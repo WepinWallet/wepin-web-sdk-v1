@@ -16,7 +16,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@wepin/storage-js": "link:../storage",
+    "@wepin/storage-js": "^0.0.1",
     "bcryptjs": "^2.4.3",
     "eventemitter2": "^6.4.9",
     "jwt-decode": "^4.0.0"

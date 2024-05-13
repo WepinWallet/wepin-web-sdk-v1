@@ -3,7 +3,7 @@ import { EthSignDataParams, EthSignMessageParams, EthSignTransactionParams } fro
 import { AccountBalanceInfo } from './types/AccountBalanceInfo';
 import { NFTInfo } from './types/NFTInfo';
 import { IWepinStorage } from '@wepin/storage-js';
-import { IWepinUser, providerType } from './types/IWepinUser';
+import { IWepinUser } from './types/IWepinUser';
 import { OTP, IApp } from '@wepin/fetch-js';
 import { WepinLifeCycle } from './types/WepinLifeCycle';
 import { Account } from './types/Account';
@@ -60,28 +60,6 @@ export declare class WepinAPI extends SafeEventEmitter {
     getAppSupportedNFTs(): Promise<{
         supportNetworkList: import('@wepin/fetch-js/dist/src/types').SupportNetwork[];
     }>;
-    /**
-     * Returns the user's login information.
-     *
-     * This method must be used in conjunction with the `@wepin/login-js` module.
-     * Additionally, the parameters for this method should utilize the return values from the `loginWithOauthProvider()`, `loginWithEmailAndPassword()`, `loginWithIdToken()`, and `loginWithAccessToken()` methods within the `@wepin/login-js` module.
-     * @param provider 'email'|'apple'|'google'|'discord'|'naver'|'external_token'
-     * @param token  `{idToken: string, refreshToken: string}`. this value is response of `@wepin/login-js`
-     * @returns {Promise<IWepinUser>}
-     * @exception `Wepin.login: registerRequired` : If this error occurs, you have to perform the `register(pin)` method.
-     * @example
-     * ```typescript
-     * import { WepinLogin } from '@wepin/login-js'
-     * const wepinLogin = WepinLogin({ appId: 'appId', appKey: 'appKey' })
-     * const res = await wepinLogin.loginWithOauthProvider({ provider: 'google' })
-     * wepinApi.login(res.provider, res.token).then((userInfo) => {
-     * console.log(userInfo)
-     * })
-     **/
-    login(provider: providerType, token: {
-        idToken: string;
-        refreshToken: string;
-    }): Promise<IWepinUser>;
     register(pin: string): Promise<IWepinUser>;
     refreshSession(): Promise<boolean>;
     /**

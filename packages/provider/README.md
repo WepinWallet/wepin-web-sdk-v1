@@ -4,7 +4,7 @@
   <a href="https://www.wepin.io/">
       <picture>
         <source media="(prefers-color-scheme: dark)">
-        <img alt="wepin logo" src="./assets/wepin_logo_color.png" width="250" height="auto">
+        <img alt="wepin logo" src="https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/assets/wepin_logo_color.png?raw=true" width="250" height="auto">
       </picture>
 </a>
 </p>

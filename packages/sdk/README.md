@@ -4,7 +4,7 @@
   <a href="https://www.wepin.io/">
       <picture>
         <source media="(prefers-color-scheme: dark)">
-        <img alt="wepin logo" src="./assets/wepin_logo_color.png" width="250" height="auto">
+        <img alt="wepin logo" src="https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/assets/wepin_logo_color.png?raw=true" width="250" height="auto">
       </picture>
 </a>
 </p>
@@ -173,7 +173,7 @@ wepinSdk.closeWidget()
 await wepinSdk.loginWithUI({email}?)
 ```
 
-The `loginWithUI()` method returns information of the logged-in user. If a user is not logged in, Wepin widget will show login page.
+The `loginWithUI()` method returns the information of the user who is logged in. If no user is logged in, the Wepin widget will display a login page. To perform a login without the widget, use the `loginWepin()` method from `@wepin/login-js` instead.
 
 
 #### Parameters
@@ -212,68 +212,14 @@ const userInfo = await wepinSdk.loginWithUI({email})
 }
 ```
 
-
-### loginWithoutUI
-```javascript
-await wepinSdk.loginWithoutUI(provider, token)
-```
-
-Returns the user's login information.
-This method must be used in conjunction with the `@wepin/login-js` module. This method with the same as `loginWithUI()`, but it doesn't show the widget.
-
-#### Parameters
-The parameters should utilize the return values from the `loginWithOauthProvider()`, `loginWithEmailAndPassword()`, `loginWithIdToken()`, and `loginWithAccessToken()` methods within the `@wepin/login-js` module.
-
-- `provider` \<'google'|'apple'|'naver'|'discord'|'external_token'|'email'>
-- `token` \<{idToken: string; refreshToken: string}>
-
-#### Returns
-- Promise\<IWepinUser>
-  - status \<'success'|'fail'>
-  - userInfo \<object> __optional__
-    - userId \<string>
-    - email \<string>
-    - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'>
-    - use2FA \<boolean>
-  - walletId \<string>
-
-#### Exception
-- `require/wepin-register` : If this error occurs, you have to perform the wepin.register(pin) method.
-
-#### Example
-
-```javascript
-import { WepinLogin } from '@wepin/login-js'
-const wepinLogin = WepinLogin({ appId: 'appId', appKey: 'appKey' })
-const res = await WepinLogin.loginWithOauthProvider({ provider: 'google' })
-try {
-  const userInfo = await wepinSdk.loginWithoutUI(res.provider, res.token)
-}catch(error){
-  if (error === 'require/wepin-register') {
-        // Perform the wepinSdk.register() method
-    }
-}
-```
-- response
-```json
-{
-    "status": "success",
-      "userInfo": {
-        "userId": "120349034824234234",
-        "email": "abc@gmail.com",
-        "provider": "google",
-        "use2FA": true,
-      },
-}
-```
 ### register
 ```javascript
 await wepinSdk.register(pin)
 ```
 
-It registers in the Wepin with a wallet pin.
+If the userStatus's loginStatus value is not 'complete' after calling the `loginWepin()` method from `@wepin/login-js`, this method needs to be called. It registers the user in Wepin with a wallet pin.
 
-After the sign up and login are completed, the Wepin service registration (wallet and account creation) will proceed.
+After the sign-up and login are completed, the registration for Wepin service (wallet and account creation) will proceed.
 
 #### Parameters
 - pin \<string> - Wallet PIN

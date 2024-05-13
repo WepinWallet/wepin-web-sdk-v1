@@ -4,7 +4,7 @@
   <a href="https://www.wepin.io/">
       <picture>
         <source media="(prefers-color-scheme: dark)">
-        <img alt="wepin logo" src="./assets/wepin_logo_color.png" width="250" height="auto">
+        <img alt="wepin logo" src="https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/assets/wepin_logo_color.png?raw=true" width="250" height="auto">
       </picture>
 </a>
 </p>
@@ -14,9 +14,11 @@
 
 # @wepin/api-js
 
-[![npm version](https://img.shields.io/npm/v/@wepin/api-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/api-js). [![npm downloads](https://img.shields.io/npm/dt/@wepin/api-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/api-js)
+[![npm version](https://img.shields.io/npm/v/@wepin/api-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/api-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/api-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/api-js)
 
 The Wepin API Library is designed for web environments. This package is not available for other platforms.
+
+To perform functions after logging into Wepin, it must be used in conjunction with the [`@wepin/login-js`](https://www.npmjs.org/package/@wepin/login-js) module.
 
 ## ⏩ Get App ID and Key
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.
@@ -200,64 +202,15 @@ const coinInfo = await wepinApi.getAppSupportedNFTs()
     ]
 }
 ```
-### login
-```javascript
-await wepinApi.login(provider, token)
-```
 
-This method logs the user into the Wepin application using the specified provider and token. It is designed to be used in conjunction with the `@wepin/login-js` module.
-
-#### Parameters
-The parameters should utilize the return values from the `loginWithOauthProvider()`, `loginWithEmailAndPassword()`, `loginWithIdToken()`, and `loginWithAccessToken()` methods within the `@wepin/login-js` module.
-
-- `provider` \<'google'|'apple'|'naver'|'discord'|'external_token'|'email'> - The login provider.
-- `token` \<{idToken: string; refreshToken: string}> - The login tokens.
-
-#### Returns
-- Promise\<IWepinUser> - A promise that resolves to an object containing the user's login status and information. The object includes:
-  - status \<'success'|'fail'>  - The login status.
-  - userInfo \<object> __optional__ - The user's information, including:
-    - userId \<string> - The user's ID.
-    - email \<string> - The user's email.
-    - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'> - The login provider.
-    - use2FA \<boolean> - Whether the user uses two-factor authentication.
-  - walletId \<string> = The user's wallet ID.
-
-#### Exception
-- `require/wepin-register` : If this error occurs, you must perform the `wepinApi.register(pin)` method.
-
-#### Example
-
-```javascript
-import { WepinLogin } from '@wepin/login-js'
-const wepinLogin = WepinLogin({ appId: 'appId', appKey: 'appKey' })
-const res = await wepinLogin.loginWithOauthProvider({ provider: 'google' })
-try {
-  const userInfo = await wepinApi.login(res.provider, res.token)
-}catch(error){
-  if (error === 'require/wepin-register') {
-        // Perform the wepinApi.register(pin) method
-    }
-}
-```
-- response
-```json
-{
-    "status": "success",
-      "userInfo": {
-        "userId": "120349034824234234",
-        "email": "abc@gmail.com",
-        "provider": "google",
-        "use2FA": true,
-      },
-}
-```
 ### register
 ```javascript
 await wepinApi.register(pin)
 ```
 
-This method registers the user in Wepin using a wallet pin. It completes the sign-up process by creating a wallet and account in the Wepin service.
+If the userStatus's loginStatus value is not 'complete' after calling the `loginWepin()` method from `@wepin/login-js`, this method needs to be called. It registers the user in Wepin with a wallet pin.
+
+After the sign-up and login are completed, the registration for Wepin service (wallet and account creation) will proceed.
 
 #### Parameters
 - pin \<string> - The wallet PIN.

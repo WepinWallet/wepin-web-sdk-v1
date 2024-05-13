@@ -4,7 +4,7 @@
   <a href="https://www.wepin.io/">
       <picture>
         <source media="(prefers-color-scheme: dark)">
-        <img alt="wepin logo" src="./assets/wepin_logo_color.png" width="250" height="auto">
+        <img alt="wepin logo" src="https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/assets/wepin_logo_color.png?raw=true" width="250" height="auto">
       </picture>
 </a>
 </p>
@@ -316,6 +316,69 @@ const res = await wepinLogin.loginWithIdToken({
     sign
 })
 ```
+
+### loginWepin
+```javascript
+await wepinLogin.loginWepin({provider, token})
+```
+
+This method logs the user into the Wepin application using the specified provider and token. 
+
+#### Parameters
+The parameters should utilize the return values from the `loginWithOauthProvider()`, `loginWithEmailAndPassword()`, `loginWithIdToken()`, and `loginWithAccessToken()` methods within the this module.
+
+- `provider` \<'google'|'apple'|'naver'|'discord'|'external_token'|'email'> - The login provider.
+- `token` \<{idToken: string; refreshToken: string}> - The login tokens.
+
+#### Returns
+- Promise\<IWepinUser> - A promise that resolves to an object containing the user's login status and information. The object includes:
+  - status \<'success'|'fail'>  - The login status.
+  - userInfo \<object> __optional__ - The user's information, including:
+    - userId \<string> - The user's ID.
+    - email \<string> - The user's email.
+    - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'> - The login provider.
+    - use2FA \<boolean> - Whether the user uses two-factor authentication.
+  - walletId \<string> = The user's wallet ID.
+  - userStatus: \<object> - The user's status of wepin login. including:
+    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - userStatus is not complete, wepin에 register해야 한다.
+    - pinRequired?: <boolean> 
+  - token: \<object> - The user's token of wepin.
+    - accessToken: \<string>
+    - refreshToken \<string>
+
+#### Example
+
+```javascript
+const wepinLogin = WepinLogin({ appId: 'appId', appKey: 'appKey' })
+const res = await wepinLogin.loginWithOauthProvider({ provider: 'google' })
+
+const userInfo = await wepinLogin.loginWepin(res)
+const userStatus = userInfo.userStatus
+if(userStatus.loginStatus === 'pinRequired'||userStatus.loginStatus === 'registerRequired') {
+    // wepin register
+}
+```
+- response
+```json
+{
+    "status": "success",
+    "userInfo": {
+    "userId": "120349034824234234",
+    "email": "abc@gmail.com",
+    "provider": "google",
+    "use2FA": true,
+    },
+    "userStatus": {
+        "loginRequired": "completed",
+        "pinRequired": false,
+    },
+    "token": {
+        "accessToken": "",
+        "refreshToken": "",
+    }
+}
+```
+
 ### logout
 ```js
 await wepinLogin.logout()

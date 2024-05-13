@@ -1,7 +1,7 @@
 import { WepinRequestMessage } from './types/Message';
 import { AccountBalanceInfo } from './types/AccountBalanceInfo';
 import { IWepinStorage } from '@wepin/storage-js';
-import { IWepinUser, providerType } from './types/IWepinUser';
+import { IWepinUser } from './types/IWepinUser';
 import { LoginProviders } from './types/LoginProviders';
 import { Widget, IWepinModal } from '@wepin/modal-js';
 import { WepinLifeCycle } from './types/WepinLifeCycle';
@@ -121,29 +121,6 @@ export declare class WepinSDK extends SafeEventEmitter {
      */
     loginWithUI(options?: {
         email?: string;
-    }): Promise<IWepinUser>;
-    /**
-     * Returns the user's login information.
-     * This method with the same as `loginWithUI()`, but it doesn't show the widget.
-     *
-     * This method must be used in conjunction with the `@wepin/login-js` module.
-     * Additionally, the parameters for this method should utilize the return values from the `loginWithOauthProvider()`, `loginWithEmailAndPassword()`, `loginWithIdToken()`, and `loginWithAccessToken()` methods within the `@wepin/login-js` module.
-     * @param provider 'email'|'apple'|'google'|'discord'|'naver'|'external_token'
-     * @param token  `{idToken: string, refreshToken: string}`. this value is response of `@wepin/login-js`
-     * @returns {Promise<IWepinUser>}
-     * @exception `Wepin.loginWithoutUI: registerRequired` : If this error occurs, you have to perform the `register(pin)` method.
-     * @example
-     * ```typescript
-     * import { WepinLogin } from '@wepin/login-js'
-     * const wepinLogin = WepinLogin({ appId: 'appId', appKey: 'appKey' })
-     * const res = await WepinLogin.loginWithOauthProvider({ provider: 'google' })
-     * wepin.loginWithoutUI(res.provider, res.token).then((userInfo) => {
-     * console.log(userInfo)
-     * })
-     **/
-    loginWithoutUI(provider: providerType, token: {
-        idToken: string;
-        refreshToken: string;
     }): Promise<IWepinUser>;
     register(pin: string): Promise<IWepinUser>;
     /**

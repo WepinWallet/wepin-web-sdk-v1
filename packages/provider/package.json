@@ -1,0 +1,40 @@
+{
+  "name": "@wepin/provider-js",
+  "version": "0.0.1",
+  "description": "Wepin Widget Javascript SDK for Web",
+  "author": "IoTrust, Co., Ltd.",
+  "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
+  "license": "MIT",
+  "main": "./dist/wepin-provider-js.mjs",
+  "jsdelivr": "./dist/wepin-provider-js.umd.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build --mode production",
+    "dev": "vite build --mode development",
+    "watch": "vite build --watch",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  },
+  "keywords": [
+    "wepin",
+    "wepinwallet",
+    "wallet",
+    "web3",
+    "provider"
+  ],
+  "dependencies": {
+    "@wepin/fetch-js": "link:../fetch",
+    "@wepin/modal-js": "link:../modal",
+    "@wepin/storage-js": "link:../storage",
+    "@wepin/utils": "^1.0.3",
+    "eth-json-rpc-middleware": "^9.0.1",
+    "events": "^3.3.0",
+    "json-rpc-engine": "^6.1.0",
+    "jwt-decode": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/events": "^3.0.3"
+  }
+}

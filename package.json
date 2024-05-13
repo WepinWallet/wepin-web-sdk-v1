@@ -1,0 +1,43 @@
+{
+  "name": "wepin-web-sdk-v1",
+  "private": true,
+  "workspaces": [
+    "packages/login",
+    "packages/provider",
+    "packages/api",
+    "packages/sdk"
+  ],
+  "description": "Monorepo for wepin web sdk v1 packages",
+  "scripts": {
+    "build": "yarn workspace @wepin/login-js build && yarn workspace @wepin/provider-js build && yarn workspace @wepin/api-js build && yarn workspace @wepin/sdk-js build",
+    "dev": "yarn workspace @wepin/login-js dev && yarn workspace @wepin/provider-js dev && yarn workspace @wepin/api-js dev && yarn workspace @wepin/sdk-js dev",
+    "publish-login": "yarn clean && yarn && yarn workspace @wepin/login-js publish ",
+    "just-publish-login": "yarn workspace @wepin/login-js publish ",
+    "publish-provider": "yarn clean && yarn && yarn workspace @wepin/provider-js publish",
+    "just-publish-provider": "yarn workspace @wepin/provider-js publish",
+    "publish-sdk": "yarn clean && yarn &&  workspace @wepin/sdk-js publish",
+    "just-publish-sdk": "yarn workspace @wepin/sdk-js publish",
+    "publish-api": "yarn clean && yarn && yarn workspace @wepin/api-js publish",
+    "just-publish-api": "yarn workspace @wepin/api-js publish",
+    "publish-all": "yarn clean && yarn && lerna publish",
+    "just-publish-all": "lerna publish"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "lerna": "^8.1.2",
+    "node-stdlib-browser": "^1.2.0",
+    "path": "^0.12.7",
+    "prettier": "^3.2.5",
+    "ts-loader": "^9.5.1",
+    "tsc-alias": "^1.8.8",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.7",
+    "vite-plugin-dts": "^3.8.1",
+    "vite-plugin-node-stdlib-browser": "^0.2.1"
+  }
+}

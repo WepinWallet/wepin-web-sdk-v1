@@ -20,8 +20,6 @@
 [![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)](https://developer.mozilla.org/docs/Web/JavaScript)
 [![typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-
-
 ## ⏩ Get App ID and Key
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.
 
@@ -41,7 +39,6 @@ To integrate Wepin into your web application, you have two module options to get
 
  - [`@wepin/sdk-js`](./packages/sdk/README.md): Module for using Wepin features along with the Wepin widget.
  - [`@wepin/api-js`](./packages/api/README.md): Module for using Wepin features with your custom UI.
-
 
 ## ⏩ Packages within this repository
 

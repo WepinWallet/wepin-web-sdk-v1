@@ -1,0 +1,33 @@
+{
+  "name": "@wepin/fetch-js",
+  "version": "0.0.1",
+  "description": "Wepin fetch library for Web",
+  "author": "IoTrust, Co., Ltd.",
+  "license": "MIT",
+  "main": "./dist/wepin-fetch-js.mjs",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build --mode production",
+    "dev": "vite build --mode development",
+    "watch": "vite build --watch",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@wepin/storage-js": "^0.0.1",
+    "bcryptjs": "^2.4.3",
+    "eventemitter2": "^6.4.9",
+    "jwt-decode": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6"
+  },
+  "keywords": [
+    "wepin",
+    "wepinwallet",
+    "wallet",
+    "wepin-fetch"
+  ]
+}

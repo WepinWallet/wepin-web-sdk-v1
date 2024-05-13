@@ -1,0 +1,27 @@
+{
+  "name": "@wepin/storage-js",
+  "version": "0.0.1",
+  "description": "Wepin SDK storage for Web",
+  "author": "IoTrust, Co., Ltd.",
+  "license": "MIT",
+  "main": "./dist/wepin-storage-js.mjs",
+  "jsdelivr": "./dist/wepin-storage-js.umd.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "vite build --mode production",
+    "dev": "vite build --mode development",
+    "watch": "vite build --watch",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  },
+  "keywords": [
+    "wepin",
+    "wepinwallet",
+    "wallet",
+    "wepin-storage"
+  ],
+  "dependencies": {},
+  "devDependencies": {}
+}

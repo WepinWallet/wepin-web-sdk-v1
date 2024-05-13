@@ -34,7 +34,7 @@ Ethers.js or Web3.js can be used with Wepin Provider to interoperate with EVM co
 ### Support Networks
 
 Please refer to the following link for detailed information on the supported network list:
-[wepin provider - supported network list](https://htmlpreview.github.io/?https://github.com/Wepin-Wallet/wepin-web-sdk-v1/blob/main/packages/provider/assets/supportedNetworkTable.html)
+[wepin provider - supported network list](https://htmlpreview.github.io/?https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/packages/provider/assets/supportedNetworkTable.html)
 
 
 ## ⏩ Install

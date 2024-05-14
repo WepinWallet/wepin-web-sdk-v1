@@ -129,8 +129,8 @@ export declare class WepinAPI extends SafeEventEmitter {
     private isEvmAccount;
     prepareTransaction({ account, to, amount, data, }: {
         account: Account | NFTInfo;
-        to: string;
-        amount: string;
+        to?: string;
+        amount?: string;
         data?: string;
     }): Promise<{
         gasLimit: number;

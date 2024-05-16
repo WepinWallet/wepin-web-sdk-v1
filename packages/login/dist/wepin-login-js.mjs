@@ -528,7 +528,7 @@ class k {
     this._modalFrame && this._modalFrame.close();
   }
 }
-const name$3 = "@wepin/login-js", version$3 = "0.0.1", description$3 = "Wepin Login Library V1 for Web", author$3 = "IoTrust, Co., Ltd.", homepage$2 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$3 = "MIT", main$3 = "./dist/wepin-login-js.mjs", types$3 = "./dist/src/index.d.ts", files$3 = [
+const name$3 = "@wepin/login-js", version$3 = "0.0.2", description$3 = "Wepin Login Library V1 for Web", author$3 = "IoTrust, Co., Ltd.", homepage$2 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$3 = "MIT", main$3 = "./dist/wepin-login-js.mjs", types$3 = "./dist/src/index.d.ts", files$3 = [
   "dist"
 ], scripts$3 = {
   build: "vite build --mode production",
@@ -536,9 +536,9 @@ const name$3 = "@wepin/login-js", version$3 = "0.0.1", description$3 = "Wepin Lo
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$3 = {
-  "@wepin/fetch-js": "link:../fetch",
-  "@wepin/modal-js": "link:../modal",
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/fetch-js": "^0.0.1",
+  "@wepin/modal-js": "^0.0.1",
+  "@wepin/storage-js": "^0.0.1",
   events: "^3.3.0",
   secp256k1: "^5.0.0",
   sha256: "^0.2.0"
@@ -1634,7 +1634,7 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.1", description$1 = "Wepin fe
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$1 = {
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/storage-js": "^0.0.1",
   bcryptjs: "^2.4.3",
   eventemitter2: "^6.4.9",
   "jwt-decode": "^4.0.0"
@@ -22358,7 +22358,7 @@ const COOKIE_NAME = "firebase:wepin", checkAndVerifyEmail = async ({
   } catch (e) {
     throw new Error("signUpEmail error" + e.message);
   }
-}, emailRegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/, passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,128}$/;
+}, emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,128}$/;
 class WepinLogin extends SafeEventEmitter {
   constructor({ appId: h, appKey: q }) {
     super(), this.version = packageJson$1.version, this.appId = h, this._appKey = q, this._isInitialized = !1, this.widget = void 0, this._wepinModal = new k(), this._wepinStorage = c, this.type = this._wepinStorage.platform, this._url = Utils.getBaseUrl(q), console.log(`WepinLogin v${this.version}`);

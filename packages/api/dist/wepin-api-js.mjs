@@ -266,7 +266,7 @@ class SafeEventEmitter extends eventsExports.EventEmitter {
     return !0;
   }
 }
-const name$2 = "@wepin/api-js", version$2 = "0.0.1", description$2 = "Wepin API library for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-api-js.mjs", jsdelivr = "./dist/wepin-api-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
+const name$2 = "@wepin/api-js", version$2 = "0.0.2", description$2 = "Wepin API library for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-api-js.mjs", jsdelivr = "./dist/wepin-api-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
   "dist"
 ], scripts$2 = {
   build: "vite build --mode production",
@@ -278,8 +278,8 @@ const name$2 = "@wepin/api-js", version$2 = "0.0.1", description$2 = "Wepin API 
   "wepinwallet",
   "wallet"
 ], dependencies$2 = {
-  "@wepin/fetch-js": "link:../fetch",
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/fetch-js": "^0.0.1",
+  "@wepin/storage-js": "^0.0.1",
   "@wepin/utils": "^1.0.3",
   "bignumber.js": "^9.1.2",
   events: "^3.3.0",
@@ -1326,7 +1326,7 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.1", description$1 = "Wepin fe
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$1 = {
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/storage-js": "^0.0.1",
   bcryptjs: "^2.4.3",
   eventemitter2: "^6.4.9",
   "jwt-decode": "^4.0.0"
@@ -58466,24 +58466,24 @@ class WepinAPI extends SafeEventEmitter {
       throw new Error("Account is required");
     if (!this.isEvmAccount(t))
       throw new Error("Wepin.prepareTransaction: not supported network");
-    if (!await this.checkAddressValidation({
+    if (o && !await this.checkAddressValidation({
       account: t,
       address: o
     }))
       throw new Error("Invalid to address");
-    const p = this._wepinStorage.getLocalStorage(this._wepinAppId, "user_id"), d = { to: o, amount: r, data: h ?? "0x", userId: p };
+    const a = this._wepinStorage.getLocalStorage(this._wepinAppId, "user_id"), p = { to: o ?? "", amount: r ?? "0", data: h ?? "0x", userId: a };
     await this.getAccounts();
-    const b = this._detailAccount.find(
-      (C) => C.network === t.network && C.address === t.address && this.isNftInfo(t) ? !0 : (C == null ? void 0 : C.contract) === (t == null ? void 0 : t.contract)
+    const d = this._detailAccount.find(
+      (w) => w.network === t.network && w.address === t.address && this.isNftInfo(t) ? !0 : (w == null ? void 0 : w.contract) === (t == null ? void 0 : t.contract)
     );
-    if (!b)
+    if (!d)
       throw new Error("Account not found");
-    const g = await this.getPrepareParams(t, b), w = await this._wepinFetch.wepinApi.transaction.prepareTransaction(
-      Object.assign(d, g)
+    const b = await this.getPrepareParams(t, d), g = await this._wepinFetch.wepinApi.transaction.prepareTransaction(
+      Object.assign(p, b)
     );
-    if (isErrorResponse(w))
-      throw new Error(w.message);
-    return w.detail;
+    if (isErrorResponse(g))
+      throw new Error(g.message);
+    return g.detail;
   }
   async signAndBroadcast({
     account: t,

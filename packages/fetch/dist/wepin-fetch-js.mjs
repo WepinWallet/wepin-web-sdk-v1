@@ -1,4 +1,4 @@
-const name$1 = "@wepin/fetch-js", version$1 = "0.0.1", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
+const name$1 = "@wepin/fetch-js", version$1 = "0.0.2", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
   "dist"
 ], scripts$1 = {
   build: "vite build --mode production",
@@ -6,7 +6,7 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.1", description$1 = "Wepin fe
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$1 = {
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/storage-js": "^0.0.1",
   bcryptjs: "^2.4.3",
   eventemitter2: "^6.4.9",
   "jwt-decode": "^4.0.0"
@@ -20280,7 +20280,7 @@ class WalletAPI {
     const M = new APIRequest({
       url: `${this.basePath}/${_.walletId}`,
       query: B,
-      method: "PATCH",
+      method: "GET",
       withCredentials: !0
     });
     return (await this.fetcher.send(M)).data;

@@ -281,7 +281,6 @@ const name$2 = "@wepin/sdk-js", version$2 = "0.0.3", description$2 = "Wepin Widg
   "@wepin/fetch-js": "^0.0.2",
   "@wepin/modal-js": "^0.0.1",
   "@wepin/storage-js": "^0.0.1",
-  "@wepin/utils": "^1.0.3",
   events: "^3.3.0",
   "jwt-decode": "^4.0.0"
 }, devDependencies$2 = {

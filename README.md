@@ -38,7 +38,6 @@ After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the d
 To integrate Wepin into your web application, you have two module options to get started:
 
  - [`@wepin/sdk-js`](./packages/sdk/README.md): Module for using Wepin features along with the Wepin widget.
- - [`@wepin/api-js`](./packages/api/README.md): Module for using Wepin features with your custom UI.
 
 ## ⏩ Packages within this repository
 
@@ -47,7 +46,6 @@ To integrate Wepin into your web application, you have two module options to get
 | Package Name  | version         | size       | Description |
 | ------------- | --------------- | ---------- | ----------- |
 | @wepin/sdk-js    |[![npm version](https://img.shields.io/npm/v/@wepin/sdk-js?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/sdk-js)| [![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/@wepin/sdk-js.svg?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/sdk-js) | Provides Wepin functionalities with the Wepin widget.|
-| @wepin/api-js    |[![npm version](https://img.shields.io/npm/v/@wepin/api-js?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/api-js)| [![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/@wepin/api-js.svg?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/api-js) | Provides Wepin functionalities without UI. |
 | @wepin/login-js    |[![npm version](https://img.shields.io/npm/v/@wepin/login-js?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/login-js)| [![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/@wepin/login-js.svg?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/login-js) | Provides functionality to retrieve OAuth authentication tokens like social login for Wepin. |
 | @wepin/provider-js    |[![npm version](https://img.shields.io/npm/v/@wepin/provider-js?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/provider-js)| [![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/@wepin/provider-js.svg?label=&style=for-the-badge)](https://www.npmjs.org/package/@wepin/provider-js) | Provides EIP-1193 compatible JSON-RPC provider functionality for Wepin. |
 

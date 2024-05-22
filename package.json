@@ -12,8 +12,8 @@
   ],
   "description": "Monorepo for wepin web sdk v1 packages",
   "scripts": {
-    "build": "yarn workspace @wepin/storage-js build && yarn workspace @wepin/modal-js build && yarn workspace @wepin/fetch-js build && yarn workspace @wepin/login-js build && yarn workspace @wepin/provider-js build && yarn workspace @wepin/api-js build && yarn workspace @wepin/sdk-js build",
-    "dev": "yarn workspace @wepin/storage-js dev && yarn workspace @wepin/modal-js dev && yarn workspace @wepin/fetch-js dev && yarn workspace @wepin/login-js dev && yarn workspace @wepin/provider-js dev && yarn workspace @wepin/api-js dev && yarn workspace @wepin/sdk-js dev",
+    "build": "yarn workspace @wepin/storage-js build && yarn workspace @wepin/modal-js build && yarn workspace @wepin/fetch-js build && yarn workspace @wepin/login-js build && yarn workspace @wepin/provider-js build && yarn workspace @wepin/sdk-js build",
+    "dev": "yarn workspace @wepin/storage-js dev && yarn workspace @wepin/modal-js dev && yarn workspace @wepin/fetch-js dev && yarn workspace @wepin/login-js dev && yarn workspace @wepin/provider-js dev && yarn workspace @wepin/sdk-js dev",
     "publish-storage": "yarn clean && yarn && yarn workspace @wepin/storage-js publish",
     "just-publish-storage": "yarn workspace @wepin/storage-js publish",
     "publish-modal": "yarn clean && yarn && yarn workspace @wepin/modal-js publish",
@@ -26,8 +26,6 @@
     "just-publish-provider": "yarn workspace @wepin/provider-js publish",
     "publish-sdk": "yarn clean && yarn &&  workspace @wepin/sdk-js publish",
     "just-publish-sdk": "yarn workspace @wepin/sdk-js publish",
-    "publish-api": "yarn clean && yarn && yarn workspace @wepin/api-js publish",
-    "just-publish-api": "yarn workspace @wepin/api-js publish",
     "publish-all": "yarn clean && yarn && lerna publish",
     "just-publish-all": "lerna publish"
   },

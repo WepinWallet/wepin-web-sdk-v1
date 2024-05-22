@@ -1,6 +1,6 @@
 {
   "name": "@wepin/login-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wepin Login Library V1 for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -17,7 +17,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@wepin/fetch-js": "^0.0.1",
+    "@wepin/fetch-js": "^0.0.2",
     "@wepin/modal-js": "^0.0.1",
     "@wepin/storage-js": "^0.0.1",
     "events": "^3.3.0",

@@ -7,6 +7,10 @@ export interface IWepinUser {
         loginStatus: 'complete' | 'pinRequired' | 'registerRequired';
         pinRequired?: boolean;
     };
+    token?: {
+        accessToken: string;
+        refreshToken: string;
+    };
 }
 interface UserInfo {
     userId: string;

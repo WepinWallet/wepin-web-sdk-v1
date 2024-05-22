@@ -1,6 +1,6 @@
 {
   "name": "@wepin/api-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wepin API library for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -23,7 +23,7 @@
     "wallet"
   ],
   "dependencies": {
-    "@wepin/fetch-js": "^0.0.1",
+    "@wepin/fetch-js": "^0.0.2",
     "@wepin/storage-js": "^0.0.1",
     "@wepin/utils": "^1.0.3",
     "bignumber.js": "^9.1.2",

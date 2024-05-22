@@ -53,11 +53,13 @@ await wepinSdk.init(attributes?)
 ```
 
 #### Parameters
-- `attributes` \<object> __optional__
-    - `type`: This determines how the widget is displayed when Wepin is initiated. The default value is 'hide', but you can also set it to 'float'.
-`'hide'` | `'float'`
-    - `defaultLanguage`: This sets the language displayed on the widget. The default value is `'ko'`, but you can also set it to `'en'`.
-    - `defaultCurrency`: This sets the currency displayed on the widget. The default value is `'KRW'`.
+- `attributes` \<IWepinSDKAttributes> __optional__
+    - `type`: __optional__ This determines how the widget is displayed when Wepin is initiated. The default value is `'hide'`, but you can also set it to `'float'`.
+    - `defaultLanguage`: __optional__ This sets the language displayed on the widget. The default value is `'ko'`, but you can also set it to `'en'`.
+    - `defaultCurrency`: __optional__ This sets the currency displayed on the widget. The default value is `'KRW'`.
+    - `loginProviders`:  __optional__ An array of login providers to configure the widget. 
+      - If not provided, all available login providers will be displayed on the widget. 
+      - If an empty array is provided, only the email login function is available. (from version `v0.0.3`)
 
 #### Example
 ```js
@@ -65,6 +67,22 @@ await wepinSdk.init({
     type: 'hide',
     defaultLanguage: 'ko',
     defaultCurrency: 'KRW',
+})
+
+// google, apple login
+await wepinSdk.init({
+    type: 'hide',
+    defaultLanguage: 'ko',
+    defaultCurrency: 'KRW',
+    loginProviders: ['google', 'apple']
+})
+
+// only email login
+await wepinSdk.init({
+    type: 'hide',
+    defaultLanguage: 'ko',
+    defaultCurrency: 'KRW',
+    loginProviders: []
 })
 ```
 ### isInitialized

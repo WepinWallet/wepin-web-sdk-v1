@@ -14,7 +14,7 @@
 
 # @wepin/login-js
 
-[![npm version](https://img.shields.io/npm/v/@wepin/login-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/login-js). [![npm downloads](https://img.shields.io/npm/dt/@wepin/login-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/login-js)
+[![npm version](https://img.shields.io/npm/v/@wepin/login-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/login-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/login-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/login-js)
 
 Wepin Login Library V1 from Web. This package is exclusively available for use in web environments.
 
@@ -363,11 +363,12 @@ if(userStatus.loginStatus === 'pinRequired'||userStatus.loginStatus === 'registe
 {
     "status": "success",
     "userInfo": {
-    "userId": "120349034824234234",
-    "email": "abc@gmail.com",
-    "provider": "google",
-    "use2FA": true,
+      "userId": "120349034824234234",
+      "email": "abc@gmail.com",
+      "provider": "google",
+      "use2FA": true,
     },
+    "walletId": "abcdsfsf123",
     "userStatus": {
         "loginRequired": "completed",
         "pinRequired": false,

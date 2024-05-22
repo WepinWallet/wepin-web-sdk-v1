@@ -1,8 +1,8 @@
+import { IWepinSDKAttributes } from './types/IWepinSDKAttributes';
 import { WepinRequestMessage } from './types/Message';
 import { AccountBalanceInfo } from './types/AccountBalanceInfo';
 import { IWepinStorage } from '@wepin/storage-js';
 import { IWepinUser } from './types/IWepinUser';
-import { LoginProviders } from './types/LoginProviders';
 import { Widget, IWepinModal } from '@wepin/modal-js';
 import { WepinLifeCycle } from './types/WepinLifeCycle';
 import { Account } from './types/Account';
@@ -12,12 +12,7 @@ import { default as SafeEventEmitter } from './utils/safeEventEmitter';
 export declare class WepinSDK extends SafeEventEmitter {
     version: string;
     type: 'web' | 'android' | 'ios';
-    wepinAppAttributes: {
-        type: string;
-        defaultLanguage: string;
-        defaultCurrency: string;
-        loginProviders?: Array<LoginProviders>;
-    };
+    wepinAppAttributes: IWepinSDKAttributes;
     wepinDomain: string;
     specifiedEmail: string;
     private _wepinLifeCycle;
@@ -48,12 +43,7 @@ export declare class WepinSDK extends SafeEventEmitter {
      * @param attributes {type: 'show' | 'hide', defaultLanguage: 'ko' | 'en', defaultCurrency: 'KRW' | 'USD', loginProviders?: Array<LoginProviders>}
      * @returns
      */
-    init(attributes?: {
-        type: string;
-        defaultLanguage: string;
-        defaultCurrency: string;
-        loginProviders?: Array<LoginProviders>;
-    }): Promise<void>;
+    init(attributes?: IWepinSDKAttributes): Promise<void>;
     get wepinWidget(): Widget;
     set wepinWidget(widget: Widget);
     /**
@@ -122,7 +112,6 @@ export declare class WepinSDK extends SafeEventEmitter {
     loginWithUI(options?: {
         email?: string;
     }): Promise<IWepinUser>;
-    register(pin: string): Promise<IWepinUser>;
     /**
      * Function to handle user logout.
      *

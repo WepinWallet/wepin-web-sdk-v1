@@ -1041,7 +1041,7 @@ var _globalThis = function(e) {
   var S = __magic__;
   return S;
 }(Object), _global = _globalThis;
-const name$1$1 = "@wepin/fetch-js", version$1$1 = "0.0.1", description$1$1 = "Wepin fetch library for Web", author$1$1 = "IoTrust, Co., Ltd.", license$1$1 = "MIT", main$1$1 = "./dist/wepin-fetch-js.mjs", types$1$1 = "./dist/src/index.d.ts", files$1$1 = [
+const name$1$1 = "@wepin/fetch-js", version$1$1 = "0.0.2", description$1$1 = "Wepin fetch library for Web", author$1$1 = "IoTrust, Co., Ltd.", license$1$1 = "MIT", main$1$1 = "./dist/wepin-fetch-js.mjs", types$1$1 = "./dist/src/index.d.ts", files$1$1 = [
   "dist"
 ], scripts$1$1 = {
   build: "vite build --mode production",
@@ -1049,7 +1049,7 @@ const name$1$1 = "@wepin/fetch-js", version$1$1 = "0.0.1", description$1$1 = "We
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$1$1 = {
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/storage-js": "^0.0.1",
   bcryptjs: "^2.4.3",
   eventemitter2: "^6.4.9",
   "jwt-decode": "^4.0.0"
@@ -21312,7 +21312,7 @@ class WalletAPI {
     const g = new APIRequest({
       url: `${this.basePath}/${o.walletId}`,
       query: S,
-      method: "PATCH",
+      method: "GET",
       withCredentials: !0
     });
     return (await this.fetcher.send(g)).data;
@@ -52785,7 +52785,7 @@ class InPageProvider extends BaseProvider {
     return window.evmproviders = window.evmproviders || {}, window.evmproviders[U.name] = U, window.evmproviders[U.name].selectedAddress = (h = o.address) == null ? void 0 : h.toLowerCase(), U;
   }
 }
-const name = "@wepin/provider-js", version = "0.0.1", description = "Wepin Widget Javascript SDK for Web", author = "IoTrust, Co., Ltd.", homepage = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license = "MIT", main = "./dist/wepin-provider-js.mjs", jsdelivr = "./dist/wepin-provider-js.umd.js", types = "./dist/src/index.d.ts", files = [
+const name = "@wepin/provider-js", version = "0.0.2", description = "Wepin Widget Javascript SDK for Web", author = "IoTrust, Co., Ltd.", homepage = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license = "MIT", main = "./dist/wepin-provider-js.mjs", jsdelivr = "./dist/wepin-provider-js.umd.js", types = "./dist/src/index.d.ts", files = [
   "dist"
 ], scripts = {
   build: "vite build --mode production",
@@ -52799,9 +52799,9 @@ const name = "@wepin/provider-js", version = "0.0.1", description = "Wepin Widge
   "web3",
   "provider"
 ], dependencies = {
-  "@wepin/fetch-js": "link:../fetch",
-  "@wepin/modal-js": "link:../modal",
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/fetch-js": "^0.0.2",
+  "@wepin/modal-js": "^0.0.1",
+  "@wepin/storage-js": "^0.0.1",
   "@wepin/utils": "^1.0.3",
   "eth-json-rpc-middleware": "^9.0.1",
   events: "^3.3.0",

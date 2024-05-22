@@ -528,7 +528,7 @@ class k {
     this._modalFrame && this._modalFrame.close();
   }
 }
-const name$3 = "@wepin/login-js", version$3 = "0.0.2", description$3 = "Wepin Login Library V1 for Web", author$3 = "IoTrust, Co., Ltd.", homepage$2 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$3 = "MIT", main$3 = "./dist/wepin-login-js.mjs", types$3 = "./dist/src/index.d.ts", files$3 = [
+const name$3 = "@wepin/login-js", version$3 = "0.0.3", description$3 = "Wepin Login Library V1 for Web", author$3 = "IoTrust, Co., Ltd.", homepage$2 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$3 = "MIT", main$3 = "./dist/wepin-login-js.mjs", types$3 = "./dist/src/index.d.ts", files$3 = [
   "dist"
 ], scripts$3 = {
   build: "vite build --mode production",
@@ -536,7 +536,7 @@ const name$3 = "@wepin/login-js", version$3 = "0.0.2", description$3 = "Wepin Lo
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$3 = {
-  "@wepin/fetch-js": "^0.0.1",
+  "@wepin/fetch-js": "^0.0.2",
   "@wepin/modal-js": "^0.0.1",
   "@wepin/storage-js": "^0.0.1",
   events: "^3.3.0",
@@ -1626,7 +1626,7 @@ var _globalThis = function(M) {
   var q = __magic__;
   return q;
 }(Object), _global = _globalThis;
-const name$1 = "@wepin/fetch-js", version$1 = "0.0.1", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
+const name$1 = "@wepin/fetch-js", version$1 = "0.0.2", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
   "dist"
 ], scripts$1 = {
   build: "vite build --mode production",
@@ -21900,7 +21900,7 @@ class WalletAPI {
     const g = new APIRequest({
       url: `${this.basePath}/${h.walletId}`,
       query: q,
-      method: "PATCH",
+      method: "GET",
       withCredentials: !0
     });
     return (await this.fetcher.send(g)).data;
@@ -22681,8 +22681,11 @@ class WepinLogin extends SafeEventEmitter {
     const e = this._wepinStorage.getLocalStorage(
       this.appId,
       "user_status"
+    ), I = this._wepinStorage.getLocalStorage(
+      this.appId,
+      "wallet_id"
     );
-    return e.loginStatus === "pinRequired" && (e.pinRequired = !0), Object.assign(z.userInfo, { userStatus: e, token: z.connectUser });
+    return e.loginStatus === "pinRequired" && (e.pinRequired = !0), Object.assign(z.userInfo, { walletId: I, userStatus: e, token: z.connectUser });
   }
   async openWidget(h, q) {
     try {

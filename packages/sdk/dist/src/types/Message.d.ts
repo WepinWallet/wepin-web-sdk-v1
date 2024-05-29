@@ -1,4 +1,4 @@
-type WepinGetSdkRequestCommand = 'send_transaction_without_provider';
+type WepinGetSdkRequestCommand = 'send_transaction_without_provider' | 'register_wepin';
 type WepinCommand = 'ready_to_widget' | 'close_wepin_widget' | 'set_local_storage' | 'set_user_email' | 'get_sdk_request' | WepinGetSdkRequestCommand;
 export interface WebviewRequestMessage {
     header: {

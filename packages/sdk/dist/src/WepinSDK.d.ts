@@ -112,6 +112,7 @@ export declare class WepinSDK extends SafeEventEmitter {
     loginWithUI(options?: {
         email?: string;
     }): Promise<IWepinUser>;
+    register(): Promise<IWepinUser>;
     /**
      * Function to handle user logout.
      *

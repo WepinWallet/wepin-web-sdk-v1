@@ -207,6 +207,9 @@ The `loginWithUI()` method returns the information of the user who is logged in.
     - email \<string>
     - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'>
     - use2FA \<boolean>
+  - userStatus: \<object> - The user's status of wepin login. including:
+    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
+    - pinRequired?: <boolean> 
   - walletId \<string>
 
 #### Example
@@ -232,15 +235,16 @@ const userInfo = await wepinSdk.loginWithUI({email})
 
 ### register
 ```javascript
-await wepinSdk.register(pin)
+await wepinSdk.register()
 ```
 
-If the userStatus's loginStatus value is not 'complete' after calling the `loginWepin()` method from `@wepin/login-js`, this method needs to be called. It registers the user in Wepin with a wallet pin.
-
-After the sign-up and login are completed, the registration for Wepin service (wallet and account creation) will proceed.
+Register the user with Wepin.
+After joining and logging in, the Register page of the Wepin widget opens and registers (wipe and account creation) the Wepin service.
+Available only if the life cycle of the WepinSDK is `login_before_register`.
+After calling the `loginWepin()` method in `@wepin/login-js`, if the loginStatus value in the userStatus is not 'complete', this method must be called. 
 
 #### Parameters
-- pin \<string> - Wallet PIN
+- void
 
 #### Returns
 - Promise\<IWepinUser>
@@ -250,6 +254,9 @@ After the sign-up and login are completed, the registration for Wepin service (w
     - email \<string>
     - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'>
     - use2FA \<boolean>
+  - userStatus: \<object> - The user's status of wepin login. including:
+    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
+    - pinRequired?: <boolean> 
   - walletId \<string>
 
 #### Exception
@@ -257,7 +264,7 @@ After the sign-up and login are completed, the registration for Wepin service (w
 #### Example
 
 ```javascript
-const userInfo = await wepinSdk.register('123456')
+const userInfo = await wepinSdk.register()
 ```
   
 ### logout

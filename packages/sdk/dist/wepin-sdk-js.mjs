@@ -1,5 +1,5 @@
-var events$1 = { exports: {} }, R = typeof Reflect == "object" ? Reflect : null, ReflectApply = R && typeof R.apply == "function" ? R.apply : function(h, U, B) {
-  return Function.prototype.apply.call(h, U, B);
+var events$1 = { exports: {} }, R = typeof Reflect == "object" ? Reflect : null, ReflectApply = R && typeof R.apply == "function" ? R.apply : function(h, P, B) {
+  return Function.prototype.apply.call(h, P, B);
 }, ReflectOwnKeys;
 R && typeof R.ownKeys == "function" ? ReflectOwnKeys = R.ownKeys : Object.getOwnPropertySymbols ? ReflectOwnKeys = function(h) {
   return Object.getOwnPropertyNames(h).concat(Object.getOwnPropertySymbols(h));
@@ -52,8 +52,8 @@ EventEmitter$1.prototype.getMaxListeners = function() {
   return _getMaxListeners(this);
 };
 EventEmitter$1.prototype.emit = function(h) {
-  for (var U = [], B = 1; B < arguments.length; B++)
-    U.push(arguments[B]);
+  for (var P = [], B = 1; B < arguments.length; B++)
+    P.push(arguments[B]);
   var V = h === "error", t = this._events;
   if (t !== void 0)
     V = V && t.error === void 0;
@@ -61,7 +61,7 @@ EventEmitter$1.prototype.emit = function(h) {
     return !1;
   if (V) {
     var O;
-    if (U.length > 0 && (O = U[0]), O instanceof Error)
+    if (P.length > 0 && (O = P[0]), O instanceof Error)
       throw O;
     var M = new Error("Unhandled error." + (O ? " (" + O.message + ")" : ""));
     throw M.context = O, M;
@@ -70,71 +70,71 @@ EventEmitter$1.prototype.emit = function(h) {
   if (D === void 0)
     return !1;
   if (typeof D == "function")
-    ReflectApply(D, this, U);
+    ReflectApply(D, this, P);
   else
-    for (var I = D.length, P = arrayClone$1(D, I), B = 0; B < I; ++B)
-      ReflectApply(P[B], this, U);
+    for (var I = D.length, U = arrayClone$1(D, I), B = 0; B < I; ++B)
+      ReflectApply(U[B], this, P);
   return !0;
 };
-function _addListener($, h, U, B) {
+function _addListener($, h, P, B) {
   var V, t, O;
-  if (checkListener(U), t = $._events, t === void 0 ? (t = $._events = /* @__PURE__ */ Object.create(null), $._eventsCount = 0) : (t.newListener !== void 0 && ($.emit(
+  if (checkListener(P), t = $._events, t === void 0 ? (t = $._events = /* @__PURE__ */ Object.create(null), $._eventsCount = 0) : (t.newListener !== void 0 && ($.emit(
     "newListener",
     h,
-    U.listener ? U.listener : U
+    P.listener ? P.listener : P
   ), t = $._events), O = t[h]), O === void 0)
-    O = t[h] = U, ++$._eventsCount;
-  else if (typeof O == "function" ? O = t[h] = B ? [U, O] : [O, U] : B ? O.unshift(U) : O.push(U), V = _getMaxListeners($), V > 0 && O.length > V && !O.warned) {
+    O = t[h] = P, ++$._eventsCount;
+  else if (typeof O == "function" ? O = t[h] = B ? [P, O] : [O, P] : B ? O.unshift(P) : O.push(P), V = _getMaxListeners($), V > 0 && O.length > V && !O.warned) {
     O.warned = !0;
     var M = new Error("Possible EventEmitter memory leak detected. " + O.length + " " + String(h) + " listeners added. Use emitter.setMaxListeners() to increase limit");
     M.name = "MaxListenersExceededWarning", M.emitter = $, M.type = h, M.count = O.length, ProcessEmitWarning(M);
   }
   return $;
 }
-EventEmitter$1.prototype.addListener = function(h, U) {
-  return _addListener(this, h, U, !1);
+EventEmitter$1.prototype.addListener = function(h, P) {
+  return _addListener(this, h, P, !1);
 };
 EventEmitter$1.prototype.on = EventEmitter$1.prototype.addListener;
-EventEmitter$1.prototype.prependListener = function(h, U) {
-  return _addListener(this, h, U, !0);
+EventEmitter$1.prototype.prependListener = function(h, P) {
+  return _addListener(this, h, P, !0);
 };
 function onceWrapper() {
   if (!this.fired)
     return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
 }
-function _onceWrap($, h, U) {
-  var B = { fired: !1, wrapFn: void 0, target: $, type: h, listener: U }, V = onceWrapper.bind(B);
-  return V.listener = U, B.wrapFn = V, V;
+function _onceWrap($, h, P) {
+  var B = { fired: !1, wrapFn: void 0, target: $, type: h, listener: P }, V = onceWrapper.bind(B);
+  return V.listener = P, B.wrapFn = V, V;
 }
-EventEmitter$1.prototype.once = function(h, U) {
-  return checkListener(U), this.on(h, _onceWrap(this, h, U)), this;
+EventEmitter$1.prototype.once = function(h, P) {
+  return checkListener(P), this.on(h, _onceWrap(this, h, P)), this;
 };
-EventEmitter$1.prototype.prependOnceListener = function(h, U) {
-  return checkListener(U), this.prependListener(h, _onceWrap(this, h, U)), this;
+EventEmitter$1.prototype.prependOnceListener = function(h, P) {
+  return checkListener(P), this.prependListener(h, _onceWrap(this, h, P)), this;
 };
-EventEmitter$1.prototype.removeListener = function(h, U) {
+EventEmitter$1.prototype.removeListener = function(h, P) {
   var B, V, t, O, M;
-  if (checkListener(U), V = this._events, V === void 0)
+  if (checkListener(P), V = this._events, V === void 0)
     return this;
   if (B = V[h], B === void 0)
     return this;
-  if (B === U || B.listener === U)
-    --this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : (delete V[h], V.removeListener && this.emit("removeListener", h, B.listener || U));
+  if (B === P || B.listener === P)
+    --this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : (delete V[h], V.removeListener && this.emit("removeListener", h, B.listener || P));
   else if (typeof B != "function") {
     for (t = -1, O = B.length - 1; O >= 0; O--)
-      if (B[O] === U || B[O].listener === U) {
+      if (B[O] === P || B[O].listener === P) {
         M = B[O].listener, t = O;
         break;
       }
     if (t < 0)
       return this;
-    t === 0 ? B.shift() : spliceOne(B, t), B.length === 1 && (V[h] = B[0]), V.removeListener !== void 0 && this.emit("removeListener", h, M || U);
+    t === 0 ? B.shift() : spliceOne(B, t), B.length === 1 && (V[h] = B[0]), V.removeListener !== void 0 && this.emit("removeListener", h, M || P);
   }
   return this;
 };
 EventEmitter$1.prototype.off = EventEmitter$1.prototype.removeListener;
 EventEmitter$1.prototype.removeAllListeners = function(h) {
-  var U, B, V;
+  var P, B, V;
   if (B = this._events, B === void 0)
     return this;
   if (B.removeListener === void 0)
@@ -145,19 +145,19 @@ EventEmitter$1.prototype.removeAllListeners = function(h) {
       O = t[V], O !== "removeListener" && this.removeAllListeners(O);
     return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
   }
-  if (U = B[h], typeof U == "function")
-    this.removeListener(h, U);
-  else if (U !== void 0)
-    for (V = U.length - 1; V >= 0; V--)
-      this.removeListener(h, U[V]);
+  if (P = B[h], typeof P == "function")
+    this.removeListener(h, P);
+  else if (P !== void 0)
+    for (V = P.length - 1; V >= 0; V--)
+      this.removeListener(h, P[V]);
   return this;
 };
-function _listeners($, h, U) {
+function _listeners($, h, P) {
   var B = $._events;
   if (B === void 0)
     return [];
   var V = B[h];
-  return V === void 0 ? [] : typeof V == "function" ? U ? [V.listener || V] : [V] : U ? unwrapListeners(V) : arrayClone$1(V, V.length);
+  return V === void 0 ? [] : typeof V == "function" ? P ? [V.listener || V] : [V] : P ? unwrapListeners(V) : arrayClone$1(V, V.length);
 }
 EventEmitter$1.prototype.listeners = function(h) {
   return _listeners(this, h, !0);
@@ -172,11 +172,11 @@ EventEmitter$1.prototype.listenerCount = listenerCount;
 function listenerCount($) {
   var h = this._events;
   if (h !== void 0) {
-    var U = h[$];
-    if (typeof U == "function")
+    var P = h[$];
+    if (typeof P == "function")
       return 1;
-    if (U !== void 0)
-      return U.length;
+    if (P !== void 0)
+      return P.length;
   }
   return 0;
 }
@@ -184,9 +184,9 @@ EventEmitter$1.prototype.eventNames = function() {
   return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
 };
 function arrayClone$1($, h) {
-  for (var U = new Array(h), B = 0; B < h; ++B)
-    U[B] = $[B];
-  return U;
+  for (var P = new Array(h), B = 0; B < h; ++B)
+    P[B] = $[B];
+  return P;
 }
 function spliceOne($, h) {
   for (; h + 1 < $.length; h++)
@@ -194,38 +194,38 @@ function spliceOne($, h) {
   $.pop();
 }
 function unwrapListeners($) {
-  for (var h = new Array($.length), U = 0; U < h.length; ++U)
-    h[U] = $[U].listener || $[U];
+  for (var h = new Array($.length), P = 0; P < h.length; ++P)
+    h[P] = $[P].listener || $[P];
   return h;
 }
 function once($, h) {
-  return new Promise(function(U, B) {
+  return new Promise(function(P, B) {
     function V(O) {
       $.removeListener(h, t), B(O);
     }
     function t() {
-      typeof $.removeListener == "function" && $.removeListener("error", V), U([].slice.call(arguments));
+      typeof $.removeListener == "function" && $.removeListener("error", V), P([].slice.call(arguments));
     }
     eventTargetAgnosticAddListener($, h, t, { once: !0 }), h !== "error" && addErrorHandlerIfEventEmitter($, V, { once: !0 });
   });
 }
-function addErrorHandlerIfEventEmitter($, h, U) {
-  typeof $.on == "function" && eventTargetAgnosticAddListener($, "error", h, U);
+function addErrorHandlerIfEventEmitter($, h, P) {
+  typeof $.on == "function" && eventTargetAgnosticAddListener($, "error", h, P);
 }
-function eventTargetAgnosticAddListener($, h, U, B) {
+function eventTargetAgnosticAddListener($, h, P, B) {
   if (typeof $.on == "function")
-    B.once ? $.once(h, U) : $.on(h, U);
+    B.once ? $.once(h, P) : $.on(h, P);
   else if (typeof $.addEventListener == "function")
     $.addEventListener(h, function V(t) {
-      B.once && $.removeEventListener(h, V), U(t);
+      B.once && $.removeEventListener(h, V), P(t);
     });
   else
     throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof $);
 }
 var eventsExports = events$1.exports;
-function safeApply($, h, U) {
+function safeApply($, h, P) {
   try {
-    Reflect.apply($, h, U);
+    Reflect.apply($, h, P);
   } catch (B) {
     setTimeout(() => {
       throw B;
@@ -233,13 +233,13 @@ function safeApply($, h, U) {
   }
 }
 function arrayClone($) {
-  const h = $.length, U = new Array(h);
+  const h = $.length, P = new Array(h);
   for (let B = 0; B < h; B += 1)
-    U[B] = $[B];
-  return U;
+    P[B] = $[B];
+  return P;
 }
 class SafeEventEmitter extends eventsExports.EventEmitter {
-  emit(h, ...U) {
+  emit(h, ...P) {
     let B = h === "error";
     const V = this._events;
     if (V !== void 0)
@@ -248,7 +248,7 @@ class SafeEventEmitter extends eventsExports.EventEmitter {
       return !1;
     if (B) {
       let O;
-      if (U.length > 0 && ([O] = U), O instanceof Error)
+      if (P.length > 0 && ([O] = P), O instanceof Error)
         throw O;
       const M = new Error(`Unhandled error.${O ? ` (${O.message})` : ""}`);
       throw M.context = O, M;
@@ -257,16 +257,16 @@ class SafeEventEmitter extends eventsExports.EventEmitter {
     if (t === void 0)
       return !1;
     if (typeof t == "function")
-      safeApply(t, this, U);
+      safeApply(t, this, P);
     else {
       const O = t.length, M = arrayClone(t);
       for (let D = 0; D < O; D += 1)
-        safeApply(M[D], this, U);
+        safeApply(M[D], this, P);
     }
     return !0;
   }
 }
-const name$2 = "@wepin/sdk-js", version$2 = "0.0.3", description$2 = "Wepin Widget Javascript SDK for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-sdk-js.mjs", jsdelivr = "./dist/wepin-sdk-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
+const name$2 = "@wepin/sdk-js", version$2 = "0.0.4", description$2 = "Wepin Widget Javascript SDK for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-sdk-js.mjs", jsdelivr = "./dist/wepin-sdk-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
   "dist"
 ], scripts$2 = {
   build: "vite build --mode production",
@@ -313,7 +313,7 @@ const Ot = class Ot {
   }
   static messages(h) {
     return {
-      hasValidOrigin: (U) => U.origin === Ot.getUrls(h).wepinWebview
+      hasValidOrigin: (P) => P.origin === Ot.getUrls(h).wepinWebview
       // hasCorrectCorrelationID(message: MessageEvent,
       //                         correlationID: string | undefined) {
       //     return correlationID && message.data && message.data.correlationID === correlationID;
@@ -347,19 +347,19 @@ const Ot = class Ot {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
       /[xy]/g,
       function(h) {
-        const U = Math.random() * 16 | 0;
-        return (h == "x" ? U : U & 3 | 8).toString(16);
+        const P = Math.random() * 16 | 0;
+        return (h == "x" ? P : P & 3 | 8).toString(16);
       }
     );
   }
 };
-Ot.checkSameNumber = (h, U, B) => {
+Ot.checkSameNumber = (h, P, B) => {
   if (B)
     return !1;
   const V = [...Array(10)].map(Number.prototype.valueOf, 0);
   let t = !1;
   return [...h].forEach((M) => {
-    if (V[Number(M)]++, V[Number(M)] >= U) {
+    if (V[Number(M)]++, V[Number(M)] >= P) {
       t = !0;
       return;
     }
@@ -368,12 +368,12 @@ Ot.checkSameNumber = (h, U, B) => {
 let Utils = Ot;
 const w = class {
   static closeOverlay(h) {
-    const U = document.querySelector(`#${h}`);
-    U && U.parentNode && U.parentNode.removeChild(U);
+    const P = document.querySelector(`#${h}`);
+    P && P.parentNode && P.parentNode.removeChild(P);
   }
   static openOverlay(h) {
-    const U = document.createElement("div");
-    U.id = h, U.classList.add(this.CONST.overlayClassName), U.style.zIndex = "2147483647", U.style.display = "flex", U.style.alignItems = "center", U.style.justifyContent = "center", U.style.textAlign = "center", U.style.position = "fixed", U.style.left = "0px", U.style.right = "0px", U.style.top = "0px", U.style.bottom = "0px", U.style.left = "0px", U.style.background = "rgba(0,0,0,0.6)", U.style.color = "white", U.style.border = "2px solid #f1f1f1";
+    const P = document.createElement("div");
+    P.id = h, P.classList.add(this.CONST.overlayClassName), P.style.zIndex = "2147483647", P.style.display = "flex", P.style.alignItems = "center", P.style.justifyContent = "center", P.style.textAlign = "center", P.style.position = "fixed", P.style.left = "0px", P.style.right = "0px", P.style.top = "0px", P.style.bottom = "0px", P.style.left = "0px", P.style.background = "rgba(0,0,0,0.6)", P.style.color = "white", P.style.border = "2px solid #f1f1f1";
     const B = document.getElementsByClassName(
       this.CONST.overlayClassName
     );
@@ -381,7 +381,7 @@ const w = class {
       const t = B.item(V);
       t && t.remove();
     }
-    document.body.appendChild(U);
+    document.body.appendChild(P);
   }
 };
 w.CONST = {
@@ -389,8 +389,8 @@ w.CONST = {
 };
 let p = w;
 const y = ($) => {
-  const h = ($ == null ? void 0 : $.width) || 375, U = ($ == null ? void 0 : $.height) || 604, B = $ != null && $.sLeft ? $ == null ? void 0 : $.sLeft : window.screenLeft ? window.screenLeft : window.screenX ? window.screenX : 0, V = $ != null && $.sTop ? $ == null ? void 0 : $.sTop : window.screenTop ? window.screenTop : window.screenY ? window.screenY : 0, t = screen.width / 2 - h / 2 + B, O = screen.height / 2 - U / 2 + V;
-  return `width=${h}, height=${U}, left=${t}, top=${O}scrollbars=yes, resizable=1, menubar=no, toolbar=no`;
+  const h = ($ == null ? void 0 : $.width) || 375, P = ($ == null ? void 0 : $.height) || 604, B = $ != null && $.sLeft ? $ == null ? void 0 : $.sLeft : window.screenLeft ? window.screenLeft : window.screenX ? window.screenX : 0, V = $ != null && $.sTop ? $ == null ? void 0 : $.sTop : window.screenTop ? window.screenTop : window.screenY ? window.screenY : 0, t = screen.width / 2 - h / 2 + B, O = screen.height / 2 - P / 2 + V;
+  return `width=${h}, height=${P}, left=${t}, top=${O}scrollbars=yes, resizable=1, menubar=no, toolbar=no`;
 }, m = ($) => {
   const h = document.createElement("iframe");
   return h.classList.add("wepin-sdk-widget-iframe"), h.setAttribute("frameborder", "0"), h.setAttribute("marginwidth", "0"), h.setAttribute("marginheight", "0"), h.style.width = "100%", $ && $ != null && $.isHide ? h.style.height = "0" : h.style.height = "100%", h.style.maxHeight = "100%", h.style.position = "fixed", h.style.bottom = "0", h.style.left = "0", h.style.zIndex = "408888000000", h.title = "wepin sdk webview", h.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; camera; clipboard-read", h.allowFullscreen = !0, h;
@@ -398,8 +398,8 @@ const y = ($) => {
   const h = Math.random() * 16 | 0;
   return ($ == "x" ? h : h & 3 | 8).toString(16);
 }), r = class Ut extends p {
-  constructor(h, U, B, V, t) {
-    super(), this.isWidgetReady = !1, this.url = h, this.id = `id-${v()}`, this.isHide = t, t || Ut.openOverlay(this.id), Ut._webview[this.id] = U, this.type = B, this.EL = V, window.addEventListener("message", this.EL), this._open = !0;
+  constructor(h, P, B, V, t) {
+    super(), this.isWidgetReady = !1, this.url = h, this.id = `id-${v()}`, this.isHide = t, t || Ut.openOverlay(this.id), Ut._webview[this.id] = P, this.type = B, this.EL = V, window.addEventListener("message", this.EL), this._open = !0;
   }
   get isOpen() {
     return this._open;
@@ -426,15 +426,15 @@ const y = ($) => {
   response(h) {
     try {
       this._post(h);
-    } catch (U) {
-      console.error("Can not response message to the webview", U);
+    } catch (P) {
+      console.error("Can not response message to the webview", P);
     }
   }
   request(h) {
     try {
       this._post(h);
-    } catch (U) {
-      console.error("Can not send message to the webview", U);
+    } catch (P) {
+      console.error("Can not send message to the webview", P);
     }
   }
 };
@@ -445,17 +445,17 @@ class a extends l$2 {
   constructor({
     url: h,
     // wepin,
-    frame: U,
+    frame: P,
     EL: B,
     isHide: V
   }) {
-    super(h, U, "Frame", B, V), U.src = h, U.id = this.id;
+    super(h, P, "Frame", B, V), P.src = h, P.id = this.id;
     const t = document.querySelector("body");
-    a.scrollPosition = window.pageYOffset, t.style.overflow = "hidden", t.style.position = "fixed", t.style.top = `-${a.scrollPosition}px`, t.style.width = "100%", document.body.appendChild(U);
+    a.scrollPosition = window.pageYOffset, t.style.overflow = "hidden", t.style.position = "fixed", t.style.top = `-${a.scrollPosition}px`, t.style.width = "100%", document.body.appendChild(P);
   }
   static async openNew({
     url: h,
-    EL: U,
+    EL: P,
     widgetOptions: B
   }) {
     const V = m({ isHide: B == null ? void 0 : B.isHide });
@@ -463,7 +463,7 @@ class a extends l$2 {
       url: h,
       // wepin,
       frame: V,
-      EL: U,
+      EL: P,
       isHide: B == null ? void 0 : B.isHide
     });
   }
@@ -477,8 +477,8 @@ class a extends l$2 {
   }
   _closeWebview() {
     const h = setTimeout(() => {
-      const U = l$2.getWebview(this.id), B = document.querySelector("body");
-      B.style.removeProperty("overflow"), B.style.removeProperty("position"), B.style.removeProperty("top"), B.style.removeProperty("width"), window.scrollTo(0, a.scrollPosition), U && document.body.removeChild(U), l$2.clearWebview(this.id), clearTimeout(h);
+      const P = l$2.getWebview(this.id), B = document.querySelector("body");
+      B.style.removeProperty("overflow"), B.style.removeProperty("position"), B.style.removeProperty("top"), B.style.removeProperty("width"), window.scrollTo(0, a.scrollPosition), P && document.body.removeChild(P), l$2.clearWebview(this.id), clearTimeout(h);
     }, 500);
   }
   _post(h) {
@@ -488,21 +488,21 @@ class a extends l$2 {
 class d extends l$2 {
   constructor({
     url: h,
-    webview: U,
+    webview: P,
     EL: B
   }) {
-    super(h, U, "Window", B, !1);
+    super(h, P, "Window", B, !1);
   }
   //: NodeJS.Timer | number
   static async openNew({
     url: h,
-    EL: U,
+    EL: P,
     widgetFeatures: B
   }) {
     const V = y(B), t = window.open(h, "Wepin_Widget", V), O = new d({
       url: h,
       webview: t,
-      EL: U
+      EL: P
     });
     if (!t)
       throw O.close(), new Error("popup window blocked");
@@ -564,16 +564,16 @@ class k {
   //     this._isInitialized = true
   //     return this._isInitialized
   //   }
-  async openAuthBrowser(h, U) {
+  async openAuthBrowser(h, P) {
     return this._modalWindow = await d.openNew({
       url: h,
-      EL: U
+      EL: P
     }), this._modalWindow;
   }
-  async openModal(h, U, B) {
+  async openModal(h, P, B) {
     return this._modalFrame = await a.openNew({
       url: h,
-      EL: U,
+      EL: P,
       widgetOptions: B
     }), this._modalFrame;
   }
@@ -590,12 +590,12 @@ const proxyToObject = ($) => {
   if (Array.isArray($))
     return $.map(proxyToObject);
   const h = {};
-  for (const U of Object.keys($))
-    h[U] = proxyToObject($[U]);
+  for (const P of Object.keys($))
+    h[P] = proxyToObject($[P]);
   return h;
 };
 var Platform = /* @__PURE__ */ (($) => ($[$.web = 1] = "web", $[$.android = 2] = "android", $[$.ios = 3] = "ios", $))(Platform || {});
-const WebviewRequestHandler = ($, h, U) => {
+const WebviewRequestHandler = ($, h, P) => {
   var t, O, M;
   const B = {
     header: {
@@ -604,8 +604,8 @@ const WebviewRequestHandler = ($, h, U) => {
       id: $.header.id
     }
   };
-  let V = U.appKey;
-  switch (U.appKey.slice(0, 13) === "local_ak_dev_" ? V = U.appKey.slice(6) : V = U.appKey, $.body.command) {
+  let V = P.appKey;
+  switch (P.appKey.slice(0, 13) === "local_ak_dev_" ? V = P.appKey.slice(6) : V = P.appKey, $.body.command) {
     case "ready_to_widget":
       {
         LOG.debug("ready_to_widget");
@@ -615,14 +615,14 @@ const WebviewRequestHandler = ($, h, U) => {
           state: "SUCCESS",
           data: {
             appKey: V,
-            appId: U.appId,
+            appId: P.appId,
             domain: h.wepinDomain,
             platform: Platform[h.type],
             attributes: D,
             //Object.assign({}, wepinSDK.wepinAppAttributes),
             version: h.version.includes("-alpha") ? h.version.substring(0, h.version.indexOf("-")) : h.version,
             type: `${h.type}-sdk`,
-            localDate: h.wepinStorage.getAllLocalStorage(U.appId) ?? {}
+            localDate: h.wepinStorage.getAllLocalStorage(P.appId) ?? {}
           }
         };
       }
@@ -631,7 +631,7 @@ const WebviewRequestHandler = ($, h, U) => {
       {
         h.wepinWidget && (h.wepinWidget.close(), h.wepinWidget = void 0);
         const D = h.wepinStorage.getLocalStorage(
-          U.appId,
+          P.appId,
           "user_info"
         );
         D ? h.setUserInfo(D, !0) : h.setUserInfo({ status: "fail" }, !0), h.removeAllListeners(), h.specifiedEmail = void 0;
@@ -639,7 +639,7 @@ const WebviewRequestHandler = ($, h, U) => {
       break;
     case "set_local_storage":
       h.wepinStorage.setAllLocalStorage(
-        U.appId,
+        P.appId,
         $.body.parameter.data
       ), $.body.parameter.data && $.body.parameter.data.user_info && h.setUserInfo($.body.parameter.data.user_info, !0), $.body.parameter.data && $.body.parameter.data["wepin:connectUser"] && h.setToken($.body.parameter.data["wepin:connectUser"]), B.body = {
         command: "set_local_storage",
@@ -670,16 +670,16 @@ const WebviewRequestHandler = ($, h, U) => {
 }, WebviewResponseHandler = ($, h) => {
   LOG.debug("Got Response from webview =>", $), h.emit($.header.id.toString(), $);
 }, getEventListener = ($, h) => {
-  const U = (B) => !(!($.wepinWidget.url.includes("/wepin-sdk-login") || $.wepinWidget.url.includes(B.origin)) && B.origin !== $.wepinWidget.url || !Object.prototype.hasOwnProperty.call(B.data, "header") || !Object.prototype.hasOwnProperty.call(B.data, "body"));
+  const P = (B) => !(!($.wepinWidget.url.includes("/wepin-sdk-login") || $.wepinWidget.url.includes(B.origin)) && B.origin !== $.wepinWidget.url || !Object.prototype.hasOwnProperty.call(B.data, "header") || !Object.prototype.hasOwnProperty.call(B.data, "body"));
   return (B) => {
-    U(B) && handleMessage(
+    P(B) && handleMessage(
       B.data,
       $,
       h
     );
   };
-}, handleMessage = ($, h, U) => {
-  $.header.request_to === "web" ? WebviewRequestHandler($, h, U) : $.header.response_to === "web" ? WebviewResponseHandler($, h) : LOG.error("Failed to handle message:", $);
+}, handleMessage = ($, h, P) => {
+  $.header.request_to === "web" ? WebviewRequestHandler($, h, P) : $.header.response_to === "web" ? WebviewResponseHandler($, h) : LOG.error("Failed to handle message:", $);
 }, emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
 var buffer$2 = {}, base64Js$1 = {};
 base64Js$1.byteLength = byteLength;
@@ -694,20 +694,20 @@ function getLens($) {
   var h = $.length;
   if (h % 4 > 0)
     throw new Error("Invalid string. Length must be a multiple of 4");
-  var U = $.indexOf("=");
-  U === -1 && (U = h);
-  var B = U === h ? 0 : 4 - U % 4;
-  return [U, B];
+  var P = $.indexOf("=");
+  P === -1 && (P = h);
+  var B = P === h ? 0 : 4 - P % 4;
+  return [P, B];
 }
 function byteLength($) {
-  var h = getLens($), U = h[0], B = h[1];
-  return (U + B) * 3 / 4 - B;
+  var h = getLens($), P = h[0], B = h[1];
+  return (P + B) * 3 / 4 - B;
 }
-function _byteLength($, h, U) {
-  return (h + U) * 3 / 4 - U;
+function _byteLength($, h, P) {
+  return (h + P) * 3 / 4 - P;
 }
 function toByteArray($) {
-  var h, U = getLens($), B = U[0], V = U[1], t = new Arr(_byteLength($, B, V)), O = 0, M = V > 0 ? B - 4 : B, D;
+  var h, P = getLens($), B = P[0], V = P[1], t = new Arr(_byteLength($, B, V)), O = 0, M = V > 0 ? B - 4 : B, D;
   for (D = 0; D < M; D += 4)
     h = revLookup[$.charCodeAt(D)] << 18 | revLookup[$.charCodeAt(D + 1)] << 12 | revLookup[$.charCodeAt(D + 2)] << 6 | revLookup[$.charCodeAt(D + 3)], t[O++] = h >> 16 & 255, t[O++] = h >> 8 & 255, t[O++] = h & 255;
   return V === 2 && (h = revLookup[$.charCodeAt(D)] << 2 | revLookup[$.charCodeAt(D + 1)] >> 4, t[O++] = h & 255), V === 1 && (h = revLookup[$.charCodeAt(D)] << 10 | revLookup[$.charCodeAt(D + 1)] << 4 | revLookup[$.charCodeAt(D + 2)] >> 2, t[O++] = h >> 8 & 255, t[O++] = h & 255), t;
@@ -715,27 +715,27 @@ function toByteArray($) {
 function tripletToBase64($) {
   return lookup[$ >> 18 & 63] + lookup[$ >> 12 & 63] + lookup[$ >> 6 & 63] + lookup[$ & 63];
 }
-function encodeChunk($, h, U) {
-  for (var B, V = [], t = h; t < U; t += 3)
+function encodeChunk($, h, P) {
+  for (var B, V = [], t = h; t < P; t += 3)
     B = ($[t] << 16 & 16711680) + ($[t + 1] << 8 & 65280) + ($[t + 2] & 255), V.push(tripletToBase64(B));
   return V.join("");
 }
 function fromByteArray($) {
-  for (var h, U = $.length, B = U % 3, V = [], t = 16383, O = 0, M = U - B; O < M; O += t)
+  for (var h, P = $.length, B = P % 3, V = [], t = 16383, O = 0, M = P - B; O < M; O += t)
     V.push(encodeChunk($, O, O + t > M ? M : O + t));
-  return B === 1 ? (h = $[U - 1], V.push(
+  return B === 1 ? (h = $[P - 1], V.push(
     lookup[h >> 2] + lookup[h << 4 & 63] + "=="
-  )) : B === 2 && (h = ($[U - 2] << 8) + $[U - 1], V.push(
+  )) : B === 2 && (h = ($[P - 2] << 8) + $[P - 1], V.push(
     lookup[h >> 10] + lookup[h >> 4 & 63] + lookup[h << 2 & 63] + "="
   )), V.join("");
 }
 var ieee754$1 = {};
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
-ieee754$1.read = function($, h, U, B, V) {
-  var t, O, M = V * 8 - B - 1, D = (1 << M) - 1, I = D >> 1, P = -7, Y = U ? V - 1 : 0, X = U ? -1 : 1, ee = $[h + Y];
-  for (Y += X, t = ee & (1 << -P) - 1, ee >>= -P, P += M; P > 0; t = t * 256 + $[h + Y], Y += X, P -= 8)
+ieee754$1.read = function($, h, P, B, V) {
+  var t, O, M = V * 8 - B - 1, D = (1 << M) - 1, I = D >> 1, U = -7, Y = P ? V - 1 : 0, X = P ? -1 : 1, ee = $[h + Y];
+  for (Y += X, t = ee & (1 << -U) - 1, ee >>= -U, U += M; U > 0; t = t * 256 + $[h + Y], Y += X, U -= 8)
     ;
-  for (O = t & (1 << -P) - 1, t >>= -P, P += B; P > 0; O = O * 256 + $[h + Y], Y += X, P -= 8)
+  for (O = t & (1 << -U) - 1, t >>= -U, U += B; U > 0; O = O * 256 + $[h + Y], Y += X, U -= 8)
     ;
   if (t === 0)
     t = 1 - I;
@@ -746,13 +746,13 @@ ieee754$1.read = function($, h, U, B, V) {
   }
   return (ee ? -1 : 1) * O * Math.pow(2, t - B);
 };
-ieee754$1.write = function($, h, U, B, V, t) {
-  var O, M, D, I = t * 8 - V - 1, P = (1 << I) - 1, Y = P >> 1, X = V === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, ee = B ? 0 : t - 1, re = B ? 1 : -1, ie = h < 0 || h === 0 && 1 / h < 0 ? 1 : 0;
-  for (h = Math.abs(h), isNaN(h) || h === 1 / 0 ? (M = isNaN(h) ? 1 : 0, O = P) : (O = Math.floor(Math.log(h) / Math.LN2), h * (D = Math.pow(2, -O)) < 1 && (O--, D *= 2), O + Y >= 1 ? h += X / D : h += X * Math.pow(2, 1 - Y), h * D >= 2 && (O++, D /= 2), O + Y >= P ? (M = 0, O = P) : O + Y >= 1 ? (M = (h * D - 1) * Math.pow(2, V), O = O + Y) : (M = h * Math.pow(2, Y - 1) * Math.pow(2, V), O = 0)); V >= 8; $[U + ee] = M & 255, ee += re, M /= 256, V -= 8)
+ieee754$1.write = function($, h, P, B, V, t) {
+  var O, M, D, I = t * 8 - V - 1, U = (1 << I) - 1, Y = U >> 1, X = V === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, ee = B ? 0 : t - 1, re = B ? 1 : -1, ie = h < 0 || h === 0 && 1 / h < 0 ? 1 : 0;
+  for (h = Math.abs(h), isNaN(h) || h === 1 / 0 ? (M = isNaN(h) ? 1 : 0, O = U) : (O = Math.floor(Math.log(h) / Math.LN2), h * (D = Math.pow(2, -O)) < 1 && (O--, D *= 2), O + Y >= 1 ? h += X / D : h += X * Math.pow(2, 1 - Y), h * D >= 2 && (O++, D /= 2), O + Y >= U ? (M = 0, O = U) : O + Y >= 1 ? (M = (h * D - 1) * Math.pow(2, V), O = O + Y) : (M = h * Math.pow(2, Y - 1) * Math.pow(2, V), O = 0)); V >= 8; $[P + ee] = M & 255, ee += re, M /= 256, V -= 8)
     ;
-  for (O = O << V | M, I += V; I > 0; $[U + ee] = O & 255, ee += re, O /= 256, I -= 8)
+  for (O = O << V | M, I += V; I > 0; $[P + ee] = O & 255, ee += re, O /= 256, I -= 8)
     ;
-  $[U + ee - re] |= ie * 128;
+  $[P + ee - re] |= ie * 128;
 };
 /*!
  * The buffer module from node.js, for the browser.
@@ -761,7 +761,7 @@ ieee754$1.write = function($, h, U, B, V, t) {
  * @license  MIT
  */
 (function($) {
-  var h = base64Js$1, U = ieee754$1, B = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
+  var h = base64Js$1, P = ieee754$1, B = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
   $.Buffer = M, $.SlowBuffer = oe, $.INSPECT_MAX_BYTES = 50;
   var V = 2147483647;
   $.kMaxLength = V, M.TYPED_ARRAY_SUPPORT = t(), !M.TYPED_ARRAY_SUPPORT && typeof console < "u" && typeof console.error == "function" && console.error(
@@ -847,11 +847,11 @@ ieee754$1.write = function($, h, U, B, V, t) {
     if (Q < 0)
       throw new RangeError('The value "' + Q + '" is invalid for option "size"');
   }
-  function P(Q, K, te) {
+  function U(Q, K, te) {
     return I(Q), Q <= 0 ? O(Q) : K !== void 0 ? typeof te == "string" ? O(Q).fill(K, te) : O(Q).fill(K) : O(Q);
   }
   M.alloc = function(Q, K, te) {
-    return P(Q, K, te);
+    return U(Q, K, te);
   };
   function Y(Q) {
     return I(Q), O(Q < 0 ? 0 : se(Q) | 0);
@@ -1335,13 +1335,13 @@ ieee754$1.write = function($, h, U, B, V, t) {
   }, M.prototype.readInt32BE = function(K, te) {
     return K = K >>> 0, te || S(K, 4, this.length), this[K] << 24 | this[K + 1] << 16 | this[K + 2] << 8 | this[K + 3];
   }, M.prototype.readFloatLE = function(K, te) {
-    return K = K >>> 0, te || S(K, 4, this.length), U.read(this, K, !0, 23, 4);
+    return K = K >>> 0, te || S(K, 4, this.length), P.read(this, K, !0, 23, 4);
   }, M.prototype.readFloatBE = function(K, te) {
-    return K = K >>> 0, te || S(K, 4, this.length), U.read(this, K, !1, 23, 4);
+    return K = K >>> 0, te || S(K, 4, this.length), P.read(this, K, !1, 23, 4);
   }, M.prototype.readDoubleLE = function(K, te) {
-    return K = K >>> 0, te || S(K, 8, this.length), U.read(this, K, !0, 52, 8);
+    return K = K >>> 0, te || S(K, 8, this.length), P.read(this, K, !0, 52, 8);
   }, M.prototype.readDoubleBE = function(K, te) {
-    return K = K >>> 0, te || S(K, 8, this.length), U.read(this, K, !1, 52, 8);
+    return K = K >>> 0, te || S(K, 8, this.length), P.read(this, K, !1, 52, 8);
   };
   function J(Q, K, te, ae, ve, qe) {
     if (!M.isBuffer(Q))
@@ -1415,7 +1415,7 @@ ieee754$1.write = function($, h, U, B, V, t) {
       throw new RangeError("Index out of range");
   }
   function ye(Q, K, te, ae, ve) {
-    return K = +K, te = te >>> 0, ve || ce(Q, K, te, 4), U.write(Q, K, te, ae, 23, 4), te + 4;
+    return K = +K, te = te >>> 0, ve || ce(Q, K, te, 4), P.write(Q, K, te, ae, 23, 4), te + 4;
   }
   M.prototype.writeFloatLE = function(K, te, ae) {
     return ye(this, K, te, !0, ae);
@@ -1423,7 +1423,7 @@ ieee754$1.write = function($, h, U, B, V, t) {
     return ye(this, K, te, !1, ae);
   };
   function Me(Q, K, te, ae, ve) {
-    return K = +K, te = te >>> 0, ve || ce(Q, K, te, 8), U.write(Q, K, te, ae, 52, 8), te + 8;
+    return K = +K, te = te >>> 0, ve || ce(Q, K, te, 8), P.write(Q, K, te, ae, 52, 8), te + 8;
   }
   M.prototype.writeDoubleLE = function(K, te, ae) {
     return Me(this, K, te, !0, ae);
@@ -1639,8 +1639,8 @@ function drainQueue$1() {
 process$2.nextTick = function($) {
   var h = new Array(arguments.length - 1);
   if (arguments.length > 1)
-    for (var U = 1; U < arguments.length; U++)
-      h[U - 1] = arguments[U];
+    for (var P = 1; P < arguments.length; P++)
+      h[P - 1] = arguments[P];
   queue$1.push(new Item$1($, h)), queue$1.length === 1 && !draining$1 && runTimeout$1(drainQueue$1);
 };
 function Item$1($, h) {
@@ -1694,8 +1694,8 @@ var _globalThis = function($) {
     configurable: !0,
     get: h
   });
-  var U = __magic__;
-  return U;
+  var P = __magic__;
+  return P;
 }(Object), _global = _globalThis;
 const name$1 = "@wepin/fetch-js", version$1 = "0.0.2", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
   "dist"
@@ -1733,11 +1733,11 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.2", description$1 = "Wepin fe
 class APIResponse {
   constructor({
     data: h,
-    status: U,
+    status: P,
     headers: B,
     request: V
   }) {
-    this.data = h, this.status = U, this.headers = B, this.request = V;
+    this.data = h, this.status = P, this.headers = B, this.request = V;
   }
 }
 var commonjsGlobal = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof _global < "u" ? _global : typeof self < "u" ? self : {};
@@ -1749,7 +1749,7 @@ function requireBase64Js() {
   if (hasRequiredBase64Js)
     return base64Js;
   hasRequiredBase64Js = 1, base64Js.byteLength = M, base64Js.toByteArray = I, base64Js.fromByteArray = X;
-  for (var $ = [], h = [], U = typeof Uint8Array < "u" ? Uint8Array : Array, B = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", V = 0, t = B.length; V < t; ++V)
+  for (var $ = [], h = [], P = typeof Uint8Array < "u" ? Uint8Array : Array, B = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", V = 0, t = B.length; V < t; ++V)
     $[V] = B[V], h[B.charCodeAt(V)] = V;
   h[45] = 62, h[95] = 63;
   function O(ee) {
@@ -1769,17 +1769,17 @@ function requireBase64Js() {
     return (re + ie) * 3 / 4 - ie;
   }
   function I(ee) {
-    var re, ie = O(ee), ne = ie[0], se = ie[1], oe = new U(D(ee, ne, se)), be = 0, de = se > 0 ? ne - 4 : ne, we;
+    var re, ie = O(ee), ne = ie[0], se = ie[1], oe = new P(D(ee, ne, se)), be = 0, de = se > 0 ? ne - 4 : ne, we;
     for (we = 0; we < de; we += 4)
       re = h[ee.charCodeAt(we)] << 18 | h[ee.charCodeAt(we + 1)] << 12 | h[ee.charCodeAt(we + 2)] << 6 | h[ee.charCodeAt(we + 3)], oe[be++] = re >> 16 & 255, oe[be++] = re >> 8 & 255, oe[be++] = re & 255;
     return se === 2 && (re = h[ee.charCodeAt(we)] << 2 | h[ee.charCodeAt(we + 1)] >> 4, oe[be++] = re & 255), se === 1 && (re = h[ee.charCodeAt(we)] << 10 | h[ee.charCodeAt(we + 1)] << 4 | h[ee.charCodeAt(we + 2)] >> 2, oe[be++] = re >> 8 & 255, oe[be++] = re & 255), oe;
   }
-  function P(ee) {
+  function U(ee) {
     return $[ee >> 18 & 63] + $[ee >> 12 & 63] + $[ee >> 6 & 63] + $[ee & 63];
   }
   function Y(ee, re, ie) {
     for (var ne, se = [], oe = re; oe < ie; oe += 3)
-      ne = (ee[oe] << 16 & 16711680) + (ee[oe + 1] << 8 & 65280) + (ee[oe + 2] & 255), se.push(P(ne));
+      ne = (ee[oe] << 16 & 16711680) + (ee[oe + 1] << 8 & 65280) + (ee[oe + 2] & 255), se.push(U(ne));
     return se.join("");
   }
   function X(ee) {
@@ -1797,11 +1797,11 @@ var ieee754 = {};
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 var hasRequiredIeee754;
 function requireIeee754() {
-  return hasRequiredIeee754 || (hasRequiredIeee754 = 1, ieee754.read = function($, h, U, B, V) {
-    var t, O, M = V * 8 - B - 1, D = (1 << M) - 1, I = D >> 1, P = -7, Y = U ? V - 1 : 0, X = U ? -1 : 1, ee = $[h + Y];
-    for (Y += X, t = ee & (1 << -P) - 1, ee >>= -P, P += M; P > 0; t = t * 256 + $[h + Y], Y += X, P -= 8)
+  return hasRequiredIeee754 || (hasRequiredIeee754 = 1, ieee754.read = function($, h, P, B, V) {
+    var t, O, M = V * 8 - B - 1, D = (1 << M) - 1, I = D >> 1, U = -7, Y = P ? V - 1 : 0, X = P ? -1 : 1, ee = $[h + Y];
+    for (Y += X, t = ee & (1 << -U) - 1, ee >>= -U, U += M; U > 0; t = t * 256 + $[h + Y], Y += X, U -= 8)
       ;
-    for (O = t & (1 << -P) - 1, t >>= -P, P += B; P > 0; O = O * 256 + $[h + Y], Y += X, P -= 8)
+    for (O = t & (1 << -U) - 1, t >>= -U, U += B; U > 0; O = O * 256 + $[h + Y], Y += X, U -= 8)
       ;
     if (t === 0)
       t = 1 - I;
@@ -1811,13 +1811,13 @@ function requireIeee754() {
       O = O + Math.pow(2, B), t = t - I;
     }
     return (ee ? -1 : 1) * O * Math.pow(2, t - B);
-  }, ieee754.write = function($, h, U, B, V, t) {
-    var O, M, D, I = t * 8 - V - 1, P = (1 << I) - 1, Y = P >> 1, X = V === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, ee = B ? 0 : t - 1, re = B ? 1 : -1, ie = h < 0 || h === 0 && 1 / h < 0 ? 1 : 0;
-    for (h = Math.abs(h), isNaN(h) || h === 1 / 0 ? (M = isNaN(h) ? 1 : 0, O = P) : (O = Math.floor(Math.log(h) / Math.LN2), h * (D = Math.pow(2, -O)) < 1 && (O--, D *= 2), O + Y >= 1 ? h += X / D : h += X * Math.pow(2, 1 - Y), h * D >= 2 && (O++, D /= 2), O + Y >= P ? (M = 0, O = P) : O + Y >= 1 ? (M = (h * D - 1) * Math.pow(2, V), O = O + Y) : (M = h * Math.pow(2, Y - 1) * Math.pow(2, V), O = 0)); V >= 8; $[U + ee] = M & 255, ee += re, M /= 256, V -= 8)
+  }, ieee754.write = function($, h, P, B, V, t) {
+    var O, M, D, I = t * 8 - V - 1, U = (1 << I) - 1, Y = U >> 1, X = V === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0, ee = B ? 0 : t - 1, re = B ? 1 : -1, ie = h < 0 || h === 0 && 1 / h < 0 ? 1 : 0;
+    for (h = Math.abs(h), isNaN(h) || h === 1 / 0 ? (M = isNaN(h) ? 1 : 0, O = U) : (O = Math.floor(Math.log(h) / Math.LN2), h * (D = Math.pow(2, -O)) < 1 && (O--, D *= 2), O + Y >= 1 ? h += X / D : h += X * Math.pow(2, 1 - Y), h * D >= 2 && (O++, D /= 2), O + Y >= U ? (M = 0, O = U) : O + Y >= 1 ? (M = (h * D - 1) * Math.pow(2, V), O = O + Y) : (M = h * Math.pow(2, Y - 1) * Math.pow(2, V), O = 0)); V >= 8; $[P + ee] = M & 255, ee += re, M /= 256, V -= 8)
       ;
-    for (O = O << V | M, I += V; I > 0; $[U + ee] = O & 255, ee += re, O /= 256, I -= 8)
+    for (O = O << V | M, I += V; I > 0; $[P + ee] = O & 255, ee += re, O /= 256, I -= 8)
       ;
-    $[U + ee - re] |= ie * 128;
+    $[P + ee - re] |= ie * 128;
   }), ieee754;
 }
 /*!
@@ -1829,7 +1829,7 @@ function requireIeee754() {
 var hasRequiredBuffer$1;
 function requireBuffer$1() {
   return hasRequiredBuffer$1 || (hasRequiredBuffer$1 = 1, function($) {
-    var h = requireBase64Js(), U = requireIeee754(), B = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
+    var h = requireBase64Js(), P = requireIeee754(), B = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
     $.Buffer = M, $.SlowBuffer = oe, $.INSPECT_MAX_BYTES = 50;
     var V = 2147483647;
     $.kMaxLength = V, M.TYPED_ARRAY_SUPPORT = t(), !M.TYPED_ARRAY_SUPPORT && typeof console < "u" && typeof console.error == "function" && console.error(
@@ -1915,11 +1915,11 @@ function requireBuffer$1() {
       if (Q < 0)
         throw new RangeError('The value "' + Q + '" is invalid for option "size"');
     }
-    function P(Q, K, te) {
+    function U(Q, K, te) {
       return I(Q), Q <= 0 ? O(Q) : K !== void 0 ? typeof te == "string" ? O(Q).fill(K, te) : O(Q).fill(K) : O(Q);
     }
     M.alloc = function(Q, K, te) {
-      return P(Q, K, te);
+      return U(Q, K, te);
     };
     function Y(Q) {
       return I(Q), O(Q < 0 ? 0 : se(Q) | 0);
@@ -2403,13 +2403,13 @@ function requireBuffer$1() {
     }, M.prototype.readInt32BE = function(Q, K) {
       return Q = Q >>> 0, K || S(Q, 4, this.length), this[Q] << 24 | this[Q + 1] << 16 | this[Q + 2] << 8 | this[Q + 3];
     }, M.prototype.readFloatLE = function(Q, K) {
-      return Q = Q >>> 0, K || S(Q, 4, this.length), U.read(this, Q, !0, 23, 4);
+      return Q = Q >>> 0, K || S(Q, 4, this.length), P.read(this, Q, !0, 23, 4);
     }, M.prototype.readFloatBE = function(Q, K) {
-      return Q = Q >>> 0, K || S(Q, 4, this.length), U.read(this, Q, !1, 23, 4);
+      return Q = Q >>> 0, K || S(Q, 4, this.length), P.read(this, Q, !1, 23, 4);
     }, M.prototype.readDoubleLE = function(Q, K) {
-      return Q = Q >>> 0, K || S(Q, 8, this.length), U.read(this, Q, !0, 52, 8);
+      return Q = Q >>> 0, K || S(Q, 8, this.length), P.read(this, Q, !0, 52, 8);
     }, M.prototype.readDoubleBE = function(Q, K) {
-      return Q = Q >>> 0, K || S(Q, 8, this.length), U.read(this, Q, !1, 52, 8);
+      return Q = Q >>> 0, K || S(Q, 8, this.length), P.read(this, Q, !1, 52, 8);
     };
     function J(Q, K, te, ae, ve, qe) {
       if (!M.isBuffer(Q))
@@ -2483,7 +2483,7 @@ function requireBuffer$1() {
         throw new RangeError("Index out of range");
     }
     function ye(Q, K, te, ae, ve) {
-      return K = +K, te = te >>> 0, ve || ce(Q, K, te, 4), U.write(Q, K, te, ae, 23, 4), te + 4;
+      return K = +K, te = te >>> 0, ve || ce(Q, K, te, 4), P.write(Q, K, te, ae, 23, 4), te + 4;
     }
     M.prototype.writeFloatLE = function(Q, K, te) {
       return ye(this, Q, K, !0, te);
@@ -2491,7 +2491,7 @@ function requireBuffer$1() {
       return ye(this, Q, K, !1, te);
     };
     function Me(Q, K, te, ae, ve) {
-      return K = +K, te = te >>> 0, ve || ce(Q, K, te, 8), U.write(Q, K, te, ae, 52, 8), te + 8;
+      return K = +K, te = te >>> 0, ve || ce(Q, K, te, 8), P.write(Q, K, te, ae, 52, 8), te + 8;
     }
     M.prototype.writeDoubleLE = function(Q, K, te) {
       return Me(this, Q, K, !0, te);
@@ -2708,8 +2708,8 @@ function drainQueue() {
 process.nextTick = function($) {
   var h = new Array(arguments.length - 1);
   if (arguments.length > 1)
-    for (var U = 1; U < arguments.length; U++)
-      h[U - 1] = arguments[U];
+    for (var P = 1; P < arguments.length; P++)
+      h[P - 1] = arguments[P];
   queue.push(new Item($, h)), queue.length === 1 && !draining && runTimeout(drainQueue);
 };
 function Item($, h) {
@@ -2765,15 +2765,15 @@ const process$1 = /* @__PURE__ */ getDefaultExportFromCjs(browserExports);
     configurable: !0,
     get: h
   });
-  var U = __magic__;
-  return U;
+  var P = __magic__;
+  return P;
 })(Object);
 var eventemitter2 = { exports: {} };
 (function($, h) {
-  (function(U) {
+  (function(P) {
     var B = Object.hasOwnProperty, V = Array.isArray ? Array.isArray : function(A) {
       return Object.prototype.toString.call(A) === "[object Array]";
-    }, t = 10, O = typeof process$1 == "object" && typeof process$1.nextTick == "function", M = typeof Symbol == "function", D = typeof Reflect == "object", I = typeof setImmediate == "function", P = I ? setImmediate : setTimeout, Y = M ? D && typeof Reflect.ownKeys == "function" ? Reflect.ownKeys : function(A) {
+    }, t = 10, O = typeof process$1 == "object" && typeof process$1.nextTick == "function", M = typeof Symbol == "function", D = typeof Reflect == "object", I = typeof setImmediate == "function", U = I ? setImmediate : setTimeout, Y = M ? D && typeof Reflect.ownKeys == "function" ? Reflect.ownKeys : function(A) {
       var q = Object.getOwnPropertyNames(A);
       return q.push.apply(q, Object.getOwnPropertySymbols(A)), q;
     } : Object.keys;
@@ -2781,7 +2781,7 @@ var eventemitter2 = { exports: {} };
       this._events = {}, this._conf && ee.call(this, this._conf);
     }
     function ee(A) {
-      A && (this._conf = A, A.delimiter && (this.delimiter = A.delimiter), A.maxListeners !== U && (this._maxListeners = A.maxListeners), A.wildcard && (this.wildcard = A.wildcard), A.newListener && (this._newListener = A.newListener), A.removeListener && (this._removeListener = A.removeListener), A.verboseMemoryLeak && (this.verboseMemoryLeak = A.verboseMemoryLeak), A.ignoreErrors && (this.ignoreErrors = A.ignoreErrors), this.wildcard && (this.listenerTree = {}));
+      A && (this._conf = A, A.delimiter && (this.delimiter = A.delimiter), A.maxListeners !== P && (this._maxListeners = A.maxListeners), A.wildcard && (this.wildcard = A.wildcard), A.newListener && (this._newListener = A.newListener), A.removeListener && (this._removeListener = A.removeListener), A.verboseMemoryLeak && (this.verboseMemoryLeak = A.verboseMemoryLeak), A.ignoreErrors && (this.ignoreErrors = A.ignoreErrors), this.wildcard && (this.listenerTree = {}));
     }
     function re(A, q) {
       var z = "(node) warning: possible EventEmitter memory leak detected. " + A + " listeners added. Use emitter.setMaxListeners() to increase limit.";
@@ -2810,7 +2810,7 @@ var eventemitter2 = { exports: {} };
     };
     function ne(A, q) {
       for (var z = {}, S, J = A.length, ce = q ? q.length : 0, ye = 0; ye < J; ye++)
-        S = A[ye], z[S] = ye < ce ? q[ye] : U;
+        S = A[ye], z[S] = ye < ce ? q[ye] : P;
       return z;
     }
     function se(A, q, z) {
@@ -2882,7 +2882,7 @@ var eventemitter2 = { exports: {} };
       for (var Ae = 0; Ae < ye; Ae++) {
         if (Me = ce[Ae], !S && !B.call(q, Me))
           throw Error('Unknown "' + Me + '" option');
-        me = A[Me], me !== U && (ue = z[Me], J[Me] = ue ? ue(me, fe) : me);
+        me = A[Me], me !== P && (ue = z[Me], J[Me] = ue ? ue(me, fe) : me);
       }
       return J;
     }
@@ -3049,13 +3049,13 @@ var eventemitter2 = { exports: {} };
         var Me = q, me = q._origin || q;
         if (ce && !O)
           throw Error("process.nextTick is not supported");
-        J === U && (J = q.constructor.name === "AsyncFunction"), q = function() {
+        J === P && (J = q.constructor.name === "AsyncFunction"), q = function() {
           var ue = arguments, fe = this, Ae = this.event;
           return J ? ce ? Promise.resolve() : new Promise(function(Be) {
-            P(Be);
+            U(Be);
           }).then(function() {
             return fe.event = Ae, Me.apply(fe, ue);
-          }) : (ce ? process$1.nextTick : P)(function() {
+          }) : (ce ? process$1.nextTick : U)(function() {
             fe.event = Ae, Me.apply(fe, ue);
           });
         }, q._async = !0, q._origin = me;
@@ -3070,9 +3070,9 @@ var eventemitter2 = { exports: {} };
         throw TypeError("target musts be an object");
       var S = this;
       z = oe(z, {
-        on: U,
-        off: U,
-        reducers: U
+        on: P,
+        off: P,
+        reducers: P
       }, {
         on: we,
         off: we,
@@ -3102,7 +3102,7 @@ var eventemitter2 = { exports: {} };
         J = z[S], (!A || J._target === A) && (J.unsubscribe(q), ce = !0);
       return ce;
     }, g.prototype.delimiter = ".", g.prototype.setMaxListeners = function(A) {
-      A !== U && (this._maxListeners = A, this._conf || (this._conf = {}), this._conf.maxListeners = A);
+      A !== P && (this._maxListeners = A, this._conf || (this._conf = {}), this._conf.maxListeners = A);
     }, g.prototype.getMaxListeners = function() {
       return this._maxListeners;
     }, g.prototype.event = "", g.prototype.once = function(A, q, z) {
@@ -3288,7 +3288,7 @@ var eventemitter2 = { exports: {} };
         throw new Error("on only accepts instances of Function");
       this._events || X.call(this);
       var J = this, ce;
-      return S !== U && (ce = o.call(this, A, q, S), q = ce[0], J = ce[1]), this._newListener && this.emit("newListener", A, q), this.wildcard ? (_e.call(this, A, q, z), J) : (this._events[A] ? (typeof this._events[A] == "function" && (this._events[A] = [this._events[A]]), z ? this._events[A].unshift(q) : this._events[A].push(q), !this._events[A].warned && this._maxListeners > 0 && this._events[A].length > this._maxListeners && (this._events[A].warned = !0, re.call(this, this._events[A].length, A))) : this._events[A] = q, J);
+      return S !== P && (ce = o.call(this, A, q, S), q = ce[0], J = ce[1]), this._newListener && this.emit("newListener", A, q), this.wildcard ? (_e.call(this, A, q, z), J) : (this._events[A] ? (typeof this._events[A] == "function" && (this._events[A] = [this._events[A]]), z ? this._events[A].unshift(q) : this._events[A].push(q), !this._events[A].warned && this._maxListeners > 0 && this._events[A].length > this._maxListeners && (this._events[A].warned = !0, re.call(this, this._events[A].length, A))) : this._events[A] = q, J);
     }, g.prototype.off = function(A, q) {
       if (typeof q != "function")
         throw new Error("removeListener only takes instances of Function");
@@ -3331,7 +3331,7 @@ var eventemitter2 = { exports: {} };
       }
       return this;
     }, g.prototype.removeListener = g.prototype.off, g.prototype.removeAllListeners = function(A) {
-      if (A === U)
+      if (A === P)
         return !this._events || X.call(this), this;
       if (this.wildcard) {
         var q = le.call(this, null, A, this.listenerTree, 0), z, S;
@@ -3345,7 +3345,7 @@ var eventemitter2 = { exports: {} };
       return this;
     }, g.prototype.listeners = function(A) {
       var q = this._events, z, S, J, ce, ye;
-      if (A === U) {
+      if (A === P) {
         if (this.wildcard)
           throw Error("event name required for wildcard emitter");
         if (!q)
@@ -3373,14 +3373,14 @@ var eventemitter2 = { exports: {} };
         return le.call(this, q, z, this.listenerTree, 0), q.length > 0;
       }
       var S = this._events, J = this._all;
-      return !!(J && J.length || S && (A === U ? Y(S).length : S[A]));
+      return !!(J && J.length || S && (A === P ? Y(S).length : S[A]));
     }, g.prototype.listenersAny = function() {
       return this._all ? this._all : [];
     }, g.prototype.waitFor = function(A, q) {
       var z = this, S = typeof q;
       return S === "number" ? q = { timeout: q } : S === "function" && (q = { filter: q }), q = oe(q, {
         timeout: 0,
-        filter: U,
+        filter: P,
         handleError: !1,
         Promise,
         overload: !1
@@ -3466,7 +3466,7 @@ var eventemitter2 = { exports: {} };
         configurable: !0
       },
       _observers: { value: null, writable: !0, configurable: !0 }
-    }), typeof U == "function" && U.amd ? U(function() {
+    }), typeof P == "function" && P.amd ? P(function() {
       return g;
     }) : $.exports = g;
   })();
@@ -3477,13 +3477,13 @@ class FetchAPI extends EventEmitter {
   constructor(h) {
     super(), this.baseUrl = h;
   }
-  async send(h, U) {
+  async send(h, P) {
     const { url: B, query: V, method: t, data: O, headers: M } = h, [D, I] = O instanceof FormData ? [O, {}] : [
       typeof O != "string" ? JSON.stringify(O) : O,
       {
         "Content-Type": "application/json"
       }
-    ], P = this.baseUrl + B, Y = this.getUrlWithParams(P, V), X = await fetch(Y, {
+    ], U = this.baseUrl + B, Y = this.getUrlWithParams(U, V), X = await fetch(Y, {
       method: t,
       headers: Object.assign(M || {}, I),
       body: D,
@@ -3496,40 +3496,40 @@ class FetchAPI extends EventEmitter {
       request: h
     });
   }
-  getUrlWithParams(h, U) {
-    if (!U)
+  getUrlWithParams(h, P) {
+    if (!P)
       return h;
     const B = new URL(h);
-    return Object.entries(U).forEach(
+    return Object.entries(P).forEach(
       ([V, t]) => {
         B.searchParams.append(V, t);
       }
     ), B.toString();
   }
   convertHeadersToPlainObject(h) {
-    const U = {};
+    const P = {};
     for (const B of Object.keys(h))
-      U[B] = h.get(B);
-    return U;
+      P[B] = h.get(B);
+    return P;
   }
   // type override 를 위해서 구현 class 에서 메서드들을 재정의 해줘야함..
-  addListener(h, U) {
-    return super.addListener(h, U);
+  addListener(h, P) {
+    return super.addListener(h, P);
   }
-  on(h, U, B) {
-    return super.on(h, U, B);
+  on(h, P, B) {
+    return super.on(h, P, B);
   }
-  prependListener(h, U, B) {
-    return super.prependListener(h, U, B);
+  prependListener(h, P, B) {
+    return super.prependListener(h, P, B);
   }
-  once(h, U, B) {
-    return super.once(h, U, B);
+  once(h, P, B) {
+    return super.once(h, P, B);
   }
-  emit(h, ...U) {
-    return super.emit(h, ...U);
+  emit(h, ...P) {
+    return super.emit(h, ...P);
   }
-  emitAsync(h, ...U) {
-    return super.emitAsync(h, ...U);
+  emitAsync(h, ...P) {
+    return super.emitAsync(h, ...P);
   }
 }
 function commonjsRequire($) {
@@ -3540,12 +3540,12 @@ var bcrypt$1 = { exports: {} }, cryptoBrowserify = {}, browser$b = { exports: {}
 var hasRequiredSafeBuffer$1;
 function requireSafeBuffer$1() {
   return hasRequiredSafeBuffer$1 || (hasRequiredSafeBuffer$1 = 1, function($, h) {
-    var U = requireBuffer$1(), B = U.Buffer;
+    var P = requireBuffer$1(), B = P.Buffer;
     function V(O, M) {
       for (var D in O)
         M[D] = O[D];
     }
-    B.from && B.alloc && B.allocUnsafe && B.allocUnsafeSlow ? $.exports = U : (V(U, h), h.Buffer = t);
+    B.from && B.alloc && B.allocUnsafe && B.allocUnsafeSlow ? $.exports = P : (V(P, h), h.Buffer = t);
     function t(O, M, D) {
       return B(O, M, D);
     }
@@ -3565,7 +3565,7 @@ function requireSafeBuffer$1() {
     }, t.allocUnsafeSlow = function(O) {
       if (typeof O != "number")
         throw new TypeError("Argument must be a number");
-      return U.SlowBuffer(O);
+      return P.SlowBuffer(O);
     };
   }(safeBuffer$1, safeBuffer$1.exports)), safeBuffer$1.exports;
 }
@@ -3575,12 +3575,12 @@ function requireBrowser$b() {
     return browser$b.exports;
   hasRequiredBrowser$b = 1;
   var $ = 65536, h = 4294967295;
-  function U() {
+  function P() {
     throw new Error(`Secure random number generation is not supported by this browser.
 Use Chrome, Firefox or Internet Explorer 11`);
   }
   var B = requireSafeBuffer$1().Buffer, V = commonjsGlobal.crypto || commonjsGlobal.msCrypto;
-  V && V.getRandomValues ? browser$b.exports = t : browser$b.exports = U;
+  V && V.getRandomValues ? browser$b.exports = t : browser$b.exports = P;
   function t(O, M) {
     if (O > h)
       throw new RangeError("requested too many random bytes");
@@ -3611,9 +3611,9 @@ function requireInherits_browser() {
   } : inherits_browser.exports = function($, h) {
     if (h) {
       $.super_ = h;
-      var U = function() {
+      var P = function() {
       };
-      U.prototype = h.prototype, $.prototype = new U(), $.prototype.constructor = $;
+      P.prototype = h.prototype, $.prototype = new P(), $.prototype.constructor = $;
     }
   }), inherits_browser.exports;
 }
@@ -3624,10 +3624,10 @@ function requireEvents() {
   hasRequiredEvents = 1;
   var $ = typeof Reflect == "object" ? Reflect : null, h = $ && typeof $.apply == "function" ? $.apply : function(de, we, Se) {
     return Function.prototype.apply.call(de, we, Se);
-  }, U;
-  $ && typeof $.ownKeys == "function" ? U = $.ownKeys : Object.getOwnPropertySymbols ? U = function(de) {
+  }, P;
+  $ && typeof $.ownKeys == "function" ? P = $.ownKeys : Object.getOwnPropertySymbols ? P = function(de) {
     return Object.getOwnPropertyNames(de).concat(Object.getOwnPropertySymbols(de));
-  } : U = function(de) {
+  } : P = function(de) {
     return Object.getOwnPropertyNames(de);
   };
   function B(de) {
@@ -3712,12 +3712,12 @@ function requireEvents() {
   }, t.prototype.on = t.prototype.addListener, t.prototype.prependListener = function(de, we) {
     return I(this, de, we, !0);
   };
-  function P() {
+  function U() {
     if (!this.fired)
       return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
   }
   function Y(de, we, Se) {
-    var ke = { fired: !1, wrapFn: void 0, target: de, type: we, listener: Se }, he = P.bind(ke);
+    var ke = { fired: !1, wrapFn: void 0, target: de, type: we, listener: Se }, he = U.bind(ke);
     return he.listener = Se, ke.wrapFn = he, he;
   }
   t.prototype.once = function(de, we) {
@@ -3788,7 +3788,7 @@ function requireEvents() {
     return 0;
   }
   t.prototype.eventNames = function() {
-    return this._eventsCount > 0 ? U(this._events) : [];
+    return this._eventsCount > 0 ? P(this._events) : [];
   };
   function re(de, we) {
     for (var Se = new Array(we), ke = 0; ke < we; ++ke)
@@ -3842,8 +3842,8 @@ function requireShams$1() {
       return !1;
     if (typeof Symbol.iterator == "symbol")
       return !0;
-    var $ = {}, h = Symbol("test"), U = Object(h);
-    if (typeof h == "string" || Object.prototype.toString.call(h) !== "[object Symbol]" || Object.prototype.toString.call(U) !== "[object Symbol]")
+    var $ = {}, h = Symbol("test"), P = Object(h);
+    if (typeof h == "string" || Object.prototype.toString.call(h) !== "[object Symbol]" || Object.prototype.toString.call(P) !== "[object Symbol]")
       return !1;
     var B = 42;
     $[h] = B;
@@ -3928,27 +3928,27 @@ function requireImplementation() {
   if (hasRequiredImplementation)
     return implementation;
   hasRequiredImplementation = 1;
-  var $ = "Function.prototype.bind called on incompatible ", h = Object.prototype.toString, U = Math.max, B = "[object Function]", V = function(M, D) {
-    for (var I = [], P = 0; P < M.length; P += 1)
-      I[P] = M[P];
+  var $ = "Function.prototype.bind called on incompatible ", h = Object.prototype.toString, P = Math.max, B = "[object Function]", V = function(M, D) {
+    for (var I = [], U = 0; U < M.length; U += 1)
+      I[U] = M[U];
     for (var Y = 0; Y < D.length; Y += 1)
       I[Y + M.length] = D[Y];
     return I;
   }, t = function(M, D) {
-    for (var I = [], P = D || 0, Y = 0; P < M.length; P += 1, Y += 1)
-      I[Y] = M[P];
+    for (var I = [], U = D || 0, Y = 0; U < M.length; U += 1, Y += 1)
+      I[Y] = M[U];
     return I;
   }, O = function(M, D) {
-    for (var I = "", P = 0; P < M.length; P += 1)
-      I += M[P], P + 1 < M.length && (I += D);
+    for (var I = "", U = 0; U < M.length; U += 1)
+      I += M[U], U + 1 < M.length && (I += D);
     return I;
   };
   return implementation = function(M) {
     var D = this;
     if (typeof D != "function" || h.apply(D) !== B)
       throw new TypeError($ + D);
-    for (var I = t(arguments, 1), P, Y = function() {
-      if (this instanceof P) {
+    for (var I = t(arguments, 1), U, Y = function() {
+      if (this instanceof U) {
         var ne = D.apply(
           this,
           V(I, arguments)
@@ -3959,14 +3959,14 @@ function requireImplementation() {
         M,
         V(I, arguments)
       );
-    }, X = U(0, D.length - I.length), ee = [], re = 0; re < X; re++)
+    }, X = P(0, D.length - I.length), ee = [], re = 0; re < X; re++)
       ee[re] = "$" + re;
-    if (P = Function("binder", "return function (" + O(ee, ",") + "){ return binder.apply(this,arguments); }")(Y), D.prototype) {
+    if (U = Function("binder", "return function (" + O(ee, ",") + "){ return binder.apply(this,arguments); }")(Y), D.prototype) {
       var ie = function() {
       };
-      ie.prototype = D.prototype, P.prototype = new ie(), ie.prototype = null;
+      ie.prototype = D.prototype, U.prototype = new ie(), ie.prototype = null;
     }
-    return P;
+    return U;
   }, implementation;
 }
 var functionBind, hasRequiredFunctionBind;
@@ -3982,34 +3982,34 @@ function requireHasown() {
   if (hasRequiredHasown)
     return hasown;
   hasRequiredHasown = 1;
-  var $ = Function.prototype.call, h = Object.prototype.hasOwnProperty, U = requireFunctionBind();
-  return hasown = U.call($, h), hasown;
+  var $ = Function.prototype.call, h = Object.prototype.hasOwnProperty, P = requireFunctionBind();
+  return hasown = P.call($, h), hasown;
 }
 var getIntrinsic, hasRequiredGetIntrinsic;
 function requireGetIntrinsic() {
   if (hasRequiredGetIntrinsic)
     return getIntrinsic;
   hasRequiredGetIntrinsic = 1;
-  var $, h = requireEsErrors(), U = require_eval(), B = requireRange(), V = requireRef(), t = requireSyntax(), O = requireType(), M = requireUri(), D = Function, I = function(F) {
+  var $, h = requireEsErrors(), P = require_eval(), B = requireRange(), V = requireRef(), t = requireSyntax(), O = requireType(), M = requireUri(), D = Function, I = function(F) {
     try {
       return D('"use strict"; return (' + F + ").constructor;")();
     } catch {
     }
-  }, P = Object.getOwnPropertyDescriptor;
-  if (P)
+  }, U = Object.getOwnPropertyDescriptor;
+  if (U)
     try {
-      P({}, "");
+      U({}, "");
     } catch {
-      P = null;
+      U = null;
     }
   var Y = function() {
     throw new O();
-  }, X = P ? function() {
+  }, X = U ? function() {
     try {
       return arguments.callee, Y;
     } catch {
       try {
-        return P(arguments, "callee").get;
+        return U(arguments, "callee").get;
       } catch {
         return Y;
       }
@@ -4041,7 +4041,7 @@ function requireGetIntrinsic() {
     "%Error%": h,
     "%eval%": eval,
     // eslint-disable-line no-eval
-    "%EvalError%": U,
+    "%EvalError%": P,
     "%Float32Array%": typeof Float32Array > "u" ? $ : Float32Array,
     "%Float64Array%": typeof Float64Array > "u" ? $ : Float64Array,
     "%FinalizationRegistry%": typeof FinalizationRegistry > "u" ? $ : FinalizationRegistry,
@@ -4207,8 +4207,8 @@ function requireGetIntrinsic() {
             throw new O("base intrinsic for " + F + " exists, but the property is not available.");
           return;
         }
-        if (P && me + 1 >= q.length) {
-          var pe = P(ce, fe);
+        if (U && me + 1 >= q.length) {
+          var pe = U(ce, fe);
           ue = !!pe, ue && "get" in pe && !("originalValue" in pe.get) ? ce = pe.get : ce = ce[fe];
         } else
           ue = ke(ce, fe), ce = ce[fe];
@@ -4251,21 +4251,21 @@ function requireDefineDataProperty() {
   if (hasRequiredDefineDataProperty)
     return defineDataProperty;
   hasRequiredDefineDataProperty = 1;
-  var $ = requireEsDefineProperty(), h = requireSyntax(), U = requireType(), B = requireGopd();
+  var $ = requireEsDefineProperty(), h = requireSyntax(), P = requireType(), B = requireGopd();
   return defineDataProperty = function(V, t, O) {
     if (!V || typeof V != "object" && typeof V != "function")
-      throw new U("`obj` must be an object or a function`");
+      throw new P("`obj` must be an object or a function`");
     if (typeof t != "string" && typeof t != "symbol")
-      throw new U("`property` must be a string or a symbol`");
+      throw new P("`property` must be a string or a symbol`");
     if (arguments.length > 3 && typeof arguments[3] != "boolean" && arguments[3] !== null)
-      throw new U("`nonEnumerable`, if provided, must be a boolean or null");
+      throw new P("`nonEnumerable`, if provided, must be a boolean or null");
     if (arguments.length > 4 && typeof arguments[4] != "boolean" && arguments[4] !== null)
-      throw new U("`nonWritable`, if provided, must be a boolean or null");
+      throw new P("`nonWritable`, if provided, must be a boolean or null");
     if (arguments.length > 5 && typeof arguments[5] != "boolean" && arguments[5] !== null)
-      throw new U("`nonConfigurable`, if provided, must be a boolean or null");
+      throw new P("`nonConfigurable`, if provided, must be a boolean or null");
     if (arguments.length > 6 && typeof arguments[6] != "boolean")
-      throw new U("`loose`, if provided, must be a boolean");
-    var M = arguments.length > 3 ? arguments[3] : null, D = arguments.length > 4 ? arguments[4] : null, I = arguments.length > 5 ? arguments[5] : null, P = arguments.length > 6 ? arguments[6] : !1, Y = !!B && B(V, t);
+      throw new P("`loose`, if provided, must be a boolean");
+    var M = arguments.length > 3 ? arguments[3] : null, D = arguments.length > 4 ? arguments[4] : null, I = arguments.length > 5 ? arguments[5] : null, U = arguments.length > 6 ? arguments[6] : !1, Y = !!B && B(V, t);
     if ($)
       $(V, t, {
         configurable: I === null && Y ? Y.configurable : !I,
@@ -4273,7 +4273,7 @@ function requireDefineDataProperty() {
         value: O,
         writable: D === null && Y ? Y.writable : !D
       });
-    else if (P || !M && !D && !I)
+    else if (U || !M && !D && !I)
       V[t] = O;
     else
       throw new h("This environment does not support defining a property as non-configurable, non-writable, or non-enumerable.");
@@ -4302,18 +4302,18 @@ function requireSetFunctionLength() {
   if (hasRequiredSetFunctionLength)
     return setFunctionLength;
   hasRequiredSetFunctionLength = 1;
-  var $ = requireGetIntrinsic(), h = requireDefineDataProperty(), U = requireHasPropertyDescriptors()(), B = requireGopd(), V = requireType(), t = $("%Math.floor%");
+  var $ = requireGetIntrinsic(), h = requireDefineDataProperty(), P = requireHasPropertyDescriptors()(), B = requireGopd(), V = requireType(), t = $("%Math.floor%");
   return setFunctionLength = function(O, M) {
     if (typeof O != "function")
       throw new V("`fn` is not a function");
     if (typeof M != "number" || M < 0 || M > 4294967295 || t(M) !== M)
       throw new V("`length` must be a positive 32-bit integer");
-    var D = arguments.length > 2 && !!arguments[2], I = !0, P = !0;
+    var D = arguments.length > 2 && !!arguments[2], I = !0, U = !0;
     if ("length" in O && B) {
       var Y = B(O, "length");
-      Y && !Y.configurable && (I = !1), Y && !Y.writable && (P = !1);
+      Y && !Y.configurable && (I = !1), Y && !Y.writable && (U = !1);
     }
-    return (I || P || !D) && (U ? h(
+    return (I || U || !D) && (P ? h(
       /** @type {Parameters<define>[0]} */
       O,
       "length",
@@ -4331,7 +4331,7 @@ function requireSetFunctionLength() {
 var hasRequiredCallBind;
 function requireCallBind() {
   return hasRequiredCallBind || (hasRequiredCallBind = 1, function($) {
-    var h = requireFunctionBind(), U = requireGetIntrinsic(), B = requireSetFunctionLength(), V = requireType(), t = U("%Function.prototype.apply%"), O = U("%Function.prototype.call%"), M = U("%Reflect.apply%", !0) || h.call(O, t), D = requireEsDefineProperty(), I = U("%Math.max%");
+    var h = requireFunctionBind(), P = requireGetIntrinsic(), B = requireSetFunctionLength(), V = requireType(), t = P("%Function.prototype.apply%"), O = P("%Function.prototype.call%"), M = P("%Reflect.apply%", !0) || h.call(O, t), D = requireEsDefineProperty(), I = P("%Math.max%");
     $.exports = function(Y) {
       if (typeof Y != "function")
         throw new V("a function is required");
@@ -4342,10 +4342,10 @@ function requireCallBind() {
         !0
       );
     };
-    var P = function() {
+    var U = function() {
       return M(h, t, arguments);
     };
-    D ? D($.exports, "apply", { value: P }) : $.exports.apply = P;
+    D ? D($.exports, "apply", { value: U }) : $.exports.apply = U;
   }(callBind)), callBind.exports;
 }
 var callBound, hasRequiredCallBound;
@@ -4353,10 +4353,10 @@ function requireCallBound() {
   if (hasRequiredCallBound)
     return callBound;
   hasRequiredCallBound = 1;
-  var $ = requireGetIntrinsic(), h = requireCallBind(), U = h($("String.prototype.indexOf"));
+  var $ = requireGetIntrinsic(), h = requireCallBind(), P = h($("String.prototype.indexOf"));
   return callBound = function(B, V) {
     var t = $(B, !!V);
-    return typeof t == "function" && U(B, ".prototype.") > -1 ? h(t) : t;
+    return typeof t == "function" && P(B, ".prototype.") > -1 ? h(t) : t;
   }, callBound;
 }
 var isArguments, hasRequiredIsArguments;
@@ -4364,10 +4364,10 @@ function requireIsArguments() {
   if (hasRequiredIsArguments)
     return isArguments;
   hasRequiredIsArguments = 1;
-  var $ = requireShams()(), h = requireCallBound(), U = h("Object.prototype.toString"), B = function(O) {
-    return $ && O && typeof O == "object" && Symbol.toStringTag in O ? !1 : U(O) === "[object Arguments]";
+  var $ = requireShams()(), h = requireCallBound(), P = h("Object.prototype.toString"), B = function(O) {
+    return $ && O && typeof O == "object" && Symbol.toStringTag in O ? !1 : P(O) === "[object Arguments]";
   }, V = function(O) {
-    return B(O) ? !0 : O !== null && typeof O == "object" && typeof O.length == "number" && O.length >= 0 && U(O) !== "[object Array]" && U(O.callee) === "[object Function]";
+    return B(O) ? !0 : O !== null && typeof O == "object" && typeof O.length == "number" && O.length >= 0 && P(O) !== "[object Array]" && P(O.callee) === "[object Function]";
   }, t = function() {
     return B(arguments);
   }();
@@ -4378,7 +4378,7 @@ function requireIsGeneratorFunction() {
   if (hasRequiredIsGeneratorFunction)
     return isGeneratorFunction;
   hasRequiredIsGeneratorFunction = 1;
-  var $ = Object.prototype.toString, h = Function.prototype.toString, U = /^\s*(?:function)?\*/, B = requireShams()(), V = Object.getPrototypeOf, t = function() {
+  var $ = Object.prototype.toString, h = Function.prototype.toString, P = /^\s*(?:function)?\*/, B = requireShams()(), V = Object.getPrototypeOf, t = function() {
     if (!B)
       return !1;
     try {
@@ -4389,7 +4389,7 @@ function requireIsGeneratorFunction() {
   return isGeneratorFunction = function(M) {
     if (typeof M != "function")
       return !1;
-    if (U.test(h.call(M)))
+    if (P.test(h.call(M)))
       return !0;
     if (!B) {
       var D = $.call(M);
@@ -4409,16 +4409,16 @@ function requireIsCallable() {
   if (hasRequiredIsCallable)
     return isCallable;
   hasRequiredIsCallable = 1;
-  var $ = Function.prototype.toString, h = typeof Reflect == "object" && Reflect !== null && Reflect.apply, U, B;
+  var $ = Function.prototype.toString, h = typeof Reflect == "object" && Reflect !== null && Reflect.apply, P, B;
   if (typeof h == "function" && typeof Object.defineProperty == "function")
     try {
-      U = Object.defineProperty({}, "length", {
+      P = Object.defineProperty({}, "length", {
         get: function() {
           throw B;
         }
       }), B = {}, h(function() {
         throw 42;
-      }, null, U);
+      }, null, P);
     } catch (oe) {
       oe !== B && (h = null);
     }
@@ -4437,7 +4437,7 @@ function requireIsCallable() {
     } catch {
       return !1;
     }
-  }, M = Object.prototype.toString, D = "[object Object]", I = "[object Function]", P = "[object GeneratorFunction]", Y = "[object HTMLAllCollection]", X = "[object HTML document.all class]", ee = "[object HTMLCollection]", re = typeof Symbol == "function" && !!Symbol.toStringTag, ie = !(0 in [,]), ne = function() {
+  }, M = Object.prototype.toString, D = "[object Object]", I = "[object Function]", U = "[object GeneratorFunction]", Y = "[object HTMLAllCollection]", X = "[object HTML document.all class]", ee = "[object HTMLCollection]", re = typeof Symbol == "function" && !!Symbol.toStringTag, ie = !(0 in [,]), ne = function() {
     return !1;
   };
   if (typeof document == "object") {
@@ -4458,7 +4458,7 @@ function requireIsCallable() {
     if (!oe || typeof oe != "function" && typeof oe != "object")
       return !1;
     try {
-      h(oe, null, U);
+      h(oe, null, P);
     } catch (be) {
       if (be !== B)
         return !1;
@@ -4474,7 +4474,7 @@ function requireIsCallable() {
     if (t(oe))
       return !1;
     var be = M.call(oe);
-    return be !== I && be !== P && !/^\[object HTML/.test(be) ? !1 : O(oe);
+    return be !== I && be !== U && !/^\[object HTML/.test(be) ? !1 : O(oe);
   }, isCallable;
 }
 var forEach_1, hasRequiredForEach;
@@ -4482,20 +4482,20 @@ function requireForEach() {
   if (hasRequiredForEach)
     return forEach_1;
   hasRequiredForEach = 1;
-  var $ = requireIsCallable(), h = Object.prototype.toString, U = Object.prototype.hasOwnProperty, B = function(M, D, I) {
-    for (var P = 0, Y = M.length; P < Y; P++)
-      U.call(M, P) && (I == null ? D(M[P], P, M) : D.call(I, M[P], P, M));
+  var $ = requireIsCallable(), h = Object.prototype.toString, P = Object.prototype.hasOwnProperty, B = function(M, D, I) {
+    for (var U = 0, Y = M.length; U < Y; U++)
+      P.call(M, U) && (I == null ? D(M[U], U, M) : D.call(I, M[U], U, M));
   }, V = function(M, D, I) {
-    for (var P = 0, Y = M.length; P < Y; P++)
-      I == null ? D(M.charAt(P), P, M) : D.call(I, M.charAt(P), P, M);
+    for (var U = 0, Y = M.length; U < Y; U++)
+      I == null ? D(M.charAt(U), U, M) : D.call(I, M.charAt(U), U, M);
   }, t = function(M, D, I) {
-    for (var P in M)
-      U.call(M, P) && (I == null ? D(M[P], P, M) : D.call(I, M[P], P, M));
+    for (var U in M)
+      P.call(M, U) && (I == null ? D(M[U], U, M) : D.call(I, M[U], U, M));
   }, O = function(M, D, I) {
     if (!$(D))
       throw new TypeError("iterator must be a function");
-    var P;
-    arguments.length >= 3 && (P = I), h.call(M) === "[object Array]" ? B(M, D, P) : typeof M == "string" ? V(M, D, P) : t(M, D, P);
+    var U;
+    arguments.length >= 3 && (U = I), h.call(M) === "[object Array]" ? B(M, D, U) : typeof M == "string" ? V(M, D, U) : t(M, D, U);
   };
   return forEach_1 = O, forEach_1;
 }
@@ -4522,9 +4522,9 @@ function requireAvailableTypedArrays() {
   hasRequiredAvailableTypedArrays = 1;
   var $ = requirePossibleTypedArrayNames(), h = typeof globalThis > "u" ? commonjsGlobal : globalThis;
   return availableTypedArrays = function() {
-    for (var U = [], B = 0; B < $.length; B++)
-      typeof h[$[B]] == "function" && (U[U.length] = $[B]);
-    return U;
+    for (var P = [], B = 0; B < $.length; B++)
+      typeof h[$[B]] == "function" && (P[P.length] = $[B]);
+    return P;
   }, availableTypedArrays;
 }
 var whichTypedArray, hasRequiredWhichTypedArray;
@@ -4532,25 +4532,25 @@ function requireWhichTypedArray() {
   if (hasRequiredWhichTypedArray)
     return whichTypedArray;
   hasRequiredWhichTypedArray = 1;
-  var $ = requireForEach(), h = requireAvailableTypedArrays(), U = requireCallBind(), B = requireCallBound(), V = requireGopd(), t = B("Object.prototype.toString"), O = requireShams()(), M = typeof globalThis > "u" ? commonjsGlobal : globalThis, D = h(), I = B("String.prototype.slice"), P = Object.getPrototypeOf, Y = B("Array.prototype.indexOf", !0) || function(ie, ne) {
+  var $ = requireForEach(), h = requireAvailableTypedArrays(), P = requireCallBind(), B = requireCallBound(), V = requireGopd(), t = B("Object.prototype.toString"), O = requireShams()(), M = typeof globalThis > "u" ? commonjsGlobal : globalThis, D = h(), I = B("String.prototype.slice"), U = Object.getPrototypeOf, Y = B("Array.prototype.indexOf", !0) || function(ie, ne) {
     for (var se = 0; se < ie.length; se += 1)
       if (ie[se] === ne)
         return se;
     return -1;
   }, X = { __proto__: null };
-  O && V && P ? $(D, function(ie) {
+  O && V && U ? $(D, function(ie) {
     var ne = new M[ie]();
     if (Symbol.toStringTag in ne) {
-      var se = P(ne), oe = V(se, Symbol.toStringTag);
+      var se = U(ne), oe = V(se, Symbol.toStringTag);
       if (!oe) {
-        var be = P(se);
+        var be = U(se);
         oe = V(be, Symbol.toStringTag);
       }
-      X["$" + ie] = U(oe.get);
+      X["$" + ie] = P(oe.get);
     }
   }) : $(D, function(ie) {
     var ne = new M[ie](), se = ne.slice || ne.set;
-    se && (X["$" + ie] = U(se));
+    se && (X["$" + ie] = P(se));
   });
   var ee = function(ie) {
     var ne = !1;
@@ -4608,11 +4608,11 @@ function requireIsTypedArray() {
 var hasRequiredTypes;
 function requireTypes() {
   return hasRequiredTypes || (hasRequiredTypes = 1, function($) {
-    var h = requireIsArguments(), U = requireIsGeneratorFunction(), B = requireWhichTypedArray(), V = requireIsTypedArray();
+    var h = requireIsArguments(), P = requireIsGeneratorFunction(), B = requireWhichTypedArray(), V = requireIsTypedArray();
     function t(ae) {
       return ae.call.bind(ae);
     }
-    var O = typeof BigInt < "u", M = typeof Symbol < "u", D = t(Object.prototype.toString), I = t(Number.prototype.valueOf), P = t(String.prototype.valueOf), Y = t(Boolean.prototype.valueOf);
+    var O = typeof BigInt < "u", M = typeof Symbol < "u", D = t(Object.prototype.toString), I = t(Number.prototype.valueOf), U = t(String.prototype.valueOf), Y = t(Boolean.prototype.valueOf);
     if (O)
       var X = t(BigInt.prototype.valueOf);
     if (M)
@@ -4626,7 +4626,7 @@ function requireTypes() {
         return !1;
       }
     }
-    $.isArgumentsObject = h, $.isGeneratorFunction = U, $.isTypedArray = V;
+    $.isArgumentsObject = h, $.isGeneratorFunction = P, $.isTypedArray = V;
     function ie(ae) {
       return typeof Promise < "u" && ae instanceof Promise || ae !== null && typeof ae == "object" && typeof ae.then == "function" && typeof ae.catch == "function";
     }
@@ -4760,7 +4760,7 @@ function requireTypes() {
     }
     $.isNumberObject = ge;
     function Ee(ae) {
-      return re(ae, P);
+      return re(ae, U);
     }
     $.isStringObject = Ee;
     function Ie(ae) {
@@ -4805,14 +4805,14 @@ function requireUtil$1() {
       for (var ce = Object.keys(J), ye = {}, Me = 0; Me < ce.length; Me++)
         ye[ce[Me]] = Object.getOwnPropertyDescriptor(J, ce[Me]);
       return ye;
-    }, U = /%[sdj%]/g;
+    }, P = /%[sdj%]/g;
     $.format = function(J) {
       if (!we(J)) {
         for (var ce = [], ye = 0; ye < arguments.length; ye++)
           ce.push(O(arguments[ye]));
         return ce.join(" ");
       }
-      for (var ye = 1, Me = arguments, me = Me.length, ue = String(J).replace(U, function(Be) {
+      for (var ye = 1, Me = arguments, me = Me.length, ue = String(J).replace(P, function(Be) {
         if (Be === "%%")
           return "%";
         if (ye >= me)
@@ -4875,7 +4875,7 @@ function requireUtil$1() {
         seen: [],
         stylize: D
       };
-      return arguments.length >= 3 && (ye.depth = arguments[2]), arguments.length >= 4 && (ye.colors = arguments[3]), se(ce) ? ye.showHidden = ce : ce && $._extend(ye, ce), ke(ye.showHidden) && (ye.showHidden = !1), ke(ye.depth) && (ye.depth = 2), ke(ye.colors) && (ye.colors = !1), ke(ye.customInspect) && (ye.customInspect = !0), ye.colors && (ye.stylize = M), P(ye, J, ye.depth);
+      return arguments.length >= 3 && (ye.depth = arguments[2]), arguments.length >= 4 && (ye.colors = arguments[3]), se(ce) ? ye.showHidden = ce : ce && $._extend(ye, ce), ke(ye.showHidden) && (ye.showHidden = !1), ke(ye.depth) && (ye.depth = 2), ke(ye.colors) && (ye.colors = !1), ke(ye.customInspect) && (ye.customInspect = !0), ye.colors && (ye.stylize = M), U(ye, J, ye.depth);
     }
     $.inspect = O, O.colors = {
       bold: [1, 22],
@@ -4915,12 +4915,12 @@ function requireUtil$1() {
         ce[ye] = !0;
       }), ce;
     }
-    function P(J, ce, ye) {
+    function U(J, ce, ye) {
       if (J.customInspect && ce && Z(ce.inspect) && // Filter out the util module, it's inspect function is special
       ce.inspect !== $.inspect && // Also filter out any prototype objects using the circular check.
       !(ce.constructor && ce.constructor.prototype === ce)) {
         var Me = ce.inspect(ye, J);
-        return we(Me) || (Me = P(J, Me, ye)), Me;
+        return we(Me) || (Me = U(J, Me, ye)), Me;
       }
       var me = Y(J, ce);
       if (me)
@@ -4995,7 +4995,7 @@ function requireUtil$1() {
     }
     function re(J, ce, ye, Me, me, ue) {
       var fe, Ae, Be;
-      if (Be = Object.getOwnPropertyDescriptor(ce, me) || { value: ce[me] }, Be.get ? Be.set ? Ae = J.stylize("[Getter/Setter]", "special") : Ae = J.stylize("[Getter]", "special") : Be.set && (Ae = J.stylize("[Setter]", "special")), A(Me, me) || (fe = "[" + me + "]"), Ae || (J.seen.indexOf(Be.value) < 0 ? (oe(ye) ? Ae = P(J, Be.value, null) : Ae = P(J, Be.value, ye - 1), Ae.indexOf(`
+      if (Be = Object.getOwnPropertyDescriptor(ce, me) || { value: ce[me] }, Be.get ? Be.set ? Ae = J.stylize("[Getter/Setter]", "special") : Ae = J.stylize("[Getter]", "special") : Be.set && (Ae = J.stylize("[Setter]", "special")), A(Me, me) || (fe = "[" + me + "]"), Ae || (J.seen.indexOf(Be.value) < 0 ? (oe(ye) ? Ae = U(J, Be.value, null) : Ae = U(J, Be.value, ye - 1), Ae.indexOf(`
 `) > -1 && (ue ? Ae = Ae.split(`
 `).map(function(pe) {
         return "  " + pe;
@@ -5214,14 +5214,14 @@ function requireBuffer_list() {
     for (var ie = 1; ie < arguments.length; ie++) {
       var ne = arguments[ie] != null ? arguments[ie] : {};
       ie % 2 ? $(Object(ne), !0).forEach(function(se) {
-        U(re, se, ne[se]);
+        P(re, se, ne[se]);
       }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(re, Object.getOwnPropertyDescriptors(ne)) : $(Object(ne)).forEach(function(se) {
         Object.defineProperty(re, se, Object.getOwnPropertyDescriptor(ne, se));
       });
     }
     return re;
   }
-  function U(re, ie, ne) {
+  function P(re, ie, ne) {
     return ie = O(ie), ie in re ? Object.defineProperty(re, ie, { value: ne, enumerable: !0, configurable: !0, writable: !0 }) : re[ie] = ne, re;
   }
   function B(re, ie) {
@@ -5253,7 +5253,7 @@ function requireBuffer_list() {
     }
     return (ie === "string" ? String : Number)(re);
   }
-  var D = requireBuffer$1(), I = D.Buffer, P = requireUtil$1(), Y = P.inspect, X = Y && Y.custom || "inspect";
+  var D = requireBuffer$1(), I = D.Buffer, U = requireUtil$1(), Y = U.inspect, X = Y && Y.custom || "inspect";
   function ee(re, ie, ne) {
     I.prototype.copy.call(re, ie, ne);
   }
@@ -5372,15 +5372,15 @@ function requireDestroy$1() {
     return destroy_1$1;
   hasRequiredDestroy$1 = 1;
   function $(O, M) {
-    var D = this, I = this._readableState && this._readableState.destroyed, P = this._writableState && this._writableState.destroyed;
-    return I || P ? (M ? M(O) : O && (this._writableState ? this._writableState.errorEmitted || (this._writableState.errorEmitted = !0, process$1.nextTick(V, this, O)) : process$1.nextTick(V, this, O)), this) : (this._readableState && (this._readableState.destroyed = !0), this._writableState && (this._writableState.destroyed = !0), this._destroy(O || null, function(Y) {
-      !M && Y ? D._writableState ? D._writableState.errorEmitted ? process$1.nextTick(U, D) : (D._writableState.errorEmitted = !0, process$1.nextTick(h, D, Y)) : process$1.nextTick(h, D, Y) : M ? (process$1.nextTick(U, D), M(Y)) : process$1.nextTick(U, D);
+    var D = this, I = this._readableState && this._readableState.destroyed, U = this._writableState && this._writableState.destroyed;
+    return I || U ? (M ? M(O) : O && (this._writableState ? this._writableState.errorEmitted || (this._writableState.errorEmitted = !0, process$1.nextTick(V, this, O)) : process$1.nextTick(V, this, O)), this) : (this._readableState && (this._readableState.destroyed = !0), this._writableState && (this._writableState.destroyed = !0), this._destroy(O || null, function(Y) {
+      !M && Y ? D._writableState ? D._writableState.errorEmitted ? process$1.nextTick(P, D) : (D._writableState.errorEmitted = !0, process$1.nextTick(h, D, Y)) : process$1.nextTick(h, D, Y) : M ? (process$1.nextTick(P, D), M(Y)) : process$1.nextTick(P, D);
     }), this);
   }
   function h(O, M) {
-    V(O, M), U(O);
+    V(O, M), P(O);
   }
-  function U(O) {
+  function P(O) {
     O._writableState && !O._writableState.emitClose || O._readableState && !O._readableState.emitClose || O.emit("close");
   }
   function B() {
@@ -5408,15 +5408,15 @@ function requireErrorsBrowser() {
     M.prototype = Object.create(D.prototype), M.prototype.constructor = M, M.__proto__ = D;
   }
   var h = {};
-  function U(M, D, I) {
+  function P(M, D, I) {
     I || (I = Error);
-    function P(X, ee, re) {
+    function U(X, ee, re) {
       return typeof D == "string" ? D : D(X, ee, re);
     }
     var Y = /* @__PURE__ */ function(X) {
       $(ee, X);
       function ee(re, ie, ne) {
-        return X.call(this, P(re, ie, ne)) || this;
+        return X.call(this, U(re, ie, ne)) || this;
       }
       return ee;
     }(I);
@@ -5425,8 +5425,8 @@ function requireErrorsBrowser() {
   function B(M, D) {
     if (Array.isArray(M)) {
       var I = M.length;
-      return M = M.map(function(P) {
-        return String(P);
+      return M = M.map(function(U) {
+        return String(U);
       }), I > 2 ? "one of ".concat(D, " ").concat(M.slice(0, I - 1).join(", "), ", or ") + M[I - 1] : I === 2 ? "one of ".concat(D, " ").concat(M[0], " or ").concat(M[1]) : "of ".concat(D, " ").concat(M[0]);
     } else
       return "of ".concat(D, " ").concat(String(M));
@@ -5440,26 +5440,26 @@ function requireErrorsBrowser() {
   function O(M, D, I) {
     return typeof I != "number" && (I = 0), I + D.length > M.length ? !1 : M.indexOf(D, I) !== -1;
   }
-  return U("ERR_INVALID_OPT_VALUE", function(M, D) {
+  return P("ERR_INVALID_OPT_VALUE", function(M, D) {
     return 'The value "' + D + '" is invalid for option "' + M + '"';
-  }, TypeError), U("ERR_INVALID_ARG_TYPE", function(M, D, I) {
-    var P;
-    typeof D == "string" && V(D, "not ") ? (P = "must not be", D = D.replace(/^not /, "")) : P = "must be";
+  }, TypeError), P("ERR_INVALID_ARG_TYPE", function(M, D, I) {
+    var U;
+    typeof D == "string" && V(D, "not ") ? (U = "must not be", D = D.replace(/^not /, "")) : U = "must be";
     var Y;
     if (t(M, " argument"))
-      Y = "The ".concat(M, " ").concat(P, " ").concat(B(D, "type"));
+      Y = "The ".concat(M, " ").concat(U, " ").concat(B(D, "type"));
     else {
       var X = O(M, ".") ? "property" : "argument";
-      Y = 'The "'.concat(M, '" ').concat(X, " ").concat(P, " ").concat(B(D, "type"));
+      Y = 'The "'.concat(M, '" ').concat(X, " ").concat(U, " ").concat(B(D, "type"));
     }
     return Y += ". Received type ".concat(typeof I), Y;
-  }, TypeError), U("ERR_STREAM_PUSH_AFTER_EOF", "stream.push() after EOF"), U("ERR_METHOD_NOT_IMPLEMENTED", function(M) {
+  }, TypeError), P("ERR_STREAM_PUSH_AFTER_EOF", "stream.push() after EOF"), P("ERR_METHOD_NOT_IMPLEMENTED", function(M) {
     return "The " + M + " method is not implemented";
-  }), U("ERR_STREAM_PREMATURE_CLOSE", "Premature close"), U("ERR_STREAM_DESTROYED", function(M) {
+  }), P("ERR_STREAM_PREMATURE_CLOSE", "Premature close"), P("ERR_STREAM_DESTROYED", function(M) {
     return "Cannot call " + M + " after a stream was destroyed";
-  }), U("ERR_MULTIPLE_CALLBACK", "Callback called multiple times"), U("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable"), U("ERR_STREAM_WRITE_AFTER_END", "write after end"), U("ERR_STREAM_NULL_VALUES", "May not write null values to stream", TypeError), U("ERR_UNKNOWN_ENCODING", function(M) {
+  }), P("ERR_MULTIPLE_CALLBACK", "Callback called multiple times"), P("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable"), P("ERR_STREAM_WRITE_AFTER_END", "write after end"), P("ERR_STREAM_NULL_VALUES", "May not write null values to stream", TypeError), P("ERR_UNKNOWN_ENCODING", function(M) {
     return "Unknown encoding: " + M;
-  }, TypeError), U("ERR_STREAM_UNSHIFT_AFTER_END_EVENT", "stream.unshift() after end event"), errorsBrowser.codes = h, errorsBrowser;
+  }, TypeError), P("ERR_STREAM_UNSHIFT_AFTER_END_EVENT", "stream.unshift() after end event"), errorsBrowser.codes = h, errorsBrowser;
 }
 var state, hasRequiredState;
 function requireState() {
@@ -5470,7 +5470,7 @@ function requireState() {
   function h(B, V, t) {
     return B.highWaterMark != null ? B.highWaterMark : V ? B[t] : null;
   }
-  function U(B, V, t, O) {
+  function P(B, V, t, O) {
     var M = h(V, O, t);
     if (M != null) {
       if (!(isFinite(M) && Math.floor(M) === M) || M < 0) {
@@ -5482,7 +5482,7 @@ function requireState() {
     return B.objectMode ? 16 : 16 * 1024;
   }
   return state = {
-    getHighWaterMark: U
+    getHighWaterMark: P
   }, state;
 }
 var browser$a, hasRequiredBrowser$a;
@@ -5490,9 +5490,9 @@ function requireBrowser$a() {
   if (hasRequiredBrowser$a)
     return browser$a;
   hasRequiredBrowser$a = 1, browser$a = $;
-  function $(U, B) {
+  function $(P, B) {
     if (h("noDeprecation"))
-      return U;
+      return P;
     var V = !1;
     function t() {
       if (!V) {
@@ -5500,18 +5500,18 @@ function requireBrowser$a() {
           throw new Error(B);
         h("traceDeprecation") ? console.trace(B) : console.warn(B), V = !0;
       }
-      return U.apply(this, arguments);
+      return P.apply(this, arguments);
     }
     return t;
   }
-  function h(U) {
+  function h(P) {
     try {
       if (!commonjsGlobal.localStorage)
         return !1;
     } catch {
       return !1;
     }
-    var B = commonjsGlobal.localStorage[U];
+    var B = commonjsGlobal.localStorage[P];
     return B == null ? !1 : String(B).toLowerCase() === "true";
   }
   return browser$a;
@@ -5529,7 +5529,7 @@ function require_stream_writable$1() {
   }
   var h;
   he.WritableState = Se;
-  var U = {
+  var P = {
     deprecate: requireBrowser$a()
   }, B = requireStreamBrowser$1(), V = requireBuffer$1().Buffer, t = (typeof commonjsGlobal < "u" ? commonjsGlobal : typeof window < "u" ? window : typeof self < "u" ? self : {}).Uint8Array || function() {
   };
@@ -5539,12 +5539,12 @@ function require_stream_writable$1() {
   function M(me) {
     return V.isBuffer(me) || me instanceof t;
   }
-  var D = requireDestroy$1(), I = requireState(), P = I.getHighWaterMark, Y = requireErrorsBrowser().codes, X = Y.ERR_INVALID_ARG_TYPE, ee = Y.ERR_METHOD_NOT_IMPLEMENTED, re = Y.ERR_MULTIPLE_CALLBACK, ie = Y.ERR_STREAM_CANNOT_PIPE, ne = Y.ERR_STREAM_DESTROYED, se = Y.ERR_STREAM_NULL_VALUES, oe = Y.ERR_STREAM_WRITE_AFTER_END, be = Y.ERR_UNKNOWN_ENCODING, de = D.errorOrDestroy;
+  var D = requireDestroy$1(), I = requireState(), U = I.getHighWaterMark, Y = requireErrorsBrowser().codes, X = Y.ERR_INVALID_ARG_TYPE, ee = Y.ERR_METHOD_NOT_IMPLEMENTED, re = Y.ERR_MULTIPLE_CALLBACK, ie = Y.ERR_STREAM_CANNOT_PIPE, ne = Y.ERR_STREAM_DESTROYED, se = Y.ERR_STREAM_NULL_VALUES, oe = Y.ERR_STREAM_WRITE_AFTER_END, be = Y.ERR_UNKNOWN_ENCODING, de = D.errorOrDestroy;
   requireInherits_browser()(he, B);
   function we() {
   }
   function Se(me, ue, fe) {
-    h = h || require_stream_duplex$1(), me = me || {}, typeof fe != "boolean" && (fe = ue instanceof h), this.objectMode = !!me.objectMode, fe && (this.objectMode = this.objectMode || !!me.writableObjectMode), this.highWaterMark = P(this, me, "writableHighWaterMark", fe), this.finalCalled = !1, this.needDrain = !1, this.ending = !1, this.ended = !1, this.finished = !1, this.destroyed = !1;
+    h = h || require_stream_duplex$1(), me = me || {}, typeof fe != "boolean" && (fe = ue instanceof h), this.objectMode = !!me.objectMode, fe && (this.objectMode = this.objectMode || !!me.writableObjectMode), this.highWaterMark = U(this, me, "writableHighWaterMark", fe), this.finalCalled = !1, this.needDrain = !1, this.ending = !1, this.ended = !1, this.finished = !1, this.destroyed = !1;
     var Ae = me.decodeStrings === !1;
     this.decodeStrings = !Ae, this.defaultEncoding = me.defaultEncoding || "utf8", this.length = 0, this.writing = !1, this.corked = 0, this.sync = !0, this.bufferProcessing = !1, this.onwrite = function(Be) {
       H(ue, Be);
@@ -5557,7 +5557,7 @@ function require_stream_writable$1() {
   }, function() {
     try {
       Object.defineProperty(Se.prototype, "buffer", {
-        get: U.deprecate(function() {
+        get: P.deprecate(function() {
           return this.getBuffer();
         }, "_writableState.buffer is deprecated. Use _writableState.getBuffer instead.", "DEP0003")
       });
@@ -5754,22 +5754,22 @@ function require_stream_duplex$1() {
     return _stream_duplex$1;
   hasRequired_stream_duplex$1 = 1;
   var $ = Object.keys || function(I) {
-    var P = [];
+    var U = [];
     for (var Y in I)
-      P.push(Y);
-    return P;
+      U.push(Y);
+    return U;
   };
   _stream_duplex$1 = O;
-  var h = require_stream_readable$1(), U = require_stream_writable$1();
+  var h = require_stream_readable$1(), P = require_stream_writable$1();
   requireInherits_browser()(O, h);
-  for (var B = $(U.prototype), V = 0; V < B.length; V++) {
+  for (var B = $(P.prototype), V = 0; V < B.length; V++) {
     var t = B[V];
-    O.prototype[t] || (O.prototype[t] = U.prototype[t]);
+    O.prototype[t] || (O.prototype[t] = P.prototype[t]);
   }
   function O(I) {
     if (!(this instanceof O))
       return new O(I);
-    h.call(this, I), U.call(this, I), this.allowHalfOpen = !0, I && (I.readable === !1 && (this.readable = !1), I.writable === !1 && (this.writable = !1), I.allowHalfOpen === !1 && (this.allowHalfOpen = !1, this.once("end", M)));
+    h.call(this, I), P.call(this, I), this.allowHalfOpen = !0, I && (I.readable === !1 && (this.readable = !1), I.writable === !1 && (this.writable = !1), I.allowHalfOpen === !1 && (this.allowHalfOpen = !1, this.once("end", M)));
   }
   Object.defineProperty(O.prototype, "writableHighWaterMark", {
     // making it explicit this property is not enumerable
@@ -5838,7 +5838,7 @@ function requireString_decoder() {
         return !1;
     }
   };
-  function U(se) {
+  function P(se) {
     if (!se)
       return "utf8";
     for (var oe; ; )
@@ -5865,7 +5865,7 @@ function requireString_decoder() {
       }
   }
   function B(se) {
-    var oe = U(se);
+    var oe = P(se);
     if (typeof oe != "string" && ($.isEncoding === h || !h(se)))
       throw new Error("Unknown encoding: " + se);
     return oe || se;
@@ -5901,7 +5901,7 @@ function requireString_decoder() {
     } else
       be = 0;
     return be < se.length ? oe ? oe + this.text(se, be) : this.text(se, be) : oe || "";
-  }, V.prototype.end = P, V.prototype.text = I, V.prototype.fillLast = function(se) {
+  }, V.prototype.end = U, V.prototype.text = I, V.prototype.fillLast = function(se) {
     if (this.lastNeed <= se.length)
       return se.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, this.lastNeed), this.lastChar.toString(this.encoding, 0, this.lastTotal);
     se.copy(this.lastChar, this.lastTotal - this.lastNeed, 0, se.length), this.lastNeed -= se.length;
@@ -5942,7 +5942,7 @@ function requireString_decoder() {
     var de = se.length - (be - this.lastNeed);
     return se.copy(this.lastChar, 0, de), se.toString("utf8", oe, de);
   }
-  function P(se) {
+  function U(se) {
     var oe = se && se.length ? this.write(se) : "";
     return this.lastNeed ? oe + "�" : oe;
   }
@@ -5999,7 +5999,7 @@ function requireEndOfStream() {
       }
     };
   }
-  function U() {
+  function P() {
   }
   function B(t) {
     return t.setHeader && typeof t.abort == "function";
@@ -6007,8 +6007,8 @@ function requireEndOfStream() {
   function V(t, O, M) {
     if (typeof O == "function")
       return V(t, null, O);
-    O || (O = {}), M = h(M || U);
-    var D = O.readable || O.readable !== !1 && t.readable, I = O.writable || O.writable !== !1 && t.writable, P = function() {
+    O || (O = {}), M = h(M || P);
+    var D = O.readable || O.readable !== !1 && t.readable, I = O.writable || O.writable !== !1 && t.writable, U = function() {
       t.writable || X();
     }, Y = t._writableState && t._writableState.finished, X = function() {
       I = !1, Y = !0, D || M.call(t);
@@ -6025,8 +6025,8 @@ function requireEndOfStream() {
     }, se = function() {
       t.req.on("finish", X);
     };
-    return B(t) ? (t.on("complete", X), t.on("abort", ne), t.req ? se() : t.on("request", se)) : I && !t._writableState && (t.on("end", P), t.on("close", P)), t.on("end", re), t.on("finish", X), O.error !== !1 && t.on("error", ie), t.on("close", ne), function() {
-      t.removeListener("complete", X), t.removeListener("abort", ne), t.removeListener("request", se), t.req && t.req.removeListener("finish", X), t.removeListener("end", P), t.removeListener("close", P), t.removeListener("finish", X), t.removeListener("end", re), t.removeListener("error", ie), t.removeListener("close", ne);
+    return B(t) ? (t.on("complete", X), t.on("abort", ne), t.req ? se() : t.on("request", se)) : I && !t._writableState && (t.on("end", U), t.on("close", U)), t.on("end", re), t.on("finish", X), O.error !== !1 && t.on("error", ie), t.on("close", ne), function() {
+      t.removeListener("complete", X), t.removeListener("abort", ne), t.removeListener("request", se), t.req && t.req.removeListener("finish", X), t.removeListener("end", U), t.removeListener("close", U), t.removeListener("finish", X), t.removeListener("end", re), t.removeListener("error", ie), t.removeListener("close", ne);
     };
   }
   return endOfStream = V, endOfStream;
@@ -6038,9 +6038,9 @@ function requireAsync_iterator() {
   hasRequiredAsync_iterator = 1;
   var $;
   function h(be, de, we) {
-    return de = U(de), de in be ? Object.defineProperty(be, de, { value: we, enumerable: !0, configurable: !0, writable: !0 }) : be[de] = we, be;
+    return de = P(de), de in be ? Object.defineProperty(be, de, { value: we, enumerable: !0, configurable: !0, writable: !0 }) : be[de] = we, be;
   }
-  function U(be) {
+  function P(be) {
     var de = B(be, "string");
     return typeof de == "symbol" ? de : String(de);
   }
@@ -6056,7 +6056,7 @@ function requireAsync_iterator() {
     }
     return (de === "string" ? String : Number)(be);
   }
-  var V = requireEndOfStream(), t = Symbol("lastResolve"), O = Symbol("lastReject"), M = Symbol("error"), D = Symbol("ended"), I = Symbol("lastPromise"), P = Symbol("handlePromise"), Y = Symbol("stream");
+  var V = requireEndOfStream(), t = Symbol("lastResolve"), O = Symbol("lastReject"), M = Symbol("error"), D = Symbol("ended"), I = Symbol("lastPromise"), U = Symbol("handlePromise"), Y = Symbol("stream");
   function X(be, de) {
     return {
       value: be,
@@ -6080,7 +6080,7 @@ function requireAsync_iterator() {
           we(X(void 0, !0));
           return;
         }
-        de[P](we, Se);
+        de[U](we, Se);
       }, Se);
     };
   }
@@ -6108,7 +6108,7 @@ function requireAsync_iterator() {
         var ke = this[Y].read();
         if (ke !== null)
           return Promise.resolve(X(ke, !1));
-        Se = new Promise(this[P]);
+        Se = new Promise(this[U]);
       }
       return this[I] = Se, Se;
     }
@@ -6141,7 +6141,7 @@ function requireAsync_iterator() {
     }), h(de, D, {
       value: be._readableState.endEmitted,
       writable: !0
-    }), h(de, P, {
+    }), h(de, U, {
       value: function(Se, ke) {
         var he = we[Y].read();
         he ? (we[I] = null, we[t] = null, we[O] = null, Se(X(he, !1))) : (we[t] = Se, we[O] = ke);
@@ -6175,7 +6175,7 @@ function require_stream_readable$1() {
   le.ReadableState = he, requireEvents().EventEmitter;
   var h = function(pe, ge) {
     return pe.listeners(ge).length;
-  }, U = requireStreamBrowser$1(), B = requireBuffer$1().Buffer, V = (typeof commonjsGlobal < "u" ? commonjsGlobal : typeof window < "u" ? window : typeof self < "u" ? self : {}).Uint8Array || function() {
+  }, P = requireStreamBrowser$1(), B = requireBuffer$1().Buffer, V = (typeof commonjsGlobal < "u" ? commonjsGlobal : typeof window < "u" ? window : typeof self < "u" ? self : {}).Uint8Array || function() {
   };
   function t(pe) {
     return B.from(pe);
@@ -6186,9 +6186,9 @@ function require_stream_readable$1() {
   var M = requireUtil$1(), D;
   M && M.debuglog ? D = M.debuglog("stream") : D = function() {
   };
-  var I = requireBuffer_list(), P = requireDestroy$1(), Y = requireState(), X = Y.getHighWaterMark, ee = requireErrorsBrowser().codes, re = ee.ERR_INVALID_ARG_TYPE, ie = ee.ERR_STREAM_PUSH_AFTER_EOF, ne = ee.ERR_METHOD_NOT_IMPLEMENTED, se = ee.ERR_STREAM_UNSHIFT_AFTER_END_EVENT, oe, be, de;
-  requireInherits_browser()(le, U);
-  var we = P.errorOrDestroy, Se = ["error", "close", "destroy", "pause", "resume"];
+  var I = requireBuffer_list(), U = requireDestroy$1(), Y = requireState(), X = Y.getHighWaterMark, ee = requireErrorsBrowser().codes, re = ee.ERR_INVALID_ARG_TYPE, ie = ee.ERR_STREAM_PUSH_AFTER_EOF, ne = ee.ERR_METHOD_NOT_IMPLEMENTED, se = ee.ERR_STREAM_UNSHIFT_AFTER_END_EVENT, oe, be, de;
+  requireInherits_browser()(le, P);
+  var we = U.errorOrDestroy, Se = ["error", "close", "destroy", "pause", "resume"];
   function ke(pe, ge, Ee) {
     if (typeof pe.prependListener == "function")
       return pe.prependListener(ge, Ee);
@@ -6201,7 +6201,7 @@ function require_stream_readable$1() {
     if ($ = $ || require_stream_duplex$1(), !(this instanceof le))
       return new le(pe);
     var ge = this instanceof $;
-    this._readableState = new he(pe, this, ge), this.readable = !0, pe && (typeof pe.read == "function" && (this._read = pe.read), typeof pe.destroy == "function" && (this._destroy = pe.destroy)), U.call(this);
+    this._readableState = new he(pe, this, ge), this.readable = !0, pe && (typeof pe.read == "function" && (this._read = pe.read), typeof pe.destroy == "function" && (this._destroy = pe.destroy)), P.call(this);
   }
   Object.defineProperty(le.prototype, "destroyed", {
     // making it explicit this property is not enumerable
@@ -6214,7 +6214,7 @@ function require_stream_readable$1() {
     set: function(pe) {
       this._readableState && (this._readableState.destroyed = pe);
     }
-  }), le.prototype.destroy = P.destroy, le.prototype._undestroy = P.undestroy, le.prototype._destroy = function(pe, ge) {
+  }), le.prototype.destroy = U.destroy, le.prototype._undestroy = U.undestroy, le.prototype._destroy = function(pe, ge) {
     ge(pe);
   }, le.prototype.push = function(pe, ge) {
     var Ee = this._readableState, Ie;
@@ -6389,13 +6389,13 @@ function require_stream_readable$1() {
     var K = Be(ge.pipes, pe);
     return K === -1 ? this : (ge.pipes.splice(K, 1), ge.pipesCount -= 1, ge.pipesCount === 1 && (ge.pipes = ge.pipes[0]), pe.emit("unpipe", this, Ee), this);
   }, le.prototype.on = function(pe, ge) {
-    var Ee = U.prototype.on.call(this, pe, ge), Ie = this._readableState;
+    var Ee = P.prototype.on.call(this, pe, ge), Ie = this._readableState;
     return pe === "data" ? (Ie.readableListening = this.listenerCount("readable") > 0, Ie.flowing !== !1 && this.resume()) : pe === "readable" && !Ie.endEmitted && !Ie.readableListening && (Ie.readableListening = Ie.needReadable = !0, Ie.flowing = !1, Ie.emittedReadable = !1, D("on readable", Ie.length, Ie.reading), Ie.length ? F(this) : Ie.reading || process$1.nextTick(ce, this)), Ee;
   }, le.prototype.addListener = le.prototype.on, le.prototype.removeListener = function(pe, ge) {
-    var Ee = U.prototype.removeListener.call(this, pe, ge);
+    var Ee = P.prototype.removeListener.call(this, pe, ge);
     return pe === "readable" && process$1.nextTick(J, this), Ee;
   }, le.prototype.removeAllListeners = function(pe) {
-    var ge = U.prototype.removeAllListeners.apply(this, arguments);
+    var ge = P.prototype.removeAllListeners.apply(this, arguments);
     return (pe === "readable" || pe === void 0) && process$1.nextTick(J, this), ge;
   };
   function J(pe) {
@@ -6518,62 +6518,62 @@ function require_stream_transform$1() {
   if (hasRequired_stream_transform$1)
     return _stream_transform$1;
   hasRequired_stream_transform$1 = 1, _stream_transform$1 = M;
-  var $ = requireErrorsBrowser().codes, h = $.ERR_METHOD_NOT_IMPLEMENTED, U = $.ERR_MULTIPLE_CALLBACK, B = $.ERR_TRANSFORM_ALREADY_TRANSFORMING, V = $.ERR_TRANSFORM_WITH_LENGTH_0, t = require_stream_duplex$1();
+  var $ = requireErrorsBrowser().codes, h = $.ERR_METHOD_NOT_IMPLEMENTED, P = $.ERR_MULTIPLE_CALLBACK, B = $.ERR_TRANSFORM_ALREADY_TRANSFORMING, V = $.ERR_TRANSFORM_WITH_LENGTH_0, t = require_stream_duplex$1();
   requireInherits_browser()(M, t);
-  function O(P, Y) {
+  function O(U, Y) {
     var X = this._transformState;
     X.transforming = !1;
     var ee = X.writecb;
     if (ee === null)
-      return this.emit("error", new U());
-    X.writechunk = null, X.writecb = null, Y != null && this.push(Y), ee(P);
+      return this.emit("error", new P());
+    X.writechunk = null, X.writecb = null, Y != null && this.push(Y), ee(U);
     var re = this._readableState;
     re.reading = !1, (re.needReadable || re.length < re.highWaterMark) && this._read(re.highWaterMark);
   }
-  function M(P) {
+  function M(U) {
     if (!(this instanceof M))
-      return new M(P);
-    t.call(this, P), this._transformState = {
+      return new M(U);
+    t.call(this, U), this._transformState = {
       afterTransform: O.bind(this),
       needTransform: !1,
       transforming: !1,
       writecb: null,
       writechunk: null,
       writeencoding: null
-    }, this._readableState.needReadable = !0, this._readableState.sync = !1, P && (typeof P.transform == "function" && (this._transform = P.transform), typeof P.flush == "function" && (this._flush = P.flush)), this.on("prefinish", D);
+    }, this._readableState.needReadable = !0, this._readableState.sync = !1, U && (typeof U.transform == "function" && (this._transform = U.transform), typeof U.flush == "function" && (this._flush = U.flush)), this.on("prefinish", D);
   }
   function D() {
-    var P = this;
+    var U = this;
     typeof this._flush == "function" && !this._readableState.destroyed ? this._flush(function(Y, X) {
-      I(P, Y, X);
+      I(U, Y, X);
     }) : I(this, null, null);
   }
-  M.prototype.push = function(P, Y) {
-    return this._transformState.needTransform = !1, t.prototype.push.call(this, P, Y);
-  }, M.prototype._transform = function(P, Y, X) {
+  M.prototype.push = function(U, Y) {
+    return this._transformState.needTransform = !1, t.prototype.push.call(this, U, Y);
+  }, M.prototype._transform = function(U, Y, X) {
     X(new h("_transform()"));
-  }, M.prototype._write = function(P, Y, X) {
+  }, M.prototype._write = function(U, Y, X) {
     var ee = this._transformState;
-    if (ee.writecb = X, ee.writechunk = P, ee.writeencoding = Y, !ee.transforming) {
+    if (ee.writecb = X, ee.writechunk = U, ee.writeencoding = Y, !ee.transforming) {
       var re = this._readableState;
       (ee.needTransform || re.needReadable || re.length < re.highWaterMark) && this._read(re.highWaterMark);
     }
-  }, M.prototype._read = function(P) {
+  }, M.prototype._read = function(U) {
     var Y = this._transformState;
     Y.writechunk !== null && !Y.transforming ? (Y.transforming = !0, this._transform(Y.writechunk, Y.writeencoding, Y.afterTransform)) : Y.needTransform = !0;
-  }, M.prototype._destroy = function(P, Y) {
-    t.prototype._destroy.call(this, P, function(X) {
+  }, M.prototype._destroy = function(U, Y) {
+    t.prototype._destroy.call(this, U, function(X) {
       Y(X);
     });
   };
-  function I(P, Y, X) {
+  function I(U, Y, X) {
     if (Y)
-      return P.emit("error", Y);
-    if (X != null && P.push(X), P._writableState.length)
+      return U.emit("error", Y);
+    if (X != null && U.push(X), U._writableState.length)
       throw new V();
-    if (P._transformState.transforming)
+    if (U._transformState.transforming)
       throw new B();
-    return P.push(null);
+    return U.push(null);
   }
   return _stream_transform$1;
 }
@@ -6584,13 +6584,13 @@ function require_stream_passthrough$1() {
   hasRequired_stream_passthrough$1 = 1, _stream_passthrough$1 = h;
   var $ = require_stream_transform$1();
   requireInherits_browser()(h, $);
-  function h(U) {
+  function h(P) {
     if (!(this instanceof h))
-      return new h(U);
-    $.call(this, U);
+      return new h(P);
+    $.call(this, P);
   }
-  return h.prototype._transform = function(U, B, V) {
-    V(null, U);
+  return h.prototype._transform = function(P, B, V) {
+    V(null, P);
   }, _stream_passthrough$1;
 }
 var pipeline_1, hasRequiredPipeline;
@@ -6605,7 +6605,7 @@ function requirePipeline() {
       ee || (ee = !0, X.apply(void 0, arguments));
     };
   }
-  var U = requireErrorsBrowser().codes, B = U.ERR_MISSING_ARGS, V = U.ERR_STREAM_DESTROYED;
+  var P = requireErrorsBrowser().codes, B = P.ERR_MISSING_ARGS, V = P.ERR_STREAM_DESTROYED;
   function t(X) {
     if (X)
       throw X;
@@ -6643,13 +6643,13 @@ function requirePipeline() {
   function I(X, ee) {
     return X.pipe(ee);
   }
-  function P(X) {
+  function U(X) {
     return !X.length || typeof X[X.length - 1] != "function" ? t : X.pop();
   }
   function Y() {
     for (var X = arguments.length, ee = new Array(X), re = 0; re < X; re++)
       ee[re] = arguments[re];
-    var ie = P(ee);
+    var ie = U(ee);
     if (Array.isArray(ee[0]) && (ee = ee[0]), ee.length < 2)
       throw new B("streams");
     var ne, se = ee.map(function(oe, be) {
@@ -6673,7 +6673,7 @@ function requireHashBase$1() {
   if (hasRequiredHashBase$1)
     return hashBase$1;
   hasRequiredHashBase$1 = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requireReadableBrowser$1().Transform, U = requireInherits_browser();
+  var $ = requireSafeBuffer$1().Buffer, h = requireReadableBrowser$1().Transform, P = requireInherits_browser();
   function B(t, O) {
     if (!$.isBuffer(t) && typeof t != "string")
       throw new TypeError(O + " must be a string or a buffer");
@@ -6681,7 +6681,7 @@ function requireHashBase$1() {
   function V(t) {
     h.call(this), this._block = $.allocUnsafe(t), this._blockSize = t, this._blockOffset = 0, this._length = [0, 0, 0, 0], this._finalized = !1;
   }
-  return U(V, h), V.prototype._transform = function(t, O, M) {
+  return P(V, h), V.prototype._transform = function(t, O, M) {
     var D = null;
     try {
       this.update(t, O);
@@ -6708,8 +6708,8 @@ function requireHashBase$1() {
     }
     for (; D < t.length; )
       M[this._blockOffset++] = t[D++];
-    for (var P = 0, Y = t.length * 8; Y > 0; ++P)
-      this._length[P] += Y, Y = this._length[P] / 4294967296 | 0, Y > 0 && (this._length[P] -= 4294967296 * Y);
+    for (var U = 0, Y = t.length * 8; Y > 0; ++U)
+      this._length[U] += Y, Y = this._length[U] / 4294967296 | 0, Y > 0 && (this._length[U] -= 4294967296 * Y);
     return this;
   }, V.prototype._update = function() {
     throw new Error("_update is not implemented");
@@ -6731,34 +6731,34 @@ function requireMd5_js() {
   if (hasRequiredMd5_js)
     return md5_js;
   hasRequiredMd5_js = 1;
-  var $ = requireInherits_browser(), h = requireHashBase$1(), U = requireSafeBuffer$1().Buffer, B = new Array(16);
+  var $ = requireInherits_browser(), h = requireHashBase$1(), P = requireSafeBuffer$1().Buffer, B = new Array(16);
   function V() {
     h.call(this, 64), this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878;
   }
   $(V, h), V.prototype._update = function() {
-    for (var P = B, Y = 0; Y < 16; ++Y)
-      P[Y] = this._block.readInt32LE(Y * 4);
+    for (var U = B, Y = 0; Y < 16; ++Y)
+      U[Y] = this._block.readInt32LE(Y * 4);
     var X = this._a, ee = this._b, re = this._c, ie = this._d;
-    X = O(X, ee, re, ie, P[0], 3614090360, 7), ie = O(ie, X, ee, re, P[1], 3905402710, 12), re = O(re, ie, X, ee, P[2], 606105819, 17), ee = O(ee, re, ie, X, P[3], 3250441966, 22), X = O(X, ee, re, ie, P[4], 4118548399, 7), ie = O(ie, X, ee, re, P[5], 1200080426, 12), re = O(re, ie, X, ee, P[6], 2821735955, 17), ee = O(ee, re, ie, X, P[7], 4249261313, 22), X = O(X, ee, re, ie, P[8], 1770035416, 7), ie = O(ie, X, ee, re, P[9], 2336552879, 12), re = O(re, ie, X, ee, P[10], 4294925233, 17), ee = O(ee, re, ie, X, P[11], 2304563134, 22), X = O(X, ee, re, ie, P[12], 1804603682, 7), ie = O(ie, X, ee, re, P[13], 4254626195, 12), re = O(re, ie, X, ee, P[14], 2792965006, 17), ee = O(ee, re, ie, X, P[15], 1236535329, 22), X = M(X, ee, re, ie, P[1], 4129170786, 5), ie = M(ie, X, ee, re, P[6], 3225465664, 9), re = M(re, ie, X, ee, P[11], 643717713, 14), ee = M(ee, re, ie, X, P[0], 3921069994, 20), X = M(X, ee, re, ie, P[5], 3593408605, 5), ie = M(ie, X, ee, re, P[10], 38016083, 9), re = M(re, ie, X, ee, P[15], 3634488961, 14), ee = M(ee, re, ie, X, P[4], 3889429448, 20), X = M(X, ee, re, ie, P[9], 568446438, 5), ie = M(ie, X, ee, re, P[14], 3275163606, 9), re = M(re, ie, X, ee, P[3], 4107603335, 14), ee = M(ee, re, ie, X, P[8], 1163531501, 20), X = M(X, ee, re, ie, P[13], 2850285829, 5), ie = M(ie, X, ee, re, P[2], 4243563512, 9), re = M(re, ie, X, ee, P[7], 1735328473, 14), ee = M(ee, re, ie, X, P[12], 2368359562, 20), X = D(X, ee, re, ie, P[5], 4294588738, 4), ie = D(ie, X, ee, re, P[8], 2272392833, 11), re = D(re, ie, X, ee, P[11], 1839030562, 16), ee = D(ee, re, ie, X, P[14], 4259657740, 23), X = D(X, ee, re, ie, P[1], 2763975236, 4), ie = D(ie, X, ee, re, P[4], 1272893353, 11), re = D(re, ie, X, ee, P[7], 4139469664, 16), ee = D(ee, re, ie, X, P[10], 3200236656, 23), X = D(X, ee, re, ie, P[13], 681279174, 4), ie = D(ie, X, ee, re, P[0], 3936430074, 11), re = D(re, ie, X, ee, P[3], 3572445317, 16), ee = D(ee, re, ie, X, P[6], 76029189, 23), X = D(X, ee, re, ie, P[9], 3654602809, 4), ie = D(ie, X, ee, re, P[12], 3873151461, 11), re = D(re, ie, X, ee, P[15], 530742520, 16), ee = D(ee, re, ie, X, P[2], 3299628645, 23), X = I(X, ee, re, ie, P[0], 4096336452, 6), ie = I(ie, X, ee, re, P[7], 1126891415, 10), re = I(re, ie, X, ee, P[14], 2878612391, 15), ee = I(ee, re, ie, X, P[5], 4237533241, 21), X = I(X, ee, re, ie, P[12], 1700485571, 6), ie = I(ie, X, ee, re, P[3], 2399980690, 10), re = I(re, ie, X, ee, P[10], 4293915773, 15), ee = I(ee, re, ie, X, P[1], 2240044497, 21), X = I(X, ee, re, ie, P[8], 1873313359, 6), ie = I(ie, X, ee, re, P[15], 4264355552, 10), re = I(re, ie, X, ee, P[6], 2734768916, 15), ee = I(ee, re, ie, X, P[13], 1309151649, 21), X = I(X, ee, re, ie, P[4], 4149444226, 6), ie = I(ie, X, ee, re, P[11], 3174756917, 10), re = I(re, ie, X, ee, P[2], 718787259, 15), ee = I(ee, re, ie, X, P[9], 3951481745, 21), this._a = this._a + X | 0, this._b = this._b + ee | 0, this._c = this._c + re | 0, this._d = this._d + ie | 0;
+    X = O(X, ee, re, ie, U[0], 3614090360, 7), ie = O(ie, X, ee, re, U[1], 3905402710, 12), re = O(re, ie, X, ee, U[2], 606105819, 17), ee = O(ee, re, ie, X, U[3], 3250441966, 22), X = O(X, ee, re, ie, U[4], 4118548399, 7), ie = O(ie, X, ee, re, U[5], 1200080426, 12), re = O(re, ie, X, ee, U[6], 2821735955, 17), ee = O(ee, re, ie, X, U[7], 4249261313, 22), X = O(X, ee, re, ie, U[8], 1770035416, 7), ie = O(ie, X, ee, re, U[9], 2336552879, 12), re = O(re, ie, X, ee, U[10], 4294925233, 17), ee = O(ee, re, ie, X, U[11], 2304563134, 22), X = O(X, ee, re, ie, U[12], 1804603682, 7), ie = O(ie, X, ee, re, U[13], 4254626195, 12), re = O(re, ie, X, ee, U[14], 2792965006, 17), ee = O(ee, re, ie, X, U[15], 1236535329, 22), X = M(X, ee, re, ie, U[1], 4129170786, 5), ie = M(ie, X, ee, re, U[6], 3225465664, 9), re = M(re, ie, X, ee, U[11], 643717713, 14), ee = M(ee, re, ie, X, U[0], 3921069994, 20), X = M(X, ee, re, ie, U[5], 3593408605, 5), ie = M(ie, X, ee, re, U[10], 38016083, 9), re = M(re, ie, X, ee, U[15], 3634488961, 14), ee = M(ee, re, ie, X, U[4], 3889429448, 20), X = M(X, ee, re, ie, U[9], 568446438, 5), ie = M(ie, X, ee, re, U[14], 3275163606, 9), re = M(re, ie, X, ee, U[3], 4107603335, 14), ee = M(ee, re, ie, X, U[8], 1163531501, 20), X = M(X, ee, re, ie, U[13], 2850285829, 5), ie = M(ie, X, ee, re, U[2], 4243563512, 9), re = M(re, ie, X, ee, U[7], 1735328473, 14), ee = M(ee, re, ie, X, U[12], 2368359562, 20), X = D(X, ee, re, ie, U[5], 4294588738, 4), ie = D(ie, X, ee, re, U[8], 2272392833, 11), re = D(re, ie, X, ee, U[11], 1839030562, 16), ee = D(ee, re, ie, X, U[14], 4259657740, 23), X = D(X, ee, re, ie, U[1], 2763975236, 4), ie = D(ie, X, ee, re, U[4], 1272893353, 11), re = D(re, ie, X, ee, U[7], 4139469664, 16), ee = D(ee, re, ie, X, U[10], 3200236656, 23), X = D(X, ee, re, ie, U[13], 681279174, 4), ie = D(ie, X, ee, re, U[0], 3936430074, 11), re = D(re, ie, X, ee, U[3], 3572445317, 16), ee = D(ee, re, ie, X, U[6], 76029189, 23), X = D(X, ee, re, ie, U[9], 3654602809, 4), ie = D(ie, X, ee, re, U[12], 3873151461, 11), re = D(re, ie, X, ee, U[15], 530742520, 16), ee = D(ee, re, ie, X, U[2], 3299628645, 23), X = I(X, ee, re, ie, U[0], 4096336452, 6), ie = I(ie, X, ee, re, U[7], 1126891415, 10), re = I(re, ie, X, ee, U[14], 2878612391, 15), ee = I(ee, re, ie, X, U[5], 4237533241, 21), X = I(X, ee, re, ie, U[12], 1700485571, 6), ie = I(ie, X, ee, re, U[3], 2399980690, 10), re = I(re, ie, X, ee, U[10], 4293915773, 15), ee = I(ee, re, ie, X, U[1], 2240044497, 21), X = I(X, ee, re, ie, U[8], 1873313359, 6), ie = I(ie, X, ee, re, U[15], 4264355552, 10), re = I(re, ie, X, ee, U[6], 2734768916, 15), ee = I(ee, re, ie, X, U[13], 1309151649, 21), X = I(X, ee, re, ie, U[4], 4149444226, 6), ie = I(ie, X, ee, re, U[11], 3174756917, 10), re = I(re, ie, X, ee, U[2], 718787259, 15), ee = I(ee, re, ie, X, U[9], 3951481745, 21), this._a = this._a + X | 0, this._b = this._b + ee | 0, this._c = this._c + re | 0, this._d = this._d + ie | 0;
   }, V.prototype._digest = function() {
     this._block[this._blockOffset++] = 128, this._blockOffset > 56 && (this._block.fill(0, this._blockOffset, 64), this._update(), this._blockOffset = 0), this._block.fill(0, this._blockOffset, 56), this._block.writeUInt32LE(this._length[0], 56), this._block.writeUInt32LE(this._length[1], 60), this._update();
-    var P = U.allocUnsafe(16);
-    return P.writeInt32LE(this._a, 0), P.writeInt32LE(this._b, 4), P.writeInt32LE(this._c, 8), P.writeInt32LE(this._d, 12), P;
+    var U = P.allocUnsafe(16);
+    return U.writeInt32LE(this._a, 0), U.writeInt32LE(this._b, 4), U.writeInt32LE(this._c, 8), U.writeInt32LE(this._d, 12), U;
   };
-  function t(P, Y) {
-    return P << Y | P >>> 32 - Y;
+  function t(U, Y) {
+    return U << Y | U >>> 32 - Y;
   }
-  function O(P, Y, X, ee, re, ie, ne) {
-    return t(P + (Y & X | ~Y & ee) + re + ie | 0, ne) + Y | 0;
+  function O(U, Y, X, ee, re, ie, ne) {
+    return t(U + (Y & X | ~Y & ee) + re + ie | 0, ne) + Y | 0;
   }
-  function M(P, Y, X, ee, re, ie, ne) {
-    return t(P + (Y & ee | X & ~ee) + re + ie | 0, ne) + Y | 0;
+  function M(U, Y, X, ee, re, ie, ne) {
+    return t(U + (Y & ee | X & ~ee) + re + ie | 0, ne) + Y | 0;
   }
-  function D(P, Y, X, ee, re, ie, ne) {
-    return t(P + (Y ^ X ^ ee) + re + ie | 0, ne) + Y | 0;
+  function D(U, Y, X, ee, re, ie, ne) {
+    return t(U + (Y ^ X ^ ee) + re + ie | 0, ne) + Y | 0;
   }
-  function I(P, Y, X, ee, re, ie, ne) {
-    return t(P + (X ^ (Y | ~ee)) + re + ie | 0, ne) + Y | 0;
+  function I(U, Y, X, ee, re, ie, ne) {
+    return t(U + (X ^ (Y | ~ee)) + re + ie | 0, ne) + Y | 0;
   }
   return md5_js = V, md5_js;
 }
@@ -6767,7 +6767,7 @@ function requireHashBase() {
   if (hasRequiredHashBase)
     return hashBase;
   hasRequiredHashBase = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requireReadableBrowser$1().Transform, U = requireInherits_browser();
+  var $ = requireSafeBuffer$1().Buffer, h = requireReadableBrowser$1().Transform, P = requireInherits_browser();
   function B(t, O) {
     if (!$.isBuffer(t) && typeof t != "string")
       throw new TypeError(O + " must be a string or a buffer");
@@ -6775,7 +6775,7 @@ function requireHashBase() {
   function V(t) {
     h.call(this), this._block = $.allocUnsafe(t), this._blockSize = t, this._blockOffset = 0, this._length = [0, 0, 0, 0], this._finalized = !1;
   }
-  return U(V, h), V.prototype._transform = function(t, O, M) {
+  return P(V, h), V.prototype._transform = function(t, O, M) {
     var D = null;
     try {
       this.update(t, O);
@@ -6802,8 +6802,8 @@ function requireHashBase() {
     }
     for (; D < t.length; )
       M[this._blockOffset++] = t[D++];
-    for (var P = 0, Y = t.length * 8; Y > 0; ++P)
-      this._length[P] += Y, Y = this._length[P] / 4294967296 | 0, Y > 0 && (this._length[P] -= 4294967296 * Y);
+    for (var U = 0, Y = t.length * 8; Y > 0; ++U)
+      this._length[U] += Y, Y = this._length[U] / 4294967296 | 0, Y > 0 && (this._length[U] -= 4294967296 * Y);
     return this;
   }, V.prototype._update = function() {
     throw new Error("_update is not implemented");
@@ -6825,7 +6825,7 @@ function requireRipemd160() {
   if (hasRequiredRipemd160)
     return ripemd160;
   hasRequiredRipemd160 = 1;
-  var $ = requireBuffer$1().Buffer, h = requireInherits_browser(), U = requireHashBase(), B = new Array(16), V = [
+  var $ = requireBuffer$1().Buffer, h = requireInherits_browser(), P = requireHashBase(), B = new Array(16), V = [
     0,
     1,
     2,
@@ -7150,10 +7150,10 @@ function requireRipemd160() {
     11,
     11
   ], D = [0, 1518500249, 1859775393, 2400959708, 2840853838], I = [1352829926, 1548603684, 1836072691, 2053994217, 0];
-  function P() {
-    U.call(this, 64), this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878, this._e = 3285377520;
+  function U() {
+    P.call(this, 64), this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878, this._e = 3285377520;
   }
-  h(P, U), P.prototype._update = function() {
+  h(U, P), U.prototype._update = function() {
     for (var se = B, oe = 0; oe < 16; ++oe)
       se[oe] = this._block.readInt32LE(oe * 4);
     for (var be = this._a | 0, de = this._b | 0, we = this._c | 0, Se = this._d | 0, ke = this._e | 0, he = this._a | 0, le = this._b | 0, _e = this._c | 0, G = this._d | 0, Z = this._e | 0, e = 0; e < 80; e += 1) {
@@ -7162,7 +7162,7 @@ function requireRipemd160() {
     }
     var H = this._b + we + G | 0;
     this._b = this._c + Se + Z | 0, this._c = this._d + ke + he | 0, this._d = this._e + be + le | 0, this._e = this._a + de + _e | 0, this._a = H;
-  }, P.prototype._digest = function() {
+  }, U.prototype._digest = function() {
     this._block[this._blockOffset++] = 128, this._blockOffset > 56 && (this._block.fill(0, this._blockOffset, 64), this._update(), this._blockOffset = 0), this._block.fill(0, this._blockOffset, 56), this._block.writeUInt32LE(this._length[0], 56), this._block.writeUInt32LE(this._length[1], 60), this._update();
     var se = $.alloc ? $.alloc(20) : new $(20);
     return se.writeInt32LE(this._a, 0), se.writeInt32LE(this._b, 4), se.writeInt32LE(this._c, 8), se.writeInt32LE(this._d, 12), se.writeInt32LE(this._e, 16), se;
@@ -7185,7 +7185,7 @@ function requireRipemd160() {
   function ne(se, oe, be, de, we, Se, ke, he) {
     return Y(se + (oe ^ (be | ~de)) + Se + ke | 0, he) + we | 0;
   }
-  return ripemd160 = P, ripemd160;
+  return ripemd160 = U, ripemd160;
 }
 var sha_js = { exports: {} }, hash$1, hasRequiredHash$1;
 function requireHash$1() {
@@ -7193,18 +7193,18 @@ function requireHash$1() {
     return hash$1;
   hasRequiredHash$1 = 1;
   var $ = requireSafeBuffer$1().Buffer;
-  function h(U, B) {
-    this._block = $.alloc(U), this._finalSize = B, this._blockSize = U, this._len = 0;
+  function h(P, B) {
+    this._block = $.alloc(P), this._finalSize = B, this._blockSize = P, this._len = 0;
   }
-  return h.prototype.update = function(U, B) {
-    typeof U == "string" && (B = B || "utf8", U = $.from(U, B));
-    for (var V = this._block, t = this._blockSize, O = U.length, M = this._len, D = 0; D < O; ) {
-      for (var I = M % t, P = Math.min(O - D, t - I), Y = 0; Y < P; Y++)
-        V[I + Y] = U[D + Y];
-      M += P, D += P, M % t === 0 && this._update(V);
+  return h.prototype.update = function(P, B) {
+    typeof P == "string" && (B = B || "utf8", P = $.from(P, B));
+    for (var V = this._block, t = this._blockSize, O = P.length, M = this._len, D = 0; D < O; ) {
+      for (var I = M % t, U = Math.min(O - D, t - I), Y = 0; Y < U; Y++)
+        V[I + Y] = P[D + Y];
+      M += U, D += U, M % t === 0 && this._update(V);
     }
     return this._len += O, this;
-  }, h.prototype.digest = function(U) {
+  }, h.prototype.digest = function(P) {
     var B = this._len % this._blockSize;
     this._block[B] = 128, this._block.fill(0, B + 1), B >= this._finalSize && (this._update(this._block), this._block.fill(0));
     var V = this._len * 8;
@@ -7216,7 +7216,7 @@ function requireHash$1() {
     }
     this._update(this._block);
     var M = this._hash();
-    return U ? M.toString(U) : M;
+    return P ? M.toString(P) : M;
   }, h.prototype._update = function() {
     throw new Error("_update must be implemented by subclass");
   }, hash$1 = h, hash$1;
@@ -7226,7 +7226,7 @@ function requireSha$1() {
   if (hasRequiredSha$1)
     return sha$1;
   hasRequiredSha$1 = 1;
-  var $ = requireInherits_browser(), h = requireHash$1(), U = requireSafeBuffer$1().Buffer, B = [
+  var $ = requireInherits_browser(), h = requireHash$1(), P = requireSafeBuffer$1().Buffer, B = [
     1518500249,
     1859775393,
     -1894007588,
@@ -7244,21 +7244,21 @@ function requireSha$1() {
   function M(I) {
     return I << 30 | I >>> 2;
   }
-  function D(I, P, Y, X) {
-    return I === 0 ? P & Y | ~P & X : I === 2 ? P & Y | P & X | Y & X : P ^ Y ^ X;
+  function D(I, U, Y, X) {
+    return I === 0 ? U & Y | ~U & X : I === 2 ? U & Y | U & X | Y & X : U ^ Y ^ X;
   }
   return t.prototype._update = function(I) {
-    for (var P = this._w, Y = this._a | 0, X = this._b | 0, ee = this._c | 0, re = this._d | 0, ie = this._e | 0, ne = 0; ne < 16; ++ne)
-      P[ne] = I.readInt32BE(ne * 4);
+    for (var U = this._w, Y = this._a | 0, X = this._b | 0, ee = this._c | 0, re = this._d | 0, ie = this._e | 0, ne = 0; ne < 16; ++ne)
+      U[ne] = I.readInt32BE(ne * 4);
     for (; ne < 80; ++ne)
-      P[ne] = P[ne - 3] ^ P[ne - 8] ^ P[ne - 14] ^ P[ne - 16];
+      U[ne] = U[ne - 3] ^ U[ne - 8] ^ U[ne - 14] ^ U[ne - 16];
     for (var se = 0; se < 80; ++se) {
-      var oe = ~~(se / 20), be = O(Y) + D(oe, X, ee, re) + ie + P[se] + B[oe] | 0;
+      var oe = ~~(se / 20), be = O(Y) + D(oe, X, ee, re) + ie + U[se] + B[oe] | 0;
       ie = re, re = ee, ee = M(X), X = Y, Y = be;
     }
     this._a = Y + this._a | 0, this._b = X + this._b | 0, this._c = ee + this._c | 0, this._d = re + this._d | 0, this._e = ie + this._e | 0;
   }, t.prototype._hash = function() {
-    var I = U.allocUnsafe(20);
+    var I = P.allocUnsafe(20);
     return I.writeInt32BE(this._a | 0, 0), I.writeInt32BE(this._b | 0, 4), I.writeInt32BE(this._c | 0, 8), I.writeInt32BE(this._d | 0, 12), I.writeInt32BE(this._e | 0, 16), I;
   }, sha$1 = t, sha$1;
 }
@@ -7267,7 +7267,7 @@ function requireSha1() {
   if (hasRequiredSha1)
     return sha1;
   hasRequiredSha1 = 1;
-  var $ = requireInherits_browser(), h = requireHash$1(), U = requireSafeBuffer$1().Buffer, B = [
+  var $ = requireInherits_browser(), h = requireHash$1(), P = requireSafeBuffer$1().Buffer, B = [
     1518500249,
     1859775393,
     -1894007588,
@@ -7279,21 +7279,21 @@ function requireSha1() {
   $(t, h), t.prototype.init = function() {
     return this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878, this._e = 3285377520, this;
   };
-  function O(P) {
-    return P << 1 | P >>> 31;
+  function O(U) {
+    return U << 1 | U >>> 31;
   }
-  function M(P) {
-    return P << 5 | P >>> 27;
+  function M(U) {
+    return U << 5 | U >>> 27;
   }
-  function D(P) {
-    return P << 30 | P >>> 2;
+  function D(U) {
+    return U << 30 | U >>> 2;
   }
-  function I(P, Y, X, ee) {
-    return P === 0 ? Y & X | ~Y & ee : P === 2 ? Y & X | Y & ee | X & ee : Y ^ X ^ ee;
+  function I(U, Y, X, ee) {
+    return U === 0 ? Y & X | ~Y & ee : U === 2 ? Y & X | Y & ee | X & ee : Y ^ X ^ ee;
   }
-  return t.prototype._update = function(P) {
+  return t.prototype._update = function(U) {
     for (var Y = this._w, X = this._a | 0, ee = this._b | 0, re = this._c | 0, ie = this._d | 0, ne = this._e | 0, se = 0; se < 16; ++se)
-      Y[se] = P.readInt32BE(se * 4);
+      Y[se] = U.readInt32BE(se * 4);
     for (; se < 80; ++se)
       Y[se] = O(Y[se - 3] ^ Y[se - 8] ^ Y[se - 14] ^ Y[se - 16]);
     for (var oe = 0; oe < 80; ++oe) {
@@ -7302,8 +7302,8 @@ function requireSha1() {
     }
     this._a = X + this._a | 0, this._b = ee + this._b | 0, this._c = re + this._c | 0, this._d = ie + this._d | 0, this._e = ne + this._e | 0;
   }, t.prototype._hash = function() {
-    var P = U.allocUnsafe(20);
-    return P.writeInt32BE(this._a | 0, 0), P.writeInt32BE(this._b | 0, 4), P.writeInt32BE(this._c | 0, 8), P.writeInt32BE(this._d | 0, 12), P.writeInt32BE(this._e | 0, 16), P;
+    var U = P.allocUnsafe(20);
+    return U.writeInt32BE(this._a | 0, 0), U.writeInt32BE(this._b | 0, 4), U.writeInt32BE(this._c | 0, 8), U.writeInt32BE(this._d | 0, 12), U.writeInt32BE(this._e | 0, 16), U;
   }, sha1 = t, sha1;
 }
 var sha256$1, hasRequiredSha256;
@@ -7311,7 +7311,7 @@ function requireSha256() {
   if (hasRequiredSha256)
     return sha256$1;
   hasRequiredSha256 = 1;
-  var $ = requireInherits_browser(), h = requireHash$1(), U = requireSafeBuffer$1().Buffer, B = [
+  var $ = requireInherits_browser(), h = requireHash$1(), P = requireSafeBuffer$1().Buffer, B = [
     1116352408,
     1899447441,
     3049323471,
@@ -7395,7 +7395,7 @@ function requireSha256() {
   function I(X) {
     return (X >>> 6 | X << 26) ^ (X >>> 11 | X << 21) ^ (X >>> 25 | X << 7);
   }
-  function P(X) {
+  function U(X) {
     return (X >>> 7 | X << 25) ^ (X >>> 18 | X << 14) ^ X >>> 3;
   }
   function Y(X) {
@@ -7405,14 +7405,14 @@ function requireSha256() {
     for (var ee = this._w, re = this._a | 0, ie = this._b | 0, ne = this._c | 0, se = this._d | 0, oe = this._e | 0, be = this._f | 0, de = this._g | 0, we = this._h | 0, Se = 0; Se < 16; ++Se)
       ee[Se] = X.readInt32BE(Se * 4);
     for (; Se < 64; ++Se)
-      ee[Se] = Y(ee[Se - 2]) + ee[Se - 7] + P(ee[Se - 15]) + ee[Se - 16] | 0;
+      ee[Se] = Y(ee[Se - 2]) + ee[Se - 7] + U(ee[Se - 15]) + ee[Se - 16] | 0;
     for (var ke = 0; ke < 64; ++ke) {
       var he = we + I(oe) + O(oe, be, de) + B[ke] + ee[ke] | 0, le = D(re) + M(re, ie, ne) | 0;
       we = de, de = be, be = oe, oe = se + he | 0, se = ne, ne = ie, ie = re, re = he + le | 0;
     }
     this._a = re + this._a | 0, this._b = ie + this._b | 0, this._c = ne + this._c | 0, this._d = se + this._d | 0, this._e = oe + this._e | 0, this._f = be + this._f | 0, this._g = de + this._g | 0, this._h = we + this._h | 0;
   }, t.prototype._hash = function() {
-    var X = U.allocUnsafe(32);
+    var X = P.allocUnsafe(32);
     return X.writeInt32BE(this._a, 0), X.writeInt32BE(this._b, 4), X.writeInt32BE(this._c, 8), X.writeInt32BE(this._d, 12), X.writeInt32BE(this._e, 16), X.writeInt32BE(this._f, 20), X.writeInt32BE(this._g, 24), X.writeInt32BE(this._h, 28), X;
   }, sha256$1 = t, sha256$1;
 }
@@ -7421,9 +7421,9 @@ function requireSha224() {
   if (hasRequiredSha224)
     return sha224$1;
   hasRequiredSha224 = 1;
-  var $ = requireInherits_browser(), h = requireSha256(), U = requireHash$1(), B = requireSafeBuffer$1().Buffer, V = new Array(64);
+  var $ = requireInherits_browser(), h = requireSha256(), P = requireHash$1(), B = requireSafeBuffer$1().Buffer, V = new Array(64);
   function t() {
-    this.init(), this._w = V, U.call(this, 64, 56);
+    this.init(), this._w = V, P.call(this, 64, 56);
   }
   return $(t, h), t.prototype.init = function() {
     return this._a = 3238371032, this._b = 914150663, this._c = 812702999, this._d = 4144912697, this._e = 4290775857, this._f = 1750603025, this._g = 1694076839, this._h = 3204075428, this;
@@ -7437,7 +7437,7 @@ function requireSha512() {
   if (hasRequiredSha512)
     return sha512$1;
   hasRequiredSha512 = 1;
-  var $ = requireInherits_browser(), h = requireHash$1(), U = requireSafeBuffer$1().Buffer, B = [
+  var $ = requireInherits_browser(), h = requireHash$1(), P = requireSafeBuffer$1().Buffer, B = [
     1116352408,
     3609767458,
     1899447441,
@@ -7617,7 +7617,7 @@ function requireSha512() {
   function I(ie, ne) {
     return (ie >>> 14 | ne << 18) ^ (ie >>> 18 | ne << 14) ^ (ne >>> 9 | ie << 23);
   }
-  function P(ie, ne) {
+  function U(ie, ne) {
     return (ie >>> 1 | ne << 31) ^ (ie >>> 8 | ne << 24) ^ ie >>> 7;
   }
   function Y(ie, ne) {
@@ -7636,7 +7636,7 @@ function requireSha512() {
     for (var ne = this._w, se = this._ah | 0, oe = this._bh | 0, be = this._ch | 0, de = this._dh | 0, we = this._eh | 0, Se = this._fh | 0, ke = this._gh | 0, he = this._hh | 0, le = this._al | 0, _e = this._bl | 0, G = this._cl | 0, Z = this._dl | 0, e = this._el | 0, o = this._fl | 0, g = this._gl | 0, H = this._hl | 0, F = 0; F < 32; F += 2)
       ne[F] = ie.readInt32BE(F * 4), ne[F + 1] = ie.readInt32BE(F * 4 + 4);
     for (; F < 160; F += 2) {
-      var A = ne[F - 30], q = ne[F - 15 * 2 + 1], z = P(A, q), S = Y(q, A);
+      var A = ne[F - 30], q = ne[F - 15 * 2 + 1], z = U(A, q), S = Y(q, A);
       A = ne[F - 2 * 2], q = ne[F - 2 * 2 + 1];
       var J = X(A, q), ce = ee(q, A), ye = ne[F - 7 * 2], Me = ne[F - 7 * 2 + 1], me = ne[F - 16 * 2], ue = ne[F - 16 * 2 + 1], fe = S + Me | 0, Ae = z + ye + re(fe, S) | 0;
       fe = fe + ce | 0, Ae = Ae + J + re(fe, ce) | 0, fe = fe + ue | 0, Ae = Ae + me + re(fe, ue) | 0, ne[F] = Ae, ne[F + 1] = fe;
@@ -7650,7 +7650,7 @@ function requireSha512() {
     }
     this._al = this._al + le | 0, this._bl = this._bl + _e | 0, this._cl = this._cl + G | 0, this._dl = this._dl + Z | 0, this._el = this._el + e | 0, this._fl = this._fl + o | 0, this._gl = this._gl + g | 0, this._hl = this._hl + H | 0, this._ah = this._ah + se + re(this._al, le) | 0, this._bh = this._bh + oe + re(this._bl, _e) | 0, this._ch = this._ch + be + re(this._cl, G) | 0, this._dh = this._dh + de + re(this._dl, Z) | 0, this._eh = this._eh + we + re(this._el, e) | 0, this._fh = this._fh + Se + re(this._fl, o) | 0, this._gh = this._gh + ke + re(this._gl, g) | 0, this._hh = this._hh + he + re(this._hl, H) | 0;
   }, t.prototype._hash = function() {
-    var ie = U.allocUnsafe(64);
+    var ie = P.allocUnsafe(64);
     function ne(se, oe, be) {
       ie.writeInt32BE(se, be), ie.writeInt32BE(oe, be + 4);
     }
@@ -7662,16 +7662,16 @@ function requireSha384() {
   if (hasRequiredSha384)
     return sha384$1;
   hasRequiredSha384 = 1;
-  var $ = requireInherits_browser(), h = requireSha512(), U = requireHash$1(), B = requireSafeBuffer$1().Buffer, V = new Array(160);
+  var $ = requireInherits_browser(), h = requireSha512(), P = requireHash$1(), B = requireSafeBuffer$1().Buffer, V = new Array(160);
   function t() {
-    this.init(), this._w = V, U.call(this, 128, 112);
+    this.init(), this._w = V, P.call(this, 128, 112);
   }
   return $(t, h), t.prototype.init = function() {
     return this._ah = 3418070365, this._bh = 1654270250, this._ch = 2438529370, this._dh = 355462360, this._eh = 1731405415, this._fh = 2394180231, this._gh = 3675008525, this._hh = 1203062813, this._al = 3238371032, this._bl = 914150663, this._cl = 812702999, this._dl = 4144912697, this._el = 4290775857, this._fl = 1750603025, this._gl = 1694076839, this._hl = 3204075428, this;
   }, t.prototype._hash = function() {
     var O = B.allocUnsafe(48);
-    function M(D, I, P) {
-      O.writeInt32BE(D, P), O.writeInt32BE(I, P + 4);
+    function M(D, I, U) {
+      O.writeInt32BE(D, U), O.writeInt32BE(I, U + 4);
     }
     return M(this._ah, this._al, 0), M(this._bh, this._bl, 8), M(this._ch, this._cl, 16), M(this._dh, this._dl, 24), M(this._eh, this._el, 32), M(this._fh, this._fl, 40), O;
   }, sha384$1 = t, sha384$1;
@@ -7683,10 +7683,10 @@ function requireSha_js() {
   hasRequiredSha_js = 1;
   var $ = sha_js.exports = function(h) {
     h = h.toLowerCase();
-    var U = $[h];
-    if (!U)
+    var P = $[h];
+    if (!P)
       throw new Error(h + " is not supported (we accept pull requests)");
-    return new U();
+    return new P();
   };
   return $.sha = requireSha$1(), $.sha1 = requireSha1(), $.sha224 = requireSha224(), $.sha256 = requireSha256(), $.sha384 = requireSha384(), $.sha512 = requireSha512(), sha_js.exports;
 }
@@ -7694,13 +7694,13 @@ var streamBrowserify, hasRequiredStreamBrowserify;
 function requireStreamBrowserify() {
   if (hasRequiredStreamBrowserify)
     return streamBrowserify;
-  hasRequiredStreamBrowserify = 1, streamBrowserify = U;
+  hasRequiredStreamBrowserify = 1, streamBrowserify = P;
   var $ = requireEvents().EventEmitter, h = requireInherits_browser();
-  h(U, $), U.Readable = require_stream_readable$1(), U.Writable = require_stream_writable$1(), U.Duplex = require_stream_duplex$1(), U.Transform = require_stream_transform$1(), U.PassThrough = require_stream_passthrough$1(), U.finished = requireEndOfStream(), U.pipeline = requirePipeline(), U.Stream = U;
-  function U() {
+  h(P, $), P.Readable = require_stream_readable$1(), P.Writable = require_stream_writable$1(), P.Duplex = require_stream_duplex$1(), P.Transform = require_stream_transform$1(), P.PassThrough = require_stream_passthrough$1(), P.finished = requireEndOfStream(), P.pipeline = requirePipeline(), P.Stream = P;
+  function P() {
     $.call(this);
   }
-  return U.prototype.pipe = function(B, V) {
+  return P.prototype.pipe = function(B, V) {
     var t = this;
     function O(ee) {
       B.writable && B.write(ee) === !1 && t.pause && t.pause();
@@ -7709,12 +7709,12 @@ function requireStreamBrowserify() {
     function M() {
       t.readable && t.resume && t.resume();
     }
-    B.on("drain", M), !B._isStdio && (!V || V.end !== !1) && (t.on("end", I), t.on("close", P));
+    B.on("drain", M), !B._isStdio && (!V || V.end !== !1) && (t.on("end", I), t.on("close", U));
     var D = !1;
     function I() {
       D || (D = !0, B.end());
     }
-    function P() {
+    function U() {
       D || (D = !0, typeof B.destroy == "function" && B.destroy());
     }
     function Y(ee) {
@@ -7723,7 +7723,7 @@ function requireStreamBrowserify() {
     }
     t.on("error", Y), B.on("error", Y);
     function X() {
-      t.removeListener("data", O), B.removeListener("drain", M), t.removeListener("end", I), t.removeListener("close", P), t.removeListener("error", Y), B.removeListener("error", Y), t.removeListener("end", X), t.removeListener("close", X), B.removeListener("close", X);
+      t.removeListener("data", O), B.removeListener("drain", M), t.removeListener("end", I), t.removeListener("close", U), t.removeListener("error", Y), B.removeListener("error", Y), t.removeListener("end", X), t.removeListener("close", X), B.removeListener("close", X);
     }
     return t.on("end", X), t.on("close", X), B.on("close", X), B.emit("pipe", t), B;
   }, streamBrowserify;
@@ -7733,7 +7733,7 @@ function requireCipherBase() {
   if (hasRequiredCipherBase)
     return cipherBase;
   hasRequiredCipherBase = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requireStreamBrowserify().Transform, U = requireString_decoder().StringDecoder, B = requireInherits_browser();
+  var $ = requireSafeBuffer$1().Buffer, h = requireStreamBrowserify().Transform, P = requireString_decoder().StringDecoder, B = requireInherits_browser();
   function V(t) {
     h.call(this), this.hashMode = typeof t == "string", this.hashMode ? this[t] = this._finalOrDigest : this.final = this._finalOrDigest, this._final && (this.__final = this._final, this._final = null), this._decoder = null, this._encoding = null;
   }
@@ -7769,7 +7769,7 @@ function requireCipherBase() {
     var O = this.__final() || $.alloc(0);
     return t && (O = this._toString(O, t, !0)), O;
   }, V.prototype._toString = function(t, O, M) {
-    if (this._decoder || (this._decoder = new U(O), this._encoding = O), this._encoding !== O)
+    if (this._decoder || (this._decoder = new P(O), this._encoding = O), this._encoding !== O)
       throw new Error("can't switch encodings");
     var D = this._decoder.write(t);
     return M && (D += this._decoder.end()), D;
@@ -7780,7 +7780,7 @@ function requireBrowser$9() {
   if (hasRequiredBrowser$9)
     return browser$9;
   hasRequiredBrowser$9 = 1;
-  var $ = requireInherits_browser(), h = requireMd5_js(), U = requireRipemd160(), B = requireSha_js(), V = requireCipherBase();
+  var $ = requireInherits_browser(), h = requireMd5_js(), P = requireRipemd160(), B = requireSha_js(), V = requireCipherBase();
   function t(O) {
     V.call(this, "digest"), this._hash = O;
   }
@@ -7789,7 +7789,7 @@ function requireBrowser$9() {
   }, t.prototype._final = function() {
     return this._hash.digest();
   }, browser$9 = function(O) {
-    return O = O.toLowerCase(), O === "md5" ? new h() : O === "rmd160" || O === "ripemd160" ? new U() : new t(B(O));
+    return O = O.toLowerCase(), O === "md5" ? new h() : O === "rmd160" || O === "ripemd160" ? new P() : new t(B(O));
   }, browser$9;
 }
 var legacy, hasRequiredLegacy;
@@ -7797,14 +7797,14 @@ function requireLegacy() {
   if (hasRequiredLegacy)
     return legacy;
   hasRequiredLegacy = 1;
-  var $ = requireInherits_browser(), h = requireSafeBuffer$1().Buffer, U = requireCipherBase(), B = h.alloc(128), V = 64;
+  var $ = requireInherits_browser(), h = requireSafeBuffer$1().Buffer, P = requireCipherBase(), B = h.alloc(128), V = 64;
   function t(O, M) {
-    U.call(this, "digest"), typeof M == "string" && (M = h.from(M)), this._alg = O, this._key = M, M.length > V ? M = O(M) : M.length < V && (M = h.concat([M, B], V));
-    for (var D = this._ipad = h.allocUnsafe(V), I = this._opad = h.allocUnsafe(V), P = 0; P < V; P++)
-      D[P] = M[P] ^ 54, I[P] = M[P] ^ 92;
+    P.call(this, "digest"), typeof M == "string" && (M = h.from(M)), this._alg = O, this._key = M, M.length > V ? M = O(M) : M.length < V && (M = h.concat([M, B], V));
+    for (var D = this._ipad = h.allocUnsafe(V), I = this._opad = h.allocUnsafe(V), U = 0; U < V; U++)
+      D[U] = M[U] ^ 54, I[U] = M[U] ^ 92;
     this._hash = [D];
   }
-  return $(t, U), t.prototype._update = function(O) {
+  return $(t, P), t.prototype._update = function(O) {
     this._hash.push(O);
   }, t.prototype._final = function() {
     var O = this._alg(h.concat(this._hash));
@@ -7826,26 +7826,26 @@ function requireBrowser$8() {
   if (hasRequiredBrowser$8)
     return browser$8;
   hasRequiredBrowser$8 = 1;
-  var $ = requireInherits_browser(), h = requireLegacy(), U = requireCipherBase(), B = requireSafeBuffer$1().Buffer, V = requireMd5(), t = requireRipemd160(), O = requireSha_js(), M = B.alloc(128);
-  function D(I, P) {
-    U.call(this, "digest"), typeof P == "string" && (P = B.from(P));
+  var $ = requireInherits_browser(), h = requireLegacy(), P = requireCipherBase(), B = requireSafeBuffer$1().Buffer, V = requireMd5(), t = requireRipemd160(), O = requireSha_js(), M = B.alloc(128);
+  function D(I, U) {
+    P.call(this, "digest"), typeof U == "string" && (U = B.from(U));
     var Y = I === "sha512" || I === "sha384" ? 128 : 64;
-    if (this._alg = I, this._key = P, P.length > Y) {
+    if (this._alg = I, this._key = U, U.length > Y) {
       var X = I === "rmd160" ? new t() : O(I);
-      P = X.update(P).digest();
+      U = X.update(U).digest();
     } else
-      P.length < Y && (P = B.concat([P, M], Y));
+      U.length < Y && (U = B.concat([U, M], Y));
     for (var ee = this._ipad = B.allocUnsafe(Y), re = this._opad = B.allocUnsafe(Y), ie = 0; ie < Y; ie++)
-      ee[ie] = P[ie] ^ 54, re[ie] = P[ie] ^ 92;
+      ee[ie] = U[ie] ^ 54, re[ie] = U[ie] ^ 92;
     this._hash = I === "rmd160" ? new t() : O(I), this._hash.update(ee);
   }
-  return $(D, U), D.prototype._update = function(I) {
+  return $(D, P), D.prototype._update = function(I) {
     this._hash.update(I);
   }, D.prototype._final = function() {
-    var I = this._hash.digest(), P = this._alg === "rmd160" ? new t() : O(this._alg);
-    return P.update(this._opad).update(I).digest();
-  }, browser$8 = function(I, P) {
-    return I = I.toLowerCase(), I === "rmd160" || I === "ripemd160" ? new D("rmd160", P) : I === "md5" ? new h(V, P) : new D(I, P);
+    var I = this._hash.digest(), U = this._alg === "rmd160" ? new t() : O(this._alg);
+    return U.update(this._opad).update(I).digest();
+  }, browser$8 = function(I, U) {
+    return I = I.toLowerCase(), I === "rmd160" || I === "ripemd160" ? new D("rmd160", U) : I === "md5" ? new h(V, U) : new D(I, U);
   }, browser$8;
 }
 const sha224WithRSAEncryption = {
@@ -8010,14 +8010,14 @@ function requirePrecondition() {
     return precondition;
   hasRequiredPrecondition = 1;
   var $ = Math.pow(2, 30) - 1;
-  return precondition = function(h, U) {
+  return precondition = function(h, P) {
     if (typeof h != "number")
       throw new TypeError("Iterations not a number");
     if (h < 0)
       throw new TypeError("Bad iterations");
-    if (typeof U != "number")
+    if (typeof P != "number")
       throw new TypeError("Key length not a number");
-    if (U < 0 || U > $ || U !== U)
+    if (P < 0 || P > $ || P !== P)
       throw new TypeError("Bad key length");
   }, precondition;
 }
@@ -8042,11 +8042,11 @@ function requireToBuffer() {
     return toBuffer;
   hasRequiredToBuffer = 1;
   var $ = requireSafeBuffer$1().Buffer;
-  return toBuffer = function(h, U, B) {
+  return toBuffer = function(h, P, B) {
     if ($.isBuffer(h))
       return h;
     if (typeof h == "string")
-      return $.from(h, U);
+      return $.from(h, P);
     if (ArrayBuffer.isView(h))
       return $.from(h.buffer);
     throw new TypeError(B + " must be a string, a Buffer, a typed array or a DataView");
@@ -8057,7 +8057,7 @@ function requireSyncBrowser() {
   if (hasRequiredSyncBrowser)
     return syncBrowser;
   hasRequiredSyncBrowser = 1;
-  var $ = requireMd5(), h = requireRipemd160(), U = requireSha_js(), B = requireSafeBuffer$1().Buffer, V = requirePrecondition(), t = requireDefaultEncoding(), O = requireToBuffer(), M = B.alloc(128), D = {
+  var $ = requireMd5(), h = requireRipemd160(), P = requireSha_js(), B = requireSafeBuffer$1().Buffer, V = requirePrecondition(), t = requireDefaultEncoding(), O = requireToBuffer(), M = B.alloc(128), D = {
     md5: 16,
     sha1: 20,
     sha224: 28,
@@ -8068,7 +8068,7 @@ function requireSyncBrowser() {
     ripemd160: 20
   };
   function I(X, ee, re) {
-    var ie = P(X), ne = X === "sha512" || X === "sha384" ? 128 : 64;
+    var ie = U(X), ne = X === "sha512" || X === "sha384" ? 128 : 64;
     ee.length > ne ? ee = ie(ee) : ee.length < ne && (ee = B.concat([ee, M], ne));
     for (var se = B.allocUnsafe(ne + D[X]), oe = B.allocUnsafe(ne + D[X]), be = 0; be < ne; be++)
       se[be] = ee[be] ^ 54, oe[be] = ee[be] ^ 92;
@@ -8080,9 +8080,9 @@ function requireSyncBrowser() {
     var re = this.hash(ee);
     return re.copy(this.opad, this.blocksize), this.hash(this.opad);
   };
-  function P(X) {
+  function U(X) {
     function ee(ie) {
-      return U(X).update(ie).digest();
+      return P(X).update(ie).digest();
     }
     function re(ie) {
       return new h().update(ie).digest();
@@ -8111,7 +8111,7 @@ function requireAsync() {
   if (hasRequiredAsync)
     return async;
   hasRequiredAsync = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requirePrecondition(), U = requireDefaultEncoding(), B = requireSyncBrowser(), V = requireToBuffer(), t, O = commonjsGlobal.crypto && commonjsGlobal.crypto.subtle, M = {
+  var $ = requireSafeBuffer$1().Buffer, h = requirePrecondition(), P = requireDefaultEncoding(), B = requireSyncBrowser(), V = requireToBuffer(), t, O = commonjsGlobal.crypto && commonjsGlobal.crypto.subtle, M = {
     sha: "SHA-1",
     "sha-1": "SHA-1",
     sha1: "SHA-1",
@@ -8135,9 +8135,9 @@ function requireAsync() {
     });
     return D[re] = ie, ie;
   }
-  var P;
+  var U;
   function Y() {
-    return P || (commonjsGlobal.process && commonjsGlobal.process.nextTick ? P = commonjsGlobal.process.nextTick : commonjsGlobal.queueMicrotask ? P = commonjsGlobal.queueMicrotask : commonjsGlobal.setImmediate ? P = commonjsGlobal.setImmediate : P = commonjsGlobal.setTimeout, P);
+    return U || (commonjsGlobal.process && commonjsGlobal.process.nextTick ? U = commonjsGlobal.process.nextTick : commonjsGlobal.queueMicrotask ? U = commonjsGlobal.queueMicrotask : commonjsGlobal.setImmediate ? U = commonjsGlobal.setImmediate : U = commonjsGlobal.setTimeout, U);
   }
   function X(re, ie, ne, se, oe) {
     return O.importKey(
@@ -8185,7 +8185,7 @@ function requireAsync() {
       });
       return;
     }
-    if (h(ne, se), re = V(re, U, "Password"), ie = V(ie, U, "Salt"), typeof be != "function")
+    if (h(ne, se), re = V(re, P, "Password"), ie = V(ie, P, "Salt"), typeof be != "function")
       throw new Error("No callback provided to pbkdf2");
     ee(I(de).then(function(we) {
       return we ? X(re, ie, ne, se, de) : B(re, ie, ne, se, oe);
@@ -8207,43 +8207,43 @@ function requireUtils$3() {
     B[0 + t] = V >>> 24, B[1 + t] = V >>> 16 & 255, B[2 + t] = V >>> 8 & 255, B[3 + t] = V & 255;
   }, utils$3.ip = function(B, V, t, O) {
     for (var M = 0, D = 0, I = 6; I >= 0; I -= 2) {
-      for (var P = 0; P <= 24; P += 8)
-        M <<= 1, M |= V >>> P + I & 1;
-      for (var P = 0; P <= 24; P += 8)
-        M <<= 1, M |= B >>> P + I & 1;
+      for (var U = 0; U <= 24; U += 8)
+        M <<= 1, M |= V >>> U + I & 1;
+      for (var U = 0; U <= 24; U += 8)
+        M <<= 1, M |= B >>> U + I & 1;
     }
     for (var I = 6; I >= 0; I -= 2) {
-      for (var P = 1; P <= 25; P += 8)
-        D <<= 1, D |= V >>> P + I & 1;
-      for (var P = 1; P <= 25; P += 8)
-        D <<= 1, D |= B >>> P + I & 1;
+      for (var U = 1; U <= 25; U += 8)
+        D <<= 1, D |= V >>> U + I & 1;
+      for (var U = 1; U <= 25; U += 8)
+        D <<= 1, D |= B >>> U + I & 1;
     }
     t[O + 0] = M >>> 0, t[O + 1] = D >>> 0;
   }, utils$3.rip = function(B, V, t, O) {
     for (var M = 0, D = 0, I = 0; I < 4; I++)
-      for (var P = 24; P >= 0; P -= 8)
-        M <<= 1, M |= V >>> P + I & 1, M <<= 1, M |= B >>> P + I & 1;
+      for (var U = 24; U >= 0; U -= 8)
+        M <<= 1, M |= V >>> U + I & 1, M <<= 1, M |= B >>> U + I & 1;
     for (var I = 4; I < 8; I++)
-      for (var P = 24; P >= 0; P -= 8)
-        D <<= 1, D |= V >>> P + I & 1, D <<= 1, D |= B >>> P + I & 1;
+      for (var U = 24; U >= 0; U -= 8)
+        D <<= 1, D |= V >>> U + I & 1, D <<= 1, D |= B >>> U + I & 1;
     t[O + 0] = M >>> 0, t[O + 1] = D >>> 0;
   }, utils$3.pc1 = function(B, V, t, O) {
     for (var M = 0, D = 0, I = 7; I >= 5; I--) {
-      for (var P = 0; P <= 24; P += 8)
-        M <<= 1, M |= V >> P + I & 1;
-      for (var P = 0; P <= 24; P += 8)
-        M <<= 1, M |= B >> P + I & 1;
+      for (var U = 0; U <= 24; U += 8)
+        M <<= 1, M |= V >> U + I & 1;
+      for (var U = 0; U <= 24; U += 8)
+        M <<= 1, M |= B >> U + I & 1;
     }
-    for (var P = 0; P <= 24; P += 8)
-      M <<= 1, M |= V >> P + I & 1;
+    for (var U = 0; U <= 24; U += 8)
+      M <<= 1, M |= V >> U + I & 1;
     for (var I = 1; I <= 3; I++) {
-      for (var P = 0; P <= 24; P += 8)
-        D <<= 1, D |= V >> P + I & 1;
-      for (var P = 0; P <= 24; P += 8)
-        D <<= 1, D |= B >> P + I & 1;
+      for (var U = 0; U <= 24; U += 8)
+        D <<= 1, D |= V >> U + I & 1;
+      for (var U = 0; U <= 24; U += 8)
+        D <<= 1, D |= B >> U + I & 1;
     }
-    for (var P = 0; P <= 24; P += 8)
-      D <<= 1, D |= B >> P + I & 1;
+    for (var U = 0; U <= 24; U += 8)
+      D <<= 1, D |= B >> U + I & 1;
     t[O + 0] = M >>> 0, t[O + 1] = D >>> 0;
   }, utils$3.r28shl = function(B, V) {
     return B << V & 268435455 | B >>> 28 - V;
@@ -8301,10 +8301,10 @@ function requireUtils$3() {
     24
   ];
   utils$3.pc2 = function(B, V, t, O) {
-    for (var M = 0, D = 0, I = $.length >>> 1, P = 0; P < I; P++)
-      M <<= 1, M |= B >>> $[P] & 1;
-    for (var P = I; P < $.length; P++)
-      D <<= 1, D |= V >>> $[P] & 1;
+    for (var M = 0, D = 0, I = $.length >>> 1, U = 0; U < I; U++)
+      M <<= 1, M |= B >>> $[U] & 1;
+    for (var U = I; U < $.length; U++)
+      D <<= 1, D |= V >>> $[U] & 1;
     t[O + 0] = M >>> 0, t[O + 1] = D >>> 0;
   }, utils$3.expand = function(B, V, t) {
     var O = 0, M = 0;
@@ -8840,7 +8840,7 @@ function requireUtils$3() {
     }
     return t >>> 0;
   };
-  var U = [
+  var P = [
     16,
     25,
     12,
@@ -8875,8 +8875,8 @@ function requireUtils$3() {
     7
   ];
   return utils$3.permute = function(B) {
-    for (var V = 0, t = 0; t < U.length; t++)
-      V <<= 1, V |= B >>> U[t] & 1;
+    for (var V = 0, t = 0; t < P.length; t++)
+      V <<= 1, V |= B >>> P[t] & 1;
     return V >>> 0;
   }, utils$3.padSplit = function(B, V, t) {
     for (var O = B.toString(2); O.length < V; )
@@ -8891,13 +8891,13 @@ function requireMinimalisticAssert() {
   if (hasRequiredMinimalisticAssert)
     return minimalisticAssert;
   hasRequiredMinimalisticAssert = 1, minimalisticAssert = $;
-  function $(h, U) {
+  function $(h, P) {
     if (!h)
-      throw new Error(U || "Assertion failed");
+      throw new Error(P || "Assertion failed");
   }
-  return $.equal = function(h, U, B) {
-    if (h != U)
-      throw new Error(B || "Assertion failed: " + h + " != " + U);
+  return $.equal = function(h, P, B) {
+    if (h != P)
+      throw new Error(B || "Assertion failed: " + h + " != " + P);
   }, minimalisticAssert;
 }
 var cipher, hasRequiredCipher;
@@ -8906,52 +8906,52 @@ function requireCipher() {
     return cipher;
   hasRequiredCipher = 1;
   var $ = requireMinimalisticAssert();
-  function h(U) {
-    this.options = U, this.type = this.options.type, this.blockSize = 8, this._init(), this.buffer = new Array(this.blockSize), this.bufferOff = 0, this.padding = U.padding !== !1;
+  function h(P) {
+    this.options = P, this.type = this.options.type, this.blockSize = 8, this._init(), this.buffer = new Array(this.blockSize), this.bufferOff = 0, this.padding = P.padding !== !1;
   }
   return cipher = h, h.prototype._init = function() {
-  }, h.prototype.update = function(U) {
-    return U.length === 0 ? [] : this.type === "decrypt" ? this._updateDecrypt(U) : this._updateEncrypt(U);
-  }, h.prototype._buffer = function(U, B) {
-    for (var V = Math.min(this.buffer.length - this.bufferOff, U.length - B), t = 0; t < V; t++)
-      this.buffer[this.bufferOff + t] = U[B + t];
+  }, h.prototype.update = function(P) {
+    return P.length === 0 ? [] : this.type === "decrypt" ? this._updateDecrypt(P) : this._updateEncrypt(P);
+  }, h.prototype._buffer = function(P, B) {
+    for (var V = Math.min(this.buffer.length - this.bufferOff, P.length - B), t = 0; t < V; t++)
+      this.buffer[this.bufferOff + t] = P[B + t];
     return this.bufferOff += V, V;
-  }, h.prototype._flushBuffer = function(U, B) {
-    return this._update(this.buffer, 0, U, B), this.bufferOff = 0, this.blockSize;
-  }, h.prototype._updateEncrypt = function(U) {
-    var B = 0, V = 0, t = (this.bufferOff + U.length) / this.blockSize | 0, O = new Array(t * this.blockSize);
-    this.bufferOff !== 0 && (B += this._buffer(U, B), this.bufferOff === this.buffer.length && (V += this._flushBuffer(O, V)));
-    for (var M = U.length - (U.length - B) % this.blockSize; B < M; B += this.blockSize)
-      this._update(U, B, O, V), V += this.blockSize;
-    for (; B < U.length; B++, this.bufferOff++)
-      this.buffer[this.bufferOff] = U[B];
+  }, h.prototype._flushBuffer = function(P, B) {
+    return this._update(this.buffer, 0, P, B), this.bufferOff = 0, this.blockSize;
+  }, h.prototype._updateEncrypt = function(P) {
+    var B = 0, V = 0, t = (this.bufferOff + P.length) / this.blockSize | 0, O = new Array(t * this.blockSize);
+    this.bufferOff !== 0 && (B += this._buffer(P, B), this.bufferOff === this.buffer.length && (V += this._flushBuffer(O, V)));
+    for (var M = P.length - (P.length - B) % this.blockSize; B < M; B += this.blockSize)
+      this._update(P, B, O, V), V += this.blockSize;
+    for (; B < P.length; B++, this.bufferOff++)
+      this.buffer[this.bufferOff] = P[B];
     return O;
-  }, h.prototype._updateDecrypt = function(U) {
-    for (var B = 0, V = 0, t = Math.ceil((this.bufferOff + U.length) / this.blockSize) - 1, O = new Array(t * this.blockSize); t > 0; t--)
-      B += this._buffer(U, B), V += this._flushBuffer(O, V);
-    return B += this._buffer(U, B), O;
-  }, h.prototype.final = function(U) {
+  }, h.prototype._updateDecrypt = function(P) {
+    for (var B = 0, V = 0, t = Math.ceil((this.bufferOff + P.length) / this.blockSize) - 1, O = new Array(t * this.blockSize); t > 0; t--)
+      B += this._buffer(P, B), V += this._flushBuffer(O, V);
+    return B += this._buffer(P, B), O;
+  }, h.prototype.final = function(P) {
     var B;
-    U && (B = this.update(U));
+    P && (B = this.update(P));
     var V;
     return this.type === "encrypt" ? V = this._finalEncrypt() : V = this._finalDecrypt(), B ? B.concat(V) : V;
-  }, h.prototype._pad = function(U, B) {
+  }, h.prototype._pad = function(P, B) {
     if (B === 0)
       return !1;
-    for (; B < U.length; )
-      U[B++] = 0;
+    for (; B < P.length; )
+      P[B++] = 0;
     return !0;
   }, h.prototype._finalEncrypt = function() {
     if (!this._pad(this.buffer, this.bufferOff))
       return [];
-    var U = new Array(this.blockSize);
-    return this._update(this.buffer, 0, U, 0), U;
-  }, h.prototype._unpad = function(U) {
-    return U;
+    var P = new Array(this.blockSize);
+    return this._update(this.buffer, 0, P, 0), P;
+  }, h.prototype._unpad = function(P) {
+    return P;
   }, h.prototype._finalDecrypt = function() {
     $.equal(this.bufferOff, this.blockSize, "Not enough data to decrypt");
-    var U = new Array(this.blockSize);
-    return this._flushBuffer(U, 0), this._unpad(U);
+    var P = new Array(this.blockSize);
+    return this._flushBuffer(P, 0), this._unpad(P);
   }, cipher;
 }
 var des, hasRequiredDes$1;
@@ -8959,7 +8959,7 @@ function requireDes$1() {
   if (hasRequiredDes$1)
     return des;
   hasRequiredDes$1 = 1;
-  var $ = requireMinimalisticAssert(), h = requireInherits_browser(), U = requireUtils$3(), B = requireCipher();
+  var $ = requireMinimalisticAssert(), h = requireInherits_browser(), P = requireUtils$3(), B = requireCipher();
   function V() {
     this.tmp = new Array(2), this.keys = null;
   }
@@ -8991,20 +8991,20 @@ function requireDes$1() {
   ];
   return t.prototype.deriveKeys = function(M, D) {
     M.keys = new Array(16 * 2), $.equal(D.length, this.blockSize, "Invalid key length");
-    var I = U.readUInt32BE(D, 0), P = U.readUInt32BE(D, 4);
-    U.pc1(I, P, M.tmp, 0), I = M.tmp[0], P = M.tmp[1];
+    var I = P.readUInt32BE(D, 0), U = P.readUInt32BE(D, 4);
+    P.pc1(I, U, M.tmp, 0), I = M.tmp[0], U = M.tmp[1];
     for (var Y = 0; Y < M.keys.length; Y += 2) {
       var X = O[Y >>> 1];
-      I = U.r28shl(I, X), P = U.r28shl(P, X), U.pc2(I, P, M.keys, Y);
+      I = P.r28shl(I, X), U = P.r28shl(U, X), P.pc2(I, U, M.keys, Y);
     }
-  }, t.prototype._update = function(M, D, I, P) {
-    var Y = this._desState, X = U.readUInt32BE(M, D), ee = U.readUInt32BE(M, D + 4);
-    U.ip(X, ee, Y.tmp, 0), X = Y.tmp[0], ee = Y.tmp[1], this.type === "encrypt" ? this._encrypt(Y, X, ee, Y.tmp, 0) : this._decrypt(Y, X, ee, Y.tmp, 0), X = Y.tmp[0], ee = Y.tmp[1], U.writeUInt32BE(I, X, P), U.writeUInt32BE(I, ee, P + 4);
+  }, t.prototype._update = function(M, D, I, U) {
+    var Y = this._desState, X = P.readUInt32BE(M, D), ee = P.readUInt32BE(M, D + 4);
+    P.ip(X, ee, Y.tmp, 0), X = Y.tmp[0], ee = Y.tmp[1], this.type === "encrypt" ? this._encrypt(Y, X, ee, Y.tmp, 0) : this._decrypt(Y, X, ee, Y.tmp, 0), X = Y.tmp[0], ee = Y.tmp[1], P.writeUInt32BE(I, X, U), P.writeUInt32BE(I, ee, U + 4);
   }, t.prototype._pad = function(M, D) {
     if (this.padding === !1)
       return !1;
-    for (var I = M.length - D, P = D; P < M.length; P++)
-      M[P] = I;
+    for (var I = M.length - D, U = D; U < M.length; U++)
+      M[U] = I;
     return !0;
   }, t.prototype._unpad = function(M) {
     if (this.padding === !1)
@@ -9012,22 +9012,22 @@ function requireDes$1() {
     for (var D = M[M.length - 1], I = M.length - D; I < M.length; I++)
       $.equal(M[I], D);
     return M.slice(0, M.length - D);
-  }, t.prototype._encrypt = function(M, D, I, P, Y) {
+  }, t.prototype._encrypt = function(M, D, I, U, Y) {
     for (var X = D, ee = I, re = 0; re < M.keys.length; re += 2) {
       var ie = M.keys[re], ne = M.keys[re + 1];
-      U.expand(ee, M.tmp, 0), ie ^= M.tmp[0], ne ^= M.tmp[1];
-      var se = U.substitute(ie, ne), oe = U.permute(se), be = ee;
+      P.expand(ee, M.tmp, 0), ie ^= M.tmp[0], ne ^= M.tmp[1];
+      var se = P.substitute(ie, ne), oe = P.permute(se), be = ee;
       ee = (X ^ oe) >>> 0, X = be;
     }
-    U.rip(ee, X, P, Y);
-  }, t.prototype._decrypt = function(M, D, I, P, Y) {
+    P.rip(ee, X, U, Y);
+  }, t.prototype._decrypt = function(M, D, I, U, Y) {
     for (var X = I, ee = D, re = M.keys.length - 2; re >= 0; re -= 2) {
       var ie = M.keys[re], ne = M.keys[re + 1];
-      U.expand(X, M.tmp, 0), ie ^= M.tmp[0], ne ^= M.tmp[1];
-      var se = U.substitute(ie, ne), oe = U.permute(se), be = X;
+      P.expand(X, M.tmp, 0), ie ^= M.tmp[0], ne ^= M.tmp[1];
+      var se = P.substitute(ie, ne), oe = P.permute(se), be = X;
       X = (ee ^ oe) >>> 0, ee = be;
     }
-    U.rip(X, ee, P, Y);
+    P.rip(X, ee, U, Y);
   }, des;
 }
 var cbc$1 = {}, hasRequiredCbc$1;
@@ -9035,38 +9035,38 @@ function requireCbc$1() {
   if (hasRequiredCbc$1)
     return cbc$1;
   hasRequiredCbc$1 = 1;
-  var $ = requireMinimalisticAssert(), h = requireInherits_browser(), U = {};
+  var $ = requireMinimalisticAssert(), h = requireInherits_browser(), P = {};
   function B(t) {
     $.equal(t.length, 8, "Invalid IV length"), this.iv = new Array(8);
     for (var O = 0; O < this.iv.length; O++)
       this.iv[O] = t[O];
   }
   function V(t) {
-    function O(P) {
-      t.call(this, P), this._cbcInit();
+    function O(U) {
+      t.call(this, U), this._cbcInit();
     }
     h(O, t);
-    for (var M = Object.keys(U), D = 0; D < M.length; D++) {
+    for (var M = Object.keys(P), D = 0; D < M.length; D++) {
       var I = M[D];
-      O.prototype[I] = U[I];
+      O.prototype[I] = P[I];
     }
-    return O.create = function(P) {
-      return new O(P);
+    return O.create = function(U) {
+      return new O(U);
     }, O;
   }
-  return cbc$1.instantiate = V, U._cbcInit = function() {
+  return cbc$1.instantiate = V, P._cbcInit = function() {
     var t = new B(this.options.iv);
     this._cbcState = t;
-  }, U._update = function(t, O, M, D) {
-    var I = this._cbcState, P = this.constructor.super_.prototype, Y = I.iv;
+  }, P._update = function(t, O, M, D) {
+    var I = this._cbcState, U = this.constructor.super_.prototype, Y = I.iv;
     if (this.type === "encrypt") {
       for (var X = 0; X < this.blockSize; X++)
         Y[X] ^= t[O + X];
-      P._update.call(this, Y, 0, M, D);
+      U._update.call(this, Y, 0, M, D);
       for (var X = 0; X < this.blockSize; X++)
         Y[X] = M[D + X];
     } else {
-      P._update.call(this, t, O, M, D);
+      U._update.call(this, t, O, M, D);
       for (var X = 0; X < this.blockSize; X++)
         M[D + X] ^= Y[X];
       for (var X = 0; X < this.blockSize; X++)
@@ -9079,30 +9079,30 @@ function requireEde() {
   if (hasRequiredEde)
     return ede;
   hasRequiredEde = 1;
-  var $ = requireMinimalisticAssert(), h = requireInherits_browser(), U = requireCipher(), B = requireDes$1();
+  var $ = requireMinimalisticAssert(), h = requireInherits_browser(), P = requireCipher(), B = requireDes$1();
   function V(O, M) {
     $.equal(M.length, 24, "Invalid key length");
-    var D = M.slice(0, 8), I = M.slice(8, 16), P = M.slice(16, 24);
+    var D = M.slice(0, 8), I = M.slice(8, 16), U = M.slice(16, 24);
     O === "encrypt" ? this.ciphers = [
       B.create({ type: "encrypt", key: D }),
       B.create({ type: "decrypt", key: I }),
-      B.create({ type: "encrypt", key: P })
+      B.create({ type: "encrypt", key: U })
     ] : this.ciphers = [
-      B.create({ type: "decrypt", key: P }),
+      B.create({ type: "decrypt", key: U }),
       B.create({ type: "encrypt", key: I }),
       B.create({ type: "decrypt", key: D })
     ];
   }
   function t(O) {
-    U.call(this, O);
+    P.call(this, O);
     var M = new V(this.type, this.options.key);
     this._edeState = M;
   }
-  return h(t, U), ede = t, t.create = function(O) {
+  return h(t, P), ede = t, t.create = function(O) {
     return new t(O);
   }, t.prototype._update = function(O, M, D, I) {
-    var P = this._edeState;
-    P.ciphers[0]._update(O, M, D, I), P.ciphers[1]._update(D, I, D, I), P.ciphers[2]._update(D, I, D, I);
+    var U = this._edeState;
+    U.ciphers[0]._update(O, M, D, I), U.ciphers[1]._update(D, I, D, I), U.ciphers[2]._update(D, I, D, I);
   }, t.prototype._pad = B.prototype._pad, t.prototype._unpad = B.prototype._unpad, ede;
 }
 var hasRequiredDes;
@@ -9114,7 +9114,7 @@ function requireBrowserifyDes() {
   if (hasRequiredBrowserifyDes)
     return browserifyDes;
   hasRequiredBrowserifyDes = 1;
-  var $ = requireCipherBase(), h = requireDes(), U = requireInherits_browser(), B = requireSafeBuffer$1().Buffer, V = {
+  var $ = requireCipherBase(), h = requireDes(), P = requireInherits_browser(), B = requireSafeBuffer$1().Buffer, V = {
     "des-ede3-cbc": h.CBC.instantiate(h.EDE),
     "des-ede3": h.EDE,
     "des-ede-cbc": h.CBC.instantiate(h.EDE),
@@ -9122,16 +9122,16 @@ function requireBrowserifyDes() {
     "des-cbc": h.CBC.instantiate(h.DES),
     "des-ecb": h.DES
   };
-  V.des = V["des-cbc"], V.des3 = V["des-ede3-cbc"], browserifyDes = t, U(t, $);
+  V.des = V["des-cbc"], V.des3 = V["des-ede3-cbc"], browserifyDes = t, P(t, $);
   function t(O) {
     $.call(this);
     var M = O.mode.toLowerCase(), D = V[M], I;
     O.decrypt ? I = "decrypt" : I = "encrypt";
-    var P = O.key;
-    B.isBuffer(P) || (P = B.from(P)), (M === "des-ede" || M === "des-ede-cbc") && (P = B.concat([P, P.slice(0, 8)]));
+    var U = O.key;
+    B.isBuffer(U) || (U = B.from(U)), (M === "des-ede" || M === "des-ede-cbc") && (U = B.concat([U, U.slice(0, 8)]));
     var Y = O.iv;
     B.isBuffer(Y) || (Y = B.from(Y)), this._des = D.create({
-      key: P,
+      key: U,
       iv: Y,
       type: I
     });
@@ -9153,7 +9153,7 @@ function requireEcb() {
 var cbc = {}, bufferXor, hasRequiredBufferXor;
 function requireBufferXor() {
   return hasRequiredBufferXor || (hasRequiredBufferXor = 1, bufferXor = function($, h) {
-    for (var U = Math.min($.length, h.length), B = new bufferExports.Buffer(U), V = 0; V < U; ++V)
+    for (var P = Math.min($.length, h.length), B = new bufferExports.Buffer(P), V = 0; V < P; ++V)
       B[V] = $[V] ^ h[V];
     return B;
   }), bufferXor;
@@ -9164,13 +9164,13 @@ function requireCbc() {
     return cbc;
   hasRequiredCbc = 1;
   var $ = requireBufferXor();
-  return cbc.encrypt = function(h, U) {
-    var B = $(U, h._prev);
+  return cbc.encrypt = function(h, P) {
+    var B = $(P, h._prev);
     return h._prev = h._cipher.encryptBlock(B), h._prev;
-  }, cbc.decrypt = function(h, U) {
+  }, cbc.decrypt = function(h, P) {
     var B = h._prev;
-    h._prev = U;
-    var V = h._cipher.decryptBlock(U);
+    h._prev = P;
+    var V = h._cipher.decryptBlock(P);
     return $(V, B);
   }, cbc;
 }
@@ -9180,16 +9180,16 @@ function requireCfb() {
     return cfb;
   hasRequiredCfb = 1;
   var $ = requireSafeBuffer$1().Buffer, h = requireBufferXor();
-  function U(B, V, t) {
+  function P(B, V, t) {
     var O = V.length, M = h(V, B._cache);
     return B._cache = B._cache.slice(O), B._prev = $.concat([B._prev, t ? V : M]), M;
   }
   return cfb.encrypt = function(B, V, t) {
     for (var O = $.allocUnsafe(0), M; V.length; )
       if (B._cache.length === 0 && (B._cache = B._cipher.encryptBlock(B._prev), B._prev = $.allocUnsafe(0)), B._cache.length <= V.length)
-        M = B._cache.length, O = $.concat([O, U(B, V.slice(0, M), t)]), V = V.slice(M);
+        M = B._cache.length, O = $.concat([O, P(B, V.slice(0, M), t)]), V = V.slice(M);
       else {
-        O = $.concat([O, U(B, V, t)]);
+        O = $.concat([O, P(B, V, t)]);
         break;
       }
     return O;
@@ -9201,16 +9201,16 @@ function requireCfb8() {
     return cfb8;
   hasRequiredCfb8 = 1;
   var $ = requireSafeBuffer$1().Buffer;
-  function h(U, B, V) {
-    var t = U._cipher.encryptBlock(U._prev), O = t[0] ^ B;
-    return U._prev = $.concat([
-      U._prev.slice(1),
+  function h(P, B, V) {
+    var t = P._cipher.encryptBlock(P._prev), O = t[0] ^ B;
+    return P._prev = $.concat([
+      P._prev.slice(1),
       $.from([V ? B : O])
     ]), O;
   }
-  return cfb8.encrypt = function(U, B, V) {
+  return cfb8.encrypt = function(P, B, V) {
     for (var t = B.length, O = $.allocUnsafe(t), M = -1; ++M < t; )
-      O[M] = h(U, B[M], V);
+      O[M] = h(P, B[M], V);
     return O;
   }, cfb8;
 }
@@ -9221,11 +9221,11 @@ function requireCfb1() {
   hasRequiredCfb1 = 1;
   var $ = requireSafeBuffer$1().Buffer;
   function h(B, V, t) {
-    for (var O, M = -1, D = 8, I = 0, P, Y; ++M < D; )
-      O = B._cipher.encryptBlock(B._prev), P = V & 1 << 7 - M ? 128 : 0, Y = O[0] ^ P, I += (Y & 128) >> M % 8, B._prev = U(B._prev, t ? P : Y);
+    for (var O, M = -1, D = 8, I = 0, U, Y; ++M < D; )
+      O = B._cipher.encryptBlock(B._prev), U = V & 1 << 7 - M ? 128 : 0, Y = O[0] ^ U, I += (Y & 128) >> M % 8, B._prev = P(B._prev, t ? U : Y);
     return I;
   }
-  function U(B, V) {
+  function P(B, V) {
     var t = B.length, O = -1, M = $.allocUnsafe(B.length);
     for (B = $.concat([B, $.from([V])]); ++O < t; )
       M[O] = B[O] << 1 | B[O + 1] >> 7;
@@ -9243,14 +9243,14 @@ function requireOfb() {
     return ofb;
   hasRequiredOfb = 1;
   var $ = requireBufferXor();
-  function h(U) {
-    return U._prev = U._cipher.encryptBlock(U._prev), U._prev;
+  function h(P) {
+    return P._prev = P._cipher.encryptBlock(P._prev), P._prev;
   }
-  return ofb.encrypt = function(U, B) {
-    for (; U._cache.length < B.length; )
-      U._cache = bufferExports.Buffer.concat([U._cache, h(U)]);
-    var V = U._cache.slice(0, B.length);
-    return U._cache = U._cache.slice(B.length), $(B, V);
+  return ofb.encrypt = function(P, B) {
+    for (; P._cache.length < B.length; )
+      P._cache = bufferExports.Buffer.concat([P._cache, h(P)]);
+    var V = P._cache.slice(0, B.length);
+    return P._cache = P._cache.slice(B.length), $(B, V);
   }, ofb;
 }
 var ctr = {}, incr32_1, hasRequiredIncr32;
@@ -9259,11 +9259,11 @@ function requireIncr32() {
     return incr32_1;
   hasRequiredIncr32 = 1;
   function $(h) {
-    for (var U = h.length, B; U--; )
-      if (B = h.readUInt8(U), B === 255)
-        h.writeUInt8(0, U);
+    for (var P = h.length, B; P--; )
+      if (B = h.readUInt8(P), B === 255)
+        h.writeUInt8(0, P);
       else {
-        B++, h.writeUInt8(B, U);
+        B++, h.writeUInt8(B, P);
         break;
       }
   }
@@ -9274,10 +9274,10 @@ function requireCtr() {
   if (hasRequiredCtr)
     return ctr;
   hasRequiredCtr = 1;
-  var $ = requireBufferXor(), h = requireSafeBuffer$1().Buffer, U = requireIncr32();
+  var $ = requireBufferXor(), h = requireSafeBuffer$1().Buffer, P = requireIncr32();
   function B(t) {
     var O = t._cipher.encryptBlockRaw(t._prev);
-    return U(t._prev), O;
+    return P(t._prev), O;
   }
   var V = 16;
   return ctr.encrypt = function(t, O) {
@@ -9287,8 +9287,8 @@ function requireCtr() {
       h.allocUnsafe(M * V)
     ]);
     for (var I = 0; I < M; I++) {
-      var P = B(t), Y = D + I * V;
-      t._cache.writeUInt32BE(P[0], Y + 0), t._cache.writeUInt32BE(P[1], Y + 4), t._cache.writeUInt32BE(P[2], Y + 8), t._cache.writeUInt32BE(P[3], Y + 12);
+      var U = B(t), Y = D + I * V;
+      t._cache.writeUInt32BE(U[0], Y + 0), t._cache.writeUInt32BE(U[1], Y + 4), t._cache.writeUInt32BE(U[2], Y + 8), t._cache.writeUInt32BE(U[3], Y + 12);
     }
     var X = t._cache.slice(0, O.length);
     return t._cache = t._cache.slice(O.length), $(O, X);
@@ -9500,8 +9500,8 @@ function requireModes$1() {
     CTR: requireCtr(),
     GCM: requireCtr()
   }, h = require$$2;
-  for (var U in h)
-    h[U].module = $[h[U].mode];
+  for (var P in h)
+    h[P].module = $[h[P].mode];
   return modes_1 = h, modes_1;
 }
 var aes = {}, hasRequiredAes;
@@ -9512,31 +9512,31 @@ function requireAes() {
   var $ = requireSafeBuffer$1().Buffer;
   function h(M) {
     $.isBuffer(M) || (M = $.from(M));
-    for (var D = M.length / 4 | 0, I = new Array(D), P = 0; P < D; P++)
-      I[P] = M.readUInt32BE(P * 4);
+    for (var D = M.length / 4 | 0, I = new Array(D), U = 0; U < D; U++)
+      I[U] = M.readUInt32BE(U * 4);
     return I;
   }
-  function U(M) {
+  function P(M) {
     for (var D = 0; D < M.length; M++)
       M[D] = 0;
   }
-  function B(M, D, I, P, Y) {
+  function B(M, D, I, U, Y) {
     for (var X = I[0], ee = I[1], re = I[2], ie = I[3], ne = M[0] ^ D[0], se = M[1] ^ D[1], oe = M[2] ^ D[2], be = M[3] ^ D[3], de, we, Se, ke, he = 4, le = 1; le < Y; le++)
       de = X[ne >>> 24] ^ ee[se >>> 16 & 255] ^ re[oe >>> 8 & 255] ^ ie[be & 255] ^ D[he++], we = X[se >>> 24] ^ ee[oe >>> 16 & 255] ^ re[be >>> 8 & 255] ^ ie[ne & 255] ^ D[he++], Se = X[oe >>> 24] ^ ee[be >>> 16 & 255] ^ re[ne >>> 8 & 255] ^ ie[se & 255] ^ D[he++], ke = X[be >>> 24] ^ ee[ne >>> 16 & 255] ^ re[se >>> 8 & 255] ^ ie[oe & 255] ^ D[he++], ne = de, se = we, oe = Se, be = ke;
-    return de = (P[ne >>> 24] << 24 | P[se >>> 16 & 255] << 16 | P[oe >>> 8 & 255] << 8 | P[be & 255]) ^ D[he++], we = (P[se >>> 24] << 24 | P[oe >>> 16 & 255] << 16 | P[be >>> 8 & 255] << 8 | P[ne & 255]) ^ D[he++], Se = (P[oe >>> 24] << 24 | P[be >>> 16 & 255] << 16 | P[ne >>> 8 & 255] << 8 | P[se & 255]) ^ D[he++], ke = (P[be >>> 24] << 24 | P[ne >>> 16 & 255] << 16 | P[se >>> 8 & 255] << 8 | P[oe & 255]) ^ D[he++], de = de >>> 0, we = we >>> 0, Se = Se >>> 0, ke = ke >>> 0, [de, we, Se, ke];
+    return de = (U[ne >>> 24] << 24 | U[se >>> 16 & 255] << 16 | U[oe >>> 8 & 255] << 8 | U[be & 255]) ^ D[he++], we = (U[se >>> 24] << 24 | U[oe >>> 16 & 255] << 16 | U[be >>> 8 & 255] << 8 | U[ne & 255]) ^ D[he++], Se = (U[oe >>> 24] << 24 | U[be >>> 16 & 255] << 16 | U[ne >>> 8 & 255] << 8 | U[se & 255]) ^ D[he++], ke = (U[be >>> 24] << 24 | U[ne >>> 16 & 255] << 16 | U[se >>> 8 & 255] << 8 | U[oe & 255]) ^ D[he++], de = de >>> 0, we = we >>> 0, Se = Se >>> 0, ke = ke >>> 0, [de, we, Se, ke];
   }
   var V = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54], t = function() {
     for (var M = new Array(256), D = 0; D < 256; D++)
       D < 128 ? M[D] = D << 1 : M[D] = D << 1 ^ 283;
-    for (var I = [], P = [], Y = [[], [], [], []], X = [[], [], [], []], ee = 0, re = 0, ie = 0; ie < 256; ++ie) {
+    for (var I = [], U = [], Y = [[], [], [], []], X = [[], [], [], []], ee = 0, re = 0, ie = 0; ie < 256; ++ie) {
       var ne = re ^ re << 1 ^ re << 2 ^ re << 3 ^ re << 4;
-      ne = ne >>> 8 ^ ne & 255 ^ 99, I[ee] = ne, P[ne] = ee;
+      ne = ne >>> 8 ^ ne & 255 ^ 99, I[ee] = ne, U[ne] = ee;
       var se = M[ee], oe = M[se], be = M[oe], de = M[ne] * 257 ^ ne * 16843008;
       Y[0][ee] = de << 24 | de >>> 8, Y[1][ee] = de << 16 | de >>> 16, Y[2][ee] = de << 8 | de >>> 24, Y[3][ee] = de, de = be * 16843009 ^ oe * 65537 ^ se * 257 ^ ee * 16843008, X[0][ne] = de << 24 | de >>> 8, X[1][ne] = de << 16 | de >>> 16, X[2][ne] = de << 8 | de >>> 24, X[3][ne] = de, ee === 0 ? ee = re = 1 : (ee = se ^ M[M[M[be ^ se]]], re ^= M[M[re]]);
     }
     return {
       SBOX: I,
-      INV_SBOX: P,
+      INV_SBOX: U,
       SUB_MIX: Y,
       INV_SUB_MIX: X
     };
@@ -9545,14 +9545,14 @@ function requireAes() {
     this._key = h(M), this._reset();
   }
   return O.blockSize = 4 * 4, O.keySize = 256 / 8, O.prototype.blockSize = O.blockSize, O.prototype.keySize = O.keySize, O.prototype._reset = function() {
-    for (var M = this._key, D = M.length, I = D + 6, P = (I + 1) * 4, Y = [], X = 0; X < D; X++)
+    for (var M = this._key, D = M.length, I = D + 6, U = (I + 1) * 4, Y = [], X = 0; X < D; X++)
       Y[X] = M[X];
-    for (X = D; X < P; X++) {
+    for (X = D; X < U; X++) {
       var ee = Y[X - 1];
       X % D === 0 ? (ee = ee << 8 | ee >>> 24, ee = t.SBOX[ee >>> 24] << 24 | t.SBOX[ee >>> 16 & 255] << 16 | t.SBOX[ee >>> 8 & 255] << 8 | t.SBOX[ee & 255], ee ^= V[X / D | 0] << 24) : D > 6 && X % D === 4 && (ee = t.SBOX[ee >>> 24] << 24 | t.SBOX[ee >>> 16 & 255] << 16 | t.SBOX[ee >>> 8 & 255] << 8 | t.SBOX[ee & 255]), Y[X] = Y[X - D] ^ ee;
     }
-    for (var re = [], ie = 0; ie < P; ie++) {
-      var ne = P - ie, se = Y[ne - (ie % 4 ? 0 : 4)];
+    for (var re = [], ie = 0; ie < U; ie++) {
+      var ne = U - ie, se = Y[ne - (ie % 4 ? 0 : 4)];
       ie < 4 || ne <= 4 ? re[ie] = se : re[ie] = t.INV_SUB_MIX[0][t.SBOX[se >>> 24]] ^ t.INV_SUB_MIX[1][t.SBOX[se >>> 16 & 255]] ^ t.INV_SUB_MIX[2][t.SBOX[se >>> 8 & 255]] ^ t.INV_SUB_MIX[3][t.SBOX[se & 255]];
     }
     this._nRounds = I, this._keySchedule = Y, this._invKeySchedule = re;
@@ -9565,10 +9565,10 @@ function requireAes() {
     M = h(M);
     var D = M[1];
     M[1] = M[3], M[3] = D;
-    var I = B(M, this._invKeySchedule, t.INV_SUB_MIX, t.INV_SBOX, this._nRounds), P = $.allocUnsafe(16);
-    return P.writeUInt32BE(I[0], 0), P.writeUInt32BE(I[3], 4), P.writeUInt32BE(I[2], 8), P.writeUInt32BE(I[1], 12), P;
+    var I = B(M, this._invKeySchedule, t.INV_SUB_MIX, t.INV_SBOX, this._nRounds), U = $.allocUnsafe(16);
+    return U.writeUInt32BE(I[0], 0), U.writeUInt32BE(I[3], 4), U.writeUInt32BE(I[2], 8), U.writeUInt32BE(I[1], 12), U;
   }, O.prototype.scrub = function() {
-    U(this._keySchedule), U(this._invKeySchedule), U(this._key);
+    P(this._keySchedule), P(this._invKeySchedule), P(this._key);
   }, aes.AES = O, aes;
 }
 var ghash, hasRequiredGhash;
@@ -9577,7 +9577,7 @@ function requireGhash() {
     return ghash;
   hasRequiredGhash = 1;
   var $ = requireSafeBuffer$1().Buffer, h = $.alloc(16, 0);
-  function U(t) {
+  function P(t) {
     return [
       t.readUInt32BE(0),
       t.readUInt32BE(4),
@@ -9597,8 +9597,8 @@ function requireGhash() {
       this.state[O] ^= t[O];
     this._multiply();
   }, V.prototype._multiply = function() {
-    for (var t = U(this.h), O = [0, 0, 0, 0], M, D, I, P = -1; ++P < 128; ) {
-      for (D = (this.state[~~(P / 8)] & 1 << 7 - P % 8) !== 0, D && (O[0] ^= t[0], O[1] ^= t[1], O[2] ^= t[2], O[3] ^= t[3]), I = (t[3] & 1) !== 0, M = 3; M > 0; M--)
+    for (var t = P(this.h), O = [0, 0, 0, 0], M, D, I, U = -1; ++U < 128; ) {
+      for (D = (this.state[~~(U / 8)] & 1 << 7 - U % 8) !== 0, D && (O[0] ^= t[0], O[1] ^= t[1], O[2] ^= t[2], O[3] ^= t[3]), I = (t[3] & 1) !== 0, M = 3; M > 0; M--)
         t[M] = t[M] >>> 1 | (t[M - 1] & 1) << 31;
       t[0] = t[0] >>> 1, I && (t[0] = t[0] ^ 225 << 24);
     }
@@ -9616,58 +9616,58 @@ function requireAuthCipher() {
   if (hasRequiredAuthCipher)
     return authCipher;
   hasRequiredAuthCipher = 1;
-  var $ = requireAes(), h = requireSafeBuffer$1().Buffer, U = requireCipherBase(), B = requireInherits_browser(), V = requireGhash(), t = requireBufferXor(), O = requireIncr32();
-  function M(P, Y) {
+  var $ = requireAes(), h = requireSafeBuffer$1().Buffer, P = requireCipherBase(), B = requireInherits_browser(), V = requireGhash(), t = requireBufferXor(), O = requireIncr32();
+  function M(U, Y) {
     var X = 0;
-    P.length !== Y.length && X++;
-    for (var ee = Math.min(P.length, Y.length), re = 0; re < ee; ++re)
-      X += P[re] ^ Y[re];
+    U.length !== Y.length && X++;
+    for (var ee = Math.min(U.length, Y.length), re = 0; re < ee; ++re)
+      X += U[re] ^ Y[re];
     return X;
   }
-  function D(P, Y, X) {
+  function D(U, Y, X) {
     if (Y.length === 12)
-      return P._finID = h.concat([Y, h.from([0, 0, 0, 1])]), h.concat([Y, h.from([0, 0, 0, 2])]);
+      return U._finID = h.concat([Y, h.from([0, 0, 0, 1])]), h.concat([Y, h.from([0, 0, 0, 2])]);
     var ee = new V(X), re = Y.length, ie = re % 16;
     ee.update(Y), ie && (ie = 16 - ie, ee.update(h.alloc(ie, 0))), ee.update(h.alloc(8, 0));
     var ne = re * 8, se = h.alloc(8);
-    se.writeUIntBE(ne, 0, 8), ee.update(se), P._finID = ee.state;
-    var oe = h.from(P._finID);
+    se.writeUIntBE(ne, 0, 8), ee.update(se), U._finID = ee.state;
+    var oe = h.from(U._finID);
     return O(oe), oe;
   }
-  function I(P, Y, X, ee) {
-    U.call(this);
+  function I(U, Y, X, ee) {
+    P.call(this);
     var re = h.alloc(4, 0);
     this._cipher = new $.AES(Y);
     var ie = this._cipher.encryptBlock(re);
-    this._ghash = new V(ie), X = D(this, X, ie), this._prev = h.from(X), this._cache = h.allocUnsafe(0), this._secCache = h.allocUnsafe(0), this._decrypt = ee, this._alen = 0, this._len = 0, this._mode = P, this._authTag = null, this._called = !1;
+    this._ghash = new V(ie), X = D(this, X, ie), this._prev = h.from(X), this._cache = h.allocUnsafe(0), this._secCache = h.allocUnsafe(0), this._decrypt = ee, this._alen = 0, this._len = 0, this._mode = U, this._authTag = null, this._called = !1;
   }
-  return B(I, U), I.prototype._update = function(P) {
+  return B(I, P), I.prototype._update = function(U) {
     if (!this._called && this._alen) {
       var Y = 16 - this._alen % 16;
       Y < 16 && (Y = h.alloc(Y, 0), this._ghash.update(Y));
     }
     this._called = !0;
-    var X = this._mode.encrypt(this, P);
-    return this._decrypt ? this._ghash.update(P) : this._ghash.update(X), this._len += P.length, X;
+    var X = this._mode.encrypt(this, U);
+    return this._decrypt ? this._ghash.update(U) : this._ghash.update(X), this._len += U.length, X;
   }, I.prototype._final = function() {
     if (this._decrypt && !this._authTag)
       throw new Error("Unsupported state or unable to authenticate data");
-    var P = t(this._ghash.final(this._alen * 8, this._len * 8), this._cipher.encryptBlock(this._finID));
-    if (this._decrypt && M(P, this._authTag))
+    var U = t(this._ghash.final(this._alen * 8, this._len * 8), this._cipher.encryptBlock(this._finID));
+    if (this._decrypt && M(U, this._authTag))
       throw new Error("Unsupported state or unable to authenticate data");
-    this._authTag = P, this._cipher.scrub();
+    this._authTag = U, this._cipher.scrub();
   }, I.prototype.getAuthTag = function() {
     if (this._decrypt || !h.isBuffer(this._authTag))
       throw new Error("Attempting to get auth tag in unsupported state");
     return this._authTag;
-  }, I.prototype.setAuthTag = function(P) {
+  }, I.prototype.setAuthTag = function(U) {
     if (!this._decrypt)
       throw new Error("Attempting to set auth tag in unsupported state");
-    this._authTag = P;
-  }, I.prototype.setAAD = function(P) {
+    this._authTag = U;
+  }, I.prototype.setAAD = function(U) {
     if (this._called)
       throw new Error("Attempting to set AAD in unsupported state");
-    this._ghash.update(P), this._alen += P.length;
+    this._ghash.update(U), this._alen += U.length;
   }, authCipher = I, authCipher;
 }
 var streamCipher, hasRequiredStreamCipher;
@@ -9675,11 +9675,11 @@ function requireStreamCipher() {
   if (hasRequiredStreamCipher)
     return streamCipher;
   hasRequiredStreamCipher = 1;
-  var $ = requireAes(), h = requireSafeBuffer$1().Buffer, U = requireCipherBase(), B = requireInherits_browser();
+  var $ = requireAes(), h = requireSafeBuffer$1().Buffer, P = requireCipherBase(), B = requireInherits_browser();
   function V(t, O, M, D) {
-    U.call(this), this._cipher = new $.AES(O), this._prev = h.from(M), this._cache = h.allocUnsafe(0), this._secCache = h.allocUnsafe(0), this._decrypt = D, this._mode = t;
+    P.call(this), this._cipher = new $.AES(O), this._prev = h.from(M), this._cache = h.allocUnsafe(0), this._secCache = h.allocUnsafe(0), this._decrypt = D, this._mode = t;
   }
-  return B(V, U), V.prototype._update = function(t) {
+  return B(V, P), V.prototype._update = function(t) {
     return this._mode.encrypt(this, t, this._decrypt);
   }, V.prototype._final = function() {
     this._cipher.scrub();
@@ -9691,42 +9691,42 @@ function requireEvp_bytestokey() {
     return evp_bytestokey;
   hasRequiredEvp_bytestokey = 1;
   var $ = requireSafeBuffer$1().Buffer, h = requireMd5_js();
-  function U(B, V, t, O) {
+  function P(B, V, t, O) {
     if ($.isBuffer(B) || (B = $.from(B, "binary")), V && ($.isBuffer(V) || (V = $.from(V, "binary")), V.length !== 8))
       throw new RangeError("salt should be Buffer with 8 byte length");
-    for (var M = t / 8, D = $.alloc(M), I = $.alloc(O || 0), P = $.alloc(0); M > 0 || O > 0; ) {
+    for (var M = t / 8, D = $.alloc(M), I = $.alloc(O || 0), U = $.alloc(0); M > 0 || O > 0; ) {
       var Y = new h();
-      Y.update(P), Y.update(B), V && Y.update(V), P = Y.digest();
+      Y.update(U), Y.update(B), V && Y.update(V), U = Y.digest();
       var X = 0;
       if (M > 0) {
         var ee = D.length - M;
-        X = Math.min(M, P.length), P.copy(D, ee, 0, X), M -= X;
+        X = Math.min(M, U.length), U.copy(D, ee, 0, X), M -= X;
       }
-      if (X < P.length && O > 0) {
-        var re = I.length - O, ie = Math.min(O, P.length - X);
-        P.copy(I, re, X, X + ie), O -= ie;
+      if (X < U.length && O > 0) {
+        var re = I.length - O, ie = Math.min(O, U.length - X);
+        U.copy(I, re, X, X + ie), O -= ie;
       }
     }
-    return P.fill(0), { key: D, iv: I };
+    return U.fill(0), { key: D, iv: I };
   }
-  return evp_bytestokey = U, evp_bytestokey;
+  return evp_bytestokey = P, evp_bytestokey;
 }
 var hasRequiredEncrypter;
 function requireEncrypter() {
   if (hasRequiredEncrypter)
     return encrypter;
   hasRequiredEncrypter = 1;
-  var $ = requireModes$1(), h = requireAuthCipher(), U = requireSafeBuffer$1().Buffer, B = requireStreamCipher(), V = requireCipherBase(), t = requireAes(), O = requireEvp_bytestokey(), M = requireInherits_browser();
+  var $ = requireModes$1(), h = requireAuthCipher(), P = requireSafeBuffer$1().Buffer, B = requireStreamCipher(), V = requireCipherBase(), t = requireAes(), O = requireEvp_bytestokey(), M = requireInherits_browser();
   function D(ee, re, ie) {
-    V.call(this), this._cache = new P(), this._cipher = new t.AES(re), this._prev = U.from(ie), this._mode = ee, this._autopadding = !0;
+    V.call(this), this._cache = new U(), this._cipher = new t.AES(re), this._prev = P.from(ie), this._mode = ee, this._autopadding = !0;
   }
   M(D, V), D.prototype._update = function(ee) {
     this._cache.add(ee);
     for (var re, ie, ne = []; re = this._cache.get(); )
       ie = this._mode.encrypt(this, re), ne.push(ie);
-    return U.concat(ne);
+    return P.concat(ne);
   };
-  var I = U.alloc(16, 16);
+  var I = P.alloc(16, 16);
   D.prototype._final = function() {
     var ee = this._cache.flush();
     if (this._autopadding)
@@ -9736,29 +9736,29 @@ function requireEncrypter() {
   }, D.prototype.setAutoPadding = function(ee) {
     return this._autopadding = !!ee, this;
   };
-  function P() {
-    this.cache = U.allocUnsafe(0);
+  function U() {
+    this.cache = P.allocUnsafe(0);
   }
-  P.prototype.add = function(ee) {
-    this.cache = U.concat([this.cache, ee]);
-  }, P.prototype.get = function() {
+  U.prototype.add = function(ee) {
+    this.cache = P.concat([this.cache, ee]);
+  }, U.prototype.get = function() {
     if (this.cache.length > 15) {
       var ee = this.cache.slice(0, 16);
       return this.cache = this.cache.slice(16), ee;
     }
     return null;
-  }, P.prototype.flush = function() {
-    for (var ee = 16 - this.cache.length, re = U.allocUnsafe(ee), ie = -1; ++ie < ee; )
+  }, U.prototype.flush = function() {
+    for (var ee = 16 - this.cache.length, re = P.allocUnsafe(ee), ie = -1; ++ie < ee; )
       re.writeUInt8(ee, ie);
-    return U.concat([this.cache, re]);
+    return P.concat([this.cache, re]);
   };
   function Y(ee, re, ie) {
     var ne = $[ee.toLowerCase()];
     if (!ne)
       throw new TypeError("invalid suite type");
-    if (typeof re == "string" && (re = U.from(re)), re.length !== ne.key / 8)
+    if (typeof re == "string" && (re = P.from(re)), re.length !== ne.key / 8)
       throw new TypeError("invalid key length " + re.length);
-    if (typeof ie == "string" && (ie = U.from(ie)), ne.mode !== "GCM" && ie.length !== ne.iv)
+    if (typeof ie == "string" && (ie = P.from(ie)), ne.mode !== "GCM" && ie.length !== ne.iv)
       throw new TypeError("invalid iv length " + ie.length);
     return ne.type === "stream" ? new B(ne.module, re, ie) : ne.type === "auth" ? new h(ne.module, re, ie) : new D(ne.module, re, ie);
   }
@@ -9776,7 +9776,7 @@ function requireDecrypter() {
   if (hasRequiredDecrypter)
     return decrypter;
   hasRequiredDecrypter = 1;
-  var $ = requireAuthCipher(), h = requireSafeBuffer$1().Buffer, U = requireModes$1(), B = requireStreamCipher(), V = requireCipherBase(), t = requireAes(), O = requireEvp_bytestokey(), M = requireInherits_browser();
+  var $ = requireAuthCipher(), h = requireSafeBuffer$1().Buffer, P = requireModes$1(), B = requireStreamCipher(), V = requireCipherBase(), t = requireAes(), O = requireEvp_bytestokey(), M = requireInherits_browser();
   function D(ee, re, ie) {
     V.call(this), this._cache = new I(), this._last = void 0, this._cipher = new t.AES(re), this._prev = h.from(ie), this._mode = ee, this._autopadding = !0;
   }
@@ -9788,7 +9788,7 @@ function requireDecrypter() {
   }, D.prototype._final = function() {
     var ee = this._cache.flush();
     if (this._autopadding)
-      return P(this._mode.decrypt(this, ee));
+      return U(this._mode.decrypt(this, ee));
     if (ee)
       throw new Error("data not multiple of block length");
   }, D.prototype.setAutoPadding = function(ee) {
@@ -9811,7 +9811,7 @@ function requireDecrypter() {
     if (this.cache.length)
       return this.cache;
   };
-  function P(ee) {
+  function U(ee) {
     var re = ee[15];
     if (re < 1 || re > 16)
       throw new Error("unable to decrypt data");
@@ -9822,7 +9822,7 @@ function requireDecrypter() {
       return ee.slice(0, 16 - re);
   }
   function Y(ee, re, ie) {
-    var ne = U[ee.toLowerCase()];
+    var ne = P[ee.toLowerCase()];
     if (!ne)
       throw new TypeError("invalid suite type");
     if (typeof ie == "string" && (ie = h.from(ie)), ne.mode !== "GCM" && ie.length !== ne.iv)
@@ -9832,7 +9832,7 @@ function requireDecrypter() {
     return ne.type === "stream" ? new B(ne.module, re, ie, !0) : ne.type === "auth" ? new $(ne.module, re, ie, !0) : new D(ne.module, re, ie);
   }
   function X(ee, re) {
-    var ie = U[ee.toLowerCase()];
+    var ie = P[ee.toLowerCase()];
     if (!ie)
       throw new TypeError("invalid suite type");
     var ne = O(re, !1, ie.key, ie.iv);
@@ -9845,9 +9845,9 @@ function requireBrowser$6() {
   if (hasRequiredBrowser$6)
     return browser$5;
   hasRequiredBrowser$6 = 1;
-  var $ = requireEncrypter(), h = requireDecrypter(), U = require$$2;
+  var $ = requireEncrypter(), h = requireDecrypter(), P = require$$2;
   function B() {
-    return Object.keys(U);
+    return Object.keys(P);
   }
   return browser$5.createCipher = browser$5.Cipher = $.createCipher, browser$5.createCipheriv = browser$5.Cipheriv = $.createCipheriv, browser$5.createDecipher = browser$5.Decipher = h.createDecipher, browser$5.createDecipheriv = browser$5.Decipheriv = h.createDecipheriv, browser$5.listCiphers = browser$5.getCiphers = B, browser$5;
 }
@@ -9880,43 +9880,43 @@ function requireBrowser$5() {
   if (hasRequiredBrowser$5)
     return browser$6;
   hasRequiredBrowser$5 = 1;
-  var $ = requireBrowserifyDes(), h = requireBrowser$6(), U = requireModes$1(), B = requireModes(), V = requireEvp_bytestokey();
-  function t(P, Y) {
-    P = P.toLowerCase();
+  var $ = requireBrowserifyDes(), h = requireBrowser$6(), P = requireModes$1(), B = requireModes(), V = requireEvp_bytestokey();
+  function t(U, Y) {
+    U = U.toLowerCase();
     var X, ee;
-    if (U[P])
-      X = U[P].key, ee = U[P].iv;
-    else if (B[P])
-      X = B[P].key * 8, ee = B[P].iv;
+    if (P[U])
+      X = P[U].key, ee = P[U].iv;
+    else if (B[U])
+      X = B[U].key * 8, ee = B[U].iv;
     else
       throw new TypeError("invalid suite type");
     var re = V(Y, !1, X, ee);
-    return M(P, re.key, re.iv);
+    return M(U, re.key, re.iv);
   }
-  function O(P, Y) {
-    P = P.toLowerCase();
+  function O(U, Y) {
+    U = U.toLowerCase();
     var X, ee;
-    if (U[P])
-      X = U[P].key, ee = U[P].iv;
-    else if (B[P])
-      X = B[P].key * 8, ee = B[P].iv;
+    if (P[U])
+      X = P[U].key, ee = P[U].iv;
+    else if (B[U])
+      X = B[U].key * 8, ee = B[U].iv;
     else
       throw new TypeError("invalid suite type");
     var re = V(Y, !1, X, ee);
-    return D(P, re.key, re.iv);
+    return D(U, re.key, re.iv);
   }
-  function M(P, Y, X) {
-    if (P = P.toLowerCase(), U[P])
-      return h.createCipheriv(P, Y, X);
-    if (B[P])
-      return new $({ key: Y, iv: X, mode: P });
+  function M(U, Y, X) {
+    if (U = U.toLowerCase(), P[U])
+      return h.createCipheriv(U, Y, X);
+    if (B[U])
+      return new $({ key: Y, iv: X, mode: U });
     throw new TypeError("invalid suite type");
   }
-  function D(P, Y, X) {
-    if (P = P.toLowerCase(), U[P])
-      return h.createDecipheriv(P, Y, X);
-    if (B[P])
-      return new $({ key: Y, iv: X, mode: P, decrypt: !0 });
+  function D(U, Y, X) {
+    if (U = U.toLowerCase(), P[U])
+      return h.createDecipheriv(U, Y, X);
+    if (B[U])
+      return new $({ key: Y, iv: X, mode: U, decrypt: !0 });
     throw new TypeError("invalid suite type");
   }
   function I() {
@@ -9927,7 +9927,7 @@ function requireBrowser$5() {
 var browser$4 = {}, bn$2 = { exports: {} }, hasRequiredBn$2;
 function requireBn$2() {
   return hasRequiredBn$2 || (hasRequiredBn$2 = 1, function($) {
-    (function(h, U) {
+    (function(h, P) {
       function B(G, Z) {
         if (!G)
           throw new Error(Z || "Assertion failed");
@@ -9943,7 +9943,7 @@ function requireBn$2() {
           return G;
         this.negative = 0, this.words = null, this.length = 0, this.red = null, G !== null && ((Z === "le" || Z === "be") && (e = Z, Z = 10), this._init(G || 0, Z || 10, e || "be"));
       }
-      typeof h == "object" ? h.exports = t : U.BN = t, t.BN = t, t.wordSize = 26;
+      typeof h == "object" ? h.exports = t : P.BN = t, t.BN = t, t.wordSize = 26;
       var O;
       try {
         typeof window < "u" && typeof window.Buffer < "u" ? O = window.Buffer : O = requireBuffer$1().Buffer;
@@ -10052,7 +10052,7 @@ function requireBn$2() {
       }, t.prototype.inspect = function() {
         return (this.red ? "<BN-R: " : "<BN: ") + this.toString(16) + ">";
       };
-      var P = [
+      var U = [
         "",
         "0",
         "00",
@@ -10163,7 +10163,7 @@ function requireBn$2() {
           e = "";
           for (var o = 0, g = 0, H = 0; H < this.length; H++) {
             var F = this.words[H], A = ((F << o | g) & 16777215).toString(16);
-            g = F >>> 24 - o & 16777215, g !== 0 || H !== this.length - 1 ? e = P[6 - A.length] + A + e : e = A + e, o += 2, o >= 26 && (o -= 26, H--);
+            g = F >>> 24 - o & 16777215, g !== 0 || H !== this.length - 1 ? e = U[6 - A.length] + A + e : e = A + e, o += 2, o >= 26 && (o -= 26, H--);
           }
           for (g !== 0 && (e = g.toString(16) + e); e.length % Z !== 0; )
             e = "0" + e;
@@ -10175,7 +10175,7 @@ function requireBn$2() {
           var S = this.clone();
           for (S.negative = 0; !S.isZero(); ) {
             var J = S.modn(z).toString(G);
-            S = S.idivn(z), S.isZero() ? e = J + e : e = P[q - J.length] + J + e;
+            S = S.idivn(z), S.isZero() ? e = J + e : e = U[q - J.length] + J + e;
           }
           for (this.isZero() && (e = "0" + e); e.length % Z !== 0; )
             e = "0" + e;
@@ -11137,11 +11137,11 @@ function requireBrorand() {
     });
   else
     try {
-      var U = requireCryptoBrowserify();
-      if (typeof U.randomBytes != "function")
+      var P = requireCryptoBrowserify();
+      if (typeof P.randomBytes != "function")
         throw new Error("Not supported");
       h.prototype._rand = function(B) {
-        return U.randomBytes(B);
+        return P.randomBytes(B);
       };
     } catch {
     }
@@ -11153,51 +11153,51 @@ function requireMr() {
     return mr;
   hasRequiredMr = 1;
   var $ = requireBn$2(), h = requireBrorand();
-  function U(B) {
+  function P(B) {
     this.rand = B || new h.Rand();
   }
-  return mr = U, U.create = function(B) {
-    return new U(B);
-  }, U.prototype._randbelow = function(B) {
+  return mr = P, P.create = function(B) {
+    return new P(B);
+  }, P.prototype._randbelow = function(B) {
     var V = B.bitLength(), t = Math.ceil(V / 8);
     do
       var O = new $(this.rand.generate(t));
     while (O.cmp(B) >= 0);
     return O;
-  }, U.prototype._randrange = function(B, V) {
+  }, P.prototype._randrange = function(B, V) {
     var t = V.sub(B);
     return B.add(this._randbelow(t));
-  }, U.prototype.test = function(B, V, t) {
+  }, P.prototype.test = function(B, V, t) {
     var O = B.bitLength(), M = $.mont(B), D = new $(1).toRed(M);
     V || (V = Math.max(1, O / 48 | 0));
-    for (var I = B.subn(1), P = 0; !I.testn(P); P++)
+    for (var I = B.subn(1), U = 0; !I.testn(U); U++)
       ;
-    for (var Y = B.shrn(P), X = I.toRed(M), ee = !0; V > 0; V--) {
+    for (var Y = B.shrn(U), X = I.toRed(M), ee = !0; V > 0; V--) {
       var re = this._randrange(new $(2), I);
       t && t(re);
       var ie = re.toRed(M).redPow(Y);
       if (!(ie.cmp(D) === 0 || ie.cmp(X) === 0)) {
-        for (var ne = 1; ne < P; ne++) {
+        for (var ne = 1; ne < U; ne++) {
           if (ie = ie.redSqr(), ie.cmp(D) === 0)
             return !1;
           if (ie.cmp(X) === 0)
             break;
         }
-        if (ne === P)
+        if (ne === U)
           return !1;
       }
     }
     return ee;
-  }, U.prototype.getDivisor = function(B, V) {
+  }, P.prototype.getDivisor = function(B, V) {
     var t = B.bitLength(), O = $.mont(B), M = new $(1).toRed(O);
     V || (V = Math.max(1, t / 48 | 0));
     for (var D = B.subn(1), I = 0; !D.testn(I); I++)
       ;
-    for (var P = B.shrn(I), Y = D.toRed(O); V > 0; V--) {
+    for (var U = B.shrn(I), Y = D.toRed(O); V > 0; V--) {
       var X = this._randrange(new $(2), D), ee = B.gcd(X);
       if (ee.cmpn(1) !== 0)
         return ee;
-      var re = X.toRed(O).redPow(P);
+      var re = X.toRed(O).redPow(U);
       if (!(re.cmp(M) === 0 || re.cmp(Y) === 0)) {
         for (var ie = 1; ie < I; ie++) {
           if (re = re.redSqr(), re.cmp(M) === 0)
@@ -11219,11 +11219,11 @@ function requireGeneratePrime() {
   hasRequiredGeneratePrime = 1;
   var $ = requireBrowser$b();
   generatePrime = ne, ne.simpleSieve = re, ne.fermatTest = ie;
-  var h = requireBn$2(), U = new h(24), B = requireMr(), V = new B(), t = new h(1), O = new h(2), M = new h(5);
+  var h = requireBn$2(), P = new h(24), B = requireMr(), V = new B(), t = new h(1), O = new h(2), M = new h(5);
   new h(16), new h(8);
   var D = new h(10), I = new h(3);
   new h(7);
-  var P = new h(11), Y = new h(4);
+  var U = new h(11), Y = new h(4);
   new h(12);
   var X = null;
   function ee() {
@@ -11260,7 +11260,7 @@ function requireGeneratePrime() {
           for (; be.mod(D).cmp(I); )
             be.iadd(Y);
       } else
-        for (; be.mod(U).cmp(P); )
+        for (; be.mod(P).cmp(U); )
           be.iadd(Y);
       if (de = be.shrn(1), re(de) && re(be) && ie(de) && ie(be) && V.test(de) && V.test(be))
         return be;
@@ -11307,9 +11307,9 @@ function requireDh() {
   if (hasRequiredDh)
     return dh;
   hasRequiredDh = 1;
-  var $ = requireBn$2(), h = requireMr(), U = new h(), B = new $(24), V = new $(11), t = new $(10), O = new $(3), M = new $(7), D = requireGeneratePrime(), I = requireBrowser$b();
+  var $ = requireBn$2(), h = requireMr(), P = new h(), B = new $(24), V = new $(11), t = new $(10), O = new $(3), M = new $(7), D = requireGeneratePrime(), I = requireBrowser$b();
   dh = re;
-  function P(ne, se) {
+  function U(ne, se) {
     return se = se || "utf8", bufferExports.Buffer.isBuffer(ne) || (ne = new bufferExports.Buffer(ne, se)), this._pub = new $(ne), this;
   }
   function Y(ne, se) {
@@ -11321,9 +11321,9 @@ function requireDh() {
     if (be in X)
       return X[be];
     var de = 0;
-    if (ne.isEven() || !D.simpleSieve || !D.fermatTest(ne) || !U.test(ne))
+    if (ne.isEven() || !D.simpleSieve || !D.fermatTest(ne) || !P.test(ne))
       return de += 1, oe === "02" || oe === "05" ? de += 8 : de += 4, X[be] = de, de;
-    U.test(ne.shrn(1)) || (de += 2);
+    P.test(ne.shrn(1)) || (de += 2);
     var we;
     switch (oe) {
       case "02":
@@ -11338,7 +11338,7 @@ function requireDh() {
     return X[be] = de, de;
   }
   function re(ne, se, oe) {
-    this.setGenerator(se), this.__prime = new $(ne), this._prime = $.mont(this.__prime), this._primeLen = ne.length, this._pub = void 0, this._priv = void 0, this._primeCode = void 0, oe ? (this.setPublicKey = P, this.setPrivateKey = Y) : this._primeCode = 8;
+    this.setGenerator(se), this.__prime = new $(ne), this._prime = $.mont(this.__prime), this._primeLen = ne.length, this._pub = void 0, this._priv = void 0, this._primeCode = void 0, oe ? (this.setPublicKey = U, this.setPrivateKey = Y) : this._primeCode = 8;
   }
   Object.defineProperty(re.prototype, "verifyError", {
     enumerable: !0,
@@ -11377,10 +11377,10 @@ function requireBrowser$4() {
   if (hasRequiredBrowser$4)
     return browser$4;
   hasRequiredBrowser$4 = 1;
-  var $ = requireGeneratePrime(), h = require$$1$1, U = requireDh();
+  var $ = requireGeneratePrime(), h = require$$1$1, P = requireDh();
   function B(O) {
     var M = new bufferExports.Buffer(h[O].prime, "hex"), D = new bufferExports.Buffer(h[O].gen, "hex");
-    return new U(M, D);
+    return new P(M, D);
   }
   var V = {
     binary: !0,
@@ -11388,7 +11388,7 @@ function requireBrowser$4() {
     base64: !0
   };
   function t(O, M, D, I) {
-    return bufferExports.Buffer.isBuffer(M) || V[M] === void 0 ? t(O, "binary", M, D) : (M = M || "binary", I = I || "binary", D = D || new bufferExports.Buffer([2]), bufferExports.Buffer.isBuffer(D) || (D = new bufferExports.Buffer(D, I)), typeof O == "number" ? new U($(O, D), D, !0) : (bufferExports.Buffer.isBuffer(O) || (O = new bufferExports.Buffer(O, M)), new U(O, D, !0)));
+    return bufferExports.Buffer.isBuffer(M) || V[M] === void 0 ? t(O, "binary", M, D) : (M = M || "binary", I = I || "binary", D = D || new bufferExports.Buffer([2]), bufferExports.Buffer.isBuffer(D) || (D = new bufferExports.Buffer(D, I)), typeof O == "number" ? new P($(O, D), D, !0) : (bufferExports.Buffer.isBuffer(O) || (O = new bufferExports.Buffer(O, M)), new P(O, D, !0)));
   }
   return browser$4.DiffieHellmanGroup = browser$4.createDiffieHellmanGroup = browser$4.getDiffieHellman = B, browser$4.createDiffieHellman = browser$4.DiffieHellman = t, browser$4;
 }
@@ -11397,7 +11397,7 @@ function requireProcessNextickArgs() {
   if (hasRequiredProcessNextickArgs)
     return processNextickArgs.exports;
   hasRequiredProcessNextickArgs = 1, typeof process$1 > "u" || !process$1.version || process$1.version.indexOf("v0.") === 0 || process$1.version.indexOf("v1.") === 0 && process$1.version.indexOf("v1.8.") !== 0 ? processNextickArgs.exports = { nextTick: $ } : processNextickArgs.exports = process$1;
-  function $(h, U, B, V) {
+  function $(h, P, B, V) {
     if (typeof h != "function")
       throw new TypeError('"callback" argument must be a function');
     var t = arguments.length, O, M;
@@ -11407,15 +11407,15 @@ function requireProcessNextickArgs() {
         return process$1.nextTick(h);
       case 2:
         return process$1.nextTick(function() {
-          h.call(null, U);
+          h.call(null, P);
         });
       case 3:
         return process$1.nextTick(function() {
-          h.call(null, U, B);
+          h.call(null, P, B);
         });
       case 4:
         return process$1.nextTick(function() {
-          h.call(null, U, B, V);
+          h.call(null, P, B, V);
         });
       default:
         for (O = new Array(t - 1), M = 0; M < O.length; )
@@ -11444,12 +11444,12 @@ function requireStreamBrowser() {
 var safeBuffer = { exports: {} }, hasRequiredSafeBuffer;
 function requireSafeBuffer() {
   return hasRequiredSafeBuffer || (hasRequiredSafeBuffer = 1, function($, h) {
-    var U = requireBuffer$1(), B = U.Buffer;
+    var P = requireBuffer$1(), B = P.Buffer;
     function V(O, M) {
       for (var D in O)
         M[D] = O[D];
     }
-    B.from && B.alloc && B.allocUnsafe && B.allocUnsafeSlow ? $.exports = U : (V(U, h), h.Buffer = t);
+    B.from && B.alloc && B.allocUnsafe && B.allocUnsafeSlow ? $.exports = P : (V(P, h), h.Buffer = t);
     function t(O, M, D) {
       return B(O, M, D);
     }
@@ -11469,7 +11469,7 @@ function requireSafeBuffer() {
     }, t.allocUnsafeSlow = function(O) {
       if (typeof O != "number")
         throw new TypeError("Argument must be a number");
-      return U.SlowBuffer(O);
+      return P.SlowBuffer(O);
     };
   }(safeBuffer, safeBuffer.exports)), safeBuffer.exports;
 }
@@ -11486,10 +11486,10 @@ function requireUtil() {
     return typeof ie == "boolean";
   }
   util.isBoolean = h;
-  function U(ie) {
+  function P(ie) {
     return ie === null;
   }
-  util.isNull = U;
+  util.isNull = P;
   function B(ie) {
     return ie == null;
   }
@@ -11518,10 +11518,10 @@ function requireUtil() {
     return typeof ie == "object" && ie !== null;
   }
   util.isObject = I;
-  function P(ie) {
+  function U(ie) {
     return re(ie) === "[object Date]";
   }
-  util.isDate = P;
+  util.isDate = U;
   function Y(ie) {
     return re(ie) === "[object Error]" || ie instanceof Error;
   }
@@ -11547,7 +11547,7 @@ function requireBufferList() {
       if (!(t instanceof O))
         throw new TypeError("Cannot call a class as a function");
     }
-    var U = requireSafeBuffer().Buffer, B = requireUtil$1();
+    var P = requireSafeBuffer().Buffer, B = requireUtil$1();
     function V(t, O, M) {
       t.copy(O, M);
     }
@@ -11576,8 +11576,8 @@ function requireBufferList() {
         return D;
       }, t.prototype.concat = function(O) {
         if (this.length === 0)
-          return U.alloc(0);
-        for (var M = U.allocUnsafe(O >>> 0), D = this.head, I = 0; D; )
+          return P.alloc(0);
+        for (var M = P.allocUnsafe(O >>> 0), D = this.head, I = 0; D; )
           V(D.data, M, I), I += D.data.length, D = D.next;
         return M;
       }, t;
@@ -11599,7 +11599,7 @@ function requireDestroy() {
       !t && I ? O._writableState ? O._writableState.errorEmitted || (O._writableState.errorEmitted = !0, $.nextTick(B, O, I)) : $.nextTick(B, O, I) : t && t(I);
     }), this);
   }
-  function U() {
+  function P() {
     this._readableState && (this._readableState.destroyed = !1, this._readableState.reading = !1, this._readableState.ended = !1, this._readableState.endEmitted = !1), this._writableState && (this._writableState.destroyed = !1, this._writableState.ended = !1, this._writableState.ending = !1, this._writableState.finalCalled = !1, this._writableState.prefinished = !1, this._writableState.finished = !1, this._writableState.errorEmitted = !1);
   }
   function B(V, t) {
@@ -11607,7 +11607,7 @@ function requireDestroy() {
   }
   return destroy_1 = {
     destroy: h,
-    undestroy: U
+    undestroy: P
   }, destroy_1;
 }
 var _stream_writable, hasRequired_stream_writable;
@@ -11623,7 +11623,7 @@ function require_stream_writable() {
       H(A, F);
     };
   }
-  var U = !process$1.browser && ["v0.10", "v0.9."].indexOf(process$1.version.slice(0, 5)) > -1 ? setImmediate : $.nextTick, B;
+  var P = !process$1.browser && ["v0.10", "v0.9."].indexOf(process$1.version.slice(0, 5)) > -1 ? setImmediate : $.nextTick, B;
   ie.WritableState = ee;
   var V = Object.create(requireUtil());
   V.inherits = requireInherits_browser();
@@ -11634,7 +11634,7 @@ function require_stream_writable() {
   function I(F) {
     return M.from(F);
   }
-  function P(F) {
+  function U(F) {
     return M.isBuffer(F) || F instanceof D;
   }
   var Y = requireDestroy();
@@ -11691,7 +11691,7 @@ function require_stream_writable() {
     return q === null ? J = new TypeError("May not write null values to stream") : typeof q != "string" && q !== void 0 && !A.objectMode && (J = new TypeError("Invalid non-string/buffer chunk")), J && (F.emit("error", J), $.nextTick(z, J), S = !1), S;
   }
   ie.prototype.write = function(F, A, q) {
-    var z = this._writableState, S = !1, J = !z.objectMode && P(F);
+    var z = this._writableState, S = !1, J = !z.objectMode && U(F);
     return J && !M.isBuffer(F) && (F = I(F)), typeof A == "function" && (q = A, A = null), J ? A = "buffer" : A || (A = z.defaultEncoding), typeof q != "function" && (q = X), z.ended ? ne(this, q) : (J || se(this, z, F, q)) && (z.pendingcb++, S = be(this, z, J, F, A, q)), S;
   }, ie.prototype.cork = function() {
     var F = this._writableState;
@@ -11752,7 +11752,7 @@ function require_stream_writable() {
       we(F, q, z, A, S);
     else {
       var J = G(q);
-      !J && !q.corked && !q.bufferProcessing && q.bufferedRequest && _e(F, q), z ? U(he, F, q, J, S) : he(F, q, J, S);
+      !J && !q.corked && !q.bufferProcessing && q.bufferedRequest && _e(F, q), z ? P(he, F, q, J, S) : he(F, q, J, S);
     }
   }
   function he(F, A, q, z) {
@@ -11835,10 +11835,10 @@ function require_stream_duplex() {
     return X;
   };
   _stream_duplex = D;
-  var U = Object.create(requireUtil());
-  U.inherits = requireInherits_browser();
+  var P = Object.create(requireUtil());
+  P.inherits = requireInherits_browser();
   var B = require_stream_readable(), V = require_stream_writable();
-  U.inherits(D, B);
+  P.inherits(D, B);
   for (var t = h(V.prototype), O = 0; O < t.length; O++) {
     var M = t[O];
     D.prototype[M] || (D.prototype[M] = V.prototype[M]);
@@ -11858,9 +11858,9 @@ function require_stream_duplex() {
     }
   });
   function I() {
-    this.allowHalfOpen || this._writableState.ended || $.nextTick(P, this);
+    this.allowHalfOpen || this._writableState.ended || $.nextTick(U, this);
   }
-  function P(Y) {
+  function U(Y) {
     Y.end();
   }
   return Object.defineProperty(D.prototype, "destroyed", {
@@ -11881,7 +11881,7 @@ function require_stream_readable() {
   hasRequired_stream_readable = 1;
   var $ = requireProcessNextickArgs();
   _stream_readable = oe;
-  var h = requireIsarray(), U;
+  var h = requireIsarray(), P;
   oe.ReadableState = se, requireEvents().EventEmitter;
   var B = function(ue, fe) {
     return ue.listeners(fe).length;
@@ -11895,8 +11895,8 @@ function require_stream_readable() {
   }
   var I = Object.create(requireUtil());
   I.inherits = requireInherits_browser();
-  var P = requireUtil$1(), Y = void 0;
-  P && P.debuglog ? Y = P.debuglog("stream") : Y = function() {
+  var U = requireUtil$1(), Y = void 0;
+  U && U.debuglog ? Y = U.debuglog("stream") : Y = function() {
   };
   var X = requireBufferList(), ee = requireDestroy(), re;
   I.inherits(oe, V);
@@ -11907,14 +11907,14 @@ function require_stream_readable() {
     !ue._events || !ue._events[fe] ? ue.on(fe, Ae) : h(ue._events[fe]) ? ue._events[fe].unshift(Ae) : ue._events[fe] = [Ae, ue._events[fe]];
   }
   function se(ue, fe) {
-    U = U || require_stream_duplex(), ue = ue || {};
-    var Ae = fe instanceof U;
+    P = P || require_stream_duplex(), ue = ue || {};
+    var Ae = fe instanceof P;
     this.objectMode = !!ue.objectMode, Ae && (this.objectMode = this.objectMode || !!ue.readableObjectMode);
     var Be = ue.highWaterMark, pe = ue.readableHighWaterMark, ge = this.objectMode ? 16 : 16 * 1024;
     Be || Be === 0 ? this.highWaterMark = Be : Ae && (pe || pe === 0) ? this.highWaterMark = pe : this.highWaterMark = ge, this.highWaterMark = Math.floor(this.highWaterMark), this.buffer = new X(), this.length = 0, this.pipes = null, this.pipesCount = 0, this.flowing = null, this.ended = !1, this.endEmitted = !1, this.reading = !1, this.sync = !0, this.needReadable = !1, this.emittedReadable = !1, this.readableListening = !1, this.resumeScheduled = !1, this.destroyed = !1, this.defaultEncoding = ue.defaultEncoding || "utf8", this.awaitDrain = 0, this.readingMore = !1, this.decoder = null, this.encoding = null, ue.encoding && (re || (re = requireString_decoder().StringDecoder), this.decoder = new re(ue.encoding), this.encoding = ue.encoding);
   }
   function oe(ue) {
-    if (U = U || require_stream_duplex(), !(this instanceof oe))
+    if (P = P || require_stream_duplex(), !(this instanceof oe))
       return new oe(ue);
     this._readableState = new se(ue, this), this.readable = !0, ue && (typeof ue.read == "function" && (this._read = ue.read), typeof ue.destroy == "function" && (this._destroy = ue.destroy)), V.call(this);
   }
@@ -12199,21 +12199,21 @@ function require_stream_transform() {
   hasRequired_stream_transform = 1, _stream_transform = B;
   var $ = require_stream_duplex(), h = Object.create(requireUtil());
   h.inherits = requireInherits_browser(), h.inherits(B, $);
-  function U(O, M) {
+  function P(O, M) {
     var D = this._transformState;
     D.transforming = !1;
     var I = D.writecb;
     if (!I)
       return this.emit("error", new Error("write callback called multiple times"));
     D.writechunk = null, D.writecb = null, M != null && this.push(M), I(O);
-    var P = this._readableState;
-    P.reading = !1, (P.needReadable || P.length < P.highWaterMark) && this._read(P.highWaterMark);
+    var U = this._readableState;
+    U.reading = !1, (U.needReadable || U.length < U.highWaterMark) && this._read(U.highWaterMark);
   }
   function B(O) {
     if (!(this instanceof B))
       return new B(O);
     $.call(this, O), this._transformState = {
-      afterTransform: U.bind(this),
+      afterTransform: P.bind(this),
       needTransform: !1,
       transforming: !1,
       writecb: null,
@@ -12234,8 +12234,8 @@ function require_stream_transform() {
   }, B.prototype._write = function(O, M, D) {
     var I = this._transformState;
     if (I.writecb = D, I.writechunk = O, I.writeencoding = M, !I.transforming) {
-      var P = this._readableState;
-      (I.needTransform || P.needReadable || P.length < P.highWaterMark) && this._read(P.highWaterMark);
+      var U = this._readableState;
+      (I.needTransform || U.needReadable || U.length < U.highWaterMark) && this._read(U.highWaterMark);
     }
   }, B.prototype._read = function(O) {
     var M = this._transformState;
@@ -12261,15 +12261,15 @@ var _stream_passthrough, hasRequired_stream_passthrough;
 function require_stream_passthrough() {
   if (hasRequired_stream_passthrough)
     return _stream_passthrough;
-  hasRequired_stream_passthrough = 1, _stream_passthrough = U;
+  hasRequired_stream_passthrough = 1, _stream_passthrough = P;
   var $ = require_stream_transform(), h = Object.create(requireUtil());
-  h.inherits = requireInherits_browser(), h.inherits(U, $);
-  function U(B) {
-    if (!(this instanceof U))
-      return new U(B);
+  h.inherits = requireInherits_browser(), h.inherits(P, $);
+  function P(B) {
+    if (!(this instanceof P))
+      return new P(B);
     $.call(this, B);
   }
-  return U.prototype._transform = function(B, V, t) {
+  return P.prototype._transform = function(B, V, t) {
     t(null, B);
   }, _stream_passthrough;
 }
@@ -12282,7 +12282,7 @@ function requireReadableBrowser() {
 var sign = { exports: {} }, bn$1 = { exports: {} }, hasRequiredBn$1;
 function requireBn$1() {
   return hasRequiredBn$1 || (hasRequiredBn$1 = 1, function($) {
-    (function(h, U) {
+    (function(h, P) {
       function B(e, o) {
         if (!e)
           throw new Error(o || "Assertion failed");
@@ -12298,7 +12298,7 @@ function requireBn$1() {
           return e;
         this.negative = 0, this.words = null, this.length = 0, this.red = null, e !== null && ((o === "le" || o === "be") && (g = o, o = 10), this._init(e || 0, o || 10, g || "be"));
       }
-      typeof h == "object" ? h.exports = t : U.BN = t, t.BN = t, t.wordSize = 26;
+      typeof h == "object" ? h.exports = t : P.BN = t, t.BN = t, t.wordSize = 26;
       var O;
       try {
         typeof window < "u" && typeof window.Buffer < "u" ? O = window.Buffer : O = requireBuffer$1().Buffer;
@@ -12398,11 +12398,11 @@ function requireBn$1() {
           e.words[o] = this.words[o];
         e.length = this.length, e.negative = this.negative, e.red = this.red;
       };
-      function P(e, o) {
+      function U(e, o) {
         e.words = o.words, e.length = o.length, e.negative = o.negative, e.red = o.red;
       }
       if (t.prototype._move = function(e) {
-        P(e, this);
+        U(e, this);
       }, t.prototype.clone = function() {
         var e = new t(null);
         return this.copy(e), e;
@@ -13324,7 +13324,7 @@ function requireBn$1() {
           "red works only with red numbers"
         );
       }, G.prototype.imod = function(e) {
-        return this.prime ? this.prime.ireduce(e)._forceRed(this) : (P(e, e.umod(this.m)._forceRed(this)), e);
+        return this.prime ? this.prime.ireduce(e)._forceRed(this) : (U(e, e.umod(this.m)._forceRed(this)), e);
       }, G.prototype.neg = function(e) {
         return e.isZero() ? e.clone() : this.m.sub(e)._forceRed(this);
       }, G.prototype.add = function(e, o) {
@@ -13440,7 +13440,7 @@ function requireBrowserifyRsa() {
     return browserifyRsa;
   hasRequiredBrowserifyRsa = 1;
   var $ = requireBn$1(), h = requireBrowser$b();
-  function U(t) {
+  function P(t) {
     var O = B(t), M = O.toRed($.mont(t.modulus)).redPow(new $(t.publicExponent)).fromRed();
     return { blinder: M, unblinder: O.invm(t.modulus) };
   }
@@ -13452,7 +13452,7 @@ function requireBrowserifyRsa() {
     return M;
   }
   function V(t, O) {
-    var M = U(O), D = O.modulus.byteLength(), I = new $(t).mul(M.blinder).umod(O.modulus), P = I.toRed($.mont(O.prime1)), Y = I.toRed($.mont(O.prime2)), X = O.coefficient, ee = O.prime1, re = O.prime2, ie = P.redPow(O.exponent1).fromRed(), ne = Y.redPow(O.exponent2).fromRed(), se = ie.isub(ne).imul(X).umod(ee).imul(re);
+    var M = P(O), D = O.modulus.byteLength(), I = new $(t).mul(M.blinder).umod(O.modulus), U = I.toRed($.mont(O.prime1)), Y = I.toRed($.mont(O.prime2)), X = O.coefficient, ee = O.prime1, re = O.prime2, ie = U.redPow(O.exponent1).fromRed(), ne = Y.redPow(O.exponent2).fromRed(), se = ie.isub(ne).imul(X).umod(ee).imul(re);
     return ne.iadd(se).imul(M.unblinder).umod(O.modulus).toArrayLike(bufferExports.Buffer, "be", D);
   }
   return V.getr = B, browserifyRsa = V, browserifyRsa;
@@ -13518,7 +13518,7 @@ var utils$2 = {}, utils$1 = {}, hasRequiredUtils$2;
 function requireUtils$2() {
   return hasRequiredUtils$2 || (hasRequiredUtils$2 = 1, function($) {
     var h = $;
-    function U(t, O) {
+    function P(t, O) {
       if (Array.isArray(t))
         return t.slice();
       if (!t)
@@ -13535,12 +13535,12 @@ function requireUtils$2() {
           M.push(parseInt(t[D] + t[D + 1], 16));
       } else
         for (var D = 0; D < t.length; D++) {
-          var I = t.charCodeAt(D), P = I >> 8, Y = I & 255;
-          P ? M.push(P, Y) : M.push(Y);
+          var I = t.charCodeAt(D), U = I >> 8, Y = I & 255;
+          U ? M.push(U, Y) : M.push(Y);
         }
       return M;
     }
-    h.toArray = U;
+    h.toArray = P;
     function B(t) {
       return t.length === 1 ? "0" + t : t;
     }
@@ -13558,13 +13558,13 @@ function requireUtils$2() {
 var hasRequiredUtils$1;
 function requireUtils$1() {
   return hasRequiredUtils$1 || (hasRequiredUtils$1 = 1, function($) {
-    var h = $, U = requireBn$2(), B = requireMinimalisticAssert(), V = requireUtils$2();
+    var h = $, P = requireBn$2(), B = requireMinimalisticAssert(), V = requireUtils$2();
     h.assert = B, h.toArray = V.toArray, h.zero2 = V.zero2, h.toHex = V.toHex, h.encode = V.encode;
-    function t(P, Y, X) {
-      var ee = new Array(Math.max(P.bitLength(), X) + 1), re;
+    function t(U, Y, X) {
+      var ee = new Array(Math.max(U.bitLength(), X) + 1), re;
       for (re = 0; re < ee.length; re += 1)
         ee[re] = 0;
-      var ie = 1 << Y + 1, ne = P.clone();
+      var ie = 1 << Y + 1, ne = U.clone();
       for (re = 0; re < ee.length; re++) {
         var se, oe = ne.andln(ie - 1);
         ne.isOdd() ? (oe > (ie >> 1) - 1 ? se = (ie >> 1) - oe : se = oe, ne.isubn(se)) : se = 0, ee[re] = se, ne.iushrn(1);
@@ -13572,36 +13572,36 @@ function requireUtils$1() {
       return ee;
     }
     h.getNAF = t;
-    function O(P, Y) {
+    function O(U, Y) {
       var X = [
         [],
         []
       ];
-      P = P.clone(), Y = Y.clone();
-      for (var ee = 0, re = 0, ie; P.cmpn(-ee) > 0 || Y.cmpn(-re) > 0; ) {
-        var ne = P.andln(3) + ee & 3, se = Y.andln(3) + re & 3;
+      U = U.clone(), Y = Y.clone();
+      for (var ee = 0, re = 0, ie; U.cmpn(-ee) > 0 || Y.cmpn(-re) > 0; ) {
+        var ne = U.andln(3) + ee & 3, se = Y.andln(3) + re & 3;
         ne === 3 && (ne = -1), se === 3 && (se = -1);
         var oe;
-        ne & 1 ? (ie = P.andln(7) + ee & 7, (ie === 3 || ie === 5) && se === 2 ? oe = -ne : oe = ne) : oe = 0, X[0].push(oe);
+        ne & 1 ? (ie = U.andln(7) + ee & 7, (ie === 3 || ie === 5) && se === 2 ? oe = -ne : oe = ne) : oe = 0, X[0].push(oe);
         var be;
-        se & 1 ? (ie = Y.andln(7) + re & 7, (ie === 3 || ie === 5) && ne === 2 ? be = -se : be = se) : be = 0, X[1].push(be), 2 * ee === oe + 1 && (ee = 1 - ee), 2 * re === be + 1 && (re = 1 - re), P.iushrn(1), Y.iushrn(1);
+        se & 1 ? (ie = Y.andln(7) + re & 7, (ie === 3 || ie === 5) && ne === 2 ? be = -se : be = se) : be = 0, X[1].push(be), 2 * ee === oe + 1 && (ee = 1 - ee), 2 * re === be + 1 && (re = 1 - re), U.iushrn(1), Y.iushrn(1);
       }
       return X;
     }
     h.getJSF = O;
-    function M(P, Y, X) {
+    function M(U, Y, X) {
       var ee = "_" + Y;
-      P.prototype[Y] = function() {
+      U.prototype[Y] = function() {
         return this[ee] !== void 0 ? this[ee] : this[ee] = X.call(this);
       };
     }
     h.cachedProperty = M;
-    function D(P) {
-      return typeof P == "string" ? h.toArray(P, "hex") : P;
+    function D(U) {
+      return typeof U == "string" ? h.toArray(U, "hex") : U;
     }
     h.parseBytes = D;
-    function I(P) {
-      return new U(P, "hex", "le");
+    function I(U) {
+      return new P(U, "hex", "le");
     }
     h.intFromLE = I;
   }(utils$2)), utils$2;
@@ -13611,7 +13611,7 @@ function requireBase$1() {
   if (hasRequiredBase$1)
     return base$1;
   hasRequiredBase$1 = 1;
-  var $ = requireBn$2(), h = requireUtils$1(), U = h.getNAF, B = h.getJSF, V = h.assert;
+  var $ = requireBn$2(), h = requireUtils$1(), P = h.getNAF, B = h.getJSF, V = h.assert;
   function t(M, D) {
     this.type = M, this.p = new $(D.p, 16), this.red = D.prime ? $.red(D.prime) : $.mont(this.p), this.zero = new $(0).toRed(this.red), this.one = new $(1).toRed(this.red), this.two = new $(2).toRed(this.red), this.n = D.n && new $(D.n, 16), this.g = D.g && this.pointFromJSON(D.g, D.gRed), this._wnafT1 = new Array(4), this._wnafT2 = new Array(4), this._wnafT3 = new Array(4), this._wnafT4 = new Array(4), this._bitLength = this.n ? this.n.bitLength() : 0;
     var I = this.n && this.p.div(this.n);
@@ -13623,13 +13623,13 @@ function requireBase$1() {
     throw new Error("Not implemented");
   }, t.prototype._fixedNafMul = function(M, D) {
     V(M.precomputed);
-    var I = M._getDoubles(), P = U(D, 1, this._bitLength), Y = (1 << I.step + 1) - (I.step % 2 === 0 ? 2 : 1);
+    var I = M._getDoubles(), U = P(D, 1, this._bitLength), Y = (1 << I.step + 1) - (I.step % 2 === 0 ? 2 : 1);
     Y /= 3;
     var X = [], ee, re;
-    for (ee = 0; ee < P.length; ee += I.step) {
+    for (ee = 0; ee < U.length; ee += I.step) {
       re = 0;
       for (var ie = ee + I.step - 1; ie >= ee; ie--)
-        re = (re << 1) + P[ie];
+        re = (re << 1) + U[ie];
       X.push(re);
     }
     for (var ne = this.jpoint(null, null, null), se = this.jpoint(null, null, null), oe = Y; oe > 0; oe--) {
@@ -13639,9 +13639,9 @@ function requireBase$1() {
     }
     return ne.toP();
   }, t.prototype._wnafMul = function(M, D) {
-    var I = 4, P = M._getNAFPoints(I);
-    I = P.wnd;
-    for (var Y = P.points, X = U(D, I, this._bitLength), ee = this.jpoint(null, null, null), re = X.length - 1; re >= 0; re--) {
+    var I = 4, U = M._getNAFPoints(I);
+    I = U.wnd;
+    for (var Y = U.points, X = P(D, I, this._bitLength), ee = this.jpoint(null, null, null), re = X.length - 1; re >= 0; re--) {
       for (var ie = 0; re >= 0 && X[re] === 0; re--)
         ie++;
       if (re >= 0 && ie++, ee = ee.dblp(ie), re < 0)
@@ -13650,17 +13650,17 @@ function requireBase$1() {
       V(ne !== 0), M.type === "affine" ? ne > 0 ? ee = ee.mixedAdd(Y[ne - 1 >> 1]) : ee = ee.mixedAdd(Y[-ne - 1 >> 1].neg()) : ne > 0 ? ee = ee.add(Y[ne - 1 >> 1]) : ee = ee.add(Y[-ne - 1 >> 1].neg());
     }
     return M.type === "affine" ? ee.toP() : ee;
-  }, t.prototype._wnafMulAdd = function(M, D, I, P, Y) {
+  }, t.prototype._wnafMulAdd = function(M, D, I, U, Y) {
     var X = this._wnafT1, ee = this._wnafT2, re = this._wnafT3, ie = 0, ne, se, oe;
-    for (ne = 0; ne < P; ne++) {
+    for (ne = 0; ne < U; ne++) {
       oe = D[ne];
       var be = oe._getNAFPoints(M);
       X[ne] = be.wnd, ee[ne] = be.points;
     }
-    for (ne = P - 1; ne >= 1; ne -= 2) {
+    for (ne = U - 1; ne >= 1; ne -= 2) {
       var de = ne - 1, we = ne;
       if (X[de] !== 1 || X[we] !== 1) {
-        re[de] = U(I[de], X[de], this._bitLength), re[we] = U(I[we], X[we], this._bitLength), ie = Math.max(re[de].length, ie), ie = Math.max(re[we].length, ie);
+        re[de] = P(I[de], X[de], this._bitLength), re[we] = P(I[we], X[we], this._bitLength), ie = Math.max(re[de].length, ie), ie = Math.max(re[we].length, ie);
         continue;
       }
       var Se = [
@@ -13703,7 +13703,7 @@ function requireBase$1() {
     for (ne = ie; ne >= 0; ne--) {
       for (var e = 0; ne >= 0; ) {
         var o = !0;
-        for (se = 0; se < P; se++)
+        for (se = 0; se < U; se++)
           Z[se] = re[se][ne] | 0, Z[se] !== 0 && (o = !1);
         if (!o)
           break;
@@ -13711,12 +13711,12 @@ function requireBase$1() {
       }
       if (ne >= 0 && e++, G = G.dblp(e), ne < 0)
         break;
-      for (se = 0; se < P; se++) {
+      for (se = 0; se < U; se++) {
         var g = Z[se];
         g !== 0 && (g > 0 ? oe = ee[se][g - 1 >> 1] : g < 0 && (oe = ee[se][-g - 1 >> 1].neg()), oe.type === "affine" ? G = G.mixedAdd(oe) : G = G.add(oe));
       }
     }
-    for (ne = 0; ne < P; ne++)
+    for (ne = 0; ne < U; ne++)
       ee[ne] = null;
     return Y ? G : G.toP();
   };
@@ -13732,11 +13732,11 @@ function requireBase$1() {
     var I = this.p.byteLength();
     if ((M[0] === 4 || M[0] === 6 || M[0] === 7) && M.length - 1 === 2 * I) {
       M[0] === 6 ? V(M[M.length - 1] % 2 === 0) : M[0] === 7 && V(M[M.length - 1] % 2 === 1);
-      var P = this.point(
+      var U = this.point(
         M.slice(1, 1 + I),
         M.slice(1 + I, 1 + 2 * I)
       );
-      return P;
+      return U;
     } else if ((M[0] === 2 || M[0] === 3) && M.length - 1 === I)
       return this.pointFromX(M.slice(1, 1 + I), M[0] === 3);
     throw new Error("Unknown point format");
@@ -13764,10 +13764,10 @@ function requireBase$1() {
   }, O.prototype._getDoubles = function(M, D) {
     if (this.precomputed && this.precomputed.doubles)
       return this.precomputed.doubles;
-    for (var I = [this], P = this, Y = 0; Y < D; Y += M) {
+    for (var I = [this], U = this, Y = 0; Y < D; Y += M) {
       for (var X = 0; X < M; X++)
-        P = P.dbl();
-      I.push(P);
+        U = U.dbl();
+      I.push(U);
     }
     return {
       step: M,
@@ -13776,8 +13776,8 @@ function requireBase$1() {
   }, O.prototype._getNAFPoints = function(M) {
     if (this.precomputed && this.precomputed.naf)
       return this.precomputed.naf;
-    for (var D = [this], I = (1 << M) - 1, P = I === 1 ? null : this.dbl(), Y = 1; Y < I; Y++)
-      D[Y] = D[Y - 1].add(P);
+    for (var D = [this], I = (1 << M) - 1, U = I === 1 ? null : this.dbl(), Y = 1; Y < I; Y++)
+      D[Y] = D[Y - 1].add(U);
     return {
       wnd: M,
       points: D
@@ -13795,13 +13795,13 @@ function requireShort() {
   if (hasRequiredShort)
     return short;
   hasRequiredShort = 1;
-  var $ = requireUtils$1(), h = requireBn$2(), U = requireInherits_browser(), B = requireBase$1(), V = $.assert;
+  var $ = requireUtils$1(), h = requireBn$2(), P = requireInherits_browser(), B = requireBase$1(), V = $.assert;
   function t(D) {
     B.call(this, "short", D), this.a = new h(D.a, 16).toRed(this.red), this.b = new h(D.b, 16).toRed(this.red), this.tinv = this.two.redInvm(), this.zeroA = this.a.fromRed().cmpn(0) === 0, this.threeA = this.a.fromRed().sub(this.p).cmpn(-3) === 0, this.endo = this._getEndomorphism(D), this._endoWnafT1 = new Array(4), this._endoWnafT2 = new Array(4);
   }
-  U(t, B), short = t, t.prototype._getEndomorphism = function(D) {
+  P(t, B), short = t, t.prototype._getEndomorphism = function(D) {
     if (!(!this.zeroA || !this.g || !this.n || this.p.modn(3) !== 1)) {
-      var I, P;
+      var I, U;
       if (D.beta)
         I = new h(D.beta, 16).toRed(this.red);
       else {
@@ -13809,10 +13809,10 @@ function requireShort() {
         I = Y[0].cmp(Y[1]) < 0 ? Y[0] : Y[1], I = I.toRed(this.red);
       }
       if (D.lambda)
-        P = new h(D.lambda, 16);
+        U = new h(D.lambda, 16);
       else {
         var X = this._getEndoRoots(this.n);
-        this.g.mul(X[0]).x.cmp(this.g.x.redMul(I)) === 0 ? P = X[0] : (P = X[1], V(this.g.mul(P).x.cmp(this.g.x.redMul(I)) === 0));
+        this.g.mul(X[0]).x.cmp(this.g.x.redMul(I)) === 0 ? U = X[0] : (U = X[1], V(this.g.mul(U).x.cmp(this.g.x.redMul(I)) === 0));
       }
       var ee;
       return D.basis ? ee = D.basis.map(function(re) {
@@ -13820,25 +13820,25 @@ function requireShort() {
           a: new h(re.a, 16),
           b: new h(re.b, 16)
         };
-      }) : ee = this._getEndoBasis(P), {
+      }) : ee = this._getEndoBasis(U), {
         beta: I,
-        lambda: P,
+        lambda: U,
         basis: ee
       };
     }
   }, t.prototype._getEndoRoots = function(D) {
-    var I = D === this.p ? this.red : h.mont(D), P = new h(2).toRed(I).redInvm(), Y = P.redNeg(), X = new h(3).toRed(I).redNeg().redSqrt().redMul(P), ee = Y.redAdd(X).fromRed(), re = Y.redSub(X).fromRed();
+    var I = D === this.p ? this.red : h.mont(D), U = new h(2).toRed(I).redInvm(), Y = U.redNeg(), X = new h(3).toRed(I).redNeg().redSqrt().redMul(U), ee = Y.redAdd(X).fromRed(), re = Y.redSub(X).fromRed();
     return [ee, re];
   }, t.prototype._getEndoBasis = function(D) {
-    for (var I = this.n.ushrn(Math.floor(this.n.bitLength() / 2)), P = D, Y = this.n.clone(), X = new h(1), ee = new h(0), re = new h(0), ie = new h(1), ne, se, oe, be, de, we, Se, ke = 0, he, le; P.cmpn(0) !== 0; ) {
-      var _e = Y.div(P);
-      he = Y.sub(_e.mul(P)), le = re.sub(_e.mul(X));
+    for (var I = this.n.ushrn(Math.floor(this.n.bitLength() / 2)), U = D, Y = this.n.clone(), X = new h(1), ee = new h(0), re = new h(0), ie = new h(1), ne, se, oe, be, de, we, Se, ke = 0, he, le; U.cmpn(0) !== 0; ) {
+      var _e = Y.div(U);
+      he = Y.sub(_e.mul(U)), le = re.sub(_e.mul(X));
       var G = ie.sub(_e.mul(ee));
       if (!oe && he.cmp(I) < 0)
         ne = Se.neg(), se = X, oe = he.neg(), be = le;
       else if (oe && ++ke === 2)
         break;
-      Se = he, Y = P, P = he, re = X, X = le, ie = ee, ee = G;
+      Se = he, Y = U, U = he, re = X, X = le, ie = ee, ee = G;
     }
     de = he.neg(), we = le;
     var Z = oe.sqr().add(be.sqr()), e = de.sqr().add(we.sqr());
@@ -13847,34 +13847,34 @@ function requireShort() {
       { a: de, b: we }
     ];
   }, t.prototype._endoSplit = function(D) {
-    var I = this.endo.basis, P = I[0], Y = I[1], X = Y.b.mul(D).divRound(this.n), ee = P.b.neg().mul(D).divRound(this.n), re = X.mul(P.a), ie = ee.mul(Y.a), ne = X.mul(P.b), se = ee.mul(Y.b), oe = D.sub(re).sub(ie), be = ne.add(se).neg();
+    var I = this.endo.basis, U = I[0], Y = I[1], X = Y.b.mul(D).divRound(this.n), ee = U.b.neg().mul(D).divRound(this.n), re = X.mul(U.a), ie = ee.mul(Y.a), ne = X.mul(U.b), se = ee.mul(Y.b), oe = D.sub(re).sub(ie), be = ne.add(se).neg();
     return { k1: oe, k2: be };
   }, t.prototype.pointFromX = function(D, I) {
     D = new h(D, 16), D.red || (D = D.toRed(this.red));
-    var P = D.redSqr().redMul(D).redIAdd(D.redMul(this.a)).redIAdd(this.b), Y = P.redSqrt();
-    if (Y.redSqr().redSub(P).cmp(this.zero) !== 0)
+    var U = D.redSqr().redMul(D).redIAdd(D.redMul(this.a)).redIAdd(this.b), Y = U.redSqrt();
+    if (Y.redSqr().redSub(U).cmp(this.zero) !== 0)
       throw new Error("invalid point");
     var X = Y.fromRed().isOdd();
     return (I && !X || !I && X) && (Y = Y.redNeg()), this.point(D, Y);
   }, t.prototype.validate = function(D) {
     if (D.inf)
       return !0;
-    var I = D.x, P = D.y, Y = this.a.redMul(I), X = I.redSqr().redMul(I).redIAdd(Y).redIAdd(this.b);
-    return P.redSqr().redISub(X).cmpn(0) === 0;
-  }, t.prototype._endoWnafMulAdd = function(D, I, P) {
+    var I = D.x, U = D.y, Y = this.a.redMul(I), X = I.redSqr().redMul(I).redIAdd(Y).redIAdd(this.b);
+    return U.redSqr().redISub(X).cmpn(0) === 0;
+  }, t.prototype._endoWnafMulAdd = function(D, I, U) {
     for (var Y = this._endoWnafT1, X = this._endoWnafT2, ee = 0; ee < D.length; ee++) {
       var re = this._endoSplit(I[ee]), ie = D[ee], ne = ie._getBeta();
       re.k1.negative && (re.k1.ineg(), ie = ie.neg(!0)), re.k2.negative && (re.k2.ineg(), ne = ne.neg(!0)), Y[ee * 2] = ie, Y[ee * 2 + 1] = ne, X[ee * 2] = re.k1, X[ee * 2 + 1] = re.k2;
     }
-    for (var se = this._wnafMulAdd(1, Y, X, ee * 2, P), oe = 0; oe < ee * 2; oe++)
+    for (var se = this._wnafMulAdd(1, Y, X, ee * 2, U), oe = 0; oe < ee * 2; oe++)
       Y[oe] = null, X[oe] = null;
     return se;
   };
-  function O(D, I, P, Y) {
-    B.BasePoint.call(this, D, "affine"), I === null && P === null ? (this.x = null, this.y = null, this.inf = !0) : (this.x = new h(I, 16), this.y = new h(P, 16), Y && (this.x.forceRed(this.curve.red), this.y.forceRed(this.curve.red)), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.y.red || (this.y = this.y.toRed(this.curve.red)), this.inf = !1);
+  function O(D, I, U, Y) {
+    B.BasePoint.call(this, D, "affine"), I === null && U === null ? (this.x = null, this.y = null, this.inf = !0) : (this.x = new h(I, 16), this.y = new h(U, 16), Y && (this.x.forceRed(this.curve.red), this.y.forceRed(this.curve.red)), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.y.red || (this.y = this.y.toRed(this.curve.red)), this.inf = !1);
   }
-  U(O, B.BasePoint), t.prototype.point = function(D, I, P) {
-    return new O(this, D, I, P);
+  P(O, B.BasePoint), t.prototype.point = function(D, I, U) {
+    return new O(this, D, I, U);
   }, t.prototype.pointFromJSON = function(D, I) {
     return O.fromJSON(this, D, I);
   }, O.prototype._getBeta = function() {
@@ -13884,8 +13884,8 @@ function requireShort() {
         return D.beta;
       var I = this.curve.point(this.x.redMul(this.curve.endo.beta), this.y);
       if (D) {
-        var P = this.curve, Y = function(X) {
-          return P.point(X.x.redMul(P.endo.beta), X.y);
+        var U = this.curve, Y = function(X) {
+          return U.point(X.x.redMul(U.endo.beta), X.y);
         };
         D.beta = I, I.precomputed = {
           beta: null,
@@ -13912,13 +13912,13 @@ function requireShort() {
         points: this.precomputed.naf.points.slice(1)
       }
     }] : [this.x, this.y];
-  }, O.fromJSON = function(D, I, P) {
+  }, O.fromJSON = function(D, I, U) {
     typeof I == "string" && (I = JSON.parse(I));
-    var Y = D.point(I[0], I[1], P);
+    var Y = D.point(I[0], I[1], U);
     if (!I[2])
       return Y;
     function X(re) {
-      return D.point(re[0], re[1], P);
+      return D.point(re[0], re[1], U);
     }
     var ee = I[2];
     return Y.precomputed = {
@@ -13949,15 +13949,15 @@ function requireShort() {
       return this.curve.point(null, null);
     var I = this.y.redSub(D.y);
     I.cmpn(0) !== 0 && (I = I.redMul(this.x.redSub(D.x).redInvm()));
-    var P = I.redSqr().redISub(this.x).redISub(D.x), Y = I.redMul(this.x.redSub(P)).redISub(this.y);
-    return this.curve.point(P, Y);
+    var U = I.redSqr().redISub(this.x).redISub(D.x), Y = I.redMul(this.x.redSub(U)).redISub(this.y);
+    return this.curve.point(U, Y);
   }, O.prototype.dbl = function() {
     if (this.inf)
       return this;
     var D = this.y.redAdd(this.y);
     if (D.cmpn(0) === 0)
       return this.curve.point(null, null);
-    var I = this.curve.a, P = this.x.redSqr(), Y = D.redInvm(), X = P.redAdd(P).redIAdd(P).redIAdd(I).redMul(Y), ee = X.redSqr().redISub(this.x.redAdd(this.x)), re = X.redMul(this.x.redSub(ee)).redISub(this.y);
+    var I = this.curve.a, U = this.x.redSqr(), Y = D.redInvm(), X = U.redAdd(U).redIAdd(U).redIAdd(I).redMul(Y), ee = X.redSqr().redISub(this.x.redAdd(this.x)), re = X.redMul(this.x.redSub(ee)).redISub(this.y);
     return this.curve.point(ee, re);
   }, O.prototype.getX = function() {
     return this.x.fromRed();
@@ -13965,11 +13965,11 @@ function requireShort() {
     return this.y.fromRed();
   }, O.prototype.mul = function(D) {
     return D = new h(D, 16), this.isInfinity() ? this : this._hasDoubles(D) ? this.curve._fixedNafMul(this, D) : this.curve.endo ? this.curve._endoWnafMulAdd([this], [D]) : this.curve._wnafMul(this, D);
-  }, O.prototype.mulAdd = function(D, I, P) {
-    var Y = [this, I], X = [D, P];
+  }, O.prototype.mulAdd = function(D, I, U) {
+    var Y = [this, I], X = [D, U];
     return this.curve.endo ? this.curve._endoWnafMulAdd(Y, X) : this.curve._wnafMulAdd(1, Y, X, 2);
-  }, O.prototype.jmulAdd = function(D, I, P) {
-    var Y = [this, I], X = [D, P];
+  }, O.prototype.jmulAdd = function(D, I, U) {
+    var Y = [this, I], X = [D, U];
     return this.curve.endo ? this.curve._endoWnafMulAdd(Y, X, !0) : this.curve._wnafMulAdd(1, Y, X, 2, !0);
   }, O.prototype.eq = function(D) {
     return this === D || this.inf === D.inf && (this.inf || this.x.cmp(D.x) === 0 && this.y.cmp(D.y) === 0);
@@ -13978,17 +13978,17 @@ function requireShort() {
       return this;
     var I = this.curve.point(this.x, this.y.redNeg());
     if (D && this.precomputed) {
-      var P = this.precomputed, Y = function(X) {
+      var U = this.precomputed, Y = function(X) {
         return X.neg();
       };
       I.precomputed = {
-        naf: P.naf && {
-          wnd: P.naf.wnd,
-          points: P.naf.points.map(Y)
+        naf: U.naf && {
+          wnd: U.naf.wnd,
+          points: U.naf.points.map(Y)
         },
-        doubles: P.doubles && {
-          step: P.doubles.step,
-          points: P.doubles.points.map(Y)
+        doubles: U.doubles && {
+          step: U.doubles.step,
+          points: U.doubles.points.map(Y)
         }
       };
     }
@@ -13999,16 +13999,16 @@ function requireShort() {
     var D = this.curve.jpoint(this.x, this.y, this.curve.one);
     return D;
   };
-  function M(D, I, P, Y) {
-    B.BasePoint.call(this, D, "jacobian"), I === null && P === null && Y === null ? (this.x = this.curve.one, this.y = this.curve.one, this.z = new h(0)) : (this.x = new h(I, 16), this.y = new h(P, 16), this.z = new h(Y, 16)), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.y.red || (this.y = this.y.toRed(this.curve.red)), this.z.red || (this.z = this.z.toRed(this.curve.red)), this.zOne = this.z === this.curve.one;
+  function M(D, I, U, Y) {
+    B.BasePoint.call(this, D, "jacobian"), I === null && U === null && Y === null ? (this.x = this.curve.one, this.y = this.curve.one, this.z = new h(0)) : (this.x = new h(I, 16), this.y = new h(U, 16), this.z = new h(Y, 16)), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.y.red || (this.y = this.y.toRed(this.curve.red)), this.z.red || (this.z = this.z.toRed(this.curve.red)), this.zOne = this.z === this.curve.one;
   }
-  return U(M, B.BasePoint), t.prototype.jpoint = function(D, I, P) {
-    return new M(this, D, I, P);
+  return P(M, B.BasePoint), t.prototype.jpoint = function(D, I, U) {
+    return new M(this, D, I, U);
   }, M.prototype.toP = function() {
     if (this.isInfinity())
       return this.curve.point(null, null);
-    var D = this.z.redInvm(), I = D.redSqr(), P = this.x.redMul(I), Y = this.y.redMul(I).redMul(D);
-    return this.curve.point(P, Y);
+    var D = this.z.redInvm(), I = D.redSqr(), U = this.x.redMul(I), Y = this.y.redMul(I).redMul(D);
+    return this.curve.point(U, Y);
   }, M.prototype.neg = function() {
     return this.curve.jpoint(this.x, this.y.redNeg(), this.z);
   }, M.prototype.add = function(D) {
@@ -14016,7 +14016,7 @@ function requireShort() {
       return D;
     if (D.isInfinity())
       return this;
-    var I = D.z.redSqr(), P = this.z.redSqr(), Y = this.x.redMul(I), X = D.x.redMul(P), ee = this.y.redMul(I.redMul(D.z)), re = D.y.redMul(P.redMul(this.z)), ie = Y.redSub(X), ne = ee.redSub(re);
+    var I = D.z.redSqr(), U = this.z.redSqr(), Y = this.x.redMul(I), X = D.x.redMul(U), ee = this.y.redMul(I.redMul(D.z)), re = D.y.redMul(U.redMul(this.z)), ie = Y.redSub(X), ne = ee.redSub(re);
     if (ie.cmpn(0) === 0)
       return ne.cmpn(0) !== 0 ? this.curve.jpoint(null, null, null) : this.dbl();
     var se = ie.redSqr(), oe = se.redMul(ie), be = Y.redMul(se), de = ne.redSqr().redIAdd(oe).redISub(be).redISub(be), we = ne.redMul(be.redISub(de)).redISub(ee.redMul(oe)), Se = this.z.redMul(D.z).redMul(ie);
@@ -14026,10 +14026,10 @@ function requireShort() {
       return D.toJ();
     if (D.isInfinity())
       return this;
-    var I = this.z.redSqr(), P = this.x, Y = D.x.redMul(I), X = this.y, ee = D.y.redMul(I).redMul(this.z), re = P.redSub(Y), ie = X.redSub(ee);
+    var I = this.z.redSqr(), U = this.x, Y = D.x.redMul(I), X = this.y, ee = D.y.redMul(I).redMul(this.z), re = U.redSub(Y), ie = X.redSub(ee);
     if (re.cmpn(0) === 0)
       return ie.cmpn(0) !== 0 ? this.curve.jpoint(null, null, null) : this.dbl();
-    var ne = re.redSqr(), se = ne.redMul(re), oe = P.redMul(ne), be = ie.redSqr().redIAdd(se).redISub(oe).redISub(oe), de = ie.redMul(oe.redISub(be)).redISub(X.redMul(se)), we = this.z.redMul(re);
+    var ne = re.redSqr(), se = ne.redMul(re), oe = U.redMul(ne), be = ie.redSqr().redIAdd(se).redISub(oe).redISub(oe), de = ie.redMul(oe.redISub(be)).redISub(X.redMul(se)), we = this.z.redMul(re);
     return this.curve.jpoint(be, de, we);
   }, M.prototype.dblp = function(D) {
     if (D === 0)
@@ -14040,10 +14040,10 @@ function requireShort() {
       return this.dbl();
     var I;
     if (this.curve.zeroA || this.curve.threeA) {
-      var P = this;
+      var U = this;
       for (I = 0; I < D; I++)
-        P = P.dbl();
-      return P;
+        U = U.dbl();
+      return U;
     }
     var Y = this.curve.a, X = this.curve.tinv, ee = this.x, re = this.y, ie = this.z, ne = ie.redSqr().redSqr(), se = re.redAdd(re);
     for (I = 0; I < D; I++) {
@@ -14056,50 +14056,50 @@ function requireShort() {
   }, M.prototype.dbl = function() {
     return this.isInfinity() ? this : this.curve.zeroA ? this._zeroDbl() : this.curve.threeA ? this._threeDbl() : this._dbl();
   }, M.prototype._zeroDbl = function() {
-    var D, I, P;
+    var D, I, U;
     if (this.zOne) {
       var Y = this.x.redSqr(), X = this.y.redSqr(), ee = X.redSqr(), re = this.x.redAdd(X).redSqr().redISub(Y).redISub(ee);
       re = re.redIAdd(re);
       var ie = Y.redAdd(Y).redIAdd(Y), ne = ie.redSqr().redISub(re).redISub(re), se = ee.redIAdd(ee);
-      se = se.redIAdd(se), se = se.redIAdd(se), D = ne, I = ie.redMul(re.redISub(ne)).redISub(se), P = this.y.redAdd(this.y);
+      se = se.redIAdd(se), se = se.redIAdd(se), D = ne, I = ie.redMul(re.redISub(ne)).redISub(se), U = this.y.redAdd(this.y);
     } else {
       var oe = this.x.redSqr(), be = this.y.redSqr(), de = be.redSqr(), we = this.x.redAdd(be).redSqr().redISub(oe).redISub(de);
       we = we.redIAdd(we);
       var Se = oe.redAdd(oe).redIAdd(oe), ke = Se.redSqr(), he = de.redIAdd(de);
-      he = he.redIAdd(he), he = he.redIAdd(he), D = ke.redISub(we).redISub(we), I = Se.redMul(we.redISub(D)).redISub(he), P = this.y.redMul(this.z), P = P.redIAdd(P);
+      he = he.redIAdd(he), he = he.redIAdd(he), D = ke.redISub(we).redISub(we), I = Se.redMul(we.redISub(D)).redISub(he), U = this.y.redMul(this.z), U = U.redIAdd(U);
     }
-    return this.curve.jpoint(D, I, P);
+    return this.curve.jpoint(D, I, U);
   }, M.prototype._threeDbl = function() {
-    var D, I, P;
+    var D, I, U;
     if (this.zOne) {
       var Y = this.x.redSqr(), X = this.y.redSqr(), ee = X.redSqr(), re = this.x.redAdd(X).redSqr().redISub(Y).redISub(ee);
       re = re.redIAdd(re);
       var ie = Y.redAdd(Y).redIAdd(Y).redIAdd(this.curve.a), ne = ie.redSqr().redISub(re).redISub(re);
       D = ne;
       var se = ee.redIAdd(ee);
-      se = se.redIAdd(se), se = se.redIAdd(se), I = ie.redMul(re.redISub(ne)).redISub(se), P = this.y.redAdd(this.y);
+      se = se.redIAdd(se), se = se.redIAdd(se), I = ie.redMul(re.redISub(ne)).redISub(se), U = this.y.redAdd(this.y);
     } else {
       var oe = this.z.redSqr(), be = this.y.redSqr(), de = this.x.redMul(be), we = this.x.redSub(oe).redMul(this.x.redAdd(oe));
       we = we.redAdd(we).redIAdd(we);
       var Se = de.redIAdd(de);
       Se = Se.redIAdd(Se);
       var ke = Se.redAdd(Se);
-      D = we.redSqr().redISub(ke), P = this.y.redAdd(this.z).redSqr().redISub(be).redISub(oe);
+      D = we.redSqr().redISub(ke), U = this.y.redAdd(this.z).redSqr().redISub(be).redISub(oe);
       var he = be.redSqr();
       he = he.redIAdd(he), he = he.redIAdd(he), he = he.redIAdd(he), I = we.redMul(Se.redISub(D)).redISub(he);
     }
-    return this.curve.jpoint(D, I, P);
+    return this.curve.jpoint(D, I, U);
   }, M.prototype._dbl = function() {
-    var D = this.curve.a, I = this.x, P = this.y, Y = this.z, X = Y.redSqr().redSqr(), ee = I.redSqr(), re = P.redSqr(), ie = ee.redAdd(ee).redIAdd(ee).redIAdd(D.redMul(X)), ne = I.redAdd(I);
+    var D = this.curve.a, I = this.x, U = this.y, Y = this.z, X = Y.redSqr().redSqr(), ee = I.redSqr(), re = U.redSqr(), ie = ee.redAdd(ee).redIAdd(ee).redIAdd(D.redMul(X)), ne = I.redAdd(I);
     ne = ne.redIAdd(ne);
     var se = ne.redMul(re), oe = ie.redSqr().redISub(se.redAdd(se)), be = se.redISub(oe), de = re.redSqr();
     de = de.redIAdd(de), de = de.redIAdd(de), de = de.redIAdd(de);
-    var we = ie.redMul(be).redISub(de), Se = P.redAdd(P).redMul(Y);
+    var we = ie.redMul(be).redISub(de), Se = U.redAdd(U).redMul(Y);
     return this.curve.jpoint(oe, we, Se);
   }, M.prototype.trpl = function() {
     if (!this.curve.zeroA)
       return this.dbl().add(this);
-    var D = this.x.redSqr(), I = this.y.redSqr(), P = this.z.redSqr(), Y = I.redSqr(), X = D.redAdd(D).redIAdd(D), ee = X.redSqr(), re = this.x.redAdd(I).redSqr().redISub(D).redISub(Y);
+    var D = this.x.redSqr(), I = this.y.redSqr(), U = this.z.redSqr(), Y = I.redSqr(), X = D.redAdd(D).redIAdd(D), ee = X.redSqr(), re = this.x.redAdd(I).redSqr().redISub(D).redISub(Y);
     re = re.redIAdd(re), re = re.redAdd(re).redIAdd(re), re = re.redISub(ee);
     var ie = re.redSqr(), ne = Y.redIAdd(Y);
     ne = ne.redIAdd(ne), ne = ne.redIAdd(ne), ne = ne.redIAdd(ne);
@@ -14109,7 +14109,7 @@ function requireShort() {
     be = be.redIAdd(be), be = be.redIAdd(be);
     var de = this.y.redMul(se.redMul(ne.redISub(se)).redISub(re.redMul(ie)));
     de = de.redIAdd(de), de = de.redIAdd(de), de = de.redIAdd(de);
-    var we = this.z.redAdd(re).redSqr().redISub(P).redISub(ie);
+    var we = this.z.redAdd(re).redSqr().redISub(U).redISub(ie);
     return this.curve.jpoint(be, de, we);
   }, M.prototype.mul = function(D, I) {
     return D = new h(D, I), this.curve._wnafMul(this, D);
@@ -14118,19 +14118,19 @@ function requireShort() {
       return this.eq(D.toJ());
     if (this === D)
       return !0;
-    var I = this.z.redSqr(), P = D.z.redSqr();
-    if (this.x.redMul(P).redISub(D.x.redMul(I)).cmpn(0) !== 0)
+    var I = this.z.redSqr(), U = D.z.redSqr();
+    if (this.x.redMul(U).redISub(D.x.redMul(I)).cmpn(0) !== 0)
       return !1;
-    var Y = I.redMul(this.z), X = P.redMul(D.z);
+    var Y = I.redMul(this.z), X = U.redMul(D.z);
     return this.y.redMul(X).redISub(D.y.redMul(Y)).cmpn(0) === 0;
   }, M.prototype.eqXToP = function(D) {
-    var I = this.z.redSqr(), P = D.toRed(this.curve.red).redMul(I);
-    if (this.x.cmp(P) === 0)
+    var I = this.z.redSqr(), U = D.toRed(this.curve.red).redMul(I);
+    if (this.x.cmp(U) === 0)
       return !0;
     for (var Y = D.clone(), X = this.curve.redN.redMul(I); ; ) {
       if (Y.iadd(this.curve.n), Y.cmp(this.curve.p) >= 0)
         return !1;
-      if (P.redIAdd(X), this.x.cmp(P) === 0)
+      if (U.redIAdd(X), this.x.cmp(U) === 0)
         return !0;
     }
   }, M.prototype.inspect = function() {
@@ -14144,18 +14144,18 @@ function requireMont() {
   if (hasRequiredMont)
     return mont;
   hasRequiredMont = 1;
-  var $ = requireBn$2(), h = requireInherits_browser(), U = requireBase$1(), B = requireUtils$1();
+  var $ = requireBn$2(), h = requireInherits_browser(), P = requireBase$1(), B = requireUtils$1();
   function V(O) {
-    U.call(this, "mont", O), this.a = new $(O.a, 16).toRed(this.red), this.b = new $(O.b, 16).toRed(this.red), this.i4 = new $(4).toRed(this.red).redInvm(), this.two = new $(2).toRed(this.red), this.a24 = this.i4.redMul(this.a.redAdd(this.two));
+    P.call(this, "mont", O), this.a = new $(O.a, 16).toRed(this.red), this.b = new $(O.b, 16).toRed(this.red), this.i4 = new $(4).toRed(this.red).redInvm(), this.two = new $(2).toRed(this.red), this.a24 = this.i4.redMul(this.a.redAdd(this.two));
   }
-  h(V, U), mont = V, V.prototype.validate = function(O) {
-    var M = O.normalize().x, D = M.redSqr(), I = D.redMul(M).redAdd(D.redMul(this.a)).redAdd(M), P = I.redSqrt();
-    return P.redSqr().cmp(I) === 0;
+  h(V, P), mont = V, V.prototype.validate = function(O) {
+    var M = O.normalize().x, D = M.redSqr(), I = D.redMul(M).redAdd(D.redMul(this.a)).redAdd(M), U = I.redSqrt();
+    return U.redSqr().cmp(I) === 0;
   };
   function t(O, M, D) {
-    U.BasePoint.call(this, O, "projective"), M === null && D === null ? (this.x = this.curve.one, this.z = this.curve.zero) : (this.x = new $(M, 16), this.z = new $(D, 16), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.z.red || (this.z = this.z.toRed(this.curve.red)));
+    P.BasePoint.call(this, O, "projective"), M === null && D === null ? (this.x = this.curve.one, this.z = this.curve.zero) : (this.x = new $(M, 16), this.z = new $(D, 16), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.z.red || (this.z = this.z.toRed(this.curve.red)));
   }
-  return h(t, U.BasePoint), V.prototype.decodePoint = function(O, M) {
+  return h(t, P.BasePoint), V.prototype.decodePoint = function(O, M) {
     return this.point(B.toArray(O, M), 1);
   }, V.prototype.point = function(O, M) {
     return new t(this, O, M);
@@ -14171,18 +14171,18 @@ function requireMont() {
   }, t.prototype.isInfinity = function() {
     return this.z.cmpn(0) === 0;
   }, t.prototype.dbl = function() {
-    var O = this.x.redAdd(this.z), M = O.redSqr(), D = this.x.redSub(this.z), I = D.redSqr(), P = M.redSub(I), Y = M.redMul(I), X = P.redMul(I.redAdd(this.curve.a24.redMul(P)));
+    var O = this.x.redAdd(this.z), M = O.redSqr(), D = this.x.redSub(this.z), I = D.redSqr(), U = M.redSub(I), Y = M.redMul(I), X = U.redMul(I.redAdd(this.curve.a24.redMul(U)));
     return this.curve.point(Y, X);
   }, t.prototype.add = function() {
     throw new Error("Not supported on Montgomery curve");
   }, t.prototype.diffAdd = function(O, M) {
-    var D = this.x.redAdd(this.z), I = this.x.redSub(this.z), P = O.x.redAdd(O.z), Y = O.x.redSub(O.z), X = Y.redMul(D), ee = P.redMul(I), re = M.z.redMul(X.redAdd(ee).redSqr()), ie = M.x.redMul(X.redISub(ee).redSqr());
+    var D = this.x.redAdd(this.z), I = this.x.redSub(this.z), U = O.x.redAdd(O.z), Y = O.x.redSub(O.z), X = Y.redMul(D), ee = U.redMul(I), re = M.z.redMul(X.redAdd(ee).redSqr()), ie = M.x.redMul(X.redISub(ee).redSqr());
     return this.curve.point(re, ie);
   }, t.prototype.mul = function(O) {
-    for (var M = O.clone(), D = this, I = this.curve.point(null, null), P = this, Y = []; M.cmpn(0) !== 0; M.iushrn(1))
+    for (var M = O.clone(), D = this, I = this.curve.point(null, null), U = this, Y = []; M.cmpn(0) !== 0; M.iushrn(1))
       Y.push(M.andln(1));
     for (var X = Y.length - 1; X >= 0; X--)
-      Y[X] === 0 ? (D = D.diffAdd(I, P), I = I.dbl()) : (I = D.diffAdd(I, P), D = D.dbl());
+      Y[X] === 0 ? (D = D.diffAdd(I, U), I = I.dbl()) : (I = D.diffAdd(I, U), D = D.dbl());
     return I;
   }, t.prototype.mulAdd = function() {
     throw new Error("Not supported on Montgomery curve");
@@ -14201,26 +14201,26 @@ function requireEdwards() {
   if (hasRequiredEdwards)
     return edwards;
   hasRequiredEdwards = 1;
-  var $ = requireUtils$1(), h = requireBn$2(), U = requireInherits_browser(), B = requireBase$1(), V = $.assert;
+  var $ = requireUtils$1(), h = requireBn$2(), P = requireInherits_browser(), B = requireBase$1(), V = $.assert;
   function t(M) {
     this.twisted = (M.a | 0) !== 1, this.mOneA = this.twisted && (M.a | 0) === -1, this.extended = this.mOneA, B.call(this, "edwards", M), this.a = new h(M.a, 16).umod(this.red.m), this.a = this.a.toRed(this.red), this.c = new h(M.c, 16).toRed(this.red), this.c2 = this.c.redSqr(), this.d = new h(M.d, 16).toRed(this.red), this.dd = this.d.redAdd(this.d), V(!this.twisted || this.c.fromRed().cmpn(1) === 0), this.oneC = (M.c | 0) === 1;
   }
-  U(t, B), edwards = t, t.prototype._mulA = function(M) {
+  P(t, B), edwards = t, t.prototype._mulA = function(M) {
     return this.mOneA ? M.redNeg() : this.a.redMul(M);
   }, t.prototype._mulC = function(M) {
     return this.oneC ? M : this.c.redMul(M);
-  }, t.prototype.jpoint = function(M, D, I, P) {
-    return this.point(M, D, I, P);
+  }, t.prototype.jpoint = function(M, D, I, U) {
+    return this.point(M, D, I, U);
   }, t.prototype.pointFromX = function(M, D) {
     M = new h(M, 16), M.red || (M = M.toRed(this.red));
-    var I = M.redSqr(), P = this.c2.redSub(this.a.redMul(I)), Y = this.one.redSub(this.c2.redMul(this.d).redMul(I)), X = P.redMul(Y.redInvm()), ee = X.redSqrt();
+    var I = M.redSqr(), U = this.c2.redSub(this.a.redMul(I)), Y = this.one.redSub(this.c2.redMul(this.d).redMul(I)), X = U.redMul(Y.redInvm()), ee = X.redSqrt();
     if (ee.redSqr().redSub(X).cmp(this.zero) !== 0)
       throw new Error("invalid point");
     var re = ee.fromRed().isOdd();
     return (D && !re || !D && re) && (ee = ee.redNeg()), this.point(M, ee);
   }, t.prototype.pointFromY = function(M, D) {
     M = new h(M, 16), M.red || (M = M.toRed(this.red));
-    var I = M.redSqr(), P = I.redSub(this.c2), Y = I.redMul(this.d).redMul(this.c2).redSub(this.a), X = P.redMul(Y.redInvm());
+    var I = M.redSqr(), U = I.redSub(this.c2), Y = I.redMul(this.d).redMul(this.c2).redSub(this.a), X = U.redMul(Y.redInvm());
     if (X.cmp(this.zero) === 0) {
       if (D)
         throw new Error("invalid point");
@@ -14234,16 +14234,16 @@ function requireEdwards() {
     if (M.isInfinity())
       return !0;
     M.normalize();
-    var D = M.x.redSqr(), I = M.y.redSqr(), P = D.redMul(this.a).redAdd(I), Y = this.c2.redMul(this.one.redAdd(this.d.redMul(D).redMul(I)));
-    return P.cmp(Y) === 0;
+    var D = M.x.redSqr(), I = M.y.redSqr(), U = D.redMul(this.a).redAdd(I), Y = this.c2.redMul(this.one.redAdd(this.d.redMul(D).redMul(I)));
+    return U.cmp(Y) === 0;
   };
-  function O(M, D, I, P, Y) {
-    B.BasePoint.call(this, M, "projective"), D === null && I === null && P === null ? (this.x = this.curve.zero, this.y = this.curve.one, this.z = this.curve.one, this.t = this.curve.zero, this.zOne = !0) : (this.x = new h(D, 16), this.y = new h(I, 16), this.z = P ? new h(P, 16) : this.curve.one, this.t = Y && new h(Y, 16), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.y.red || (this.y = this.y.toRed(this.curve.red)), this.z.red || (this.z = this.z.toRed(this.curve.red)), this.t && !this.t.red && (this.t = this.t.toRed(this.curve.red)), this.zOne = this.z === this.curve.one, this.curve.extended && !this.t && (this.t = this.x.redMul(this.y), this.zOne || (this.t = this.t.redMul(this.z.redInvm()))));
+  function O(M, D, I, U, Y) {
+    B.BasePoint.call(this, M, "projective"), D === null && I === null && U === null ? (this.x = this.curve.zero, this.y = this.curve.one, this.z = this.curve.one, this.t = this.curve.zero, this.zOne = !0) : (this.x = new h(D, 16), this.y = new h(I, 16), this.z = U ? new h(U, 16) : this.curve.one, this.t = Y && new h(Y, 16), this.x.red || (this.x = this.x.toRed(this.curve.red)), this.y.red || (this.y = this.y.toRed(this.curve.red)), this.z.red || (this.z = this.z.toRed(this.curve.red)), this.t && !this.t.red && (this.t = this.t.toRed(this.curve.red)), this.zOne = this.z === this.curve.one, this.curve.extended && !this.t && (this.t = this.x.redMul(this.y), this.zOne || (this.t = this.t.redMul(this.z.redInvm()))));
   }
-  return U(O, B.BasePoint), t.prototype.pointFromJSON = function(M) {
+  return P(O, B.BasePoint), t.prototype.pointFromJSON = function(M) {
     return O.fromJSON(this, M);
-  }, t.prototype.point = function(M, D, I, P) {
-    return new O(this, M, D, I, P);
+  }, t.prototype.point = function(M, D, I, U) {
+    return new O(this, M, D, I, U);
   }, O.fromJSON = function(M, D) {
     return new O(M, D[0], D[1], D[2]);
   }, O.prototype.inspect = function() {
@@ -14253,25 +14253,25 @@ function requireEdwards() {
   }, O.prototype._extDbl = function() {
     var M = this.x.redSqr(), D = this.y.redSqr(), I = this.z.redSqr();
     I = I.redIAdd(I);
-    var P = this.curve._mulA(M), Y = this.x.redAdd(this.y).redSqr().redISub(M).redISub(D), X = P.redAdd(D), ee = X.redSub(I), re = P.redSub(D), ie = Y.redMul(ee), ne = X.redMul(re), se = Y.redMul(re), oe = ee.redMul(X);
+    var U = this.curve._mulA(M), Y = this.x.redAdd(this.y).redSqr().redISub(M).redISub(D), X = U.redAdd(D), ee = X.redSub(I), re = U.redSub(D), ie = Y.redMul(ee), ne = X.redMul(re), se = Y.redMul(re), oe = ee.redMul(X);
     return this.curve.point(ie, ne, oe, se);
   }, O.prototype._projDbl = function() {
-    var M = this.x.redAdd(this.y).redSqr(), D = this.x.redSqr(), I = this.y.redSqr(), P, Y, X, ee, re, ie;
+    var M = this.x.redAdd(this.y).redSqr(), D = this.x.redSqr(), I = this.y.redSqr(), U, Y, X, ee, re, ie;
     if (this.curve.twisted) {
       ee = this.curve._mulA(D);
       var ne = ee.redAdd(I);
-      this.zOne ? (P = M.redSub(D).redSub(I).redMul(ne.redSub(this.curve.two)), Y = ne.redMul(ee.redSub(I)), X = ne.redSqr().redSub(ne).redSub(ne)) : (re = this.z.redSqr(), ie = ne.redSub(re).redISub(re), P = M.redSub(D).redISub(I).redMul(ie), Y = ne.redMul(ee.redSub(I)), X = ne.redMul(ie));
+      this.zOne ? (U = M.redSub(D).redSub(I).redMul(ne.redSub(this.curve.two)), Y = ne.redMul(ee.redSub(I)), X = ne.redSqr().redSub(ne).redSub(ne)) : (re = this.z.redSqr(), ie = ne.redSub(re).redISub(re), U = M.redSub(D).redISub(I).redMul(ie), Y = ne.redMul(ee.redSub(I)), X = ne.redMul(ie));
     } else
-      ee = D.redAdd(I), re = this.curve._mulC(this.z).redSqr(), ie = ee.redSub(re).redSub(re), P = this.curve._mulC(M.redISub(ee)).redMul(ie), Y = this.curve._mulC(ee).redMul(D.redISub(I)), X = ee.redMul(ie);
-    return this.curve.point(P, Y, X);
+      ee = D.redAdd(I), re = this.curve._mulC(this.z).redSqr(), ie = ee.redSub(re).redSub(re), U = this.curve._mulC(M.redISub(ee)).redMul(ie), Y = this.curve._mulC(ee).redMul(D.redISub(I)), X = ee.redMul(ie);
+    return this.curve.point(U, Y, X);
   }, O.prototype.dbl = function() {
     return this.isInfinity() ? this : this.curve.extended ? this._extDbl() : this._projDbl();
   }, O.prototype._extAdd = function(M) {
-    var D = this.y.redSub(this.x).redMul(M.y.redSub(M.x)), I = this.y.redAdd(this.x).redMul(M.y.redAdd(M.x)), P = this.t.redMul(this.curve.dd).redMul(M.t), Y = this.z.redMul(M.z.redAdd(M.z)), X = I.redSub(D), ee = Y.redSub(P), re = Y.redAdd(P), ie = I.redAdd(D), ne = X.redMul(ee), se = re.redMul(ie), oe = X.redMul(ie), be = ee.redMul(re);
+    var D = this.y.redSub(this.x).redMul(M.y.redSub(M.x)), I = this.y.redAdd(this.x).redMul(M.y.redAdd(M.x)), U = this.t.redMul(this.curve.dd).redMul(M.t), Y = this.z.redMul(M.z.redAdd(M.z)), X = I.redSub(D), ee = Y.redSub(U), re = Y.redAdd(U), ie = I.redAdd(D), ne = X.redMul(ee), se = re.redMul(ie), oe = X.redMul(ie), be = ee.redMul(re);
     return this.curve.point(ne, se, be, oe);
   }, O.prototype._projAdd = function(M) {
-    var D = this.z.redMul(M.z), I = D.redSqr(), P = this.x.redMul(M.x), Y = this.y.redMul(M.y), X = this.curve.d.redMul(P).redMul(Y), ee = I.redSub(X), re = I.redAdd(X), ie = this.x.redAdd(this.y).redMul(M.x.redAdd(M.y)).redISub(P).redISub(Y), ne = D.redMul(ee).redMul(ie), se, oe;
-    return this.curve.twisted ? (se = D.redMul(re).redMul(Y.redSub(this.curve._mulA(P))), oe = ee.redMul(re)) : (se = D.redMul(re).redMul(Y.redSub(P)), oe = this.curve._mulC(ee).redMul(re)), this.curve.point(ne, se, oe);
+    var D = this.z.redMul(M.z), I = D.redSqr(), U = this.x.redMul(M.x), Y = this.y.redMul(M.y), X = this.curve.d.redMul(U).redMul(Y), ee = I.redSub(X), re = I.redAdd(X), ie = this.x.redAdd(this.y).redMul(M.x.redAdd(M.y)).redISub(U).redISub(Y), ne = D.redMul(ee).redMul(ie), se, oe;
+    return this.curve.twisted ? (se = D.redMul(re).redMul(Y.redSub(this.curve._mulA(U))), oe = ee.redMul(re)) : (se = D.redMul(re).redMul(Y.redSub(U)), oe = this.curve._mulC(ee).redMul(re)), this.curve.point(ne, se, oe);
   }, O.prototype.add = function(M) {
     return this.isInfinity() ? M : M.isInfinity() ? this : this.curve.extended ? this._extAdd(M) : this._projAdd(M);
   }, O.prototype.mul = function(M) {
@@ -14302,10 +14302,10 @@ function requireEdwards() {
     var D = M.toRed(this.curve.red).redMul(this.z);
     if (this.x.cmp(D) === 0)
       return !0;
-    for (var I = M.clone(), P = this.curve.redN.redMul(this.z); ; ) {
+    for (var I = M.clone(), U = this.curve.redN.redMul(this.z); ; ) {
       if (I.iadd(this.curve.n), I.cmp(this.curve.p) >= 0)
         return !1;
-      if (D.redIAdd(P), this.x.cmp(D) === 0)
+      if (D.redIAdd(U), this.x.cmp(D) === 0)
         return !0;
     }
   }, O.prototype.toP = O.prototype.normalize, O.prototype.mixedAdd = O.prototype.add, edwards;
@@ -14324,7 +14324,7 @@ function requireUtils() {
   hasRequiredUtils = 1;
   var $ = requireMinimalisticAssert(), h = requireInherits_browser();
   utils.inherits = h;
-  function U(Z, e) {
+  function P(Z, e) {
     return (Z.charCodeAt(e) & 64512) !== 55296 || e < 0 || e + 1 >= Z.length ? !1 : (Z.charCodeAt(e + 1) & 64512) === 56320;
   }
   function B(Z, e) {
@@ -14341,7 +14341,7 @@ function requireUtils() {
       } else
         for (var g = 0, H = 0; H < Z.length; H++) {
           var F = Z.charCodeAt(H);
-          F < 128 ? o[g++] = F : F < 2048 ? (o[g++] = F >> 6 | 192, o[g++] = F & 63 | 128) : U(Z, H) ? (F = 65536 + ((F & 1023) << 10) + (Z.charCodeAt(++H) & 1023), o[g++] = F >> 18 | 240, o[g++] = F >> 12 & 63 | 128, o[g++] = F >> 6 & 63 | 128, o[g++] = F & 63 | 128) : (o[g++] = F >> 12 | 224, o[g++] = F >> 6 & 63 | 128, o[g++] = F & 63 | 128);
+          F < 128 ? o[g++] = F : F < 2048 ? (o[g++] = F >> 6 | 192, o[g++] = F & 63 | 128) : P(Z, H) ? (F = 65536 + ((F & 1023) << 10) + (Z.charCodeAt(++H) & 1023), o[g++] = F >> 18 | 240, o[g++] = F >> 12 & 63 | 128, o[g++] = F >> 6 & 63 | 128, o[g++] = F & 63 | 128) : (o[g++] = F >> 12 | 224, o[g++] = F >> 6 & 63 | 128, o[g++] = F & 63 | 128);
         }
     else
       for (H = 0; H < Z.length; H++)
@@ -14386,14 +14386,14 @@ function requireUtils() {
     return F;
   }
   utils.join32 = I;
-  function P(Z, e) {
+  function U(Z, e) {
     for (var o = new Array(Z.length * 4), g = 0, H = 0; g < Z.length; g++, H += 4) {
       var F = Z[g];
       e === "big" ? (o[H] = F >>> 24, o[H + 1] = F >>> 16 & 255, o[H + 2] = F >>> 8 & 255, o[H + 3] = F & 255) : (o[H + 3] = F >>> 24, o[H + 2] = F >>> 16 & 255, o[H + 1] = F >>> 8 & 255, o[H] = F & 255);
     }
     return o;
   }
-  utils.split32 = P;
+  utils.split32 = U;
   function Y(Z, e) {
     return Z >>> e | Z << 32 - e;
   }
@@ -14483,10 +14483,10 @@ function requireCommon$1() {
     return common$1;
   hasRequiredCommon$1 = 1;
   var $ = requireUtils(), h = requireMinimalisticAssert();
-  function U() {
+  function P() {
     this.pending = null, this.pendingTotal = 0, this.blockSize = this.constructor.blockSize, this.outSize = this.constructor.outSize, this.hmacStrength = this.constructor.hmacStrength, this.padLength = this.constructor.padLength / 8, this.endian = "big", this._delta8 = this.blockSize / 8, this._delta32 = this.blockSize / 32;
   }
-  return common$1.BlockHash = U, U.prototype.update = function(B, V) {
+  return common$1.BlockHash = P, P.prototype.update = function(B, V) {
     if (B = $.toArray(B, V), this.pending ? this.pending = this.pending.concat(B) : this.pending = B, this.pendingTotal += B.length, this.pending.length >= this._delta8) {
       B = this.pending;
       var t = B.length % this._delta8;
@@ -14495,9 +14495,9 @@ function requireCommon$1() {
         this._update(B, O, O + this._delta32);
     }
     return this;
-  }, U.prototype.digest = function(B) {
+  }, P.prototype.digest = function(B) {
     return this.update(this._pad()), h(this.pending === null), this._digest(B);
-  }, U.prototype._pad = function() {
+  }, P.prototype._pad = function() {
     var B = this.pendingTotal, V = this._delta8, t = V - (B + this.padLength) % V, O = new Array(t + this.padLength);
     O[0] = 128;
     for (var M = 1; M < t; M++)
@@ -14518,41 +14518,41 @@ function requireCommon() {
     return common;
   hasRequiredCommon = 1;
   var $ = requireUtils(), h = $.rotr32;
-  function U(P, Y, X, ee) {
-    if (P === 0)
+  function P(U, Y, X, ee) {
+    if (U === 0)
       return B(Y, X, ee);
-    if (P === 1 || P === 3)
+    if (U === 1 || U === 3)
       return t(Y, X, ee);
-    if (P === 2)
+    if (U === 2)
       return V(Y, X, ee);
   }
-  common.ft_1 = U;
-  function B(P, Y, X) {
-    return P & Y ^ ~P & X;
+  common.ft_1 = P;
+  function B(U, Y, X) {
+    return U & Y ^ ~U & X;
   }
   common.ch32 = B;
-  function V(P, Y, X) {
-    return P & Y ^ P & X ^ Y & X;
+  function V(U, Y, X) {
+    return U & Y ^ U & X ^ Y & X;
   }
   common.maj32 = V;
-  function t(P, Y, X) {
-    return P ^ Y ^ X;
+  function t(U, Y, X) {
+    return U ^ Y ^ X;
   }
   common.p32 = t;
-  function O(P) {
-    return h(P, 2) ^ h(P, 13) ^ h(P, 22);
+  function O(U) {
+    return h(U, 2) ^ h(U, 13) ^ h(U, 22);
   }
   common.s0_256 = O;
-  function M(P) {
-    return h(P, 6) ^ h(P, 11) ^ h(P, 25);
+  function M(U) {
+    return h(U, 6) ^ h(U, 11) ^ h(U, 25);
   }
   common.s1_256 = M;
-  function D(P) {
-    return h(P, 7) ^ h(P, 18) ^ P >>> 3;
+  function D(U) {
+    return h(U, 7) ^ h(U, 18) ^ U >>> 3;
   }
   common.g0_256 = D;
-  function I(P) {
-    return h(P, 17) ^ h(P, 19) ^ P >>> 10;
+  function I(U) {
+    return h(U, 17) ^ h(U, 19) ^ U >>> 10;
   }
   return common.g1_256 = I, common;
 }
@@ -14561,7 +14561,7 @@ function require_1() {
   if (hasRequired_1)
     return _1;
   hasRequired_1 = 1;
-  var $ = requireUtils(), h = requireCommon$1(), U = requireCommon(), B = $.rotl32, V = $.sum32, t = $.sum32_5, O = U.ft_1, M = h.BlockHash, D = [
+  var $ = requireUtils(), h = requireCommon$1(), P = requireCommon(), B = $.rotl32, V = $.sum32, t = $.sum32_5, O = P.ft_1, M = h.BlockHash, D = [
     1518500249,
     1859775393,
     2400959708,
@@ -14578,9 +14578,9 @@ function require_1() {
       3285377520
     ], this.W = new Array(80);
   }
-  return $.inherits(I, M), _1 = I, I.blockSize = 512, I.outSize = 160, I.hmacStrength = 80, I.padLength = 64, I.prototype._update = function(P, Y) {
+  return $.inherits(I, M), _1 = I, I.blockSize = 512, I.outSize = 160, I.hmacStrength = 80, I.padLength = 64, I.prototype._update = function(U, Y) {
     for (var X = this.W, ee = 0; ee < 16; ee++)
-      X[ee] = P[Y + ee];
+      X[ee] = U[Y + ee];
     for (; ee < X.length; ee++)
       X[ee] = B(X[ee - 3] ^ X[ee - 8] ^ X[ee - 14] ^ X[ee - 16], 1);
     var re = this.h[0], ie = this.h[1], ne = this.h[2], se = this.h[3], oe = this.h[4];
@@ -14589,8 +14589,8 @@ function require_1() {
       oe = se, se = ne, ne = B(ie, 30), ie = re, re = de;
     }
     this.h[0] = V(this.h[0], re), this.h[1] = V(this.h[1], ie), this.h[2] = V(this.h[2], ne), this.h[3] = V(this.h[3], se), this.h[4] = V(this.h[4], oe);
-  }, I.prototype._digest = function(P) {
-    return P === "hex" ? $.toHex32(this.h, "big") : $.split32(this.h, "big");
+  }, I.prototype._digest = function(U) {
+    return U === "hex" ? $.toHex32(this.h, "big") : $.split32(this.h, "big");
   }, _1;
 }
 var _256, hasRequired_256;
@@ -14598,7 +14598,7 @@ function require_256() {
   if (hasRequired_256)
     return _256;
   hasRequired_256 = 1;
-  var $ = requireUtils(), h = requireCommon$1(), U = requireCommon(), B = requireMinimalisticAssert(), V = $.sum32, t = $.sum32_4, O = $.sum32_5, M = U.ch32, D = U.maj32, I = U.s0_256, P = U.s1_256, Y = U.g0_256, X = U.g1_256, ee = h.BlockHash, re = [
+  var $ = requireUtils(), h = requireCommon$1(), P = requireCommon(), B = requireMinimalisticAssert(), V = $.sum32, t = $.sum32_4, O = $.sum32_5, M = P.ch32, D = P.maj32, I = P.s0_256, U = P.s1_256, Y = P.g0_256, X = P.g1_256, ee = h.BlockHash, re = [
     1116352408,
     1899447441,
     3049323471,
@@ -14685,7 +14685,7 @@ function require_256() {
       oe[be] = t(X(oe[be - 2]), oe[be - 7], Y(oe[be - 15]), oe[be - 16]);
     var de = this.h[0], we = this.h[1], Se = this.h[2], ke = this.h[3], he = this.h[4], le = this.h[5], _e = this.h[6], G = this.h[7];
     for (B(this.k.length === oe.length), be = 0; be < oe.length; be++) {
-      var Z = O(G, P(he), M(he, le, _e), this.k[be], oe[be]), e = V(I(de), D(de, we, Se));
+      var Z = O(G, U(he), M(he, le, _e), this.k[be], oe[be]), e = V(I(de), D(de, we, Se));
       G = _e, _e = le, le = he, he = V(ke, Z), ke = Se, Se = we, we = de, de = V(Z, e);
     }
     this.h[0] = V(this.h[0], de), this.h[1] = V(this.h[1], we), this.h[2] = V(this.h[2], Se), this.h[3] = V(this.h[3], ke), this.h[4] = V(this.h[4], he), this.h[5] = V(this.h[5], le), this.h[6] = V(this.h[6], _e), this.h[7] = V(this.h[7], G);
@@ -14699,9 +14699,9 @@ function require_224() {
     return _224;
   hasRequired_224 = 1;
   var $ = requireUtils(), h = require_256();
-  function U() {
-    if (!(this instanceof U))
-      return new U();
+  function P() {
+    if (!(this instanceof P))
+      return new P();
     h.call(this), this.h = [
       3238371032,
       914150663,
@@ -14713,7 +14713,7 @@ function require_224() {
       3204075428
     ];
   }
-  return $.inherits(U, h), _224 = U, U.blockSize = 512, U.outSize = 224, U.hmacStrength = 192, U.padLength = 64, U.prototype._digest = function(B) {
+  return $.inherits(P, h), _224 = P, P.blockSize = 512, P.outSize = 224, P.hmacStrength = 192, P.padLength = 64, P.prototype._digest = function(B) {
     return B === "hex" ? $.toHex32(this.h.slice(0, 7), "big") : $.split32(this.h.slice(0, 7), "big");
   }, _224;
 }
@@ -14722,7 +14722,7 @@ function require_512() {
   if (hasRequired_512)
     return _512;
   hasRequired_512 = 1;
-  var $ = requireUtils(), h = requireCommon$1(), U = requireMinimalisticAssert(), B = $.rotr64_hi, V = $.rotr64_lo, t = $.shr64_hi, O = $.shr64_lo, M = $.sum64, D = $.sum64_hi, I = $.sum64_lo, P = $.sum64_4_hi, Y = $.sum64_4_lo, X = $.sum64_5_hi, ee = $.sum64_5_lo, re = h.BlockHash, ie = [
+  var $ = requireUtils(), h = requireCommon$1(), P = requireMinimalisticAssert(), B = $.rotr64_hi, V = $.rotr64_lo, t = $.shr64_hi, O = $.shr64_lo, M = $.sum64, D = $.sum64_hi, I = $.sum64_lo, U = $.sum64_4_hi, Y = $.sum64_4_lo, X = $.sum64_5_hi, ee = $.sum64_5_lo, re = h.BlockHash, ie = [
     1116352408,
     3609767458,
     1899447441,
@@ -14911,7 +14911,7 @@ function require_512() {
       g[H] = e[o + H];
     for (; H < g.length; H += 2) {
       var F = G(g[H - 4], g[H - 3]), A = Z(g[H - 4], g[H - 3]), q = g[H - 14], z = g[H - 13], S = le(g[H - 30], g[H - 29]), J = _e(g[H - 30], g[H - 29]), ce = g[H - 32], ye = g[H - 31];
-      g[H] = P(
+      g[H] = U(
         F,
         A,
         q,
@@ -14934,7 +14934,7 @@ function require_512() {
   }, ne.prototype._update = function(e, o) {
     this._prepareBlock(e, o);
     var g = this.W, H = this.h[0], F = this.h[1], A = this.h[2], q = this.h[3], z = this.h[4], S = this.h[5], J = this.h[6], ce = this.h[7], ye = this.h[8], Me = this.h[9], me = this.h[10], ue = this.h[11], fe = this.h[12], Ae = this.h[13], Be = this.h[14], pe = this.h[15];
-    U(this.k.length === g.length);
+    P(this.k.length === g.length);
     for (var ge = 0; ge < g.length; ge += 2) {
       var Ee = Be, Ie = pe, Pe = ke(ye, Me), Q = he(ye, Me), K = se(ye, Me, me, ue, fe), te = oe(ye, Me, me, ue, fe, Ae), ae = this.k[ge], ve = this.k[ge + 1], qe = g[ge], Re = g[ge + 1], xe = X(
         Ee,
@@ -15023,9 +15023,9 @@ function require_384() {
     return _384;
   hasRequired_384 = 1;
   var $ = requireUtils(), h = require_512();
-  function U() {
-    if (!(this instanceof U))
-      return new U();
+  function P() {
+    if (!(this instanceof P))
+      return new P();
     h.call(this), this.h = [
       3418070365,
       3238371032,
@@ -15045,7 +15045,7 @@ function require_384() {
       3204075428
     ];
   }
-  return $.inherits(U, h), _384 = U, U.blockSize = 1024, U.outSize = 384, U.hmacStrength = 192, U.padLength = 128, U.prototype._digest = function(B) {
+  return $.inherits(P, h), _384 = P, P.blockSize = 1024, P.outSize = 384, P.hmacStrength = 192, P.padLength = 128, P.prototype._digest = function(B) {
     return B === "hex" ? $.toHex32(this.h.slice(0, 12), "big") : $.split32(this.h.slice(0, 12), "big");
   }, _384;
 }
@@ -15058,7 +15058,7 @@ function requireRipemd() {
   if (hasRequiredRipemd)
     return ripemd;
   hasRequiredRipemd = 1;
-  var $ = requireUtils(), h = requireCommon$1(), U = $.rotl32, B = $.sum32, V = $.sum32_3, t = $.sum32_4, O = h.BlockHash;
+  var $ = requireUtils(), h = requireCommon$1(), P = $.rotl32, B = $.sum32, V = $.sum32_3, t = $.sum32_4, O = h.BlockHash;
   function M() {
     if (!(this instanceof M))
       return new M();
@@ -15067,19 +15067,19 @@ function requireRipemd() {
   $.inherits(M, O), ripemd.ripemd160 = M, M.blockSize = 512, M.outSize = 160, M.hmacStrength = 192, M.padLength = 64, M.prototype._update = function(ie, ne) {
     for (var se = this.h[0], oe = this.h[1], be = this.h[2], de = this.h[3], we = this.h[4], Se = se, ke = oe, he = be, le = de, _e = we, G = 0; G < 80; G++) {
       var Z = B(
-        U(
+        P(
           t(se, D(G, oe, be, de), ie[Y[G] + ne], I(G)),
           ee[G]
         ),
         we
       );
-      se = we, we = de, de = U(be, 10), be = oe, oe = Z, Z = B(
-        U(
-          t(Se, D(79 - G, ke, he, le), ie[X[G] + ne], P(G)),
+      se = we, we = de, de = P(be, 10), be = oe, oe = Z, Z = B(
+        P(
+          t(Se, D(79 - G, ke, he, le), ie[X[G] + ne], U(G)),
           re[G]
         ),
         _e
-      ), Se = _e, _e = le, le = U(he, 10), he = ke, ke = Z;
+      ), Se = _e, _e = le, le = P(he, 10), he = ke, ke = Z;
     }
     Z = V(this.h[1], be, le), this.h[1] = V(this.h[2], de, _e), this.h[2] = V(this.h[3], we, Se), this.h[3] = V(this.h[4], se, ke), this.h[4] = V(this.h[0], oe, he), this.h[0] = Z;
   }, M.prototype._digest = function(ie) {
@@ -15091,7 +15091,7 @@ function requireRipemd() {
   function I(ie) {
     return ie <= 15 ? 0 : ie <= 31 ? 1518500249 : ie <= 47 ? 1859775393 : ie <= 63 ? 2400959708 : 2840853838;
   }
-  function P(ie) {
+  function U(ie) {
     return ie <= 15 ? 1352829926 : ie <= 31 ? 1548603684 : ie <= 47 ? 1836072691 : ie <= 63 ? 2053994217 : 0;
   }
   var Y = [
@@ -15427,12 +15427,12 @@ function requireHmac() {
     return hmac;
   hasRequiredHmac = 1;
   var $ = requireUtils(), h = requireMinimalisticAssert();
-  function U(B, V, t) {
-    if (!(this instanceof U))
-      return new U(B, V, t);
+  function P(B, V, t) {
+    if (!(this instanceof P))
+      return new P(B, V, t);
     this.Hash = B, this.blockSize = B.blockSize / 8, this.outSize = B.outSize / 8, this.inner = null, this.outer = null, this._init($.toArray(V, t));
   }
-  return hmac = U, U.prototype._init = function(B) {
+  return hmac = P, P.prototype._init = function(B) {
     B.length > this.blockSize && (B = new this.Hash().update(B).digest()), h(B.length <= this.blockSize);
     for (var V = B.length; V < this.blockSize; V++)
       B.push(0);
@@ -15441,9 +15441,9 @@ function requireHmac() {
     for (this.inner = new this.Hash().update(B), V = 0; V < B.length; V++)
       B[V] ^= 106;
     this.outer = new this.Hash().update(B);
-  }, U.prototype.update = function(B, V) {
+  }, P.prototype.update = function(B, V) {
     return this.inner.update(B, V), this;
-  }, U.prototype.digest = function(B) {
+  }, P.prototype.digest = function(B) {
     return this.outer.update(this.inner.digest()), this.outer.digest(B);
   }, hmac;
 }
@@ -16240,17 +16240,17 @@ function requireSecp256k1() {
 var hasRequiredCurves;
 function requireCurves() {
   return hasRequiredCurves || (hasRequiredCurves = 1, function($) {
-    var h = $, U = requireHash(), B = requireCurve(), V = requireUtils$1(), t = V.assert;
+    var h = $, P = requireHash(), B = requireCurve(), V = requireUtils$1(), t = V.assert;
     function O(I) {
       I.type === "short" ? this.curve = new B.short(I) : I.type === "edwards" ? this.curve = new B.edwards(I) : this.curve = new B.mont(I), this.g = this.curve.g, this.n = this.curve.n, this.hash = I.hash, t(this.g.validate(), "Invalid curve"), t(this.g.mul(this.n).isInfinity(), "Invalid curve, G*N != O");
     }
     h.PresetCurve = O;
-    function M(I, P) {
+    function M(I, U) {
       Object.defineProperty(h, I, {
         configurable: !0,
         enumerable: !0,
         get: function() {
-          var Y = new O(P);
+          var Y = new O(U);
           return Object.defineProperty(h, I, {
             configurable: !0,
             enumerable: !0,
@@ -16266,7 +16266,7 @@ function requireCurves() {
       a: "ffffffff ffffffff ffffffff fffffffe ffffffff fffffffc",
       b: "64210519 e59c80e7 0fa7e9ab 72243049 feb8deec c146b9b1",
       n: "ffffffff ffffffff ffffffff 99def836 146bc9b1 b4d22831",
-      hash: U.sha256,
+      hash: P.sha256,
       gRed: !1,
       g: [
         "188da80e b03090f6 7cbf20eb 43a18800 f4ff0afd 82ff1012",
@@ -16279,7 +16279,7 @@ function requireCurves() {
       a: "ffffffff ffffffff ffffffff fffffffe ffffffff ffffffff fffffffe",
       b: "b4050a85 0c04b3ab f5413256 5044b0b7 d7bfd8ba 270b3943 2355ffb4",
       n: "ffffffff ffffffff ffffffff ffff16a2 e0b8f03e 13dd2945 5c5c2a3d",
-      hash: U.sha256,
+      hash: P.sha256,
       gRed: !1,
       g: [
         "b70e0cbd 6bb4bf7f 321390b9 4a03c1d3 56c21122 343280d6 115c1d21",
@@ -16292,7 +16292,7 @@ function requireCurves() {
       a: "ffffffff 00000001 00000000 00000000 00000000 ffffffff ffffffff fffffffc",
       b: "5ac635d8 aa3a93e7 b3ebbd55 769886bc 651d06b0 cc53b0f6 3bce3c3e 27d2604b",
       n: "ffffffff 00000000 ffffffff ffffffff bce6faad a7179e84 f3b9cac2 fc632551",
-      hash: U.sha256,
+      hash: P.sha256,
       gRed: !1,
       g: [
         "6b17d1f2 e12c4247 f8bce6e5 63a440f2 77037d81 2deb33a0 f4a13945 d898c296",
@@ -16305,7 +16305,7 @@ function requireCurves() {
       a: "ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe ffffffff 00000000 00000000 fffffffc",
       b: "b3312fa7 e23ee7e4 988e056b e3f82d19 181d9c6e fe814112 0314088f 5013875a c656398d 8a2ed19d 2a85c8ed d3ec2aef",
       n: "ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff c7634d81 f4372ddf 581a0db2 48b0a77a ecec196a ccc52973",
-      hash: U.sha384,
+      hash: P.sha384,
       gRed: !1,
       g: [
         "aa87ca22 be8b0537 8eb1c71e f320ad74 6e1d3b62 8ba79b98 59f741e0 82542a38 5502f25d bf55296c 3a545e38 72760ab7",
@@ -16318,7 +16318,7 @@ function requireCurves() {
       a: "000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffc",
       b: "00000051 953eb961 8e1c9a1f 929a21a0 b68540ee a2da725b 99b315f3 b8b48991 8ef109e1 56193951 ec7e937b 1652c0bd 3bb1bf07 3573df88 3d2c34f1 ef451fd4 6b503f00",
       n: "000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffa 51868783 bf2f966b 7fcc0148 f709a5d0 3bb5c9b8 899c47ae bb6fb71e 91386409",
-      hash: U.sha512,
+      hash: P.sha512,
       gRed: !1,
       g: [
         "000000c6 858e06b7 0404e9cd 9e3ecb66 2395b442 9c648139 053fb521 f828af60 6b4d3dba a14b5e77 efe75928 fe1dc127 a2ffa8de 3348b3c1 856a429b f97e7e31 c2e5bd66",
@@ -16331,7 +16331,7 @@ function requireCurves() {
       a: "76d06",
       b: "1",
       n: "1000000000000000 0000000000000000 14def9dea2f79cd6 5812631a5cf5d3ed",
-      hash: U.sha256,
+      hash: P.sha256,
       gRed: !1,
       g: [
         "9"
@@ -16345,7 +16345,7 @@ function requireCurves() {
       // -121665 * (121666^(-1)) (mod P)
       d: "52036cee2b6ffe73 8cc740797779e898 00700a4d4141d8ab 75eb4dca135978a3",
       n: "1000000000000000 0000000000000000 14def9dea2f79cd6 5812631a5cf5d3ed",
-      hash: U.sha256,
+      hash: P.sha256,
       gRed: !1,
       g: [
         "216936d3cd6e53fec0a4e231fdd6dc5c692cc7609525a7b2c9562d608f25d51a",
@@ -16367,7 +16367,7 @@ function requireCurves() {
       b: "7",
       n: "ffffffff ffffffff ffffffff fffffffe baaedce6 af48a03b bfd25e8c d0364141",
       h: "1",
-      hash: U.sha256,
+      hash: P.sha256,
       // Precomputed endomorphism
       beta: "7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee",
       lambda: "5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72",
@@ -16395,13 +16395,13 @@ function requireHmacDrbg() {
   if (hasRequiredHmacDrbg)
     return hmacDrbg;
   hasRequiredHmacDrbg = 1;
-  var $ = requireHash(), h = requireUtils$2(), U = requireMinimalisticAssert();
+  var $ = requireHash(), h = requireUtils$2(), P = requireMinimalisticAssert();
   function B(V) {
     if (!(this instanceof B))
       return new B(V);
     this.hash = V.hash, this.predResist = !!V.predResist, this.outLen = this.hash.outSize, this.minEntropy = V.minEntropy || this.hash.hmacStrength, this._reseed = null, this.reseedInterval = null, this.K = null, this.V = null;
     var t = h.toArray(V.entropy, V.entropyEnc || "hex"), O = h.toArray(V.nonce, V.nonceEnc || "hex"), M = h.toArray(V.pers, V.persEnc || "hex");
-    U(
+    P(
       t.length >= this.minEntropy / 8,
       "Not enough entropy. Minimum is: " + this.minEntropy + " bits"
     ), this._init(t, O, M);
@@ -16418,7 +16418,7 @@ function requireHmacDrbg() {
     var t = this._hmac().update(this.V).update([0]);
     V && (t = t.update(V)), this.K = t.digest(), this.V = this._hmac().update(this.V).digest(), V && (this.K = this._hmac().update(this.V).update([1]).update(V).digest(), this.V = this._hmac().update(this.V).digest());
   }, B.prototype.reseed = function(V, t, O, M) {
-    typeof t != "string" && (M = O, O = t, t = null), V = h.toArray(V, t), O = h.toArray(O, M), U(
+    typeof t != "string" && (M = O, O = t, t = null), V = h.toArray(V, t), O = h.toArray(O, M), P(
       V.length >= this.minEntropy / 8,
       "Not enough entropy. Minimum is: " + this.minEntropy + " bits"
     ), this._update(V.concat(O || [])), this._reseed = 1;
@@ -16437,7 +16437,7 @@ function requireKey$1() {
   if (hasRequiredKey$1)
     return key$1;
   hasRequiredKey$1 = 1;
-  var $ = requireBn$2(), h = requireUtils$1(), U = h.assert;
+  var $ = requireBn$2(), h = requireUtils$1(), P = h.assert;
   function B(V, t) {
     this.ec = V, this.priv = null, this.pub = null, t.priv && this._importPrivate(t.priv, t.privEnc), t.pub && this._importPublic(t.pub, t.pubEnc);
   }
@@ -16462,12 +16462,12 @@ function requireKey$1() {
     this.priv = new $(V, t || 16), this.priv = this.priv.umod(this.ec.curve.n);
   }, B.prototype._importPublic = function(V, t) {
     if (V.x || V.y) {
-      this.ec.curve.type === "mont" ? U(V.x, "Need x coordinate") : (this.ec.curve.type === "short" || this.ec.curve.type === "edwards") && U(V.x && V.y, "Need both x and y coordinate"), this.pub = this.ec.curve.point(V.x, V.y);
+      this.ec.curve.type === "mont" ? P(V.x, "Need x coordinate") : (this.ec.curve.type === "short" || this.ec.curve.type === "edwards") && P(V.x && V.y, "Need both x and y coordinate"), this.pub = this.ec.curve.point(V.x, V.y);
       return;
     }
     this.pub = this.ec.curve.decodePoint(V, t);
   }, B.prototype.derive = function(V) {
-    return V.validate() || U(V.validate(), "public point not validated"), V.mul(this.priv).getX();
+    return V.validate() || P(V.validate(), "public point not validated"), V.mul(this.priv).getX();
   }, B.prototype.sign = function(V, t, O) {
     return this.ec.sign(V, this, t, O);
   }, B.prototype.verify = function(V, t) {
@@ -16481,21 +16481,21 @@ function requireSignature$1() {
   if (hasRequiredSignature$1)
     return signature$1;
   hasRequiredSignature$1 = 1;
-  var $ = requireBn$2(), h = requireUtils$1(), U = h.assert;
+  var $ = requireBn$2(), h = requireUtils$1(), P = h.assert;
   function B(D, I) {
     if (D instanceof B)
       return D;
-    this._importDER(D, I) || (U(D.r && D.s, "Signature without r or s"), this.r = new $(D.r, 16), this.s = new $(D.s, 16), D.recoveryParam === void 0 ? this.recoveryParam = null : this.recoveryParam = D.recoveryParam);
+    this._importDER(D, I) || (P(D.r && D.s, "Signature without r or s"), this.r = new $(D.r, 16), this.s = new $(D.s, 16), D.recoveryParam === void 0 ? this.recoveryParam = null : this.recoveryParam = D.recoveryParam);
   }
   signature$1 = B;
   function V() {
     this.place = 0;
   }
   function t(D, I) {
-    var P = D[I.place++];
-    if (!(P & 128))
-      return P;
-    var Y = P & 15;
+    var U = D[I.place++];
+    if (!(U & 128))
+      return U;
+    var Y = U & 15;
     if (Y === 0 || Y > 4)
       return !1;
     for (var X = 0, ee = 0, re = I.place; ee < Y; ee++, re++)
@@ -16503,28 +16503,28 @@ function requireSignature$1() {
     return X <= 127 ? !1 : (I.place = re, X);
   }
   function O(D) {
-    for (var I = 0, P = D.length - 1; !D[I] && !(D[I + 1] & 128) && I < P; )
+    for (var I = 0, U = D.length - 1; !D[I] && !(D[I + 1] & 128) && I < U; )
       I++;
     return I === 0 ? D : D.slice(I);
   }
   B.prototype._importDER = function(D, I) {
     D = h.toArray(D, I);
-    var P = new V();
-    if (D[P.place++] !== 48)
+    var U = new V();
+    if (D[U.place++] !== 48)
       return !1;
-    var Y = t(D, P);
-    if (Y === !1 || Y + P.place !== D.length || D[P.place++] !== 2)
+    var Y = t(D, U);
+    if (Y === !1 || Y + U.place !== D.length || D[U.place++] !== 2)
       return !1;
-    var X = t(D, P);
+    var X = t(D, U);
     if (X === !1)
       return !1;
-    var ee = D.slice(P.place, X + P.place);
-    if (P.place += X, D[P.place++] !== 2)
+    var ee = D.slice(U.place, X + U.place);
+    if (U.place += X, D[U.place++] !== 2)
       return !1;
-    var re = t(D, P);
-    if (re === !1 || D.length !== re + P.place)
+    var re = t(D, U);
+    if (re === !1 || D.length !== re + U.place)
       return !1;
-    var ie = D.slice(P.place, re + P.place);
+    var ie = D.slice(U.place, re + U.place);
     if (ee[0] === 0)
       if (ee[1] & 128)
         ee = ee.slice(1);
@@ -16542,18 +16542,18 @@ function requireSignature$1() {
       D.push(I);
       return;
     }
-    var P = 1 + (Math.log(I) / Math.LN2 >>> 3);
-    for (D.push(P | 128); --P; )
-      D.push(I >>> (P << 3) & 255);
+    var U = 1 + (Math.log(I) / Math.LN2 >>> 3);
+    for (D.push(U | 128); --U; )
+      D.push(I >>> (U << 3) & 255);
     D.push(I);
   }
   return B.prototype.toDER = function(D) {
-    var I = this.r.toArray(), P = this.s.toArray();
-    for (I[0] & 128 && (I = [0].concat(I)), P[0] & 128 && (P = [0].concat(P)), I = O(I), P = O(P); !P[0] && !(P[1] & 128); )
-      P = P.slice(1);
+    var I = this.r.toArray(), U = this.s.toArray();
+    for (I[0] & 128 && (I = [0].concat(I)), U[0] & 128 && (U = [0].concat(U)), I = O(I), U = O(U); !U[0] && !(U[1] & 128); )
+      U = U.slice(1);
     var Y = [2];
-    M(Y, I.length), Y = Y.concat(I), Y.push(2), M(Y, P.length);
-    var X = Y.concat(P), ee = [48];
+    M(Y, I.length), Y = Y.concat(I), Y.push(2), M(Y, U.length);
+    var X = Y.concat(U), ee = [48];
     return M(ee, X.length), ee = ee.concat(X), h.encode(ee, D);
   }, signature$1;
 }
@@ -16562,7 +16562,7 @@ function requireEc() {
   if (hasRequiredEc)
     return ec;
   hasRequiredEc = 1;
-  var $ = requireBn$2(), h = requireHmacDrbg(), U = requireUtils$1(), B = requireCurves(), V = requireBrorand(), t = U.assert, O = requireKey$1(), M = requireSignature$1();
+  var $ = requireBn$2(), h = requireHmacDrbg(), P = requireUtils$1(), B = requireCurves(), V = requireBrorand(), t = P.assert, O = requireKey$1(), M = requireSignature$1();
   function D(I) {
     if (!(this instanceof D))
       return new D(I);
@@ -16573,13 +16573,13 @@ function requireEc() {
   }
   return ec = D, D.prototype.keyPair = function(I) {
     return new O(this, I);
-  }, D.prototype.keyFromPrivate = function(I, P) {
-    return O.fromPrivate(this, I, P);
-  }, D.prototype.keyFromPublic = function(I, P) {
-    return O.fromPublic(this, I, P);
+  }, D.prototype.keyFromPrivate = function(I, U) {
+    return O.fromPrivate(this, I, U);
+  }, D.prototype.keyFromPublic = function(I, U) {
+    return O.fromPublic(this, I, U);
   }, D.prototype.genKeyPair = function(I) {
     I || (I = {});
-    for (var P = new h({
+    for (var U = new h({
       hash: this.hash,
       pers: I.pers,
       persEnc: I.persEnc || "utf8",
@@ -16587,16 +16587,16 @@ function requireEc() {
       entropyEnc: I.entropy && I.entropyEnc || "utf8",
       nonce: this.n.toArray()
     }), Y = this.n.byteLength(), X = this.n.sub(new $(2)); ; ) {
-      var ee = new $(P.generate(Y));
+      var ee = new $(U.generate(Y));
       if (!(ee.cmp(X) > 0))
         return ee.iaddn(1), this.keyFromPrivate(ee);
     }
-  }, D.prototype._truncateToN = function(I, P) {
+  }, D.prototype._truncateToN = function(I, U) {
     var Y = I.byteLength() * 8 - this.n.bitLength();
-    return Y > 0 && (I = I.ushrn(Y)), !P && I.cmp(this.n) >= 0 ? I.sub(this.n) : I;
-  }, D.prototype.sign = function(I, P, Y, X) {
-    typeof Y == "object" && (X = Y, Y = null), X || (X = {}), P = this.keyFromPrivate(P, Y), I = this._truncateToN(new $(I, 16));
-    for (var ee = this.n.byteLength(), re = P.getPrivate().toArray("be", ee), ie = I.toArray("be", ee), ne = new h({
+    return Y > 0 && (I = I.ushrn(Y)), !U && I.cmp(this.n) >= 0 ? I.sub(this.n) : I;
+  }, D.prototype.sign = function(I, U, Y, X) {
+    typeof Y == "object" && (X = Y, Y = null), X || (X = {}), U = this.keyFromPrivate(U, Y), I = this._truncateToN(new $(I, 16));
+    for (var ee = this.n.byteLength(), re = U.getPrivate().toArray("be", ee), ie = I.toArray("be", ee), ne = new h({
       hash: this.hash,
       entropy: re,
       nonce: ie,
@@ -16609,7 +16609,7 @@ function requireEc() {
         if (!de.isInfinity()) {
           var we = de.getX(), Se = we.umod(this.n);
           if (Se.cmpn(0) !== 0) {
-            var ke = be.invm(this.n).mul(Se.mul(P.getPrivate()).iadd(I));
+            var ke = be.invm(this.n).mul(Se.mul(U.getPrivate()).iadd(I));
             if (ke = ke.umod(this.n), ke.cmpn(0) !== 0) {
               var he = (de.getY().isOdd() ? 1 : 0) | (we.cmp(Se) !== 0 ? 2 : 0);
               return X.canonical && ke.cmp(this.nh) > 0 && (ke = this.n.sub(ke), he ^= 1), new M({ r: Se, s: ke, recoveryParam: he });
@@ -16618,28 +16618,28 @@ function requireEc() {
         }
       }
     }
-  }, D.prototype.verify = function(I, P, Y, X) {
-    I = this._truncateToN(new $(I, 16)), Y = this.keyFromPublic(Y, X), P = new M(P, "hex");
-    var ee = P.r, re = P.s;
+  }, D.prototype.verify = function(I, U, Y, X) {
+    I = this._truncateToN(new $(I, 16)), Y = this.keyFromPublic(Y, X), U = new M(U, "hex");
+    var ee = U.r, re = U.s;
     if (ee.cmpn(1) < 0 || ee.cmp(this.n) >= 0 || re.cmpn(1) < 0 || re.cmp(this.n) >= 0)
       return !1;
     var ie = re.invm(this.n), ne = ie.mul(I).umod(this.n), se = ie.mul(ee).umod(this.n), oe;
     return this.curve._maxwellTrick ? (oe = this.g.jmulAdd(ne, Y.getPublic(), se), oe.isInfinity() ? !1 : oe.eqXToP(ee)) : (oe = this.g.mulAdd(ne, Y.getPublic(), se), oe.isInfinity() ? !1 : oe.getX().umod(this.n).cmp(ee) === 0);
-  }, D.prototype.recoverPubKey = function(I, P, Y, X) {
-    t((3 & Y) === Y, "The recovery param is more than two bits"), P = new M(P, X);
-    var ee = this.n, re = new $(I), ie = P.r, ne = P.s, se = Y & 1, oe = Y >> 1;
+  }, D.prototype.recoverPubKey = function(I, U, Y, X) {
+    t((3 & Y) === Y, "The recovery param is more than two bits"), U = new M(U, X);
+    var ee = this.n, re = new $(I), ie = U.r, ne = U.s, se = Y & 1, oe = Y >> 1;
     if (ie.cmp(this.curve.p.umod(this.curve.n)) >= 0 && oe)
       throw new Error("Unable to find sencond key candinate");
     oe ? ie = this.curve.pointFromX(ie.add(this.curve.n), se) : ie = this.curve.pointFromX(ie, se);
-    var be = P.r.invm(ee), de = ee.sub(re).mul(be).umod(ee), we = ne.mul(be).umod(ee);
+    var be = U.r.invm(ee), de = ee.sub(re).mul(be).umod(ee), we = ne.mul(be).umod(ee);
     return this.g.mulAdd(de, ie, we);
-  }, D.prototype.getKeyRecoveryParam = function(I, P, Y, X) {
-    if (P = new M(P, X), P.recoveryParam !== null)
-      return P.recoveryParam;
+  }, D.prototype.getKeyRecoveryParam = function(I, U, Y, X) {
+    if (U = new M(U, X), U.recoveryParam !== null)
+      return U.recoveryParam;
     for (var ee = 0; ee < 4; ee++) {
       var re;
       try {
-        re = this.recoverPubKey(I, P, ee);
+        re = this.recoverPubKey(I, U, ee);
       } catch {
         continue;
       }
@@ -16654,9 +16654,9 @@ function requireKey() {
   if (hasRequiredKey)
     return key;
   hasRequiredKey = 1;
-  var $ = requireUtils$1(), h = $.assert, U = $.parseBytes, B = $.cachedProperty;
+  var $ = requireUtils$1(), h = $.assert, P = $.parseBytes, B = $.cachedProperty;
   function V(t, O) {
-    this.eddsa = t, this._secret = U(O.secret), t.isPoint(O.pub) ? this._pub = O.pub : this._pubBytes = U(O.pub);
+    this.eddsa = t, this._secret = P(O.secret), t.isPoint(O.pub) ? this._pub = O.pub : this._pubBytes = P(O.pub);
   }
   return V.fromPublic = function(t, O) {
     return O instanceof V ? O : new V(t, { pub: O });
@@ -16692,12 +16692,12 @@ function requireSignature() {
   if (hasRequiredSignature)
     return signature;
   hasRequiredSignature = 1;
-  var $ = requireBn$2(), h = requireUtils$1(), U = h.assert, B = h.cachedProperty, V = h.parseBytes;
+  var $ = requireBn$2(), h = requireUtils$1(), P = h.assert, B = h.cachedProperty, V = h.parseBytes;
   function t(O, M) {
     this.eddsa = O, typeof M != "object" && (M = V(M)), Array.isArray(M) && (M = {
       R: M.slice(0, O.encodingLength),
       S: M.slice(O.encodingLength)
-    }), U(M.R && M.S, "Signature without R or S"), O.isPoint(M.R) && (this._R = M.R), M.S instanceof $ && (this._S = M.S), this._Rencoded = Array.isArray(M.R) ? M.R : M.Rencoded, this._Sencoded = Array.isArray(M.S) ? M.S : M.Sencoded;
+    }), P(M.R && M.S, "Signature without R or S"), O.isPoint(M.R) && (this._R = M.R), M.S instanceof $ && (this._S = M.S), this._Rencoded = Array.isArray(M.R) ? M.R : M.Rencoded, this._Sencoded = Array.isArray(M.S) ? M.S : M.Sencoded;
   }
   return B(t, "S", function() {
     return this.eddsa.decodeInt(this.Sencoded());
@@ -16718,7 +16718,7 @@ function requireEddsa() {
   if (hasRequiredEddsa)
     return eddsa;
   hasRequiredEddsa = 1;
-  var $ = requireHash(), h = requireCurves(), U = requireUtils$1(), B = U.assert, V = U.parseBytes, t = requireKey(), O = requireSignature();
+  var $ = requireHash(), h = requireCurves(), P = requireUtils$1(), B = P.assert, V = P.parseBytes, t = requireKey(), O = requireSignature();
   function M(D) {
     if (B(D === "ed25519", "only tested with ed25519 so far"), !(this instanceof M))
       return new M(D);
@@ -16726,16 +16726,16 @@ function requireEddsa() {
   }
   return eddsa = M, M.prototype.sign = function(D, I) {
     D = V(D);
-    var P = this.keyFromSecret(I), Y = this.hashInt(P.messagePrefix(), D), X = this.g.mul(Y), ee = this.encodePoint(X), re = this.hashInt(ee, P.pubBytes(), D).mul(P.priv()), ie = Y.add(re).umod(this.curve.n);
+    var U = this.keyFromSecret(I), Y = this.hashInt(U.messagePrefix(), D), X = this.g.mul(Y), ee = this.encodePoint(X), re = this.hashInt(ee, U.pubBytes(), D).mul(U.priv()), ie = Y.add(re).umod(this.curve.n);
     return this.makeSignature({ R: X, S: ie, Rencoded: ee });
-  }, M.prototype.verify = function(D, I, P) {
+  }, M.prototype.verify = function(D, I, U) {
     D = V(D), I = this.makeSignature(I);
-    var Y = this.keyFromPublic(P), X = this.hashInt(I.Rencoded(), Y.pubBytes(), D), ee = this.g.mul(I.S()), re = I.R().add(Y.pub().mul(X));
+    var Y = this.keyFromPublic(U), X = this.hashInt(I.Rencoded(), Y.pubBytes(), D), ee = this.g.mul(I.S()), re = I.R().add(Y.pub().mul(X));
     return re.eq(ee);
   }, M.prototype.hashInt = function() {
     for (var D = this.hash(), I = 0; I < arguments.length; I++)
       D.update(arguments[I]);
-    return U.intFromLE(D.digest()).umod(this.curve.n);
+    return P.intFromLE(D.digest()).umod(this.curve.n);
   }, M.prototype.keyFromPublic = function(D) {
     return t.fromPublic(this, D);
   }, M.prototype.keyFromSecret = function(D) {
@@ -16746,13 +16746,13 @@ function requireEddsa() {
     var I = D.getY().toArray("le", this.encodingLength);
     return I[this.encodingLength - 1] |= D.getX().isOdd() ? 128 : 0, I;
   }, M.prototype.decodePoint = function(D) {
-    D = U.parseBytes(D);
-    var I = D.length - 1, P = D.slice(0, I).concat(D[I] & -129), Y = (D[I] & 128) !== 0, X = U.intFromLE(P);
+    D = P.parseBytes(D);
+    var I = D.length - 1, U = D.slice(0, I).concat(D[I] & -129), Y = (D[I] & 128) !== 0, X = P.intFromLE(U);
     return this.curve.pointFromY(X, Y);
   }, M.prototype.encodeInt = function(D) {
     return D.toArray("le", this.encodingLength);
   }, M.prototype.decodeInt = function(D) {
-    return U.intFromLE(D);
+    return P.intFromLE(D);
   }, M.prototype.isPoint = function(D) {
     return D instanceof this.pointClass;
   }, eddsa;
@@ -16767,7 +16767,7 @@ function requireElliptic() {
 var bn = { exports: {} }, hasRequiredBn;
 function requireBn() {
   return hasRequiredBn || (hasRequiredBn = 1, function($) {
-    (function(h, U) {
+    (function(h, P) {
       function B(e, o) {
         if (!e)
           throw new Error(o || "Assertion failed");
@@ -16783,7 +16783,7 @@ function requireBn() {
           return e;
         this.negative = 0, this.words = null, this.length = 0, this.red = null, e !== null && ((o === "le" || o === "be") && (g = o, o = 10), this._init(e || 0, o || 10, g || "be"));
       }
-      typeof h == "object" ? h.exports = t : U.BN = t, t.BN = t, t.wordSize = 26;
+      typeof h == "object" ? h.exports = t : P.BN = t, t.BN = t, t.wordSize = 26;
       var O;
       try {
         typeof window < "u" && typeof window.Buffer < "u" ? O = window.Buffer : O = requireBuffer$1().Buffer;
@@ -16883,11 +16883,11 @@ function requireBn() {
           e.words[o] = this.words[o];
         e.length = this.length, e.negative = this.negative, e.red = this.red;
       };
-      function P(e, o) {
+      function U(e, o) {
         e.words = o.words, e.length = o.length, e.negative = o.negative, e.red = o.red;
       }
       if (t.prototype._move = function(e) {
-        P(e, this);
+        U(e, this);
       }, t.prototype.clone = function() {
         var e = new t(null);
         return this.copy(e), e;
@@ -17809,7 +17809,7 @@ function requireBn() {
           "red works only with red numbers"
         );
       }, G.prototype.imod = function(e) {
-        return this.prime ? this.prime.ireduce(e)._forceRed(this) : (P(e, e.umod(this.m)._forceRed(this)), e);
+        return this.prime ? this.prime.ireduce(e)._forceRed(this) : (U(e, e.umod(this.m)._forceRed(this)), e);
       }, G.prototype.neg = function(e) {
         return e.isZero() ? e.clone() : this.m.sub(e)._forceRed(this);
       }, G.prototype.add = function(e, o) {
@@ -17925,35 +17925,35 @@ function requireVmBrowserify() {
     var indexOf = function($, h) {
       if ($.indexOf)
         return $.indexOf(h);
-      for (var U = 0; U < $.length; U++)
-        if ($[U] === h)
-          return U;
+      for (var P = 0; P < $.length; P++)
+        if ($[P] === h)
+          return P;
       return -1;
     }, Object_keys = function($) {
       if (Object.keys)
         return Object.keys($);
       var h = [];
-      for (var U in $)
-        h.push(U);
+      for (var P in $)
+        h.push(P);
       return h;
     }, forEach = function($, h) {
       if ($.forEach)
         return $.forEach(h);
-      for (var U = 0; U < $.length; U++)
-        h($[U], U, $);
+      for (var P = 0; P < $.length; P++)
+        h($[P], P, $);
     }, defineProp = function() {
       try {
-        return Object.defineProperty({}, "_", {}), function($, h, U) {
+        return Object.defineProperty({}, "_", {}), function($, h, P) {
           Object.defineProperty($, h, {
             writable: !0,
             enumerable: !1,
             configurable: !0,
-            value: U
+            value: P
           });
         };
       } catch {
-        return function($, h, U) {
-          $[h] = U;
+        return function($, h, P) {
+          $[h] = P;
         };
       }
     }(), globals = [
@@ -18002,29 +18002,29 @@ function requireVmBrowserify() {
         throw new TypeError("needs a 'context' argument.");
       var h = document.createElement("iframe");
       h.style || (h.style = {}), h.style.display = "none", document.body.appendChild(h);
-      var U = h.contentWindow, B = U.eval, V = U.execScript;
-      !B && V && (V.call(U, "null"), B = U.eval), forEach(Object_keys($), function(M) {
-        U[M] = $[M];
+      var P = h.contentWindow, B = P.eval, V = P.execScript;
+      !B && V && (V.call(P, "null"), B = P.eval), forEach(Object_keys($), function(M) {
+        P[M] = $[M];
       }), forEach(globals, function(M) {
-        $[M] && (U[M] = $[M]);
+        $[M] && (P[M] = $[M]);
       });
-      var t = Object_keys(U), O = B.call(U, this.code);
-      return forEach(Object_keys(U), function(M) {
-        (M in $ || indexOf(t, M) === -1) && ($[M] = U[M]);
+      var t = Object_keys(P), O = B.call(P, this.code);
+      return forEach(Object_keys(P), function(M) {
+        (M in $ || indexOf(t, M) === -1) && ($[M] = P[M]);
       }), forEach(globals, function(M) {
-        M in $ || defineProp($, M, U[M]);
+        M in $ || defineProp($, M, P[M]);
       }), document.body.removeChild(h), O;
     }, Script.prototype.runInThisContext = function() {
       return eval(this.code);
     }, Script.prototype.runInNewContext = function($) {
-      var h = Script.createContext($), U = this.runInContext(h);
+      var h = Script.createContext($), P = this.runInContext(h);
       return $ && forEach(Object_keys(h), function(B) {
         $[B] = h[B];
-      }), U;
+      }), P;
     }, forEach(Object_keys(Script.prototype), function($) {
       exports[$] = Script[$] = function(h) {
-        var U = Script(h);
-        return U[$].apply(U, [].slice.call(arguments, 1));
+        var P = Script(h);
+        return P[$].apply(P, [].slice.call(arguments, 1));
       };
     }), exports.isContext = function($) {
       return $ instanceof Context;
@@ -18032,8 +18032,8 @@ function requireVmBrowserify() {
       return exports.Script($);
     }, exports.createContext = Script.createContext = function($) {
       var h = new Context();
-      return typeof $ == "object" && forEach(Object_keys($), function(U) {
-        h[U] = $[U];
+      return typeof $ == "object" && forEach(Object_keys($), function(P) {
+        h[P] = $[P];
       }), h;
     };
   }(vmBrowserify)), vmBrowserify;
@@ -18041,7 +18041,7 @@ function requireVmBrowserify() {
 var hasRequiredApi;
 function requireApi() {
   return hasRequiredApi || (hasRequiredApi = 1, function($) {
-    var h = requireAsn1$1(), U = requireInherits_browser(), B = $;
+    var h = requireAsn1$1(), P = requireInherits_browser(), B = $;
     B.define = function(t, O) {
       return new V(t, O);
     };
@@ -18061,7 +18061,7 @@ function requireApi() {
           this._initNamed(M);
         };
       }
-      return U(O, t), O.prototype._initNamed = function(M) {
+      return P(O, t), O.prototype._initNamed = function(M) {
         t.call(this, M);
       }, new O(this);
     }, V.prototype._getDecoder = function(t) {
@@ -18090,7 +18090,7 @@ function requireReporter() {
     };
   }
   reporter.Reporter = h, h.prototype.isError = function(B) {
-    return B instanceof U;
+    return B instanceof P;
   }, h.prototype.save = function() {
     var B = this._reporterState;
     return { obj: B.obj, pathLen: B.path.length };
@@ -18114,8 +18114,8 @@ function requireReporter() {
     var V = this._reporterState, t = V.obj;
     return V.obj = B, t;
   }, h.prototype.error = function(B) {
-    var V, t = this._reporterState, O = B instanceof U;
-    if (O ? V = B : V = new U(t.path.map(function(M) {
+    var V, t = this._reporterState, O = B instanceof P;
+    if (O ? V = B : V = new P(t.path.map(function(M) {
       return "[" + JSON.stringify(M) + "]";
     }).join(""), B.message || B, B.stack), !t.options.partial)
       throw V;
@@ -18127,11 +18127,11 @@ function requireReporter() {
       errors: V.errors
     } : B;
   };
-  function U(B, V) {
+  function P(B, V) {
     this.path = B, this.rethrow(V);
   }
-  return $(U, Error), U.prototype.rethrow = function(B) {
-    if (this.message = B + " at: " + (this.path || "(shallow)"), Error.captureStackTrace && Error.captureStackTrace(this, U), !this.stack)
+  return $(P, Error), P.prototype.rethrow = function(B) {
+    if (this.message = B + " at: " + (this.path || "(shallow)"), Error.captureStackTrace && Error.captureStackTrace(this, P), !this.stack)
       try {
         throw new Error(this.message);
       } catch (V) {
@@ -18145,9 +18145,9 @@ function requireBuffer() {
   if (hasRequiredBuffer)
     return buffer;
   hasRequiredBuffer = 1;
-  var $ = requireInherits_browser(), h = requireBase().Reporter, U = requireBuffer$1().Buffer;
+  var $ = requireInherits_browser(), h = requireBase().Reporter, P = requireBuffer$1().Buffer;
   function B(t, O) {
-    if (h.call(this, O), !U.isBuffer(t)) {
+    if (h.call(this, O), !P.isBuffer(t)) {
       this.error("Input not Buffer");
       return;
     }
@@ -18180,16 +18180,16 @@ function requireBuffer() {
         return O.error("non-byte EncoderBuffer value");
       this.value = t, this.length = 1;
     } else if (typeof t == "string")
-      this.value = t, this.length = U.byteLength(t);
-    else if (U.isBuffer(t))
+      this.value = t, this.length = P.byteLength(t);
+    else if (P.isBuffer(t))
       this.value = t, this.length = t.length;
     else
       return O.error("Unsupported type: " + typeof t);
   }
   return buffer.EncoderBuffer = V, V.prototype.join = function(t, O) {
-    return t || (t = new U(this.length)), O || (O = 0), this.length === 0 || (Array.isArray(this.value) ? this.value.forEach(function(M) {
+    return t || (t = new P(this.length)), O || (O = 0), this.length === 0 || (Array.isArray(this.value) ? this.value.forEach(function(M) {
       M.join(t, O), O += M.length;
-    }) : (typeof this.value == "number" ? t[O] = this.value : typeof this.value == "string" ? t.write(this.value, O) : U.isBuffer(this.value) && this.value.copy(t, O), O += this.length)), t;
+    }) : (typeof this.value == "number" ? t[O] = this.value : typeof this.value == "string" ? t.write(this.value, O) : P.isBuffer(this.value) && this.value.copy(t, O), O += this.length)), t;
   }, buffer;
 }
 var node, hasRequiredNode;
@@ -18197,7 +18197,7 @@ function requireNode() {
   if (hasRequiredNode)
     return node;
   hasRequiredNode = 1;
-  var $ = requireBase().Reporter, h = requireBase().EncoderBuffer, U = requireBase().DecoderBuffer, B = requireMinimalisticAssert(), V = [
+  var $ = requireBase().Reporter, h = requireBase().EncoderBuffer, P = requireBase().DecoderBuffer, B = requireMinimalisticAssert(), V = [
     "seq",
     "seqof",
     "set",
@@ -18254,9 +18254,9 @@ function requireNode() {
     "_encodeInt",
     "_encodeBool"
   ];
-  function M(I, P) {
+  function M(I, U) {
     var Y = {};
-    this._baseState = Y, Y.enc = I, Y.parent = P || null, Y.children = null, Y.tag = null, Y.args = null, Y.reverseArgs = null, Y.choice = null, Y.optional = !1, Y.any = !1, Y.obj = !1, Y.use = null, Y.useDecoder = null, Y.key = null, Y.default = null, Y.explicit = null, Y.implicit = null, Y.contains = null, Y.parent || (Y.children = [], this._wrap());
+    this._baseState = Y, Y.enc = I, Y.parent = U || null, Y.children = null, Y.tag = null, Y.args = null, Y.reverseArgs = null, Y.choice = null, Y.optional = !1, Y.any = !1, Y.obj = !1, Y.use = null, Y.useDecoder = null, Y.key = null, Y.default = null, Y.explicit = null, Y.implicit = null, Y.contains = null, Y.parent || (Y.children = [], this._wrap());
   }
   node = M;
   var D = [
@@ -18279,34 +18279,34 @@ function requireNode() {
     "contains"
   ];
   return M.prototype.clone = function() {
-    var I = this._baseState, P = {};
+    var I = this._baseState, U = {};
     D.forEach(function(X) {
-      P[X] = I[X];
+      U[X] = I[X];
     });
-    var Y = new this.constructor(P.parent);
-    return Y._baseState = P, Y;
+    var Y = new this.constructor(U.parent);
+    return Y._baseState = U, Y;
   }, M.prototype._wrap = function() {
     var I = this._baseState;
-    t.forEach(function(P) {
-      this[P] = function() {
+    t.forEach(function(U) {
+      this[U] = function() {
         var Y = new this.constructor(this);
-        return I.children.push(Y), Y[P].apply(Y, arguments);
+        return I.children.push(Y), Y[U].apply(Y, arguments);
       };
     }, this);
   }, M.prototype._init = function(I) {
-    var P = this._baseState;
-    B(P.parent === null), I.call(this), P.children = P.children.filter(function(Y) {
+    var U = this._baseState;
+    B(U.parent === null), I.call(this), U.children = U.children.filter(function(Y) {
       return Y._baseState.parent === this;
-    }, this), B.equal(P.children.length, 1, "Root node can have only one child");
+    }, this), B.equal(U.children.length, 1, "Root node can have only one child");
   }, M.prototype._useArgs = function(I) {
-    var P = this._baseState, Y = I.filter(function(X) {
+    var U = this._baseState, Y = I.filter(function(X) {
       return X instanceof this.constructor;
     }, this);
     I = I.filter(function(X) {
       return !(X instanceof this.constructor);
-    }, this), Y.length !== 0 && (B(P.children === null), P.children = Y, Y.forEach(function(X) {
+    }, this), Y.length !== 0 && (B(U.children === null), U.children = Y, Y.forEach(function(X) {
       X._baseState.parent = this;
-    }, this)), I.length !== 0 && (B(P.args === null), P.args = I, P.reverseArgs = I.map(function(X) {
+    }, this)), I.length !== 0 && (B(U.args === null), U.args = I, U.reverseArgs = I.map(function(X) {
       if (typeof X != "object" || X.constructor !== Object)
         return X;
       var ee = {};
@@ -18318,58 +18318,58 @@ function requireNode() {
     }));
   }, O.forEach(function(I) {
     M.prototype[I] = function() {
-      var P = this._baseState;
-      throw new Error(I + " not implemented for encoding: " + P.enc);
+      var U = this._baseState;
+      throw new Error(I + " not implemented for encoding: " + U.enc);
     };
   }), V.forEach(function(I) {
     M.prototype[I] = function() {
-      var P = this._baseState, Y = Array.prototype.slice.call(arguments);
-      return B(P.tag === null), P.tag = I, this._useArgs(Y), this;
+      var U = this._baseState, Y = Array.prototype.slice.call(arguments);
+      return B(U.tag === null), U.tag = I, this._useArgs(Y), this;
     };
   }), M.prototype.use = function(I) {
     B(I);
-    var P = this._baseState;
-    return B(P.use === null), P.use = I, this;
+    var U = this._baseState;
+    return B(U.use === null), U.use = I, this;
   }, M.prototype.optional = function() {
     var I = this._baseState;
     return I.optional = !0, this;
   }, M.prototype.def = function(I) {
-    var P = this._baseState;
-    return B(P.default === null), P.default = I, P.optional = !0, this;
+    var U = this._baseState;
+    return B(U.default === null), U.default = I, U.optional = !0, this;
   }, M.prototype.explicit = function(I) {
-    var P = this._baseState;
-    return B(P.explicit === null && P.implicit === null), P.explicit = I, this;
+    var U = this._baseState;
+    return B(U.explicit === null && U.implicit === null), U.explicit = I, this;
   }, M.prototype.implicit = function(I) {
-    var P = this._baseState;
-    return B(P.explicit === null && P.implicit === null), P.implicit = I, this;
+    var U = this._baseState;
+    return B(U.explicit === null && U.implicit === null), U.implicit = I, this;
   }, M.prototype.obj = function() {
-    var I = this._baseState, P = Array.prototype.slice.call(arguments);
-    return I.obj = !0, P.length !== 0 && this._useArgs(P), this;
+    var I = this._baseState, U = Array.prototype.slice.call(arguments);
+    return I.obj = !0, U.length !== 0 && this._useArgs(U), this;
   }, M.prototype.key = function(I) {
-    var P = this._baseState;
-    return B(P.key === null), P.key = I, this;
+    var U = this._baseState;
+    return B(U.key === null), U.key = I, this;
   }, M.prototype.any = function() {
     var I = this._baseState;
     return I.any = !0, this;
   }, M.prototype.choice = function(I) {
-    var P = this._baseState;
-    return B(P.choice === null), P.choice = I, this._useArgs(Object.keys(I).map(function(Y) {
+    var U = this._baseState;
+    return B(U.choice === null), U.choice = I, this._useArgs(Object.keys(I).map(function(Y) {
       return I[Y];
     })), this;
   }, M.prototype.contains = function(I) {
-    var P = this._baseState;
-    return B(P.use === null), P.contains = I, this;
-  }, M.prototype._decode = function(I, P) {
+    var U = this._baseState;
+    return B(U.use === null), U.contains = I, this;
+  }, M.prototype._decode = function(I, U) {
     var Y = this._baseState;
     if (Y.parent === null)
-      return I.wrapResult(Y.children[0]._decode(I, P));
+      return I.wrapResult(Y.children[0]._decode(I, U));
     var X = Y.default, ee = !0, re = null;
     if (Y.key !== null && (re = I.enterKey(Y.key)), Y.optional) {
       var ie = null;
       if (Y.explicit !== null ? ie = Y.explicit : Y.implicit !== null ? ie = Y.implicit : Y.tag !== null && (ie = Y.tag), ie === null && !Y.any) {
         var ne = I.save();
         try {
-          Y.choice === null ? this._decodeGeneric(Y.tag, I, P) : this._decodeChoice(I, P), ee = !0;
+          Y.choice === null ? this._decodeGeneric(Y.tag, I, U) : this._decodeChoice(I, U), ee = !0;
         } catch {
           ee = !1;
         }
@@ -18398,28 +18398,28 @@ function requireNode() {
           return de;
         Y.any ? X = I.raw(ne) : I = de;
       }
-      if (P && P.track && Y.tag !== null && P.track(I.path(), be, I.length, "tagged"), P && P.track && Y.tag !== null && P.track(I.path(), I.offset, I.length, "content"), Y.any ? X = X : Y.choice === null ? X = this._decodeGeneric(Y.tag, I, P) : X = this._decodeChoice(I, P), I.isError(X))
+      if (U && U.track && Y.tag !== null && U.track(I.path(), be, I.length, "tagged"), U && U.track && Y.tag !== null && U.track(I.path(), I.offset, I.length, "content"), Y.any ? X = X : Y.choice === null ? X = this._decodeGeneric(Y.tag, I, U) : X = this._decodeChoice(I, U), I.isError(X))
         return X;
       if (!Y.any && Y.choice === null && Y.children !== null && Y.children.forEach(function(Se) {
-        Se._decode(I, P);
+        Se._decode(I, U);
       }), Y.contains && (Y.tag === "octstr" || Y.tag === "bitstr")) {
-        var we = new U(X);
-        X = this._getUse(Y.contains, I._reporterState.obj)._decode(we, P);
+        var we = new P(X);
+        X = this._getUse(Y.contains, I._reporterState.obj)._decode(we, U);
       }
     }
     return Y.obj && ee && (X = I.leaveObject(se)), Y.key !== null && (X !== null || ee === !0) ? I.leaveKey(re, Y.key, X) : re !== null && I.exitKey(re), X;
-  }, M.prototype._decodeGeneric = function(I, P, Y) {
+  }, M.prototype._decodeGeneric = function(I, U, Y) {
     var X = this._baseState;
-    return I === "seq" || I === "set" ? null : I === "seqof" || I === "setof" ? this._decodeList(P, I, X.args[0], Y) : /str$/.test(I) ? this._decodeStr(P, I, Y) : I === "objid" && X.args ? this._decodeObjid(P, X.args[0], X.args[1], Y) : I === "objid" ? this._decodeObjid(P, null, null, Y) : I === "gentime" || I === "utctime" ? this._decodeTime(P, I, Y) : I === "null_" ? this._decodeNull(P, Y) : I === "bool" ? this._decodeBool(P, Y) : I === "objDesc" ? this._decodeStr(P, I, Y) : I === "int" || I === "enum" ? this._decodeInt(P, X.args && X.args[0], Y) : X.use !== null ? this._getUse(X.use, P._reporterState.obj)._decode(P, Y) : P.error("unknown tag: " + I);
-  }, M.prototype._getUse = function(I, P) {
+    return I === "seq" || I === "set" ? null : I === "seqof" || I === "setof" ? this._decodeList(U, I, X.args[0], Y) : /str$/.test(I) ? this._decodeStr(U, I, Y) : I === "objid" && X.args ? this._decodeObjid(U, X.args[0], X.args[1], Y) : I === "objid" ? this._decodeObjid(U, null, null, Y) : I === "gentime" || I === "utctime" ? this._decodeTime(U, I, Y) : I === "null_" ? this._decodeNull(U, Y) : I === "bool" ? this._decodeBool(U, Y) : I === "objDesc" ? this._decodeStr(U, I, Y) : I === "int" || I === "enum" ? this._decodeInt(U, X.args && X.args[0], Y) : X.use !== null ? this._getUse(X.use, U._reporterState.obj)._decode(U, Y) : U.error("unknown tag: " + I);
+  }, M.prototype._getUse = function(I, U) {
     var Y = this._baseState;
-    return Y.useDecoder = this._use(I, P), B(Y.useDecoder._baseState.parent === null), Y.useDecoder = Y.useDecoder._baseState.children[0], Y.implicit !== Y.useDecoder._baseState.implicit && (Y.useDecoder = Y.useDecoder.clone(), Y.useDecoder._baseState.implicit = Y.implicit), Y.useDecoder;
-  }, M.prototype._decodeChoice = function(I, P) {
+    return Y.useDecoder = this._use(I, U), B(Y.useDecoder._baseState.parent === null), Y.useDecoder = Y.useDecoder._baseState.children[0], Y.implicit !== Y.useDecoder._baseState.implicit && (Y.useDecoder = Y.useDecoder.clone(), Y.useDecoder._baseState.implicit = Y.implicit), Y.useDecoder;
+  }, M.prototype._decodeChoice = function(I, U) {
     var Y = this._baseState, X = null, ee = !1;
     return Object.keys(Y.choice).some(function(re) {
       var ie = I.save(), ne = Y.choice[re];
       try {
-        var se = ne._decode(I, P);
+        var se = ne._decode(I, U);
         if (I.isError(se))
           return !1;
         X = { type: re, value: se }, ee = !0;
@@ -18430,19 +18430,19 @@ function requireNode() {
     }, this), ee ? X : I.error("Choice not matched");
   }, M.prototype._createEncoderBuffer = function(I) {
     return new h(I, this.reporter);
-  }, M.prototype._encode = function(I, P, Y) {
+  }, M.prototype._encode = function(I, U, Y) {
     var X = this._baseState;
     if (!(X.default !== null && X.default === I)) {
-      var ee = this._encodeValue(I, P, Y);
-      if (ee !== void 0 && !this._skipDefault(ee, P, Y))
+      var ee = this._encodeValue(I, U, Y);
+      if (ee !== void 0 && !this._skipDefault(ee, U, Y))
         return ee;
     }
-  }, M.prototype._encodeValue = function(I, P, Y) {
+  }, M.prototype._encodeValue = function(I, U, Y) {
     var X = this._baseState;
     if (X.parent === null)
-      return X.children[0]._encode(I, P || new $());
+      return X.children[0]._encode(I, U || new $());
     var ne = null;
-    if (this.reporter = P, X.optional && I === void 0)
+    if (this.reporter = U, X.optional && I === void 0)
       if (X.default !== null)
         I = X.default;
       else
@@ -18451,65 +18451,65 @@ function requireNode() {
     if (X.any)
       ne = this._createEncoderBuffer(I);
     else if (X.choice)
-      ne = this._encodeChoice(I, P);
+      ne = this._encodeChoice(I, U);
     else if (X.contains)
-      ee = this._getUse(X.contains, Y)._encode(I, P), re = !0;
+      ee = this._getUse(X.contains, Y)._encode(I, U), re = !0;
     else if (X.children)
       ee = X.children.map(function(be) {
         if (be._baseState.tag === "null_")
-          return be._encode(null, P, I);
+          return be._encode(null, U, I);
         if (be._baseState.key === null)
-          return P.error("Child should have a key");
-        var de = P.enterKey(be._baseState.key);
+          return U.error("Child should have a key");
+        var de = U.enterKey(be._baseState.key);
         if (typeof I != "object")
-          return P.error("Child expected, but input is not object");
-        var we = be._encode(I[be._baseState.key], P, I);
-        return P.leaveKey(de), we;
+          return U.error("Child expected, but input is not object");
+        var we = be._encode(I[be._baseState.key], U, I);
+        return U.leaveKey(de), we;
       }, this).filter(function(be) {
         return be;
       }), ee = this._createEncoderBuffer(ee);
     else if (X.tag === "seqof" || X.tag === "setof") {
       if (!(X.args && X.args.length === 1))
-        return P.error("Too many args for : " + X.tag);
+        return U.error("Too many args for : " + X.tag);
       if (!Array.isArray(I))
-        return P.error("seqof/setof, but data is not Array");
+        return U.error("seqof/setof, but data is not Array");
       var ie = this.clone();
       ie._baseState.implicit = null, ee = this._createEncoderBuffer(I.map(function(be) {
         var de = this._baseState;
-        return this._getUse(de.args[0], I)._encode(be, P);
+        return this._getUse(de.args[0], I)._encode(be, U);
       }, ie));
     } else
-      X.use !== null ? ne = this._getUse(X.use, Y)._encode(I, P) : (ee = this._encodePrimitive(X.tag, I), re = !0);
+      X.use !== null ? ne = this._getUse(X.use, Y)._encode(I, U) : (ee = this._encodePrimitive(X.tag, I), re = !0);
     var ne;
     if (!X.any && X.choice === null) {
       var se = X.implicit !== null ? X.implicit : X.tag, oe = X.implicit === null ? "universal" : "context";
-      se === null ? X.use === null && P.error("Tag could be omitted only for .use()") : X.use === null && (ne = this._encodeComposite(se, re, oe, ee));
+      se === null ? X.use === null && U.error("Tag could be omitted only for .use()") : X.use === null && (ne = this._encodeComposite(se, re, oe, ee));
     }
     return X.explicit !== null && (ne = this._encodeComposite(X.explicit, !1, "context", ne)), ne;
-  }, M.prototype._encodeChoice = function(I, P) {
+  }, M.prototype._encodeChoice = function(I, U) {
     var Y = this._baseState, X = Y.choice[I.type];
     return X || B(
       !1,
       I.type + " not found in " + JSON.stringify(Object.keys(Y.choice))
-    ), X._encode(I.value, P);
-  }, M.prototype._encodePrimitive = function(I, P) {
+    ), X._encode(I.value, U);
+  }, M.prototype._encodePrimitive = function(I, U) {
     var Y = this._baseState;
     if (/str$/.test(I))
-      return this._encodeStr(P, I);
+      return this._encodeStr(U, I);
     if (I === "objid" && Y.args)
-      return this._encodeObjid(P, Y.reverseArgs[0], Y.args[1]);
+      return this._encodeObjid(U, Y.reverseArgs[0], Y.args[1]);
     if (I === "objid")
-      return this._encodeObjid(P, null, null);
+      return this._encodeObjid(U, null, null);
     if (I === "gentime" || I === "utctime")
-      return this._encodeTime(P, I);
+      return this._encodeTime(U, I);
     if (I === "null_")
       return this._encodeNull();
     if (I === "int" || I === "enum")
-      return this._encodeInt(P, Y.args && Y.reverseArgs[0]);
+      return this._encodeInt(U, Y.args && Y.reverseArgs[0]);
     if (I === "bool")
-      return this._encodeBool(P);
+      return this._encodeBool(U);
     if (I === "objDesc")
-      return this._encodeStr(P, I);
+      return this._encodeStr(U, I);
     throw new Error("Unsupported tag: " + I);
   }, M.prototype._isNumstr = function(I) {
     return /^[0-9 ]*$/.test(I);
@@ -18570,11 +18570,11 @@ var hasRequiredConstants;
 function requireConstants() {
   return hasRequiredConstants || (hasRequiredConstants = 1, function($) {
     var h = $;
-    h._reverse = function(U) {
+    h._reverse = function(P) {
       var B = {};
-      return Object.keys(U).forEach(function(V) {
+      return Object.keys(P).forEach(function(V) {
         (V | 0) == V && (V = V | 0);
-        var t = U[V];
+        var t = P[V];
         B[t] = V;
       }), B;
     }, h.der = requireDer$2();
@@ -18585,59 +18585,59 @@ function requireDer$1() {
   if (hasRequiredDer$1)
     return der_1$1;
   hasRequiredDer$1 = 1;
-  var $ = requireInherits_browser(), h = requireAsn1$1(), U = h.base, B = h.bignum, V = h.constants.der;
+  var $ = requireInherits_browser(), h = requireAsn1$1(), P = h.base, B = h.bignum, V = h.constants.der;
   function t(I) {
     this.enc = "der", this.name = I.name, this.entity = I, this.tree = new O(), this.tree._init(I.body);
   }
-  der_1$1 = t, t.prototype.decode = function(I, P) {
-    return I instanceof U.DecoderBuffer || (I = new U.DecoderBuffer(I, P)), this.tree._decode(I, P);
+  der_1$1 = t, t.prototype.decode = function(I, U) {
+    return I instanceof P.DecoderBuffer || (I = new P.DecoderBuffer(I, U)), this.tree._decode(I, U);
   };
   function O(I) {
-    U.Node.call(this, "der", I);
+    P.Node.call(this, "der", I);
   }
-  $(O, U.Node), O.prototype._peekTag = function(I, P, Y) {
+  $(O, P.Node), O.prototype._peekTag = function(I, U, Y) {
     if (I.isEmpty())
       return !1;
-    var X = I.save(), ee = M(I, 'Failed to peek tag: "' + P + '"');
-    return I.isError(ee) ? ee : (I.restore(X), ee.tag === P || ee.tagStr === P || ee.tagStr + "of" === P || Y);
-  }, O.prototype._decodeTag = function(I, P, Y) {
+    var X = I.save(), ee = M(I, 'Failed to peek tag: "' + U + '"');
+    return I.isError(ee) ? ee : (I.restore(X), ee.tag === U || ee.tagStr === U || ee.tagStr + "of" === U || Y);
+  }, O.prototype._decodeTag = function(I, U, Y) {
     var X = M(
       I,
-      'Failed to decode tag of "' + P + '"'
+      'Failed to decode tag of "' + U + '"'
     );
     if (I.isError(X))
       return X;
     var ee = D(
       I,
       X.primitive,
-      'Failed to get length of "' + P + '"'
+      'Failed to get length of "' + U + '"'
     );
     if (I.isError(ee))
       return ee;
-    if (!Y && X.tag !== P && X.tagStr !== P && X.tagStr + "of" !== P)
-      return I.error('Failed to match tag: "' + P + '"');
+    if (!Y && X.tag !== U && X.tagStr !== U && X.tagStr + "of" !== U)
+      return I.error('Failed to match tag: "' + U + '"');
     if (X.primitive || ee !== null)
-      return I.skip(ee, 'Failed to match body of: "' + P + '"');
+      return I.skip(ee, 'Failed to match body of: "' + U + '"');
     var re = I.save(), ie = this._skipUntilEnd(
       I,
       'Failed to skip indefinite length body: "' + this.tag + '"'
     );
-    return I.isError(ie) ? ie : (ee = I.offset - re.offset, I.restore(re), I.skip(ee, 'Failed to match body of: "' + P + '"'));
-  }, O.prototype._skipUntilEnd = function(I, P) {
+    return I.isError(ie) ? ie : (ee = I.offset - re.offset, I.restore(re), I.skip(ee, 'Failed to match body of: "' + U + '"'));
+  }, O.prototype._skipUntilEnd = function(I, U) {
     for (; ; ) {
-      var Y = M(I, P);
+      var Y = M(I, U);
       if (I.isError(Y))
         return Y;
-      var X = D(I, Y.primitive, P);
+      var X = D(I, Y.primitive, U);
       if (I.isError(X))
         return X;
       var ee;
-      if (Y.primitive || X !== null ? ee = I.skip(X) : ee = this._skipUntilEnd(I, P), I.isError(ee))
+      if (Y.primitive || X !== null ? ee = I.skip(X) : ee = this._skipUntilEnd(I, U), I.isError(ee))
         return ee;
       if (Y.tagStr === "end")
         break;
     }
-  }, O.prototype._decodeList = function(I, P, Y, X) {
+  }, O.prototype._decodeList = function(I, U, Y, X) {
     for (var ee = []; !I.isEmpty(); ) {
       var re = this._peekTag(I, "end");
       if (I.isError(re))
@@ -18648,71 +18648,71 @@ function requireDer$1() {
       ee.push(ie);
     }
     return ee;
-  }, O.prototype._decodeStr = function(I, P) {
-    if (P === "bitstr") {
+  }, O.prototype._decodeStr = function(I, U) {
+    if (U === "bitstr") {
       var Y = I.readUInt8();
       return I.isError(Y) ? Y : { unused: Y, data: I.raw() };
-    } else if (P === "bmpstr") {
+    } else if (U === "bmpstr") {
       var X = I.raw();
       if (X.length % 2 === 1)
         return I.error("Decoding of string type: bmpstr length mismatch");
       for (var ee = "", re = 0; re < X.length / 2; re++)
         ee += String.fromCharCode(X.readUInt16BE(re * 2));
       return ee;
-    } else if (P === "numstr") {
+    } else if (U === "numstr") {
       var ie = I.raw().toString("ascii");
       return this._isNumstr(ie) ? ie : I.error("Decoding of string type: numstr unsupported characters");
     } else {
-      if (P === "octstr" || P === "objDesc")
+      if (U === "octstr" || U === "objDesc")
         return I.raw();
-      if (P === "printstr") {
+      if (U === "printstr") {
         var ne = I.raw().toString("ascii");
         return this._isPrintstr(ne) ? ne : I.error("Decoding of string type: printstr unsupported characters");
       } else
-        return /str$/.test(P) ? I.raw().toString() : I.error("Decoding of string type: " + P + " unsupported");
+        return /str$/.test(U) ? I.raw().toString() : I.error("Decoding of string type: " + U + " unsupported");
     }
-  }, O.prototype._decodeObjid = function(I, P, Y) {
+  }, O.prototype._decodeObjid = function(I, U, Y) {
     for (var X, ee = [], re = 0; !I.isEmpty(); ) {
       var ie = I.readUInt8();
       re <<= 7, re |= ie & 127, ie & 128 || (ee.push(re), re = 0);
     }
     ie & 128 && ee.push(re);
     var ne = ee[0] / 40 | 0, se = ee[0] % 40;
-    if (Y ? X = ee : X = [ne, se].concat(ee.slice(1)), P) {
-      var oe = P[X.join(" ")];
-      oe === void 0 && (oe = P[X.join(".")]), oe !== void 0 && (X = oe);
+    if (Y ? X = ee : X = [ne, se].concat(ee.slice(1)), U) {
+      var oe = U[X.join(" ")];
+      oe === void 0 && (oe = U[X.join(".")]), oe !== void 0 && (X = oe);
     }
     return X;
-  }, O.prototype._decodeTime = function(I, P) {
+  }, O.prototype._decodeTime = function(I, U) {
     var Y = I.raw().toString();
-    if (P === "gentime")
+    if (U === "gentime")
       var X = Y.slice(0, 4) | 0, ee = Y.slice(4, 6) | 0, re = Y.slice(6, 8) | 0, ie = Y.slice(8, 10) | 0, ne = Y.slice(10, 12) | 0, se = Y.slice(12, 14) | 0;
-    else if (P === "utctime") {
+    else if (U === "utctime") {
       var X = Y.slice(0, 2) | 0, ee = Y.slice(2, 4) | 0, re = Y.slice(4, 6) | 0, ie = Y.slice(6, 8) | 0, ne = Y.slice(8, 10) | 0, se = Y.slice(10, 12) | 0;
       X < 70 ? X = 2e3 + X : X = 1900 + X;
     } else
-      return I.error("Decoding " + P + " time is not supported yet");
+      return I.error("Decoding " + U + " time is not supported yet");
     return Date.UTC(X, ee - 1, re, ie, ne, se, 0);
   }, O.prototype._decodeNull = function(I) {
     return null;
   }, O.prototype._decodeBool = function(I) {
-    var P = I.readUInt8();
-    return I.isError(P) ? P : P !== 0;
-  }, O.prototype._decodeInt = function(I, P) {
+    var U = I.readUInt8();
+    return I.isError(U) ? U : U !== 0;
+  }, O.prototype._decodeInt = function(I, U) {
     var Y = I.raw(), X = new B(Y);
-    return P && (X = P[X.toString(10)] || X), X;
-  }, O.prototype._use = function(I, P) {
-    return typeof I == "function" && (I = I(P)), I._getDecoder("der").tree;
+    return U && (X = U[X.toString(10)] || X), X;
+  }, O.prototype._use = function(I, U) {
+    return typeof I == "function" && (I = I(U)), I._getDecoder("der").tree;
   };
-  function M(I, P) {
-    var Y = I.readUInt8(P);
+  function M(I, U) {
+    var Y = I.readUInt8(U);
     if (I.isError(Y))
       return Y;
     var X = V.tagClass[Y >> 6], ee = (Y & 32) === 0;
     if ((Y & 31) === 31) {
       var re = Y;
       for (Y = 0; (re & 128) === 128; ) {
-        if (re = I.readUInt8(P), I.isError(re))
+        if (re = I.readUInt8(U), I.isError(re))
           return re;
         Y <<= 7, Y |= re & 127;
       }
@@ -18726,11 +18726,11 @@ function requireDer$1() {
       tagStr: ie
     };
   }
-  function D(I, P, Y) {
+  function D(I, U, Y) {
     var X = I.readUInt8(Y);
     if (I.isError(X))
       return X;
-    if (!P && X === 128)
+    if (!U && X === 128)
       return null;
     if (!(X & 128))
       return X;
@@ -18754,12 +18754,12 @@ function requirePem$1() {
   if (hasRequiredPem$1)
     return pem$1;
   hasRequiredPem$1 = 1;
-  var $ = requireInherits_browser(), h = requireBuffer$1().Buffer, U = requireDer$1();
+  var $ = requireInherits_browser(), h = requireBuffer$1().Buffer, P = requireDer$1();
   function B(V) {
-    U.call(this, V), this.enc = "pem";
+    P.call(this, V), this.enc = "pem";
   }
-  return $(B, U), pem$1 = B, B.prototype.decode = function(V, t) {
-    for (var O = V.toString().split(/[\r\n]+/g), M = t.label.toUpperCase(), D = /^-----(BEGIN|END) ([^-]+)-----$/, I = -1, P = -1, Y = 0; Y < O.length; Y++) {
+  return $(B, P), pem$1 = B, B.prototype.decode = function(V, t) {
+    for (var O = V.toString().split(/[\r\n]+/g), M = t.label.toUpperCase(), D = /^-----(BEGIN|END) ([^-]+)-----$/, I = -1, U = -1, Y = 0; Y < O.length; Y++) {
       var X = O[Y].match(D);
       if (X !== null && X[2] === M)
         if (I === -1) {
@@ -18769,16 +18769,16 @@ function requirePem$1() {
         } else {
           if (X[1] !== "END")
             break;
-          P = Y;
+          U = Y;
           break;
         }
     }
-    if (I === -1 || P === -1)
+    if (I === -1 || U === -1)
       throw new Error("PEM section not found for: " + M);
-    var ee = O.slice(I + 1, P).join("");
+    var ee = O.slice(I + 1, U).join("");
     ee.replace(/[^a-z0-9\+\/=]+/gi, "");
     var re = new h(ee, "base64");
-    return U.prototype.decode.call(this, re, t);
+    return P.prototype.decode.call(this, re, t);
   }, pem$1;
 }
 var hasRequiredDecoders;
@@ -18793,18 +18793,18 @@ function requireDer() {
   if (hasRequiredDer)
     return der_1;
   hasRequiredDer = 1;
-  var $ = requireInherits_browser(), h = requireBuffer$1().Buffer, U = requireAsn1$1(), B = U.base, V = U.constants.der;
+  var $ = requireInherits_browser(), h = requireBuffer$1().Buffer, P = requireAsn1$1(), B = P.base, V = P.constants.der;
   function t(I) {
     this.enc = "der", this.name = I.name, this.entity = I, this.tree = new O(), this.tree._init(I.body);
   }
-  der_1 = t, t.prototype.encode = function(I, P) {
-    return this.tree._encode(I, P).join();
+  der_1 = t, t.prototype.encode = function(I, U) {
+    return this.tree._encode(I, U).join();
   };
   function O(I) {
     B.Node.call(this, "der", I);
   }
-  $(O, B.Node), O.prototype._encodeComposite = function(I, P, Y, X) {
-    var ee = D(I, P, Y, this.reporter);
+  $(O, B.Node), O.prototype._encodeComposite = function(I, U, Y, X) {
+    var ee = D(I, U, Y, this.reporter);
     if (X.length < 128) {
       var ne = new h(2);
       return ne[0] = ee, ne[1] = X.length, this._createEncoderBuffer([ne, X]);
@@ -18816,22 +18816,22 @@ function requireDer() {
     for (var ie = 1 + re, se = X.length; se > 0; ie--, se >>= 8)
       ne[ie] = se & 255;
     return this._createEncoderBuffer([ne, X]);
-  }, O.prototype._encodeStr = function(I, P) {
-    if (P === "bitstr")
+  }, O.prototype._encodeStr = function(I, U) {
+    if (U === "bitstr")
       return this._createEncoderBuffer([I.unused | 0, I.data]);
-    if (P === "bmpstr") {
+    if (U === "bmpstr") {
       for (var Y = new h(I.length * 2), X = 0; X < I.length; X++)
         Y.writeUInt16BE(I.charCodeAt(X), X * 2);
       return this._createEncoderBuffer(Y);
     } else
-      return P === "numstr" ? this._isNumstr(I) ? this._createEncoderBuffer(I) : this.reporter.error("Encoding of string type: numstr supports only digits and space") : P === "printstr" ? this._isPrintstr(I) ? this._createEncoderBuffer(I) : this.reporter.error("Encoding of string type: printstr supports only latin upper and lower case letters, digits, space, apostrophe, left and rigth parenthesis, plus sign, comma, hyphen, dot, slash, colon, equal sign, question mark") : /str$/.test(P) ? this._createEncoderBuffer(I) : P === "objDesc" ? this._createEncoderBuffer(I) : this.reporter.error("Encoding of string type: " + P + " unsupported");
-  }, O.prototype._encodeObjid = function(I, P, Y) {
+      return U === "numstr" ? this._isNumstr(I) ? this._createEncoderBuffer(I) : this.reporter.error("Encoding of string type: numstr supports only digits and space") : U === "printstr" ? this._isPrintstr(I) ? this._createEncoderBuffer(I) : this.reporter.error("Encoding of string type: printstr supports only latin upper and lower case letters, digits, space, apostrophe, left and rigth parenthesis, plus sign, comma, hyphen, dot, slash, colon, equal sign, question mark") : /str$/.test(U) ? this._createEncoderBuffer(I) : U === "objDesc" ? this._createEncoderBuffer(I) : this.reporter.error("Encoding of string type: " + U + " unsupported");
+  }, O.prototype._encodeObjid = function(I, U, Y) {
     if (typeof I == "string") {
-      if (!P)
+      if (!U)
         return this.reporter.error("string objid given, but no values map found");
-      if (!P.hasOwnProperty(I))
+      if (!U.hasOwnProperty(I))
         return this.reporter.error("objid not found in values map");
-      I = P[I].split(/[\s\.]+/g);
+      I = U[I].split(/[\s\.]+/g);
       for (var X = 0; X < I.length; X++)
         I[X] |= 0;
     } else if (Array.isArray(I)) {
@@ -18861,9 +18861,9 @@ function requireDer() {
   function M(I) {
     return I < 10 ? "0" + I : I;
   }
-  O.prototype._encodeTime = function(I, P) {
+  O.prototype._encodeTime = function(I, U) {
     var Y, X = new Date(I);
-    return P === "gentime" ? Y = [
+    return U === "gentime" ? Y = [
       M(X.getFullYear()),
       M(X.getUTCMonth() + 1),
       M(X.getUTCDate()),
@@ -18871,7 +18871,7 @@ function requireDer() {
       M(X.getUTCMinutes()),
       M(X.getUTCSeconds()),
       "Z"
-    ].join("") : P === "utctime" ? Y = [
+    ].join("") : U === "utctime" ? Y = [
       M(X.getFullYear() % 100),
       M(X.getUTCMonth() + 1),
       M(X.getUTCDate()),
@@ -18879,16 +18879,16 @@ function requireDer() {
       M(X.getUTCMinutes()),
       M(X.getUTCSeconds()),
       "Z"
-    ].join("") : this.reporter.error("Encoding " + P + " time is not supported yet"), this._encodeStr(Y, "octstr");
+    ].join("") : this.reporter.error("Encoding " + U + " time is not supported yet"), this._encodeStr(Y, "octstr");
   }, O.prototype._encodeNull = function() {
     return this._createEncoderBuffer("");
-  }, O.prototype._encodeInt = function(I, P) {
+  }, O.prototype._encodeInt = function(I, U) {
     if (typeof I == "string") {
-      if (!P)
+      if (!U)
         return this.reporter.error("String int or enum given, but no values map");
-      if (!P.hasOwnProperty(I))
+      if (!U.hasOwnProperty(I))
         return this.reporter.error("Values map doesn't contain: " + JSON.stringify(I));
-      I = P[I];
+      I = U[I];
     }
     if (typeof I != "number" && !h.isBuffer(I)) {
       var Y = I.toArray();
@@ -18911,21 +18911,21 @@ function requireDer() {
     return ee[0] & 128 && ee.unshift(0), this._createEncoderBuffer(new h(ee));
   }, O.prototype._encodeBool = function(I) {
     return this._createEncoderBuffer(I ? 255 : 0);
-  }, O.prototype._use = function(I, P) {
-    return typeof I == "function" && (I = I(P)), I._getEncoder("der").tree;
-  }, O.prototype._skipDefault = function(I, P, Y) {
+  }, O.prototype._use = function(I, U) {
+    return typeof I == "function" && (I = I(U)), I._getEncoder("der").tree;
+  }, O.prototype._skipDefault = function(I, U, Y) {
     var X = this._baseState, ee;
     if (X.default === null)
       return !1;
     var re = I.join();
-    if (X.defaultBuffer === void 0 && (X.defaultBuffer = this._encodeValue(X.default, P, Y).join()), re.length !== X.defaultBuffer.length)
+    if (X.defaultBuffer === void 0 && (X.defaultBuffer = this._encodeValue(X.default, U, Y).join()), re.length !== X.defaultBuffer.length)
       return !1;
     for (ee = 0; ee < re.length; ee++)
       if (re[ee] !== X.defaultBuffer[ee])
         return !1;
     return !0;
   };
-  function D(I, P, Y, X) {
+  function D(I, U, Y, X) {
     var ee;
     if (I === "seqof" ? I = "seq" : I === "setof" && (I = "set"), V.tagByName.hasOwnProperty(I))
       ee = V.tagByName[I];
@@ -18933,7 +18933,7 @@ function requireDer() {
       ee = I;
     else
       return X.error("Unknown tag: " + I);
-    return ee >= 31 ? X.error("Multi-octet tag encoding unsupported") : (P || (ee |= 32), ee |= V.tagClassByName[Y || "universal"] << 6, ee);
+    return ee >= 31 ? X.error("Multi-octet tag encoding unsupported") : (U || (ee |= 32), ee |= V.tagClassByName[Y || "universal"] << 6, ee);
   }
   return der_1;
 }
@@ -18943,10 +18943,10 @@ function requirePem() {
     return pem;
   hasRequiredPem = 1;
   var $ = requireInherits_browser(), h = requireDer();
-  function U(B) {
+  function P(B) {
     h.call(this, B), this.enc = "pem";
   }
-  return $(U, h), pem = U, U.prototype.encode = function(B, V) {
+  return $(P, h), pem = P, P.prototype.encode = function(B, V) {
     for (var t = h.prototype.encode.call(this, B), O = t.toString("base64"), M = ["-----BEGIN " + V.label + "-----"], D = 0; D < O.length; D += 64)
       M.push(O.slice(D, D + 64));
     return M.push("-----END " + V.label + "-----"), M.join(`
@@ -18977,7 +18977,7 @@ function requireCertificate() {
       utcTime: this.utctime(),
       generalTime: this.gentime()
     });
-  }), U = $.define("AttributeTypeValue", function() {
+  }), P = $.define("AttributeTypeValue", function() {
     this.seq().obj(
       this.key("type").objid(),
       this.key("value").any()
@@ -18994,7 +18994,7 @@ function requireCertificate() {
       this.key("subjectPublicKey").bitstr()
     );
   }), t = $.define("RelativeDistinguishedName", function() {
-    this.setof(U);
+    this.setof(P);
   }), O = $.define("RDNSequence", function() {
     this.seqof(t);
   }), M = $.define("Name", function() {
@@ -19012,7 +19012,7 @@ function requireCertificate() {
       this.key("critical").bool().def(!1),
       this.key("extnValue").octstr()
     );
-  }), P = $.define("TBSCertificate", function() {
+  }), U = $.define("TBSCertificate", function() {
     this.seq().obj(
       this.key("version").explicit(0).int().optional(),
       this.key("serialNumber").int(),
@@ -19027,7 +19027,7 @@ function requireCertificate() {
     );
   }), Y = $.define("X509Certificate", function() {
     this.seq().obj(
-      this.key("tbsCertificate").use(P),
+      this.key("tbsCertificate").use(U),
       this.key("signatureAlgorithm").use(B),
       this.key("signatureValue").bitstr()
     );
@@ -19055,13 +19055,13 @@ function requireAsn1() {
     );
   });
   asn1$1.RSAPrivateKey = h;
-  var U = $.define("RSAPublicKey", function() {
+  var P = $.define("RSAPublicKey", function() {
     this.seq().obj(
       this.key("modulus").int(),
       this.key("publicExponent").int()
     );
   });
-  asn1$1.RSAPublicKey = U;
+  asn1$1.RSAPublicKey = P;
   var B = $.define("AlgorithmIdentifier", function() {
     this.seq().obj(
       this.key("algorithm").objid(),
@@ -19161,20 +19161,20 @@ function requireFixProc() {
   if (hasRequiredFixProc)
     return fixProc;
   hasRequiredFixProc = 1;
-  var $ = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m, h = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m, U = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m, B = requireEvp_bytestokey(), V = requireBrowser$6(), t = requireSafeBuffer$1().Buffer;
+  var $ = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m, h = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m, P = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m, B = requireEvp_bytestokey(), V = requireBrowser$6(), t = requireSafeBuffer$1().Buffer;
   return fixProc = function(O, M) {
-    var D = O.toString(), I = D.match($), P;
+    var D = O.toString(), I = D.match($), U;
     if (I) {
       var Y = "aes" + I[1], X = t.from(I[2], "hex"), ee = t.from(I[3].replace(/[\r\n]/g, ""), "base64"), re = B(M, X.slice(0, 8), parseInt(I[1], 10)).key, ie = [], ne = V.createDecipheriv(Y, re, X);
-      ie.push(ne.update(ee)), ie.push(ne.final()), P = t.concat(ie);
+      ie.push(ne.update(ee)), ie.push(ne.final()), U = t.concat(ie);
     } else {
-      var se = D.match(U);
-      P = t.from(se[2].replace(/[\r\n]/g, ""), "base64");
+      var se = D.match(P);
+      U = t.from(se[2].replace(/[\r\n]/g, ""), "base64");
     }
     var oe = D.match(h)[1];
     return {
       tag: oe,
-      data: P
+      data: U
     };
   }, fixProc;
 }
@@ -19183,15 +19183,15 @@ function requireParseAsn1() {
   if (hasRequiredParseAsn1)
     return parseAsn1;
   hasRequiredParseAsn1 = 1;
-  var $ = requireAsn1(), h = require$$1, U = requireFixProc(), B = requireBrowser$6(), V = requireBrowser$7(), t = requireSafeBuffer$1().Buffer;
+  var $ = requireAsn1(), h = require$$1, P = requireFixProc(), B = requireBrowser$6(), V = requireBrowser$7(), t = requireSafeBuffer$1().Buffer;
   function O(D, I) {
-    var P = D.algorithm.decrypt.kde.kdeparams.salt, Y = parseInt(D.algorithm.decrypt.kde.kdeparams.iters.toString(), 10), X = h[D.algorithm.decrypt.cipher.algo.join(".")], ee = D.algorithm.decrypt.cipher.iv, re = D.subjectPrivateKey, ie = parseInt(X.split("-")[1], 10) / 8, ne = V.pbkdf2Sync(I, P, Y, ie, "sha1"), se = B.createDecipheriv(X, ne, ee), oe = [];
+    var U = D.algorithm.decrypt.kde.kdeparams.salt, Y = parseInt(D.algorithm.decrypt.kde.kdeparams.iters.toString(), 10), X = h[D.algorithm.decrypt.cipher.algo.join(".")], ee = D.algorithm.decrypt.cipher.iv, re = D.subjectPrivateKey, ie = parseInt(X.split("-")[1], 10) / 8, ne = V.pbkdf2Sync(I, U, Y, ie, "sha1"), se = B.createDecipheriv(X, ne, ee), oe = [];
     return oe.push(se.update(re)), oe.push(se.final()), t.concat(oe);
   }
   function M(D) {
     var I;
     typeof D == "object" && !t.isBuffer(D) && (I = D.passphrase, D = D.key), typeof D == "string" && (D = t.from(D));
-    var P = U(D, I), Y = P.tag, X = P.data, ee, re;
+    var U = P(D, I), Y = U.tag, X = U.data, ee, re;
     switch (Y) {
       case "CERTIFICATE":
         re = $.certificate.decode(X, "der").tbsCertificate.subjectPublicKeyInfo;
@@ -19264,7 +19264,7 @@ function requireSign() {
   if (hasRequiredSign)
     return sign.exports;
   hasRequiredSign = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requireBrowser$8(), U = requireBrowserifyRsa(), B = requireElliptic().ec, V = requireBn(), t = requireParseAsn1(), O = require$$4, M = 1;
+  var $ = requireSafeBuffer$1().Buffer, h = requireBrowser$8(), P = requireBrowserifyRsa(), B = requireElliptic().ec, V = requireBn(), t = requireParseAsn1(), O = require$$4, M = 1;
   function D(se, oe, be, de, we) {
     var Se = t(oe);
     if (Se.curve) {
@@ -19274,7 +19274,7 @@ function requireSign() {
     } else if (Se.type === "dsa") {
       if (de !== "dsa")
         throw new Error("wrong private key type");
-      return P(se, Se, be);
+      return U(se, Se, be);
     }
     if (de !== "rsa" && de !== "ecdsa/rsa")
       throw new Error("wrong private key type");
@@ -19286,7 +19286,7 @@ function requireSign() {
     he.push(0);
     for (var le = -1; ++le < se.length; )
       he.push(se[le]);
-    var _e = U(he, Se);
+    var _e = P(he, Se);
     return _e;
   }
   function I(se, oe) {
@@ -19296,7 +19296,7 @@ function requireSign() {
     var de = new B(be), we = de.keyFromPrivate(oe.privateKey), Se = we.sign(se);
     return $.from(Se.toDER());
   }
-  function P(se, oe, be) {
+  function U(se, oe, be) {
     for (var de = oe.params.priv_key, we = oe.params.p, Se = oe.params.q, ke = oe.params.g, he = new V(0), le, _e = ee(se, Se).mod(Se), G = !1, Z = X(de, Se, se, be); G === !1; )
       le = ie(Se, Z, be), he = ne(ke, le, we, Se), G = le.invm(Se).imul(_e.add(de.mul(he))).mod(Se), G.cmpn(0) === 0 && (G = !1, he = new V(0));
     return Y(he, G);
@@ -19353,26 +19353,26 @@ function requireVerify() {
   if (hasRequiredVerify)
     return verify_1;
   hasRequiredVerify = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requireBn(), U = requireElliptic().ec, B = requireParseAsn1(), V = require$$4;
-  function t(I, P, Y, X, ee) {
+  var $ = requireSafeBuffer$1().Buffer, h = requireBn(), P = requireElliptic().ec, B = requireParseAsn1(), V = require$$4;
+  function t(I, U, Y, X, ee) {
     var re = B(Y);
     if (re.type === "ec") {
       if (X !== "ecdsa" && X !== "ecdsa/rsa")
         throw new Error("wrong public key type");
-      return O(I, P, re);
+      return O(I, U, re);
     } else if (re.type === "dsa") {
       if (X !== "dsa")
         throw new Error("wrong public key type");
-      return M(I, P, re);
+      return M(I, U, re);
     }
     if (X !== "rsa" && X !== "ecdsa/rsa")
       throw new Error("wrong public key type");
-    P = $.concat([ee, P]);
-    for (var ie = re.modulus.byteLength(), ne = [1], se = 0; P.length + ne.length + 2 < ie; )
+    U = $.concat([ee, U]);
+    for (var ie = re.modulus.byteLength(), ne = [1], se = 0; U.length + ne.length + 2 < ie; )
       ne.push(255), se += 1;
     ne.push(0);
-    for (var oe = -1; ++oe < P.length; )
-      ne.push(P[oe]);
+    for (var oe = -1; ++oe < U.length; )
+      ne.push(U[oe]);
     ne = $.from(ne);
     var be = h.mont(re.modulus);
     I = new h(I).toRed(be), I = I.redPow(new h(re.publicExponent)), I = $.from(I.fromRed().toArray());
@@ -19381,23 +19381,23 @@ function requireVerify() {
       de |= I[oe] ^ ne[oe];
     return de === 0;
   }
-  function O(I, P, Y) {
+  function O(I, U, Y) {
     var X = V[Y.data.algorithm.curve.join(".")];
     if (!X)
       throw new Error("unknown curve " + Y.data.algorithm.curve.join("."));
-    var ee = new U(X), re = Y.data.subjectPrivateKey.data;
-    return ee.verify(P, I, re);
+    var ee = new P(X), re = Y.data.subjectPrivateKey.data;
+    return ee.verify(U, I, re);
   }
-  function M(I, P, Y) {
+  function M(I, U, Y) {
     var X = Y.data.p, ee = Y.data.q, re = Y.data.g, ie = Y.data.pub_key, ne = B.signature.decode(I, "der"), se = ne.s, oe = ne.r;
     D(se, ee), D(oe, ee);
-    var be = h.mont(X), de = se.invm(ee), we = re.toRed(be).redPow(new h(P).mul(de).mod(ee)).fromRed().mul(ie.toRed(be).redPow(oe.mul(de).mod(ee)).fromRed()).mod(X).mod(ee);
+    var be = h.mont(X), de = se.invm(ee), we = re.toRed(be).redPow(new h(U).mul(de).mod(ee)).fromRed().mul(ie.toRed(be).redPow(oe.mul(de).mod(ee)).fromRed()).mod(X).mod(ee);
     return we.cmp(oe) === 0;
   }
-  function D(I, P) {
+  function D(I, U) {
     if (I.cmpn(0) <= 0)
       throw new Error("invalid sig");
-    if (I.cmp(P) >= 0)
+    if (I.cmp(U) >= 0)
       throw new Error("invalid sig");
   }
   return verify_1 = t, verify_1;
@@ -19407,18 +19407,18 @@ function requireBrowser$3() {
   if (hasRequiredBrowser$3)
     return browser$3;
   hasRequiredBrowser$3 = 1;
-  var $ = requireSafeBuffer$1().Buffer, h = requireBrowser$9(), U = requireReadableBrowser(), B = requireInherits_browser(), V = requireSign(), t = requireVerify(), O = require$$6;
+  var $ = requireSafeBuffer$1().Buffer, h = requireBrowser$9(), P = requireReadableBrowser(), B = requireInherits_browser(), V = requireSign(), t = requireVerify(), O = require$$6;
   Object.keys(O).forEach(function(Y) {
     O[Y].id = $.from(O[Y].id, "hex"), O[Y.toLowerCase()] = O[Y];
   });
   function M(Y) {
-    U.Writable.call(this);
+    P.Writable.call(this);
     var X = O[Y];
     if (!X)
       throw new Error("Unknown message digest");
     this._hashType = X.hash, this._hash = h(X.hash), this._tag = X.id, this._signType = X.sign;
   }
-  B(M, U.Writable), M.prototype._write = function(Y, X, ee) {
+  B(M, P.Writable), M.prototype._write = function(Y, X, ee) {
     this._hash.update(Y), ee();
   }, M.prototype.update = function(Y, X) {
     return this._hash.update(typeof Y == "string" ? $.from(Y, X) : Y), this;
@@ -19428,13 +19428,13 @@ function requireBrowser$3() {
     return X ? re.toString(X) : re;
   };
   function D(Y) {
-    U.Writable.call(this);
+    P.Writable.call(this);
     var X = O[Y];
     if (!X)
       throw new Error("Unknown message digest");
     this._hash = h(X.hash), this._tag = X.id, this._signType = X.sign;
   }
-  B(D, U.Writable), D.prototype._write = function(Y, X, ee) {
+  B(D, P.Writable), D.prototype._write = function(Y, X, ee) {
     this._hash.update(Y), ee();
   }, D.prototype.update = function(Y, X) {
     return this._hash.update(typeof Y == "string" ? $.from(Y, X) : Y), this;
@@ -19447,14 +19447,14 @@ function requireBrowser$3() {
   function I(Y) {
     return new M(Y);
   }
-  function P(Y) {
+  function U(Y) {
     return new D(Y);
   }
   return browser$3 = {
     Sign: I,
-    Verify: P,
+    Verify: U,
     createSign: I,
-    createVerify: P
+    createVerify: U
   }, browser$3;
 }
 var browser$2, hasRequiredBrowser$2;
@@ -19466,7 +19466,7 @@ function requireBrowser$2() {
   browser$2 = function(t) {
     return new B(t);
   };
-  var U = {
+  var P = {
     secp256k1: {
       name: "secp256k1",
       byteLength: 32
@@ -19496,9 +19496,9 @@ function requireBrowser$2() {
       byteLength: 66
     }
   };
-  U.p224 = U.secp224r1, U.p256 = U.secp256r1 = U.prime256v1, U.p192 = U.secp192r1 = U.prime192v1, U.p384 = U.secp384r1, U.p521 = U.secp521r1;
+  P.p224 = P.secp224r1, P.p256 = P.secp256r1 = P.prime256v1, P.p192 = P.secp192r1 = P.prime192v1, P.p384 = P.secp384r1, P.p521 = P.secp521r1;
   function B(t) {
-    this.curveType = U[t], this.curveType || (this.curveType = {
+    this.curveType = P[t], this.curveType || (this.curveType = {
       name: t
     }), this.curve = new $.ec(this.curveType.name), this.keys = void 0;
   }
@@ -19539,10 +19539,10 @@ function requireMgf() {
   var $ = requireBrowser$9(), h = requireSafeBuffer$1().Buffer;
   mgf = function(B, V) {
     for (var t = h.alloc(0), O = 0, M; t.length < V; )
-      M = U(O++), t = h.concat([t, $("sha1").update(B).update(M).digest()]);
+      M = P(O++), t = h.concat([t, $("sha1").update(B).update(M).digest()]);
     return t.slice(0, V);
   };
-  function U(B) {
+  function P(B) {
     var V = h.allocUnsafe(4);
     return V.writeUInt32BE(B, 0), V;
   }
@@ -19551,7 +19551,7 @@ function requireMgf() {
 var xor, hasRequiredXor;
 function requireXor() {
   return hasRequiredXor || (hasRequiredXor = 1, xor = function($, h) {
-    for (var U = $.length, B = -1; ++B < U; )
+    for (var P = $.length, B = -1; ++B < P; )
       $[B] ^= h[B];
     return $;
   }), xor;
@@ -19562,17 +19562,17 @@ function requireWithPublic() {
     return withPublic_1;
   hasRequiredWithPublic = 1;
   var $ = requireBn$2(), h = requireSafeBuffer$1().Buffer;
-  function U(B, V) {
+  function P(B, V) {
     return h.from(B.toRed($.mont(V.modulus)).redPow(new $(V.publicExponent)).fromRed().toArray());
   }
-  return withPublic_1 = U, withPublic_1;
+  return withPublic_1 = P, withPublic_1;
 }
 var publicEncrypt, hasRequiredPublicEncrypt;
 function requirePublicEncrypt() {
   if (hasRequiredPublicEncrypt)
     return publicEncrypt;
   hasRequiredPublicEncrypt = 1;
-  var $ = requireParseAsn1(), h = requireBrowser$b(), U = requireBrowser$9(), B = requireMgf(), V = requireXor(), t = requireBn$2(), O = requireWithPublic(), M = requireBrowserifyRsa(), D = requireSafeBuffer$1().Buffer;
+  var $ = requireParseAsn1(), h = requireBrowser$b(), P = requireBrowser$9(), B = requireMgf(), V = requireXor(), t = requireBn$2(), O = requireWithPublic(), M = requireBrowserifyRsa(), D = requireSafeBuffer$1().Buffer;
   publicEncrypt = function(X, ee, re) {
     var ie;
     X.padding ? ie = X.padding : re ? ie = 1 : ie = 4;
@@ -19580,7 +19580,7 @@ function requirePublicEncrypt() {
     if (ie === 4)
       se = I(ne, ee);
     else if (ie === 1)
-      se = P(ne, ee, re);
+      se = U(ne, ee, re);
     else if (ie === 3) {
       if (se = new t(ee), se.cmp(ne.modulus) >= 0)
         throw new Error("data too long for modulus");
@@ -19589,13 +19589,13 @@ function requirePublicEncrypt() {
     return re ? M(se, ne) : O(se, ne);
   };
   function I(X, ee) {
-    var re = X.modulus.byteLength(), ie = ee.length, ne = U("sha1").update(D.alloc(0)).digest(), se = ne.length, oe = 2 * se;
+    var re = X.modulus.byteLength(), ie = ee.length, ne = P("sha1").update(D.alloc(0)).digest(), se = ne.length, oe = 2 * se;
     if (ie > re - oe - 2)
       throw new Error("message too long");
     var be = D.alloc(re - ie - oe - 2), de = re - se - 1, we = h(se), Se = V(D.concat([ne, be, D.alloc(1, 1), ee], de), B(we, de)), ke = V(we, B(Se, se));
     return new t(D.concat([D.alloc(1), ke, Se], re));
   }
-  function P(X, ee, re) {
+  function U(X, ee, re) {
     var ie = ee.length, ne = X.modulus.byteLength();
     if (ie > ne - 11)
       throw new Error("message too long");
@@ -19614,7 +19614,7 @@ function requirePrivateDecrypt() {
   if (hasRequiredPrivateDecrypt)
     return privateDecrypt;
   hasRequiredPrivateDecrypt = 1;
-  var $ = requireParseAsn1(), h = requireMgf(), U = requireXor(), B = requireBn$2(), V = requireBrowserifyRsa(), t = requireBrowser$9(), O = requireWithPublic(), M = requireSafeBuffer$1().Buffer;
+  var $ = requireParseAsn1(), h = requireMgf(), P = requireXor(), B = requireBn$2(), V = requireBrowserifyRsa(), t = requireBrowser$9(), O = requireWithPublic(), M = requireSafeBuffer$1().Buffer;
   privateDecrypt = function(Y, X, ee) {
     var re;
     Y.padding ? re = Y.padding : ee ? re = 1 : re = 4;
@@ -19636,8 +19636,8 @@ function requirePrivateDecrypt() {
     var ee = Y.modulus.byteLength(), re = t("sha1").update(M.alloc(0)).digest(), ie = re.length;
     if (X[0] !== 0)
       throw new Error("decryption error");
-    var ne = X.slice(1, ie + 1), se = X.slice(ie + 1), oe = U(ne, h(se, ie)), be = U(se, h(oe, ee - ie - 1));
-    if (P(re, be.slice(0, ie)))
+    var ne = X.slice(1, ie + 1), se = X.slice(ie + 1), oe = P(ne, h(se, ie)), be = P(se, h(oe, ee - ie - 1));
+    if (U(re, be.slice(0, ie)))
       throw new Error("decryption error");
     for (var de = ie; be[de] === 0; )
       de++;
@@ -19656,7 +19656,7 @@ function requirePrivateDecrypt() {
       throw new Error("decryption error");
     return X.slice(ie);
   }
-  function P(Y, X) {
+  function U(Y, X) {
     Y = M.from(Y), X = M.from(X);
     var ee = 0, re = Y.length;
     Y.length !== X.length && (ee++, re = Math.min(Y.length, X.length));
@@ -19669,10 +19669,10 @@ function requirePrivateDecrypt() {
 var hasRequiredBrowser$1;
 function requireBrowser$1() {
   return hasRequiredBrowser$1 || (hasRequiredBrowser$1 = 1, function($) {
-    $.publicEncrypt = requirePublicEncrypt(), $.privateDecrypt = requirePrivateDecrypt(), $.privateEncrypt = function(h, U) {
-      return $.publicEncrypt(h, U, !0);
-    }, $.publicDecrypt = function(h, U) {
-      return $.privateDecrypt(h, U, !0);
+    $.publicEncrypt = requirePublicEncrypt(), $.privateDecrypt = requirePrivateDecrypt(), $.privateEncrypt = function(h, P) {
+      return $.publicEncrypt(h, P, !0);
+    }, $.publicDecrypt = function(h, P) {
+      return $.privateDecrypt(h, P, !0);
     };
   }(browser$1)), browser$1;
 }
@@ -19685,7 +19685,7 @@ function requireBrowser() {
     throw new Error(`secure random number generation not supported by this browser
 use chrome, FireFox or Internet Explorer 11`);
   }
-  var h = requireSafeBuffer$1(), U = requireBrowser$b(), B = h.Buffer, V = h.kMaxLength, t = commonjsGlobal.crypto || commonjsGlobal.msCrypto, O = Math.pow(2, 32) - 1;
+  var h = requireSafeBuffer$1(), P = requireBrowser$b(), B = h.Buffer, V = h.kMaxLength, t = commonjsGlobal.crypto || commonjsGlobal.msCrypto, O = Math.pow(2, 32) - 1;
   function M(X, ee) {
     if (typeof X != "number" || X !== X)
       throw new TypeError("offset must be a number");
@@ -19712,9 +19712,9 @@ use chrome, FireFox or Internet Explorer 11`);
       ie = re, re = X.length - ee;
     else if (typeof ie != "function")
       throw new TypeError('"cb" argument must be a function');
-    return M(ee, X.length), D(re, ee, X.length), P(X, ee, re, ie);
+    return M(ee, X.length), D(re, ee, X.length), U(X, ee, re, ie);
   }
-  function P(X, ee, re, ie) {
+  function U(X, ee, re, ie) {
     if (process$1.browser) {
       var ne = X.buffer, se = new Uint8Array(ne, ee, re);
       if (t.getRandomValues(se), ie) {
@@ -19726,20 +19726,20 @@ use chrome, FireFox or Internet Explorer 11`);
       return X;
     }
     if (ie) {
-      U(re, function(be, de) {
+      P(re, function(be, de) {
         if (be)
           return ie(be);
         de.copy(X, ee), ie(null, X);
       });
       return;
     }
-    var oe = U(re);
+    var oe = P(re);
     return oe.copy(X, ee), X;
   }
   function Y(X, ee, re) {
     if (typeof ee > "u" && (ee = 0), !B.isBuffer(X) && !(X instanceof commonjsGlobal.Uint8Array))
       throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
-    return M(ee, X.length), re === void 0 && (re = X.length - ee), D(re, ee, X.length), P(X, ee, re);
+    return M(ee, X.length), re === void 0 && (re = X.length - ee), D(re, ee, X.length), U(X, ee, re);
   }
   return browser;
 }
@@ -19748,9 +19748,9 @@ function requireCryptoBrowserify() {
   if (hasRequiredCryptoBrowserify)
     return cryptoBrowserify;
   hasRequiredCryptoBrowserify = 1, cryptoBrowserify.randomBytes = cryptoBrowserify.rng = cryptoBrowserify.pseudoRandomBytes = cryptoBrowserify.prng = requireBrowser$b(), cryptoBrowserify.createHash = cryptoBrowserify.Hash = requireBrowser$9(), cryptoBrowserify.createHmac = cryptoBrowserify.Hmac = requireBrowser$8();
-  var $ = requireAlgos(), h = Object.keys($), U = ["sha1", "sha224", "sha256", "sha384", "sha512", "md5", "rmd160"].concat(h);
+  var $ = requireAlgos(), h = Object.keys($), P = ["sha1", "sha224", "sha256", "sha384", "sha512", "md5", "rmd160"].concat(h);
   cryptoBrowserify.getHashes = function() {
-    return U;
+    return P;
   };
   var B = requireBrowser$7();
   cryptoBrowserify.pbkdf2 = B.pbkdf2, cryptoBrowserify.pbkdf2Sync = B.pbkdf2Sync;
@@ -19794,10 +19794,10 @@ function requireCryptoBrowserify() {
    * Released under the Apache License, Version 2.0
    * see: https://github.com/dcodeIO/bcrypt.js for details
    */
-  (function(h, U) {
-    typeof commonjsRequire == "function" && $ && $.exports ? $.exports = U() : (h.dcodeIO = h.dcodeIO || {}).bcrypt = U();
+  (function(h, P) {
+    typeof commonjsRequire == "function" && $ && $.exports ? $.exports = P() : (h.dcodeIO = h.dcodeIO || {}).bcrypt = P();
   })(commonjsGlobal, function() {
-    var h = {}, U = null;
+    var h = {}, P = null;
     function B(G) {
       if ($ && $.exports)
         try {
@@ -19809,17 +19809,17 @@ function requireCryptoBrowserify() {
         return (self.crypto || self.msCrypto).getRandomValues(Z = new Uint32Array(G)), Array.prototype.slice.call(Z);
       } catch {
       }
-      if (!U)
+      if (!P)
         throw Error("Neither WebCryptoAPI nor a crypto module is available. Use bcrypt.setRandomFallback to set an alternative");
-      return U(G);
+      return P(G);
     }
     var V = !1;
     try {
       B(1), V = !0;
     } catch {
     }
-    U = null, h.setRandomFallback = function(G) {
-      U = G;
+    P = null, h.setRandomFallback = function(G) {
+      P = G;
     }, h.genSaltSync = function(G, Z) {
       if (G = G || ie, typeof G != "number")
         throw Error("Illegal arguments: " + typeof G + ", " + typeof Z);
@@ -20065,7 +20065,7 @@ function requireCryptoBrowserify() {
       -1,
       -1,
       -1
-    ], P = String.fromCharCode;
+    ], U = String.fromCharCode;
     function Y(G, Z) {
       var e = 0, o = [], g, H;
       if (Z <= 0 || Z > G.length)
@@ -20087,8 +20087,8 @@ function requireCryptoBrowserify() {
       var e = 0, o = G.length, g = 0, H = [], F, A, q, z, S, J;
       if (Z <= 0)
         throw Error("Illegal len: " + Z);
-      for (; e < o - 1 && g < Z && (J = G.charCodeAt(e++), F = J < I.length ? I[J] : -1, J = G.charCodeAt(e++), A = J < I.length ? I[J] : -1, !(F == -1 || A == -1 || (S = F << 2 >>> 0, S |= (A & 48) >> 4, H.push(P(S)), ++g >= Z || e >= o) || (J = G.charCodeAt(e++), q = J < I.length ? I[J] : -1, q == -1) || (S = (A & 15) << 4 >>> 0, S |= (q & 60) >> 2, H.push(P(S)), ++g >= Z || e >= o))); )
-        J = G.charCodeAt(e++), z = J < I.length ? I[J] : -1, S = (q & 3) << 6 >>> 0, S |= z, H.push(P(S)), ++g;
+      for (; e < o - 1 && g < Z && (J = G.charCodeAt(e++), F = J < I.length ? I[J] : -1, J = G.charCodeAt(e++), A = J < I.length ? I[J] : -1, !(F == -1 || A == -1 || (S = F << 2 >>> 0, S |= (A & 48) >> 4, H.push(U(S)), ++g >= Z || e >= o) || (J = G.charCodeAt(e++), q = J < I.length ? I[J] : -1, q == -1) || (S = (A & 15) << 4 >>> 0, S |= (q & 60) >> 2, H.push(U(S)), ++g >= Z || e >= o))); )
+        J = G.charCodeAt(e++), z = J < I.length ? I[J] : -1, S = (q & 3) << 6 >>> 0, S |= z, H.push(U(S)), ++g;
       var ce = [];
       for (e = 0; e < g; e++)
         ce.push(H[e].charCodeAt(0));
@@ -21330,8 +21330,8 @@ const bcrypt = /* @__PURE__ */ getDefaultExportFromCjs(bcryptExports);
 class FirebaseAuthAPI {
   constructor(h) {
     this.FIREBASE_AUTH_URL = "https://identitytoolkit.googleapis.com/v1/", this.BCRYPT_SALT = "$2a$10$QCJoWqnN.acrjPIgKYCthu";
-    const U = new URL(this.FIREBASE_AUTH_URL);
-    this.firebaseKey = h.apiKey, this.fetcher = new FetchAPI(U.toString());
+    const P = new URL(this.FIREBASE_AUTH_URL);
+    this.firebaseKey = h.apiKey, this.fetcher = new FetchAPI(P.toString());
   }
   checkError(h) {
     if (h.error)
@@ -21339,9 +21339,9 @@ class FirebaseAuthAPI {
         `Error code: ${h.error.code}, message: ${h.error.message}`
       );
   }
-  async signUpWithEmailPassword(h, U, B = !0) {
-    let V = U;
-    B && (V = bcrypt.hashSync(U, this.BCRYPT_SALT));
+  async signUpWithEmailPassword(h, P, B = !0) {
+    let V = P;
+    B && (V = bcrypt.hashSync(P, this.BCRYPT_SALT));
     const t = JSON.stringify({
       email: h,
       password: V,
@@ -21357,9 +21357,9 @@ class FirebaseAuthAPI {
     });
     return this.checkError(O.data), O.data;
   }
-  async signInWithEmailPassword(h, U, B = !0) {
-    let V = U;
-    B && (V = bcrypt.hashSync(U, this.BCRYPT_SALT));
+  async signInWithEmailPassword(h, P, B = !0) {
+    let V = P;
+    B && (V = bcrypt.hashSync(P, this.BCRYPT_SALT));
     const t = JSON.stringify({
       email: h,
       password: V,
@@ -21376,12 +21376,12 @@ class FirebaseAuthAPI {
     return this.checkError(O.data), O.data;
   }
   async getCurrentUser(h) {
-    const U = JSON.stringify({
+    const P = JSON.stringify({
       idToken: h
     }), B = await this.fetcher.send({
       url: "accounts:lookup",
       method: "POST",
-      data: U,
+      data: P,
       query: {
         key: this.firebaseKey
       },
@@ -21390,13 +21390,13 @@ class FirebaseAuthAPI {
     return this.checkError(B.data), B.data;
   }
   async getRefreshIdToken(h) {
-    const U = JSON.stringify({
+    const P = JSON.stringify({
       grant_type: "refresh_token",
       refresh_token: h
     }), B = await this.fetcher.send({
       url: "token",
       method: "POST",
-      data: U,
+      data: P,
       query: {
         key: this.firebaseKey
       },
@@ -21404,9 +21404,9 @@ class FirebaseAuthAPI {
     }), V = B.data;
     return this.checkError(B.data), V.id_token;
   }
-  async resetPassword(h, U, B = !0) {
-    let V = U;
-    B && (V = bcrypt.hashSync(U, this.BCRYPT_SALT));
+  async resetPassword(h, P, B = !0) {
+    let V = P;
+    B && (V = bcrypt.hashSync(P, this.BCRYPT_SALT));
     const t = JSON.stringify({
       oobCode: h,
       newPassword: V
@@ -21422,12 +21422,12 @@ class FirebaseAuthAPI {
     return this.checkError(O.data), O.data;
   }
   async verifyEmail(h) {
-    const U = JSON.stringify({
+    const P = JSON.stringify({
       oobCode: h
     }), B = await this.fetcher.send({
       url: "accounts:update",
       method: "POST",
-      data: U,
+      data: P,
       query: {
         key: this.firebaseKey
       },
@@ -21436,12 +21436,12 @@ class FirebaseAuthAPI {
     return this.checkError(B.data), B.data;
   }
   async signInWithCustomToken(h) {
-    const U = JSON.stringify({
+    const P = JSON.stringify({
       token: h,
       returnSecureToken: !0
     }), B = await this.fetcher.send({
       url: "accounts:signInWithCustomToken",
-      data: U,
+      data: P,
       query: {
         key: this.firebaseKey
       },
@@ -21453,8 +21453,8 @@ class FirebaseAuthAPI {
       refreshToken: B.data.refreshToken
     };
   }
-  async updatePassword(h, U) {
-    const B = bcrypt.hashSync(U, this.BCRYPT_SALT), V = JSON.stringify({
+  async updatePassword(h, P) {
+    const B = bcrypt.hashSync(P, this.BCRYPT_SALT), V = JSON.stringify({
       idToken: h,
       password: B,
       returnSecureToken: !0
@@ -21470,13 +21470,13 @@ class FirebaseAuthAPI {
     return this.checkError(t.data), t.data;
   }
 }
-var u$1 = ($, h, U) => {
+var u$1 = ($, h, P) => {
   if (!h.has($))
-    throw TypeError("Cannot " + U);
-}, i$1 = ($, h, U) => (u$1($, h, "read from private field"), U ? U.call($) : h.get($)), n$1 = ($, h, U) => {
+    throw TypeError("Cannot " + P);
+}, i$1 = ($, h, P) => (u$1($, h, "read from private field"), P ? P.call($) : h.get($)), n$1 = ($, h, P) => {
   if (h.has($))
     throw TypeError("Cannot add the same private member more than once");
-  h instanceof WeakSet ? h.add($) : h.set($, U);
+  h instanceof WeakSet ? h.add($) : h.set($, P);
 }, l$1;
 const s$1 = class Nt {
   static getLocalStorageEnabled() {
@@ -21488,17 +21488,17 @@ const s$1 = class Nt {
     }
     return h;
   }
-  static setAllLocalStorage(h, U) {
+  static setAllLocalStorage(h, P) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
       );
       return;
     }
-    const B = JSON.stringify(U);
+    const B = JSON.stringify(P);
     localStorage.setItem(i$1(this, l$1) + h, B);
   }
-  static setLocalStorage(h, U, B) {
+  static setLocalStorage(h, P, B) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
@@ -21507,21 +21507,21 @@ const s$1 = class Nt {
     }
     const V = this.getAllLocalStorage(h);
     if (V) {
-      V[U] = B, localStorage.setItem(
+      V[P] = B, localStorage.setItem(
         i$1(this, l$1) + h,
         // btoa(JSON.stringify(localData)),
         JSON.stringify(V)
       );
       return;
     }
-    const t = { [U]: B };
+    const t = { [P]: B };
     localStorage.setItem(
       i$1(this, l$1) + h,
       // btoa(JSON.stringify(newData)),
       JSON.stringify(t)
     );
   }
-  static getLocalStorage(h, U) {
+  static getLocalStorage(h, P) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
@@ -21531,9 +21531,9 @@ const s$1 = class Nt {
     const B = this.getAllLocalStorage(h);
     try {
       if (B)
-        return JSON.parse(B[U]);
+        return JSON.parse(B[P]);
     } catch {
-      return B[U];
+      return B[P];
     }
   }
   static getAllLocalStorage(h) {
@@ -21552,16 +21552,16 @@ const s$1 = class Nt {
       return;
     }
   }
-  static clearLocalStorage(h, U) {
+  static clearLocalStorage(h, P) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
       );
       return;
     }
-    if (this.getLocalStorage(h, U)) {
+    if (this.getLocalStorage(h, P)) {
       const B = this.getAllLocalStorage(h);
-      delete B[U], localStorage.setItem(
+      delete B[P], localStorage.setItem(
         i$1(this, l$1) + h,
         // btoa(JSON.stringify(localData)),
         JSON.stringify(B)
@@ -21577,7 +21577,7 @@ const s$1 = class Nt {
     }
     localStorage.removeItem(i$1(this, l$1) + h);
   }
-  static setLoginUserLocalStorage(h, U, B) {
+  static setLoginUserLocalStorage(h, P, B) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
@@ -21586,8 +21586,8 @@ const s$1 = class Nt {
     }
     const V = {};
     return V["firebase:wepin"] = Object.assign(
-      { provider: U == null ? void 0 : U.provider },
-      U == null ? void 0 : U.token
+      { provider: P == null ? void 0 : P.provider },
+      P == null ? void 0 : P.token
     ), V["wepin:connectUser"] = {
       accessToken: B.token.access,
       refreshToken: B.token.refresh
@@ -21596,13 +21596,13 @@ const s$1 = class Nt {
       userInfo: {
         userId: B.userInfo.userId,
         email: B.userInfo.email,
-        provider: U.provider,
+        provider: P.provider,
         use2FA: B.userInfo.use2FA >= 2
       }
     }, V.user_status = {
       loginStatus: B.loginStatus,
       pinRequired: B.loginStatus === "registerRequired" ? B.pinRequired : !1
-    }, B.loginStatus !== "pinRequired" && B.walletId && (V.wallet_id = B.walletId, V.user_info.walletId = B.walletId), V.oauth_provider_pending = U.provider, Nt.setAllLocalStorage(h, V), {
+    }, B.loginStatus !== "pinRequired" && B.walletId && (V.wallet_id = B.walletId, V.user_info.walletId = B.walletId), V.oauth_provider_pending = P.provider, Nt.setAllLocalStorage(h, V), {
       userInfo: V.user_info,
       connectUser: V["wepin:connectUser"]
     };
@@ -21611,8 +21611,8 @@ const s$1 = class Nt {
 l$1 = /* @__PURE__ */ new WeakMap(), s$1.platform = "web", n$1(s$1, l$1, "wepin:auth:");
 let c$1 = s$1;
 const isErrorResponse = ($) => {
-  const h = $.statusCode !== void 0 || $.status !== void 0, U = $.timestamp !== void 0 && $.message !== void 0 && $.path !== void 0;
-  return h && U;
+  const h = $.statusCode !== void 0 || $.status !== void 0, P = $.timestamp !== void 0 && $.message !== void 0 && $.path !== void 0;
+  return h && P;
 }, getBaseUrl = ($) => {
   if ($.slice(0, 8) === "ak_live_")
     return "https://sdk.wepin.io/v1";
@@ -21627,13 +21627,13 @@ const isErrorResponse = ($) => {
 class APIRequest {
   constructor({
     data: h,
-    headers: U,
+    headers: P,
     url: B,
     query: V,
     withCredentials: t = !1,
     method: O
   }) {
-    this.data = h, this.headers = U, this.url = B, this.query = V, this.withCredentials = t, this.method = O;
+    this.data = h, this.headers = P, this.url = B, this.query = V, this.withCredentials = t, this.method = O;
   }
 }
 const APIEvents = {
@@ -21644,8 +21644,8 @@ let InvalidTokenError$1 = class extends Error {
 };
 InvalidTokenError$1.prototype.name = "InvalidTokenError";
 function b64DecodeUnicode$1($) {
-  return decodeURIComponent(atob($).replace(/(.)/g, (h, U) => {
-    let B = U.charCodeAt(0).toString(16).toUpperCase();
+  return decodeURIComponent(atob($).replace(/(.)/g, (h, P) => {
+    let B = P.charCodeAt(0).toString(16).toUpperCase();
     return B.length < 2 && (B = "0" + B), "%" + B;
   }));
 }
@@ -21673,31 +21673,31 @@ function jwtDecode$1($, h) {
   if (typeof $ != "string")
     throw new InvalidTokenError$1("Invalid token specified: must be a string");
   h || (h = {});
-  const U = h.header === !0 ? 0 : 1, B = $.split(".")[U];
+  const P = h.header === !0 ? 0 : 1, B = $.split(".")[P];
   if (typeof B != "string")
-    throw new InvalidTokenError$1(`Invalid token specified: missing part #${U + 1}`);
+    throw new InvalidTokenError$1(`Invalid token specified: missing part #${P + 1}`);
   let V;
   try {
     V = base64UrlDecode$1(B);
   } catch (t) {
-    throw new InvalidTokenError$1(`Invalid token specified: invalid base64 for part #${U + 1} (${t.message})`);
+    throw new InvalidTokenError$1(`Invalid token specified: invalid base64 for part #${P + 1} (${t.message})`);
   }
   try {
     return JSON.parse(V);
   } catch (t) {
-    throw new InvalidTokenError$1(`Invalid token specified: invalid json for part #${U + 1} (${t.message})`);
+    throw new InvalidTokenError$1(`Invalid token specified: invalid json for part #${P + 1} (${t.message})`);
   }
 }
 const checkJwtToken = () => {
   const $ = (h) => {
-    var U;
+    var P;
     const B = h;
-    return !B || ((U = jwtDecode$1(B)) == null ? void 0 : U.exp) <= Math.floor(Date.now() / 1e3) + 60;
+    return !B || ((P = jwtDecode$1(B)) == null ? void 0 : P.exp) <= Math.floor(Date.now() / 1e3) + 60;
   };
   return {
     // isExpiredAccessToken,
-    checkTokenExpired: (h, U) => {
-      if (!(h === "/app/info" || h === "/user/login" || h === "/user/oauth") && $(U)) {
+    checkTokenExpired: (h, P) => {
+      if (!(h === "/app/info" || h === "/user/login" || h === "/user/oauth") && $(P)) {
         if (h !== "/access-token")
           throw new Error("token_expired");
         return;
@@ -21706,41 +21706,41 @@ const checkJwtToken = () => {
   };
 };
 class WepinSDKFetchAPI extends FetchAPI {
-  constructor(h, U) {
-    super(), this.baseUrl = h, this.params = U, this.addListener(APIEvents.request, this.requestCallback), this.addListener(APIEvents.response, this.responseCallback);
+  constructor(h, P) {
+    super(), this.baseUrl = h, this.params = P, this.addListener(APIEvents.request, this.requestCallback), this.addListener(APIEvents.response, this.responseCallback);
   }
-  async send(h, U) {
-    await this.emitAsync(APIEvents.request, h, U || {});
+  async send(h, P) {
+    await this.emitAsync(APIEvents.request, h, P || {});
     const { data: B, url: V, headers: t } = h, O = (() => {
       if (B instanceof FormData)
         return {};
     })();
     h.headers = Object.assign(t || {}, O);
-    const M = await super.send(h, U);
+    const M = await super.send(h, P);
     return this.setToken(V, M), await this.emitAsync(
       APIEvents.response,
       M,
-      U || {}
+      P || {}
     ), M;
   }
-  setToken(h, U) {
+  setToken(h, P) {
     var B, V, t, O, M, D;
-    isErrorResponse(U.data) || (h === "user/login" && (B = U.data) != null && B.token ? this.params.wepinFetch.setToken({
-      accessToken: (V = U.data) == null ? void 0 : V.token.access,
-      refreshToken: (t = U.data) == null ? void 0 : t.token.refresh
-    }) : h === "/user/access-token" && (O = U.data) != null && O.token ? this.params.wepinFetch.setToken({
-      accessToken: (M = U.data) == null ? void 0 : M.token,
+    isErrorResponse(P.data) || (h === "user/login" && (B = P.data) != null && B.token ? this.params.wepinFetch.setToken({
+      accessToken: (V = P.data) == null ? void 0 : V.token.access,
+      refreshToken: (t = P.data) == null ? void 0 : t.token.refresh
+    }) : h === "/user/access-token" && (O = P.data) != null && O.token ? this.params.wepinFetch.setToken({
+      accessToken: (M = P.data) == null ? void 0 : M.token,
       refreshToken: (D = this.params.wepinFetch.Token) == null ? void 0 : D.refreshToken
     }) : h === "user/logout" && this.params.wepinFetch.setToken());
   }
-  async requestCallback(h, U) {
+  async requestCallback(h, P) {
     var B, V, t;
     try {
       h.headers || (h.headers = {}), h.headers["X-API-KEY"] = this.params.appKey;
       const O = this.params.domain && this.params.domain.includes("localhost") ? "" : this.params.domain;
       if (h.headers["X-SDK-TYPE"] = this.params.sdk.type, h.headers["X-SDK-VERSION"] = this.params.sdk.version, h.headers["X-API-DOMAIN"] = O, h.url === "/user/access-token" && (h.query = {
         refresh_token: (B = this.params.wepinFetch.Token) == null ? void 0 : B.refreshToken
-      }), U != null && U.ignoreCheckToken)
+      }), P != null && P.ignoreCheckToken)
         return;
       try {
         const D = (V = this.params.wepinFetch.Token) == null ? void 0 : V.accessToken, { checkTokenExpired: I } = checkJwtToken();
@@ -21785,32 +21785,32 @@ class UserAPI {
   }
   // 2.1 Check User Email
   async checkEmailExist(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/check-user`,
       method: "GET",
       query: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, {
+    return (await this.fetcher.send(P, {
       ignoreCheckToken: !0
     })).data;
   }
   // 2.2 Get User PW State
   async getUserPasswordState(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/password-state`,
       method: "GET",
       query: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, {
+    return (await this.fetcher.send(P, {
       ignoreCheckToken: !0
     })).data;
   }
   // 2.3 Provider Login
-  async oAuth(h, U) {
+  async oAuth(h, P) {
     const B = new APIRequest({
-      url: `${this.basePath}/oauth/login/${U.provider}`,
+      url: `${this.basePath}/oauth/login/${P.provider}`,
       method: "GET",
       query: h,
       withCredentials: !0
@@ -21821,42 +21821,42 @@ class UserAPI {
   }
   // 2.4 Verify User Email
   async verify(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/verify`,
       method: "POST",
       data: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, {
+    return (await this.fetcher.send(P, {
       ignoreCheckToken: !0
     })).data;
   }
   // 2.5 Login
   async login(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/login`,
       method: "POST",
       data: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, { ignoreCheckToken: !0 })).data;
+    return (await this.fetcher.send(P, { ignoreCheckToken: !0 })).data;
   }
   // 2.6 Update User PW State
-  async updateUserPasswordState(h, U) {
+  async updateUserPasswordState(h, P) {
     const B = new APIRequest({
       url: `${this.basePath}/${h.userId}/password-state`,
       method: "PATCH",
-      data: U,
+      data: P,
       withCredentials: !0
     });
     return (await this.fetcher.send(B)).data;
   }
   // 2.7 Update Terms Accepted
-  async updateTermsAccepted(h, U) {
+  async updateTermsAccepted(h, P) {
     const B = new APIRequest({
       url: `${this.basePath}/${h.userId}/terms-accepted`,
       method: "PATCH",
-      data: U,
+      data: P,
       withCredentials: !0
     });
     return (await this.fetcher.send(B)).data;
@@ -21884,21 +21884,21 @@ class UserAPI {
   }
   // 2.11 Get Terms Accepted
   async getTermsAccepted(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/${h.userId}/terms-accepted`,
       method: "GET",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 2.12 Logout
   async logout(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/${h.userId}/logout`,
       method: "POST",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 2.13 Get Firebase Config
   async getFirebaseConfig() {
@@ -21911,32 +21911,32 @@ class UserAPI {
   }
   // 2.14 Login OAuth idToken
   async loginOAuthIdToken(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/oauth/login/id-token`,
       method: "POST",
       data: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, { ignoreCheckToken: !0 })).data;
+    return (await this.fetcher.send(P, { ignoreCheckToken: !0 })).data;
   }
   // 2.15 Login OAuth AccessToken
   async loginOAuthAccessToken(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/oauth/login/access-token`,
       method: "POST",
       data: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, { ignoreCheckToken: !0 })).data;
+    return (await this.fetcher.send(P, { ignoreCheckToken: !0 })).data;
   }
   // 2.18 Get User Info
   async getUserInfo(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/${h.userId}/detail`,
       method: "GET",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
 }
 class WalletAPI {
@@ -21945,49 +21945,49 @@ class WalletAPI {
   }
   // 3.1 Verify Wallet PIN
   async verifyPin(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/pin/verify`,
       data: h,
       method: "POST",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 3.2 Change Wallet PIN
   async changePin(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/pin/change`,
       data: h,
       method: "PATCH",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 3.3 Get Wallet Info
-  async fetchWalletInfo(h, U) {
+  async fetchWalletInfo(h, P) {
     const B = new APIRequest({
       url: `${this.basePath}/${h.walletId}`,
-      query: U,
+      query: P,
       method: "GET",
       withCredentials: !0
     });
     return (await this.fetcher.send(B)).data;
   }
   // 3.4 Get Wallet Key Info
-  async getWalletKeyInfo(h, U) {
+  async getWalletKeyInfo(h, P) {
     const B = new APIRequest({
       url: `${this.basePath}/${h.walletId}/wallet-keyinfo`,
-      query: U,
+      query: P,
       method: "GET",
       withCredentials: !0
     });
     return (await this.fetcher.send(B)).data;
   }
   // 3.5 Reset Wallet PIN Try Count
-  async resetPinTryCount(h, U) {
+  async resetPinTryCount(h, P) {
     const B = new APIRequest({
       url: `${this.basePath}/${h.walletId}/pin/reset-try-count`,
-      query: U,
+      query: P,
       method: "GET",
       withCredentials: !0
     });
@@ -22011,25 +22011,25 @@ class AppAPI {
   }
   // 1.3 Get App Info
   async getAppInfo(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/info`,
       query: h,
       method: "GET",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, {
+    return (await this.fetcher.send(P, {
       ignoreCheckToken: !0
     })).data;
   }
   // 1.4 Get App Coins
   async getAppCoins(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/coins`,
       method: "GET",
       query: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U, {
+    return (await this.fetcher.send(P, {
       ignoreCheckToken: !0
     })).data;
   }
@@ -22046,13 +22046,13 @@ class AppAPI {
   }
   // 1.6 Register
   async register(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/register`,
       method: "POST",
       data: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
 }
 class AccountAPI {
@@ -22061,23 +22061,23 @@ class AccountAPI {
   }
   // 4.1 Readdress
   async readdress(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/readdress`,
       data: h,
       method: "PATCH",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 4.2 Get App Account
   async getAppAccountList(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}`,
       query: h,
       method: "GET",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
 }
 class AccountBalanceAPI {
@@ -22086,12 +22086,12 @@ class AccountBalanceAPI {
   }
   // 5.1 Get Account Balance
   async getAccountBalance(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/${h.accountId}/balance`,
       method: "GET",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
 }
 class NFTAPI {
@@ -22111,23 +22111,23 @@ class NFTAPI {
   }
   // 6.2 Get App NFTs
   async getAppNFTList(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: this.basePath,
       method: "GET",
       query: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 6.3 Refresh NFTs
   async refreshAppNFTList(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/refresh`,
       method: "GET",
       query: h,
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
 }
 class TransactionAPI {
@@ -22136,60 +22136,60 @@ class TransactionAPI {
   }
   // 7.1 Sign transaction
   async sign(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/sign`,
       data: h,
       method: "POST",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 7.2 Broadcast Transaction
   async broadCast(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/broadcast`,
       data: h,
       method: "POST",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 7.3 Get prepare transaction data
   async prepareTransaction(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/prepare`,
       data: h,
       method: "POST",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
   // 7.4 Check Address validation
   async checkAddressValidation(h) {
-    const U = new APIRequest({
+    const P = new APIRequest({
       url: `${this.basePath}/check_address`,
       query: h,
       method: "GET",
       withCredentials: !0
     });
-    return (await this.fetcher.send(U)).data;
+    return (await this.fetcher.send(P)).data;
   }
 }
 class WepinSdkAPI {
-  constructor(h, U) {
-    const B = new WepinSDKFetchAPI(h, U);
+  constructor(h, P) {
+    const B = new WepinSDKFetchAPI(h, P);
     this.app = new AppAPI(B), this.user = new UserAPI(B), this.wallet = new WalletAPI(B), this.account = new AccountAPI(B), this.balance = new AccountBalanceAPI(B), this.nft = new NFTAPI(B), this.transaction = new TransactionAPI(B);
   }
 }
 class WepinFetch {
   constructor({
     appId: h,
-    appKey: U,
+    appKey: P,
     domain: B,
     sdk: V,
     storage: t
   }) {
-    this.version = packageJson.version, this.appId = h, this._appKey = U, this._domain = B, this._token = void 0, this.sdk = V, this._wepinStorage = t ?? c$1;
+    this.version = packageJson.version, this.appId = h, this._appKey = P, this._domain = B, this._token = void 0, this.sdk = V, this._wepinStorage = t ?? c$1;
   }
   async init() {
     const h = await WepinFetch.getFirebaseConfig(
@@ -22208,12 +22208,12 @@ class WepinFetch {
   isInitialized() {
     return this._isInitialized;
   }
-  static async getFirebaseConfig(h, U, B) {
+  static async getFirebaseConfig(h, P, B) {
     const V = getBaseUrl(h), t = await (await fetch(`${V}/user/firebase-config`, {
       method: "GET",
       headers: {
         "X-API-KEY": h,
-        "X-SDK-TYPE": U,
+        "X-SDK-TYPE": P,
         "X-SDK-VERSION": B,
         "Content-Type": "application/json"
       }
@@ -22238,8 +22238,8 @@ class InvalidTokenError extends Error {
 }
 InvalidTokenError.prototype.name = "InvalidTokenError";
 function b64DecodeUnicode($) {
-  return decodeURIComponent(atob($).replace(/(.)/g, (h, U) => {
-    let B = U.charCodeAt(0).toString(16).toUpperCase();
+  return decodeURIComponent(atob($).replace(/(.)/g, (h, P) => {
+    let B = P.charCodeAt(0).toString(16).toUpperCase();
     return B.length < 2 && (B = "0" + B), "%" + B;
   }));
 }
@@ -22267,48 +22267,48 @@ function jwtDecode($, h) {
   if (typeof $ != "string")
     throw new InvalidTokenError("Invalid token specified: must be a string");
   h || (h = {});
-  const U = h.header === !0 ? 0 : 1, B = $.split(".")[U];
+  const P = h.header === !0 ? 0 : 1, B = $.split(".")[P];
   if (typeof B != "string")
-    throw new InvalidTokenError(`Invalid token specified: missing part #${U + 1}`);
+    throw new InvalidTokenError(`Invalid token specified: missing part #${P + 1}`);
   let V;
   try {
     V = base64UrlDecode(B);
   } catch (t) {
-    throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${U + 1} (${t.message})`);
+    throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${P + 1} (${t.message})`);
   }
   try {
     return JSON.parse(V);
   } catch (t) {
-    throw new InvalidTokenError(`Invalid token specified: invalid json for part #${U + 1} (${t.message})`);
+    throw new InvalidTokenError(`Invalid token specified: invalid json for part #${P + 1} (${t.message})`);
   }
 }
 const getAccountSDK = ($) => {
   let h = [];
-  return $ != null && $.length && (h = $.map((U) => U.contract && U.accountTokenId ? {
-    network: U.network,
-    address: U.address,
-    contract: U.contract
+  return $ != null && $.length && (h = $.map((P) => P.contract && P.accountTokenId ? {
+    network: P.network,
+    address: P.address,
+    contract: P.contract
     // name: account.name,
   } : {
-    network: U.network,
-    address: U.address
+    network: P.network,
+    address: P.address
   })), h;
 }, filterAccountList = ($, h) => {
-  const { accounts: U, aa_accounts: B } = $;
-  return h ? B ? U.concat(B) : U : U.map((t) => {
+  const { accounts: P, aa_accounts: B } = $;
+  return h ? B ? P.concat(B) : P : P.map((t) => {
     const O = B == null ? void 0 : B.find(
       (M) => M.coinId === t.coinId && (M == null ? void 0 : M.contract) === (t == null ? void 0 : t.contract) && (M == null ? void 0 : M.eoaAddress) === t.address
     );
     return O || t;
   });
 };
-var u = ($, h, U) => {
+var u = ($, h, P) => {
   if (!h.has($))
-    throw TypeError("Cannot " + U);
-}, i = ($, h, U) => (u($, h, "read from private field"), U ? U.call($) : h.get($)), n = ($, h, U) => {
+    throw TypeError("Cannot " + P);
+}, i = ($, h, P) => (u($, h, "read from private field"), P ? P.call($) : h.get($)), n = ($, h, P) => {
   if (h.has($))
     throw TypeError("Cannot add the same private member more than once");
-  h instanceof WeakSet ? h.add($) : h.set($, U);
+  h instanceof WeakSet ? h.add($) : h.set($, P);
 }, l;
 const s = class Dt {
   static getLocalStorageEnabled() {
@@ -22320,17 +22320,17 @@ const s = class Dt {
     }
     return h;
   }
-  static setAllLocalStorage(h, U) {
+  static setAllLocalStorage(h, P) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
       );
       return;
     }
-    const B = JSON.stringify(U);
+    const B = JSON.stringify(P);
     localStorage.setItem(i(this, l) + h, B);
   }
-  static setLocalStorage(h, U, B) {
+  static setLocalStorage(h, P, B) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
@@ -22339,21 +22339,21 @@ const s = class Dt {
     }
     const V = this.getAllLocalStorage(h);
     if (V) {
-      V[U] = B, localStorage.setItem(
+      V[P] = B, localStorage.setItem(
         i(this, l) + h,
         // btoa(JSON.stringify(localData)),
         JSON.stringify(V)
       );
       return;
     }
-    const t = { [U]: B };
+    const t = { [P]: B };
     localStorage.setItem(
       i(this, l) + h,
       // btoa(JSON.stringify(newData)),
       JSON.stringify(t)
     );
   }
-  static getLocalStorage(h, U) {
+  static getLocalStorage(h, P) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
@@ -22363,9 +22363,9 @@ const s = class Dt {
     const B = this.getAllLocalStorage(h);
     try {
       if (B)
-        return JSON.parse(B[U]);
+        return JSON.parse(B[P]);
     } catch {
-      return B[U];
+      return B[P];
     }
   }
   static getAllLocalStorage(h) {
@@ -22384,16 +22384,16 @@ const s = class Dt {
       return;
     }
   }
-  static clearLocalStorage(h, U) {
+  static clearLocalStorage(h, P) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
       );
       return;
     }
-    if (this.getLocalStorage(h, U)) {
+    if (this.getLocalStorage(h, P)) {
       const B = this.getAllLocalStorage(h);
-      delete B[U], localStorage.setItem(
+      delete B[P], localStorage.setItem(
         i(this, l) + h,
         // btoa(JSON.stringify(localData)),
         JSON.stringify(B)
@@ -22409,7 +22409,7 @@ const s = class Dt {
     }
     localStorage.removeItem(i(this, l) + h);
   }
-  static setLoginUserLocalStorage(h, U, B) {
+  static setLoginUserLocalStorage(h, P, B) {
     if (!this.getLocalStorageEnabled()) {
       console.error(
         "Local storage is not available. We recommend using local storage to maintain login sessions."
@@ -22418,8 +22418,8 @@ const s = class Dt {
     }
     const V = {};
     return V["firebase:wepin"] = Object.assign(
-      { provider: U == null ? void 0 : U.provider },
-      U == null ? void 0 : U.token
+      { provider: P == null ? void 0 : P.provider },
+      P == null ? void 0 : P.token
     ), V["wepin:connectUser"] = {
       accessToken: B.token.access,
       refreshToken: B.token.refresh
@@ -22428,13 +22428,13 @@ const s = class Dt {
       userInfo: {
         userId: B.userInfo.userId,
         email: B.userInfo.email,
-        provider: U.provider,
+        provider: P.provider,
         use2FA: B.userInfo.use2FA >= 2
       }
     }, V.user_status = {
       loginStatus: B.loginStatus,
       pinRequired: B.loginStatus === "registerRequired" ? B.pinRequired : !1
-    }, B.loginStatus !== "pinRequired" && B.walletId && (V.wallet_id = B.walletId, V.user_info.walletId = B.walletId), V.oauth_provider_pending = U.provider, Dt.setAllLocalStorage(h, V), {
+    }, B.loginStatus !== "pinRequired" && B.walletId && (V.wallet_id = B.walletId, V.user_info.walletId = B.walletId), V.oauth_provider_pending = P.provider, Dt.setAllLocalStorage(h, V), {
       userInfo: V.user_info,
       connectUser: V["wepin:connectUser"]
     };
@@ -22444,7 +22444,7 @@ l = /* @__PURE__ */ new WeakMap(), s.platform = "web", n(s, l, "wepin:auth:");
 let c = s;
 var isNumeric = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i, mathceil = Math.ceil, mathfloor = Math.floor, bignumberError = "[BigNumber Error] ", tooManyDigits = bignumberError + "Number primitive has more than 15 significant digits: ", BASE = 1e14, LOG_BASE = 14, MAX_SAFE_INTEGER = 9007199254740991, POWS_TEN = [1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13], SQRT_BASE = 1e7, MAX = 1e9;
 function clone($) {
-  var h, U, B, V = oe.prototype = { constructor: oe, toString: null, valueOf: null }, t = new oe(1), O = 20, M = 4, D = -7, I = 21, P = -1e7, Y = 1e7, X = !1, ee = 1, re = 0, ie = {
+  var h, P, B, V = oe.prototype = { constructor: oe, toString: null, valueOf: null }, t = new oe(1), O = 20, M = 4, D = -7, I = 21, U = -1e7, Y = 1e7, X = !1, ee = 1, re = 0, ie = {
     prefix: "",
     groupSize: 3,
     secondaryGroupSize: 0,
@@ -22461,7 +22461,7 @@ function clone($) {
       return new oe(he, le);
     if (le == null) {
       if (he && he._isBigNumber === !0) {
-        A.s = he.s, !he.c || he.e > Y ? A.c = A.e = null : he.e < P ? A.c = [A.e = 0] : (A.e = he.e, A.c = he.c.slice());
+        A.s = he.s, !he.c || he.e > Y ? A.c = A.e = null : he.e < U ? A.c = [A.e = 0] : (A.e = he.e, A.c = he.c.slice());
         return;
       }
       if ((g = typeof he == "number") && he * 0 == 0) {
@@ -22501,7 +22501,7 @@ function clone($) {
           }
           return B(A, String(he), g, le);
         }
-      g = !1, F = U(F, le, 10, A.s), (e = F.indexOf(".")) > -1 ? F = F.replace(".", "") : e = F.length;
+      g = !1, F = P(F, le, 10, A.s), (e = F.indexOf(".")) > -1 ? F = F.replace(".", "") : e = F.length;
     }
     for (o = 0; F.charCodeAt(o) === 48; o++)
       ;
@@ -22512,7 +22512,7 @@ function clone($) {
         throw Error(tooManyDigits + A.s * he);
       if ((e = e - o - 1) > Y)
         A.c = A.e = null;
-      else if (e < P)
+      else if (e < U)
         A.c = [A.e = 0];
       else {
         if (A.e = e, A.c = [], o = (e + 1) % LOG_BASE, e < 0 && (o += LOG_BASE), o < H) {
@@ -22534,9 +22534,9 @@ function clone($) {
       if (typeof he == "object") {
         if (he.hasOwnProperty(le = "DECIMAL_PLACES") && (_e = he[le], intCheck(_e, 0, MAX, le), O = _e), he.hasOwnProperty(le = "ROUNDING_MODE") && (_e = he[le], intCheck(_e, 0, 8, le), M = _e), he.hasOwnProperty(le = "EXPONENTIAL_AT") && (_e = he[le], _e && _e.pop ? (intCheck(_e[0], -MAX, 0, le), intCheck(_e[1], 0, MAX, le), D = _e[0], I = _e[1]) : (intCheck(_e, -MAX, MAX, le), D = -(I = _e < 0 ? -_e : _e))), he.hasOwnProperty(le = "RANGE"))
           if (_e = he[le], _e && _e.pop)
-            intCheck(_e[0], -MAX, -1, le), intCheck(_e[1], 1, MAX, le), P = _e[0], Y = _e[1];
+            intCheck(_e[0], -MAX, -1, le), intCheck(_e[1], 1, MAX, le), U = _e[0], Y = _e[1];
           else if (intCheck(_e, -MAX, MAX, le), _e)
-            P = -(Y = _e < 0 ? -_e : _e);
+            U = -(Y = _e < 0 ? -_e : _e);
           else
             throw Error(bignumberError + le + " cannot be zero: " + _e);
         if (he.hasOwnProperty(le = "CRYPTO"))
@@ -22566,7 +22566,7 @@ function clone($) {
       DECIMAL_PLACES: O,
       ROUNDING_MODE: M,
       EXPONENTIAL_AT: [D, I],
-      RANGE: [P, Y],
+      RANGE: [U, Y],
       CRYPTO: X,
       MODULO_MODE: ee,
       POW_PRECISION: re,
@@ -22641,7 +22641,7 @@ function clone($) {
     for (var he = 1, le = arguments, _e = new oe(le[0]); he < le.length; )
       _e = _e.plus(le[he++]);
     return _e;
-  }, U = /* @__PURE__ */ function() {
+  }, P = /* @__PURE__ */ function() {
     var he = "0123456789";
     function le(_e, G, Z, e) {
       for (var o, g = [0], H, F = 0, A = _e.length; F < A; ) {
@@ -22774,7 +22774,7 @@ function clone($) {
       ;
     for (Z = le[0]; Z >= 10; Z /= 10, G++)
       ;
-    return (_e = G + _e * LOG_BASE - 1) > Y ? he.c = he.e = null : _e < P ? he.c = [he.e = 0] : (he.e = _e, he.c = le), he;
+    return (_e = G + _e * LOG_BASE - 1) > Y ? he.c = he.e = null : _e < U ? he.c = [he.e = 0] : (he.e = _e, he.c = le), he;
   }
   B = /* @__PURE__ */ function() {
     var he = /^(-?)0([xbo])(?=\w[\w.]*$)/i, le = /^([^.]+)\.$/, _e = /^\.([^.]+)$/, G = /^-?(Infinity|NaN)$/, Z = /^\s*\+(?=[\w.])|^\s+|\s+$/g;
@@ -22837,7 +22837,7 @@ function clone($) {
         for (e = q.length; q[--e] === 0; q.pop())
           ;
       }
-      he.e > Y ? he.c = he.e = null : he.e < P && (he.c = [he.e = 0]);
+      he.e > Y ? he.c = he.e = null : he.e < U && (he.c = [he.e = 0]);
     }
     return he;
   }
@@ -23077,7 +23077,7 @@ function clone($) {
     return he != null && intCheck(he, 1, MAX), be(this, he, le, 2);
   }, V.toString = function(he) {
     var le, _e = this, G = _e.s, Z = _e.e;
-    return Z === null ? G ? (le = "Infinity", G < 0 && (le = "-" + le)) : le = "NaN" : (he == null ? le = Z <= D || Z >= I ? toExponential(coeffToString(_e.c), Z) : toFixedPoint(coeffToString(_e.c), Z, "0") : he === 10 && se ? (_e = Se(new oe(_e), O + Z + 1, M), le = toFixedPoint(coeffToString(_e.c), _e.e, "0")) : (intCheck(he, 2, ne.length, "Base"), le = U(toFixedPoint(coeffToString(_e.c), Z, "0"), 10, he, G, !0)), G < 0 && _e.c[0] && (le = "-" + le)), le;
+    return Z === null ? G ? (le = "Infinity", G < 0 && (le = "-" + le)) : le = "NaN" : (he == null ? le = Z <= D || Z >= I ? toExponential(coeffToString(_e.c), Z) : toFixedPoint(coeffToString(_e.c), Z, "0") : he === 10 && se ? (_e = Se(new oe(_e), O + Z + 1, M), le = toFixedPoint(coeffToString(_e.c), _e.e, "0")) : (intCheck(he, 2, ne.length, "Base"), le = P(toFixedPoint(coeffToString(_e.c), Z, "0"), 10, he, G, !0)), G < 0 && _e.c[0] && (le = "-" + le)), le;
   }, V.valueOf = V.toJSON = function() {
     return ke(this);
   }, V._isBigNumber = !0, V[Symbol.toStringTag] = "BigNumber", V[Symbol.for("nodejs.util.inspect.custom")] = V.valueOf, $ != null && oe.set($), oe;
@@ -23087,8 +23087,8 @@ function bitFloor($) {
   return $ > 0 || $ === h ? h : h - 1;
 }
 function coeffToString($) {
-  for (var h, U, B = 1, V = $.length, t = $[0] + ""; B < V; ) {
-    for (h = $[B++] + "", U = LOG_BASE - h.length; U--; h = "0" + h)
+  for (var h, P, B = 1, V = $.length, t = $[0] + ""; B < V; ) {
+    for (h = $[B++] + "", P = LOG_BASE - h.length; P--; h = "0" + h)
       ;
     t += h;
   }
@@ -23097,25 +23097,25 @@ function coeffToString($) {
   return t.slice(0, V + 1 || 1);
 }
 function compare($, h) {
-  var U, B, V = $.c, t = h.c, O = $.s, M = h.s, D = $.e, I = h.e;
+  var P, B, V = $.c, t = h.c, O = $.s, M = h.s, D = $.e, I = h.e;
   if (!O || !M)
     return null;
-  if (U = V && !V[0], B = t && !t[0], U || B)
-    return U ? B ? 0 : -M : O;
+  if (P = V && !V[0], B = t && !t[0], P || B)
+    return P ? B ? 0 : -M : O;
   if (O != M)
     return O;
-  if (U = O < 0, B = D == I, !V || !t)
-    return B ? 0 : !V ^ U ? 1 : -1;
+  if (P = O < 0, B = D == I, !V || !t)
+    return B ? 0 : !V ^ P ? 1 : -1;
   if (!B)
-    return D > I ^ U ? 1 : -1;
+    return D > I ^ P ? 1 : -1;
   for (M = (D = V.length) < (I = t.length) ? D : I, O = 0; O < M; O++)
     if (V[O] != t[O])
-      return V[O] > t[O] ^ U ? 1 : -1;
-  return D == I ? 0 : D > I ^ U ? 1 : -1;
+      return V[O] > t[O] ^ P ? 1 : -1;
+  return D == I ? 0 : D > I ^ P ? 1 : -1;
 }
-function intCheck($, h, U, B) {
-  if ($ < h || $ > U || $ !== mathfloor($))
-    throw Error(bignumberError + (B || "Argument") + (typeof $ == "number" ? $ < h || $ > U ? " out of range: " : " not an integer: " : " not a primitive number: ") + String($));
+function intCheck($, h, P, B) {
+  if ($ < h || $ > P || $ !== mathfloor($))
+    throw Error(bignumberError + (B || "Argument") + (typeof $ == "number" ? $ < h || $ > P ? " out of range: " : " not an integer: " : " not a primitive number: ") + String($));
 }
 function isOdd($) {
   var h = $.c.length - 1;
@@ -23124,14 +23124,14 @@ function isOdd($) {
 function toExponential($, h) {
   return ($.length > 1 ? $.charAt(0) + "." + $.slice(1) : $) + (h < 0 ? "e" : "e+") + h;
 }
-function toFixedPoint($, h, U) {
+function toFixedPoint($, h, P) {
   var B, V;
   if (h < 0) {
-    for (V = U + "."; ++h; V += U)
+    for (V = P + "."; ++h; V += P)
       ;
     $ = V + $;
   } else if (B = $.length, ++h > B) {
-    for (V = U, h -= B; --h; V += U)
+    for (V = P, h -= B; --h; V += P)
       ;
     $ += V;
   } else
@@ -23139,10 +23139,10 @@ function toFixedPoint($, h, U) {
   return $;
 }
 var BigNumber = clone();
-const filterAccountBalance = ($, h, U) => {
+const filterAccountBalance = ($, h, P) => {
   const B = $.filter(
     (t) => t.accountId === h.accountId && t.accountTokenId
-  ), V = U.tokens.length ? U.tokens.filter(
+  ), V = P.tokens.length ? P.tokens.filter(
     (t) => B.find((O) => O.contract === t.contract)
   ).map((t) => {
     const O = { ...t };
@@ -23151,25 +23151,25 @@ const filterAccountBalance = ($, h, U) => {
   return {
     network: h.network,
     address: h.address,
-    balance: getBalanceWithDecimal(U.balance, U.decimals),
+    balance: getBalanceWithDecimal(P.balance, P.decimals),
     symbol: h.symbol,
     tokens: V
   };
 }, getBalanceWithDecimal = ($, h) => {
   if (!h || !$)
     return "0";
-  const U = new BigNumber($).shiftedBy(-h).toFixed();
-  return U === "NaN" ? "0" : U;
+  const P = new BigNumber($).shiftedBy(-h).toFixed();
+  return P === "NaN" ? "0" : P;
 };
 class WepinSDK extends SafeEventEmitter {
   // _userInfo: IWepinUser
   constructor({
     appId: h,
-    appKey: U,
+    appKey: P,
     wepinModal: B,
     wepinStorage: V
   }) {
-    super(), this.version = PackageJson.version, console.log(`WepinWeb SDK v${this.version}`), this._isInitialized = !1, this._wepinLifeCycle = "not_initialized", this._wepinAppId = h, this._wepinAppKey = U, this._wepinModal = B || new k(), this._wepinStorage = V || c, this.type = this._wepinStorage.platform, this.setModeByAppKey(U);
+    super(), this.version = PackageJson.version, console.log(`WepinWeb SDK v${this.version}`), this._isInitialized = !1, this._wepinLifeCycle = "not_initialized", this._wepinAppId = h, this._wepinAppKey = P, this._wepinModal = B || new k(), this._wepinStorage = V || c, this.type = this._wepinStorage.platform, this.setModeByAppKey(P);
   }
   setModeByAppKey(h) {
     if (h.slice(0, 8) === "ak_live_") {
@@ -23216,13 +23216,13 @@ class WepinSDK extends SafeEventEmitter {
       sdk: { version: this.version, type: `${this.type}-sdk` },
       storage: this._wepinStorage
     }), await this._wepinFetch.init();
-    const U = await this._wepinFetch.wepinApi.app.getAppInfo({
+    const P = await this._wepinFetch.wepinApi.app.getAppInfo({
       platform: ProjectPlatformKind[this.type],
       withNetwork: !1
     });
-    if (isErrorResponse(U))
-      throw new Error(U.message);
-    this._wepinAppId = this._wepinFetch.appId = U.appInfo.id;
+    if (isErrorResponse(P))
+      throw new Error(P.message);
+    this._wepinAppId = this._wepinFetch.appId = P.appInfo.id;
     const B = this._wepinStorage.getLocalStorage(
       this._wepinAppId,
       "wepin:connectUser"
@@ -23265,9 +23265,9 @@ class WepinSDK extends SafeEventEmitter {
    */
   changeLanguage({
     currency: h,
-    language: U
+    language: P
   }) {
-    this.wepinAppAttributes.defaultCurrency = h, this.wepinAppAttributes.defaultLanguage = U;
+    this.wepinAppAttributes.defaultCurrency = h, this.wepinAppAttributes.defaultLanguage = P;
   }
   //init, login되지 않으면 open 못하게!
   /**
@@ -23282,19 +23282,19 @@ class WepinSDK extends SafeEventEmitter {
   }
   async _open(h) {
     try {
-      let U = Utils.getUrls(this._modeByAppKey).wepinWebview;
+      let P = Utils.getUrls(this._modeByAppKey).wepinWebview;
       if (this._widget && this._widget.isOpen) {
         LOG.debug("already opened widget", this._widget);
         return;
       }
-      h != null && h.url && (U += h.url), this._EL = getEventListener(this, {
+      h != null && h.url && (P += h.url), this._EL = getEventListener(this, {
         appKey: this._wepinAppKey,
         appId: this._wepinAppId
-      }), h != null && h.isHide || this.wepinAppAttributes.type !== "show" && (h != null && h.isInit) ? this._widget = await this._wepinModal.openModal(U, this._EL, {
+      }), h != null && h.isHide || this.wepinAppAttributes.type !== "show" && (h != null && h.isInit) ? this._widget = await this._wepinModal.openModal(P, this._EL, {
         isHide: !0
-      }) : (h == null ? void 0 : h.type) === "WINDOW" ? this._widget = await this._wepinModal.openAuthBrowser(U, this._EL) : this._widget = await this._wepinModal.openModal(U, this._EL), LOG.debug("openWidget this._widget", this._widget);
-    } catch (U) {
-      throw LOG.error(U), new Error("Wepin.openWidget: Can't open wepin sdk widget");
+      }) : (h == null ? void 0 : h.type) === "WINDOW" ? this._widget = await this._wepinModal.openAuthBrowser(P, this._EL) : this._widget = await this._wepinModal.openModal(P, this._EL), LOG.debug("openWidget this._widget", this._widget);
+    } catch (P) {
+      throw LOG.error(P), new Error("Wepin.openWidget: Can't open wepin sdk widget");
     }
   }
   /**
@@ -23357,7 +23357,7 @@ class WepinSDK extends SafeEventEmitter {
   async loginWithUI(h) {
     if (!this._isInitialized)
       throw new Error("Wepin.loginWithUI: wepin sdk has to be initialized");
-    const U = this._wepinStorage.getLocalStorage(
+    const P = this._wepinStorage.getLocalStorage(
       this._wepinAppId,
       "wepin:connectUser"
     ), B = this._wepinStorage.getLocalStorage(
@@ -23372,126 +23372,132 @@ class WepinSDK extends SafeEventEmitter {
       this.specifiedEmail = h == null ? void 0 : h.email;
     } else
       this.specifiedEmail = void 0;
-    return this._wepinLifeCycle = "before_login", U && B && (B && (U != null && U.refreshToken) && (h != null && h.email) && (B == null ? void 0 : B.userInfo.email) !== (h == null ? void 0 : h.email) && await this.logout(), U != null && U.refreshToken && (LOG.debug("currentUserInfo", B), !await this.checkExpiredToken() && B && B.status === "success")) ? (this._wepinLifeCycle = "login", B) : (await this._open(), new Promise((V, t) => {
+    if (this._wepinLifeCycle = "before_login", P && B && (B && (P != null && P.refreshToken) && (h != null && h.email) && (B == null ? void 0 : B.userInfo.email) !== (h == null ? void 0 : h.email) && await this.logout(), P != null && P.refreshToken && (LOG.debug("currentUserInfo", B), !await this.checkExpiredToken() && B && B.status === "success"))) {
+      this._wepinLifeCycle = "login";
+      const t = this._wepinStorage.getLocalStorage(
+        this._wepinAppId,
+        "user_status"
+      );
+      return Object.assign(B, { userStatus: t });
+    }
+    return await this._open(), new Promise((V, t) => {
       this.once("onUserInfoSet", (O) => {
         try {
           const M = this._wepinStorage.getLocalStorage(
             this._wepinAppId,
             "wepin:connectUser"
+          ), D = this._wepinStorage.getLocalStorage(
+            this._wepinAppId,
+            "user_status"
           );
-          this._close(), this._wepinFetch.setToken(M), this.specifiedEmail = void 0, V(O);
+          this._close(), this._wepinFetch.setToken(M), this.specifiedEmail = void 0, V(Object.assign(O, { userStatus: D }));
         } catch (M) {
           t(new Error(M));
         }
       });
-    }));
+    });
   }
-  // public async register(pin: string): Promise<IWepinUser> {
-  //   // let result = false
-  //   if (!this._isInitialized) {
-  //     throw new Error('Wepin.register: wepin sdk has to be initialized')
-  //   }
-  //   if (!pin) {
-  //     throw new Error('Wepin.register: pin is required')
-  //   }
-  //   if (!pinRegExp.test(pin)) {
-  //     throw new Error(
-  //       'Wepin.register: The PIN must be a string composed of 6 to 8 digits.',
-  //     )
-  //   }
-  //   const userStatus = this._wepinStorage.getLocalStorage(
-  //     this._wepinAppId,
-  //     'user_status',
-  //   )
-  //   if (
-  //     userStatus.loginStatus === 'registerRequired' ||
-  //     userStatus.loginStatus === 'pinRequired'
-  //   )
-  //     this._wepinLifeCycle === 'login_before_register'
-  //   if ((await this.getStatus()) !== 'login_before_register') {
-  //     throw new Error(
-  //       'Wepin.register: The LifeCycle of wepin sdk has to be login_before_register',
-  //     )
-  //   }
-  //   const userId = this._wepinStorage.getLocalStorage(
-  //     this._wepinAppId,
-  //     'user_id',
-  //   )
-  //   const walletId = this._wepinStorage.getLocalStorage(
-  //     this._wepinAppId,
-  //     'wallet_id',
-  //   )
-  //   let registerResponse
-  //   if (
-  //     userStatus?.loginStatus === 'registerRequired' &&
-  //     !userStatus?.pinRequired
-  //   ) {
-  //     registerResponse = await this._wepinFetch.wepinApi.app.register({
-  //       appId: this._wepinAppId,
-  //       userId,
-  //       walletId,
-  //       loginStatus: userStatus.loginStatus,
-  //     })
-  //   } else {
-  //     const type =
-  //       userStatus?.loginStatus === 'pinRequired' ? VERIFY_CREATE : VERIFY_PIN
-  //     const uvd = await getUVD(pin, this._wepinFetch, {
-  //       type,
-  //       userId,
-  //       walletId,
-  //     })
-  //     registerResponse = await this._wepinFetch.wepinApi.app.register({
-  //       appId: this._wepinAppId,
-  //       userId,
-  //       walletId,
-  //       loginStatus: userStatus.loginStatus,
-  //       UVD: uvd.UVD,
-  //       hint: uvd?.hint,
-  //     })
-  //   }
-  //   if (isErrorResponse(registerResponse)) {
-  //     throw new Error(registerResponse.message)
-  //   }
-  //   const resTempAccepted =
-  //     await this._wepinFetch.wepinApi.user.updateTermsAccepted(
-  //       { userId },
-  //       {
-  //         termsAccepted: {
-  //           termsOfService: true,
-  //           privacyPolicy: true,
-  //         },
-  //       },
-  //     )
-  //   if (
-  //     isErrorResponse(resTempAccepted) ||
-  //     !Object.values(resTempAccepted.termsAccepted).every((x) => x === true)
-  //   ) {
-  //     throw new Error(`unknown/updateTermsAccepted`)
-  //   }
-  //   this._wepinStorage.setLocalStorage(this._wepinAppId, 'user_status', {
-  //     loginStatus: 'complete',
-  //   })
-  //   const userInfo = this._wepinStorage.getLocalStorage(
-  //     this._wepinAppId,
-  //     'user_info',
-  //   )
-  //   this._userInfo = userInfo
-  //   if (registerResponse.walletId) {
-  //     this._wepinStorage.setLocalStorage(
-  //       this._wepinAppId,
-  //       'wallet_id',
-  //       registerResponse.walletId,
-  //     )
-  //     userInfo.walletId = this._userInfo.walletId = registerResponse.walletId
-  //     this._wepinStorage.setLocalStorage(
-  //       this._wepinAppId,
-  //       'user_info',
-  //       userInfo,
-  //     )
-  //   }
-  //   this._wepinLifeCycle = 'login'
-  //   return this._userInfo
-  // }
+  async register() {
+    if (!this._isInitialized)
+      throw new Error("Wepin.register: wepin sdk has to be initialized");
+    const h = this._wepinStorage.getLocalStorage(
+      this._wepinAppId,
+      "user_status"
+    );
+    if ((h.loginStatus === "registerRequired" || h.loginStatus === "pinRequired") && this._wepinLifeCycle, await this.getStatus() !== "login_before_register")
+      throw new Error(
+        "Wepin.register: The LifeCycle of wepin sdk has to be login_before_register"
+      );
+    if (h.loginStatus !== "registerRequired" && h.loginStatus !== "pinRequired")
+      throw new Error("Wepin.register: invalid login status");
+    if (h.loginStatus === "registerRequired" && !h.pinRequired) {
+      const P = this._wepinStorage.getLocalStorage(
+        this._wepinAppId,
+        "user_id"
+      ), B = this._wepinStorage.getLocalStorage(
+        this._wepinAppId,
+        "wallet_id"
+      ), V = await this._wepinFetch.wepinApi.app.register({
+        appId: this._wepinAppId,
+        userId: P,
+        walletId: B,
+        loginStatus: h.loginStatus
+      });
+      if (isErrorResponse(V))
+        throw new Error(V.message);
+      const t = await this._wepinFetch.wepinApi.user.updateTermsAccepted(
+        { userId: P },
+        {
+          termsAccepted: {
+            termsOfService: !0,
+            privacyPolicy: !0
+          }
+        }
+      );
+      if (isErrorResponse(t) || !Object.values(t.termsAccepted).every((D) => D === !0))
+        throw new Error("unknown/updateTermsAccepted");
+      this._wepinStorage.setLocalStorage(this._wepinAppId, "user_status", {
+        loginStatus: "complete"
+      });
+      const O = this._wepinStorage.getLocalStorage(
+        this._wepinAppId,
+        "user_info"
+      );
+      this._userInfo = O, V.walletId && (this._wepinStorage.setLocalStorage(
+        this._wepinAppId,
+        "wallet_id",
+        V.walletId
+      ), O.walletId = this._userInfo.walletId = V.walletId, this._wepinStorage.setLocalStorage(
+        this._wepinAppId,
+        "user_info",
+        O
+      )), this._wepinLifeCycle = "login";
+      const M = this._wepinStorage.getLocalStorage(this._wepinAppId, "user_status");
+      return Object.assign(O, { userStatus: M });
+    } else {
+      const P = (/* @__PURE__ */ new Date()).getTime();
+      return this.wepinRequest = {
+        header: {
+          request_from: "web",
+          request_to: "wepin_widget",
+          id: P
+        },
+        body: {
+          command: "register_wepin",
+          parameter: {
+            loginStatus: h.loginStatus,
+            pinRequired: h.pinRequired
+          }
+        }
+      }, new Promise((B, V) => {
+        this.once(P.toString(), async (t) => {
+          var O;
+          if (LOG.debug("response data: ", t.body.data), this.wepinRequest = void 0, this._close(), t.body.state === "SUCCESS") {
+            const M = (O = t.body.data) == null ? void 0 : O.walletId;
+            this._wepinStorage.setLocalStorage(
+              this._wepinAppId,
+              "user_status",
+              {
+                loginStatus: "complete"
+              }
+            );
+            const D = this._wepinStorage.getLocalStorage(
+              this._wepinAppId,
+              "user_info"
+            );
+            this._userInfo = D, D.walletId = this._userInfo.walletId = M, this._wepinStorage.setLocalStorage(
+              this._wepinAppId,
+              "user_info",
+              D
+            ), this._wepinLifeCycle = "login";
+            const I = this._wepinStorage.getLocalStorage(this._wepinAppId, "user_status");
+            B(Object.assign(D, { userStatus: I }));
+          } else
+            t.body.data ? V(new Error(`Wepin.register: ${t.body.data}`)) : V(new Error("unknown/error"));
+        }), this._open({ url: "/sdk-register" });
+      });
+    }
+  }
   /**
    * Function to handle user logout.
    *
@@ -23521,14 +23527,14 @@ class WepinSDK extends SafeEventEmitter {
       throw new Error(
         "Wepin.getAccounts: Only if you're logged in to the wepin"
       );
-    const U = this._wepinStorage.getLocalStorage(
+    const P = this._wepinStorage.getLocalStorage(
       this._wepinAppId,
       "user_id"
     ), B = this._wepinStorage.getLocalStorage(
       this._wepinAppId,
       "wallet_id"
     ), V = await this._wepinFetch.wepinApi.account.getAppAccountList({
-      userId: U,
+      userId: P,
       walletId: B,
       localeId: this.wepinAppAttributes.defaultLanguage === "ko" ? 1 : 2
     });
@@ -23538,8 +23544,8 @@ class WepinSDK extends SafeEventEmitter {
       (O) => (h == null ? void 0 : h.networks.findIndex((M) => M === O.network)) >= 0
     ) : this._accountInfo;
   }
-  setUserInfo(h, U) {
-    this._userInfo = h, h && h.status === "success" ? this._wepinLifeCycle = "login" : this._wepinLifeCycle = "initialized", U && this.emit("onUserInfoSet", h);
+  setUserInfo(h, P) {
+    this._userInfo = h, h && h.status === "success" ? this._wepinLifeCycle = "login" : this._wepinLifeCycle = "initialized", P && this.emit("onUserInfoSet", h);
   }
   /**
    * Returns lifecycle of wepin.
@@ -23560,11 +23566,11 @@ class WepinSDK extends SafeEventEmitter {
       const h = this._wepinStorage.getLocalStorage(
         this._wepinAppId,
         "user_status"
-      ), U = this._wepinStorage.getLocalStorage(
+      ), P = this._wepinStorage.getLocalStorage(
         this._wepinAppId,
         "user_info"
       );
-      this._userInfo = U, h.loginStatus === "registerRequired" || h.loginStatus === "pinRequired" ? this._wepinLifeCycle = "login_before_register" : this._wepinLifeCycle = "login";
+      this._userInfo = P, h.loginStatus === "registerRequired" || h.loginStatus === "pinRequired" ? this._wepinLifeCycle = "login_before_register" : this._wepinLifeCycle = "login";
     }
     return this._wepinLifeCycle;
   }
@@ -23582,8 +23588,8 @@ class WepinSDK extends SafeEventEmitter {
       throw new Error(
         "Wepin.getBalance: Only if you're logged in to the wepin."
       );
-    const U = !h || h.length === 0, B = [];
-    if (await this.getAccounts(), U) {
+    const P = !h || h.length === 0, B = [];
+    if (await this.getAccounts(), P) {
       for (const V of this._detailAccount)
         if (h && h.findIndex(
           (t) => t.network === V.network && t.address === V.address
@@ -23629,7 +23635,7 @@ class WepinSDK extends SafeEventEmitter {
    */
   async send({
     account: h,
-    txData: U
+    txData: P
   }) {
     if (!this._isInitialized)
       throw new Error("Wepin.send: wepin sdk has to be initialized");
@@ -23655,8 +23661,8 @@ class WepinSDK extends SafeEventEmitter {
             contract: h == null ? void 0 : h.contract
           },
           from: h.address,
-          to: U == null ? void 0 : U.toAddress,
-          value: U == null ? void 0 : U.amount
+          to: P == null ? void 0 : P.toAddress,
+          value: P == null ? void 0 : P.amount
         }
       }
     }, new Promise((t, O) => {

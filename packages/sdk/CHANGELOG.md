@@ -1,4 +1,4 @@
-## [Version 0.0.4](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.4) (2024-05-23)
+## [Version 0.0.4](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.4) (2024-05-29)
 
 #### New Features:
 - Added a new `register` Method:

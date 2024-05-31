@@ -207,7 +207,7 @@ The `loginWithUI()` method returns the information of the user who is logged in.
     - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'>
     - use2FA \<boolean>
   - userStatus: \<object> - The user's status of wepin login. including:
-    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
+    - loginStatus: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
     - pinRequired?: <boolean> 
   - walletId \<string>
 
@@ -254,7 +254,7 @@ After calling the `loginWepin()` method in `@wepin/login-js`, if the loginStatus
     - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'>
     - use2FA \<boolean>
   - userStatus: \<object> - The user's status of wepin login. including:
-    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
+    - loginStatus: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
     - pinRequired?: <boolean> 
   - walletId \<string>
 

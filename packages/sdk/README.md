@@ -159,12 +159,11 @@ The `openWidget()` method shows Wepin widget. If a user is not logged in, Wepin 
 
 #### Returns
 - Promise \<void>
-  - 
 
 #### Example
 
 ```javascript
-await wepinSdk.openWidget(true)
+await wepinSdk.openWidget()
 ```
 
 ### closeWidget

@@ -342,6 +342,8 @@ It returns the account's balance information. It can be only usable after widget
   
 #### Returns
 - Promise \<AccountBalanceInfo[]>
+  - network \<string>
+  - address \<string>
   - symbol \<string> - symbol of account
   - balance \<string> - balance of account
   - tokens \<Array\<TokenBalanceInfo>> - token balance information for account
@@ -360,8 +362,10 @@ const result = await wepinSdk.getBalance([{
 ```json
 [
     {
+        "network": "Ethereum",
+        "address": "0x0000001111112222223333334444445555556666",
         "symbol": "ETH",
-            "balance": "1.1",
+        "balance": "1.1",
         "tokens":[
             {
                 "contract": "0x123...213",

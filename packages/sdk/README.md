@@ -149,7 +149,7 @@ const status = await wepinSdk.getStatus()
 
 ### openWidget
 ```javascript
-await wepinSdk.openWidget(locale?)
+await wepinSdk.openWidget()
 ```
 
 The `openWidget()` method shows Wepin widget. If a user is not logged in, Wepin widget will show login page.

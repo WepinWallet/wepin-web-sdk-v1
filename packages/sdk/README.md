@@ -54,9 +54,9 @@ await wepinSdk.init(attributes?)
 
 #### Parameters
 - `attributes` \<IWepinSDKAttributes> __optional__
-    - `type`: This determines how the widget is displayed when Wepin is initiated. The default value is `'hide'`, but you can also set it to `'float'`.
+    - `type`: This determines how the widget is displayed when Wepin is initiated. The default value is `'hide'` and currently, only 'hide' is supported.
     - `defaultLanguage`: This sets the language displayed on the widget. The default value is `'ko'`, but you can also set it to `'en'`.
-    - `defaultCurrency`: This sets the currency displayed on the widget. The default value is `'KRW'`.
+    - `defaultCurrency`: This sets the currency displayed on the widget. The default value is `'KRW'`, but you can also set it to `'USD'`.
     - `loginProviders`:  __optional__ An array of login providers to configure the widget. 
       - If not provided, all available login providers will be displayed on the widget. 
       - If an empty array is provided, only the email login function is available. (from version `v0.0.3`)

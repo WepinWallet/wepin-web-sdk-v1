@@ -132,7 +132,7 @@ It returns a Provider by given network
 #### Example
 
 ```javascript
-const provider = await wepinProvider.getProvider()
+const provider = await wepinProvider.getProvider('ethereum')
 ```
 
 ### finalize

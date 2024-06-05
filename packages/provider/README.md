@@ -119,11 +119,11 @@ Methods can be used after initialization of Wepin Provider.
 await wepinProvider.getProvider(network)
 ```
 
-It returns a Provider by given network, chainId.
+It returns a Provider by given network
 
 #### Parameters
 
-- `network` \<string> __optional__
+- `network` \<string> 
   - Available chains Wepin helps provide. It should be lowercase.
 
 #### Returns

@@ -144,7 +144,7 @@ The `finalize()` method finalizes the Wepin Provider.
 
 #### Parameters
  - void
- - 
+   
 #### Returns
  - void
 

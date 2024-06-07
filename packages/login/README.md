@@ -389,7 +389,6 @@ The `logout()` method logs out the user logged into Wepin.
 
 #### Parameters
  - void
- - 
 #### Returns
  - Promise\<boolean>
     - true if success

@@ -1,6 +1,6 @@
-import { RpcUrlType } from '../types/info';
-import { WepinProvider } from '..';
 import { BaseProvider } from '../BaseProvider';
+import { WepinProvider } from '..';
+import { RpcUrlType } from '../types/info';
 
 export default class InPageProvider extends BaseProvider {
     constructor({ network, rpcUrl, chainId, wepinProvider, }: {

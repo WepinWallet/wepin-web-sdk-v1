@@ -1,5 +1,5 @@
-import { CreateWepinMiddlewareOptions } from '../types/wepinMiddlewareOptions';
 import { InvalidatedJsonRpcRequest } from '../types/EIP1193';
+import { CreateWepinMiddlewareOptions } from '../types/wepinMiddlewareOptions';
 
 /**
  * eth_sign: [address, data]

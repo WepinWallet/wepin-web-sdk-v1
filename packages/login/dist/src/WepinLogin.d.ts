@@ -1,9 +1,9 @@
-import { IWepinUser } from './types/IWepinUser';
-import { LocaleTpe } from './types/Locale';
-import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params } from './types/LoginRequest';
-import { LoginResult, providerType } from './types/LoginResult';
-import { Widget } from '@wepin/modal-js';
 import { default as SafeEventEmitter } from './utils/safeEventEmitter';
+import { Widget } from '@wepin/modal-js';
+import { LoginResult, providerType } from './types/LoginResult';
+import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params } from './types/LoginRequest';
+import { LocaleTpe } from './types/Locale';
+import { IWepinUser } from './types/IWepinUser';
 
 export declare class WepinLogin extends SafeEventEmitter {
     version: string;

@@ -1,4 +1,14 @@
-## [Version 0.0.4](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.4) (2024-05-29)
+## [Version 0.0.5](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.5) (2024-06-26)
+
+#### Bug Fixes:
+
+- Set the build target to `es2015`.
+- Moved all dependencies to devDependencies.
+- Updated `@wepin/fetch-js` module to v0.0.4.
+- Updated `@wepin/modal-js` module to v0.0.2.
+- Updated `@wepin/storage-js` module to v0.0.3.
+
+## [Version 0.0.4](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.4) (2024-05-23)
 
 #### New Features:
 - Added a new `register` Method:

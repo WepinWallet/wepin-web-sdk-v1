@@ -1,13 +1,13 @@
-import { IWepinSDKAttributes } from './types/IWepinSDKAttributes';
-import { WepinRequestMessage } from './types/Message';
-import { AccountBalanceInfo } from './types/AccountBalanceInfo';
-import { IWepinStorage } from '@wepin/storage-js';
-import { IWepinUser } from './types/IWepinUser';
-import { Widget, IWepinModal } from '@wepin/modal-js';
-import { WepinLifeCycle } from './types/WepinLifeCycle';
-import { Account } from './types/Account';
-import { modeByAppKey } from './types/modeByAppKey';
 import { default as SafeEventEmitter } from './utils/safeEventEmitter';
+import { modeByAppKey } from './types/modeByAppKey';
+import { Account } from './types/Account';
+import { WepinLifeCycle } from './types/WepinLifeCycle';
+import { Widget, IWepinModal } from '@wepin/modal-js';
+import { IWepinUser } from './types/IWepinUser';
+import { IWepinStorage } from '@wepin/storage-js';
+import { AccountBalanceInfo } from './types/AccountBalanceInfo';
+import { WepinRequestMessage } from './types/Message';
+import { IWepinSDKAttributes } from './types/IWepinSDKAttributes';
 
 export declare class WepinSDK extends SafeEventEmitter {
     version: string;
@@ -89,7 +89,7 @@ export declare class WepinSDK extends SafeEventEmitter {
     setToken(token: {
         accessToken: string;
         refreshToken: string;
-    }): void;
+    }): Promise<void>;
     private checkExpiredToken;
     /**
      * Returns the user's login information.
@@ -173,5 +173,5 @@ export declare class WepinSDK extends SafeEventEmitter {
             amount: string;
         };
     }): Promise<unknown>;
-    finalize(): void;
+    finalize(): Promise<void>;
 }

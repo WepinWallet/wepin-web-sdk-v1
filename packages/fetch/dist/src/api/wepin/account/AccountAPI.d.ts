@@ -1,7 +1,7 @@
-import { IAppAccount } from '../../../types';
-import { default as IAccountAPI } from './IAccountAPI';
-import { default as InterfaceAPI } from '../../InterfaceAPI';
 import { ErrorResponse } from '../../APITypes';
+import { default as InterfaceAPI } from '../../InterfaceAPI';
+import { default as IAccountAPI } from './IAccountAPI';
+import { IAppAccount } from '../../../types';
 
 declare class AccountAPI implements IAccountAPI {
     private fetcher;

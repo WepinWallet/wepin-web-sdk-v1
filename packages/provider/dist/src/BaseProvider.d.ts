@@ -1,7 +1,7 @@
-import { default as SafeEventEmitter } from './utils/safeEventEmitter';
-import { BaseProviderState, RequestArguments, InvalidatedJsonRpcRequest } from './types/EIP1193';
-import { ProviderInfo } from './types/EIP5749';
 import { JsonRpcEngine, JsonRpcMiddleware } from 'json-rpc-engine';
+import { ProviderInfo } from './types/EIP5749';
+import { BaseProviderState, RequestArguments, InvalidatedJsonRpcRequest } from './types/EIP1193';
+import { default as SafeEventEmitter } from './utils/safeEventEmitter';
 
 export interface BaseProviderOptions {
     logger?: Console;

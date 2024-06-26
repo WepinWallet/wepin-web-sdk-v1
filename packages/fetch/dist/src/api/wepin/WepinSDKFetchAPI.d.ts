@@ -1,9 +1,9 @@
-import { WepinFetch } from '../../WepinFetch';
-import { default as FetchAPI } from '../FetchAPI';
-import { URLParams, Headers, RequestData } from '../APITypes';
-import { default as InterfaceAPI } from '../InterfaceAPI';
-import { default as APIResponse } from '../APIResponse';
 import { default as APIRequest } from '../APIRequest';
+import { default as APIResponse } from '../APIResponse';
+import { default as InterfaceAPI } from '../InterfaceAPI';
+import { URLParams, Headers, RequestData } from '../APITypes';
+import { default as FetchAPI } from '../FetchAPI';
+import { WepinFetch } from '../../WepinFetch';
 
 declare class WepinSDKFetchAPI extends FetchAPI implements InterfaceAPI {
     baseUrl: string;

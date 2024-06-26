@@ -1,5 +1,5 @@
-import { WepinResponseMessage } from '../types/Message';
 import { Widget } from './Widget';
+import { WepinResponseMessage } from '../types/Message';
 
 export interface WidgetWindowFeatures {
     width: number;

@@ -1,5 +1,5 @@
-import { WidgetWindow } from './widget/WidgetWindow';
 import { WidgetFrame } from './widget/WidgetFrame';
+import { WidgetWindow } from './widget/WidgetWindow';
 
 export interface IWepinModal {
     platformType: 'web' | 'ios' | 'android';

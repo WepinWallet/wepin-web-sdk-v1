@@ -1,6 +1,6 @@
-import { default as WepinSdkAPI } from './api/wepin/WepinSdkAPI';
-import { IWepinStorage } from '@wepin/storage-js';
 import { default as FirebaseAuthAPI } from './api/firebaseAuth/FirebaseAuthAPI';
+import { IWepinStorage } from '@wepin/storage-js';
+import { default as WepinSdkAPI } from './api/wepin/WepinSdkAPI';
 
 export declare class WepinFetch {
     version: string;
@@ -26,12 +26,12 @@ export declare class WepinFetch {
     init(): Promise<void>;
     isInitialized(): boolean;
     private static getFirebaseConfig;
-    get Token(): {
+    Token(): Promise<{
         accessToken: string;
         refreshToken: string;
-    };
+    }>;
     setToken(token?: {
         accessToken: string;
         refreshToken: string;
-    }): void;
+    }): Promise<void>;
 }

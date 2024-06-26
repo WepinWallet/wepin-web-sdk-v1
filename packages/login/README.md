@@ -340,7 +340,7 @@ The parameters should utilize the return values from the `loginWithOauthProvider
     - use2FA \<boolean> - Whether the user uses two-factor authentication.
   - walletId \<string> = The user's wallet ID.
   - userStatus: \<object> - The user's status of wepin login. including:
-    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - userStatus is not complete, wepin에 register해야 한다.
+    - loginStats: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
     - pinRequired?: <boolean> 
   - token: \<object> - The user's token of wepin.
     - accessToken: \<string>

@@ -1,7 +1,7 @@
-import { default as ITransactionAPI } from './ITransactionAPI';
-import { default as InterfaceAPI } from '../../InterfaceAPI';
-import { ErrorResponse } from '../../APITypes';
 import { EthSendTransactionResult, EthSignDataParams, EthSignMessageParams, EthSignMessageResult, EthSignTransactionParams, EthSignTransactionResult, PrepareTxParams, prepareTransactionResult } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
+import { default as InterfaceAPI } from '../../InterfaceAPI';
+import { default as ITransactionAPI } from './ITransactionAPI';
 
 declare class TransactionAPI implements ITransactionAPI {
     private fetcher;

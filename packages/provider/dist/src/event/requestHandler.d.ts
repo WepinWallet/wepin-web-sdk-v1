@@ -1,5 +1,5 @@
-import { WepinProvider } from '../WepinProvider';
 import { WebviewRequestMessage } from '../types/Message';
+import { WepinProvider } from '../WepinProvider';
 
 /**
  * It handles all the request from the webview.

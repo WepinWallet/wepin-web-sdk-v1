@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../../APITypes';
 import { GetAccountBalanceResponseBody } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
 
 interface IAccountBalanceAPI {
     getAccountBalance(params: {

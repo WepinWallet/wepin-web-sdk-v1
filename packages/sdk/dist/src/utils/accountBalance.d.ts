@@ -1,5 +1,5 @@
-import { AccountBalanceInfo } from '../types/AccountBalanceInfo';
 import { IAccountBalance, IAppAccount } from '@wepin/fetch-js';
+import { AccountBalanceInfo } from '../types/AccountBalanceInfo';
 
 /**
  * aa_accounts에 해당하는 coin, token의 경우, 계정리스트의 account를 aa_account값으로 대체하거나 account와 aa_account를 모두 포함시킨다.

@@ -418,18 +418,18 @@ const result = await wepinSdk.send({
 
 ### finalize
 ```js
-wepinSdk.finalize()
+await wepinSdk.finalize()
 ```
 
 The `finalize()` method finalizes the Wepin SDK.
 
 #### Parameters
- - void
+ - Promise\<void>
  - 
 #### Returns
  - void
 
 #### Example
 ```js
-wepinSdk.finalize()
+await wepinSdk.finalize()
 ```

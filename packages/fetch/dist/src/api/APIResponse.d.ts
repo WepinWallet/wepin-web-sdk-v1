@@ -1,5 +1,5 @@
-import { APIResponseConstructorParameter, Headers, ResponseData } from './APITypes';
 import { default as APIRequest } from './APIRequest';
+import { APIResponseConstructorParameter, Headers, ResponseData } from './APITypes';
 
 declare class APIResponse<THeader extends Headers | undefined | unknown = unknown, TData extends ResponseData | unknown = unknown, TAPIRequest = APIRequest> {
     data: TData;

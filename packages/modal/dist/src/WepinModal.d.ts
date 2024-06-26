@@ -1,6 +1,6 @@
-import { IWepinModal } from './IWepinModal';
-import { WidgetWindow } from './widget/WidgetWindow';
 import { WidgetFrame } from './widget/WidgetFrame';
+import { WidgetWindow } from './widget/WidgetWindow';
+import { IWepinModal } from './IWepinModal';
 
 export declare class WepinModal implements IWepinModal {
     platformType: "web";

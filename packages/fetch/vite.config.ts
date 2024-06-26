@@ -16,6 +16,7 @@ export default defineConfig({
     alias: [{ find: '@', replacement: 'src' }],
   },
   build: {
+    target: ['es2015'], // ES2015로 타겟 설정
     lib: {
       entry: 'src/index.ts',
       name: '@wepin/fetch-js',

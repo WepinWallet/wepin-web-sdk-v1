@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../../APITypes';
 import { EthSendTransactionResult, EthSignDataParams, EthSignMessageParams, EthSignMessageResult, EthSignTransactionParams, EthSignTransactionResult, PrepareTxParams, prepareTransactionResult } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
 
 interface ITransactionAPI {
     sign(body: EthSignTransactionParams | EthSignMessageParams | EthSignDataParams): Promise<ErrorResponse | EthSignTransactionResult | EthSignMessageResult>;

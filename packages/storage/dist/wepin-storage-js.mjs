@@ -1,145 +1,177 @@
-var u = (r, t, a) => {
-  if (!t.has(r))
-    throw TypeError("Cannot " + a);
+var S = (l) => {
+  throw TypeError(l);
 };
-var i = (r, t, a) => (u(r, t, "read from private field"), a ? a.call(r) : t.get(r)), n = (r, t, a) => {
-  if (t.has(r))
-    throw TypeError("Cannot add the same private member more than once");
-  t instanceof WeakSet ? t.add(r) : t.set(r, a);
-};
-var l;
-const s = class s {
-  static getLocalStorageEnabled() {
-    let t = !1;
+var h = (l, a, e) => a.has(l) || S("Cannot " + e);
+var n = (l, a, e) => (h(l, a, "read from private field"), e ? e.call(l) : a.get(l)), f = (l, a, e) => a.has(l) ? S("Cannot add the same private member more than once") : a instanceof WeakSet ? a.add(l) : a.set(l, e);
+var s = (l, a, e) => new Promise((t, o) => {
+  var g = (c) => {
     try {
-      t = window.localStorage && !0;
-    } catch {
-      t = !1;
+      u(e.next(c));
+    } catch (d) {
+      o(d);
     }
-    return t;
-  }
-  static setAllLocalStorage(t, a) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
-    const e = JSON.stringify(a);
-    localStorage.setItem(i(this, l) + t, e);
-  }
-  static setLocalStorage(t, a, e) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
-    const o = this.getAllLocalStorage(t);
-    if (o) {
-      o[a] = e, localStorage.setItem(
-        i(this, l) + t,
-        // btoa(JSON.stringify(localData)),
-        JSON.stringify(o)
-      );
-      return;
-    }
-    const g = { [a]: e };
-    localStorage.setItem(
-      i(this, l) + t,
-      // btoa(JSON.stringify(newData)),
-      JSON.stringify(g)
-    );
-  }
-  static getLocalStorage(t, a) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
-    const e = this.getAllLocalStorage(t);
+  }, L = (c) => {
     try {
-      if (e)
-        return JSON.parse(e[a]);
-    } catch {
-      return e[a];
+      u(e.throw(c));
+    } catch (d) {
+      o(d);
     }
+  }, u = (c) => c.done ? t(c.value) : Promise.resolve(c.value).then(g, L);
+  u((e = e.apply(l, a)).next());
+});
+var i;
+const r = class r {
+  constructor() {
+    this.platform = "web";
   }
-  static getAllLocalStorage(t) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
+  getLocalStorageEnabled() {
+    let a = !1;
     try {
-      return localStorage.getItem(i(this, l) + t) ? (
-        // ? JSON.parse(atob(localStorage.getItem(this.#COOKIE_NAME + appId)))
-        JSON.parse(localStorage.getItem(i(this, l) + t))
-      ) : void 0;
-    } catch {
-      return;
+      a = window.localStorage && !0;
+    } catch (e) {
+      a = !1;
     }
+    return a;
   }
-  static clearLocalStorage(t, a) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
-    if (this.getLocalStorage(t, a)) {
-      const o = this.getAllLocalStorage(t);
-      delete o[a], localStorage.setItem(
-        i(this, l) + t,
-        // btoa(JSON.stringify(localData)),
-        JSON.stringify(o)
-      );
-    }
-  }
-  static clearAllLocalStorage(t) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
-    localStorage.removeItem(i(this, l) + t);
-  }
-  static setLoginUserLocalStorage(t, a, e) {
-    if (!this.getLocalStorageEnabled()) {
-      console.error(
-        "Local storage is not available. We recommend using local storage to maintain login sessions."
-      );
-      return;
-    }
-    const o = {};
-    return o["firebase:wepin"] = Object.assign(
-      { provider: a == null ? void 0 : a.provider },
-      a == null ? void 0 : a.token
-    ), o["wepin:connectUser"] = {
-      accessToken: e.token.access,
-      refreshToken: e.token.refresh
-    }, o.user_id = e.userInfo.userId, o.user_info = {
-      status: "success",
-      userInfo: {
-        userId: e.userInfo.userId,
-        email: e.userInfo.email,
-        provider: a.provider,
-        use2FA: e.userInfo.use2FA >= 2
+  setAllLocalStorage(a, e) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
       }
-    }, o.user_status = {
-      loginStatus: e.loginStatus,
-      pinRequired: e.loginStatus === "registerRequired" ? e.pinRequired : !1
-    }, e.loginStatus !== "pinRequired" && e.walletId && (o.wallet_id = e.walletId, o.user_info.walletId = e.walletId), o.oauth_provider_pending = a.provider, s.setAllLocalStorage(t, o), {
-      userInfo: o.user_info,
-      connectUser: o["wepin:connectUser"]
-    };
+      const t = JSON.stringify(e);
+      localStorage.setItem(n(r, i) + a, t);
+    });
+  }
+  setLocalStorage(a, e, t) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const o = yield this.getAllLocalStorage(a);
+      if (o) {
+        o[e] = t, localStorage.setItem(
+          n(r, i) + a,
+          // btoa(JSON.stringify(localData)),
+          JSON.stringify(o)
+        );
+        return;
+      }
+      const g = { [e]: t };
+      localStorage.setItem(
+        n(r, i) + a,
+        // btoa(JSON.stringify(newData)),
+        JSON.stringify(g)
+      );
+    });
+  }
+  getLocalStorage(a, e) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const t = yield this.getAllLocalStorage(a);
+      try {
+        if (t)
+          return JSON.parse(t[e]);
+      } catch (o) {
+        if (t)
+          return t[e];
+      }
+    });
+  }
+  getAllLocalStorage(a) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      try {
+        return localStorage.getItem(n(r, i) + a) ? (
+          // ? JSON.parse(atob(localStorage.getItem(this.#COOKIE_NAME + appId)))
+          JSON.parse(localStorage.getItem(n(r, i) + a))
+        ) : void 0;
+      } catch (e) {
+        return;
+      }
+    });
+  }
+  clearLocalStorage(a, e) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      if (yield this.getLocalStorage(a, e)) {
+        const o = yield this.getAllLocalStorage(a);
+        if (!o)
+          return;
+        delete o[e], localStorage.setItem(
+          n(r, i) + a,
+          // btoa(JSON.stringify(localData)),
+          JSON.stringify(o)
+        );
+      }
+    });
+  }
+  clearAllLocalStorage(a) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      localStorage.removeItem(n(r, i) + a);
+    });
+  }
+  setLoginUserLocalStorage(a, e, t) {
+    return s(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const o = {};
+      return o["firebase:wepin"] = Object.assign(
+        { provider: e == null ? void 0 : e.provider },
+        e == null ? void 0 : e.token
+      ), o["wepin:connectUser"] = {
+        accessToken: t.token.access,
+        refreshToken: t.token.refresh
+      }, o.user_id = t.userInfo.userId, o.user_info = {
+        status: "success",
+        userInfo: {
+          userId: t.userInfo.userId,
+          email: t.userInfo.email,
+          provider: e.provider,
+          use2FA: t.userInfo.use2FA >= 2
+        }
+      }, o.user_status = {
+        loginStatus: t.loginStatus,
+        pinRequired: t.loginStatus === "registerRequired" ? t.pinRequired : !1
+      }, t.loginStatus !== "pinRequired" && t.walletId && (o.wallet_id = t.walletId, o.user_info.walletId = t.walletId), o.oauth_provider_pending = e.provider, this.setAllLocalStorage(a, o), {
+        userInfo: o.user_info,
+        connectUser: o["wepin:connectUser"]
+      };
+    });
   }
 };
-l = new WeakMap(), s.platform = "web", n(s, l, "wepin:auth:");
-let c = s;
+i = new WeakMap(), f(r, i, "wepin:auth:");
+let m = r;
 export {
-  c as default
+  m as default
 };

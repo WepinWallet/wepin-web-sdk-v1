@@ -1,7 +1,7 @@
-import { default as InterfaceAPI } from '../../InterfaceAPI';
-import { default as IAppAPI } from './IAppAPI';
-import { ErrorResponse } from '../../APITypes';
 import { IApp, ProjectPlatformKind, RegisterRequestBody, TypeLayoutByIdResponse, TypeLayoutResponse, TypeThemeResponse, ICoinInfo } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
+import { default as IAppAPI } from './IAppAPI';
+import { default as InterfaceAPI } from '../../InterfaceAPI';
 
 declare class AppAPI implements IAppAPI {
     private fetcher;

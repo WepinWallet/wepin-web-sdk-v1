@@ -1,7 +1,7 @@
-import { CheckEmailRequestParams, CheckEmailResponseBody, GetTermsAcceptedResponseBody, GetUserInfoResponseBody, GetUserPasswordStateRequestBody, GetUserPasswordStateResponseBody, LoginAccessTokenRequestBody, LoginAccessTokenResponseBody, LoginIdTokenRequestBody, LoginIdTokenResponseBody, LoginResponseBody, UpdateTermsAcceptedRequestBody, UpdateTermsAcceptedResponseBody, UpdateUserPasswordStateRequestBody, UpdateUserPasswordStateResponseBody, VerifyRequestBody, VerifyResponseBody, oAuthRequest, oAuthResponseBody } from '../../../types';
-import { default as InterfaceAPI } from '../../InterfaceAPI';
-import { default as IUserAPI } from './IUserAPI';
 import { ErrorResponse } from '../../APITypes';
+import { default as IUserAPI } from './IUserAPI';
+import { default as InterfaceAPI } from '../../InterfaceAPI';
+import { CheckEmailRequestParams, CheckEmailResponseBody, GetTermsAcceptedResponseBody, GetUserInfoResponseBody, GetUserPasswordStateRequestBody, GetUserPasswordStateResponseBody, LoginAccessTokenRequestBody, LoginAccessTokenResponseBody, LoginIdTokenRequestBody, LoginIdTokenResponseBody, LoginResponseBody, UpdateTermsAcceptedRequestBody, UpdateTermsAcceptedResponseBody, UpdateUserPasswordStateRequestBody, UpdateUserPasswordStateResponseBody, VerifyRequestBody, VerifyResponseBody, oAuthRequest, oAuthResponseBody } from '../../../types';
 
 declare class UserAPI implements IUserAPI {
     private fetcher;
@@ -20,10 +20,14 @@ declare class UserAPI implements IUserAPI {
     updateTermsAccepted(params: {
         userId: string;
     }, body: UpdateTermsAcceptedRequestBody): Promise<UpdateTermsAcceptedResponseBody | ErrorResponse>;
-    refreshToken(): Promise<{
+    refreshToken(params: {
+        userId: string;
+    }): Promise<{
         token: string;
     } | ErrorResponse>;
-    fetchKey(): Promise<{
+    fetchKey(params: {
+        userId: string;
+    }): Promise<{
         pubKey: string;
     } | ErrorResponse>;
     getTermsAccepted(params: {

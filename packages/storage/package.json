@@ -1,6 +1,6 @@
 {
   "name": "@wepin/storage-js",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Wepin SDK storage for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",

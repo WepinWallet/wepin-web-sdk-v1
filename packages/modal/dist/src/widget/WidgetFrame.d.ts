@@ -1,5 +1,5 @@
-import { WepinResponseMessage } from '../types/Message';
 import { Widget } from './Widget';
+import { WepinResponseMessage } from '../types/Message';
 
 export declare class WidgetFrame extends Widget {
     static scrollPosition: number;

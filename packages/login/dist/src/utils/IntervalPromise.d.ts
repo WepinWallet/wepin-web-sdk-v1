@@ -1,4 +1,3 @@
-/// <reference types="node" />
 type ExecutorFunction<T> = (resolve: (value?: T) => void, reject: (error?: unknown) => void) => void;
 export declare class Timer {
     intervalTimer: NodeJS.Timeout;

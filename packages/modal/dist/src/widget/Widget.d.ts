@@ -1,5 +1,5 @@
-import { WepinRequestMessage, WepinResponseMessage } from '../types/Message';
 import { Overlay } from '../widget/overlay/Overlay';
+import { WepinRequestMessage, WepinResponseMessage } from '../types/Message';
 
 type WebviewType = Window | HTMLIFrameElement;
 /**

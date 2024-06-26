@@ -1,23 +1,24 @@
-import { LocalStorageData, LocalStorageKey, LocalStorageType } from './types/storage';
+import { IWepinStorage } from './types/IWepinStorage';
+import { IUserInfo, IWepinToken, LocalStorageData, LocalStorageKey, LocalStorageType } from './types/storage';
 
-export default class WepinStorage {
+export default class WepinStorage implements IWepinStorage {
     #private;
-    static platform: 'web' | 'ios' | 'android';
-    static getLocalStorageEnabled(): boolean;
-    static setAllLocalStorage(appId: string, value: LocalStorageType): void;
-    static setLocalStorage(appId: string, name: LocalStorageKey, value: LocalStorageData): void;
-    static getLocalStorage(appId: string, name: LocalStorageKey): any;
-    static getAllLocalStorage(appId: string): any;
-    static clearLocalStorage(appId: string, name: LocalStorageKey): void;
-    static clearAllLocalStorage(appId: string): void;
-    static setLoginUserLocalStorage(appId: string, request: {
+    platform: 'web' | 'ios' | 'android';
+    getLocalStorageEnabled(): boolean;
+    setAllLocalStorage(appId: string, value: LocalStorageType): Promise<void>;
+    setLocalStorage(appId: string, name: LocalStorageKey, value: LocalStorageData): Promise<void>;
+    getLocalStorage<T>(appId: string, name: LocalStorageKey): Promise<T | undefined>;
+    getAllLocalStorage(appId: string): Promise<LocalStorageType | undefined>;
+    clearLocalStorage(appId: string, name: LocalStorageKey): Promise<void>;
+    clearAllLocalStorage(appId: string): Promise<void>;
+    setLoginUserLocalStorage(appId: string, request: {
         provider: string;
         token: {
             idToken: string;
             refreshToken: string;
         };
-    }, response: any): {
-        userInfo: any;
-        connectUser: any;
-    };
+    }, response: any): Promise<{
+        userInfo: IUserInfo;
+        connectUser: IWepinToken;
+    }>;
 }

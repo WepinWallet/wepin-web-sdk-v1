@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../../APITypes';
 import { IAppAccount } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
 
 interface IAccountAPI {
     readdress(body: {

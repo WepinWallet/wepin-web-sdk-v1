@@ -1,5 +1,5 @@
-import { default as APIResponse } from './APIResponse';
 import { default as APIRequest } from './APIRequest';
+import { default as APIResponse } from './APIResponse';
 
 export declare const APIEvents: {
     readonly request: "request";

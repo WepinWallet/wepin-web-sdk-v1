@@ -1,8 +1,8 @@
-import { BaseProvider } from './BaseProvider';
-import { WepinRequestMessage } from './types/Message';
-import { default as SafeEventEmitter } from './utils/safeEventEmitter';
-import { IWepinStorage } from '@wepin/storage-js';
 import { Widget, IWepinModal } from '@wepin/modal-js';
+import { IWepinStorage } from '@wepin/storage-js';
+import { default as SafeEventEmitter } from './utils/safeEventEmitter';
+import { WepinRequestMessage } from './types/Message';
+import { BaseProvider } from './BaseProvider';
 
 export declare class WepinProvider extends SafeEventEmitter {
     version: string;
@@ -53,5 +53,5 @@ export declare class WepinProvider extends SafeEventEmitter {
      */
     getProvider(network: string): Promise<BaseProvider>;
     openModal(): Promise<void>;
-    finalize(): void;
+    finalize(): Promise<void>;
 }

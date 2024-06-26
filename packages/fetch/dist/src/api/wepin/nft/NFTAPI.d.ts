@@ -1,7 +1,7 @@
-import { default as INFTAPI } from './INFTAPI';
-import { default as InterfaceAPI } from '../../InterfaceAPI';
-import { ErrorResponse } from '../../APITypes';
 import { IAppNFT, SupportNetwork } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
+import { default as InterfaceAPI } from '../../InterfaceAPI';
+import { default as INFTAPI } from './INFTAPI';
 
 declare class NFTAPI implements INFTAPI {
     private fetcher;

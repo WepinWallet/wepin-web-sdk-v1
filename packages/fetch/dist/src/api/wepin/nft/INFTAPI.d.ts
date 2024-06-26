@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../../APITypes';
 import { IAppNFT, SupportNetwork } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
 
 interface INFTAPI {
     getSupportingNetworkList(): Promise<{

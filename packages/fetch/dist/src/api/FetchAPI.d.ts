@@ -1,9 +1,9 @@
-import { APIEvents, EventListenerFunctions } from './APIEvents';
-import { default as EventEmitter, Listener, OnOptions } from 'eventemitter2';
-import { URLParams, Headers, RequestData } from './APITypes';
-import { default as InterfaceAPI } from './InterfaceAPI';
-import { default as APIResponse } from './APIResponse';
 import { default as APIRequest } from './APIRequest';
+import { default as APIResponse } from './APIResponse';
+import { default as InterfaceAPI } from './InterfaceAPI';
+import { URLParams, Headers, RequestData } from './APITypes';
+import { default as EventEmitter, Listener, OnOptions } from 'eventemitter2';
+import { APIEvents, EventListenerFunctions } from './APIEvents';
 
 declare class FetchAPI extends EventEmitter implements InterfaceAPI {
     baseUrl?: string;

@@ -123,7 +123,7 @@ It returns a Provider by given network
 
 #### Parameters
 
-- `network` \<string> 
+- `network` \<string>
   - Available chains Wepin helps provide. It should be lowercase.
 
 #### Returns
@@ -137,18 +137,18 @@ const provider = await wepinProvider.getProvider('ethereum')
 
 ### finalize
 ```js
-wepinProvider.finalize()
+await wepinProvider.finalize()
 ```
 
 The `finalize()` method finalizes the Wepin Provider.
 
 #### Parameters
- - void
-   
+ - Promise\<void>
+
 #### Returns
  - void
 
 #### Example
 ```js
-wepinProvider.finalize()
+await wepinProvider.finalize()
 ```

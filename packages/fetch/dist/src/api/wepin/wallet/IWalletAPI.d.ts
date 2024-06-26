@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../../APITypes';
 import { ChangePinRequestBody, ChangePinResponseBody, FetchWalletInfoResponseBody, GetWalletKeyInfoResponseBody, ResetPinTryCountResponseBody, VerifyPinRequestBody, VerifyPinResponseBody } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
 
 interface IWalletAPI {
     verifyPin(body: VerifyPinRequestBody): Promise<VerifyPinResponseBody | ErrorResponse>;

@@ -10,12 +10,13 @@ export default defineConfig({
     dts({
       // rollupTypes: true,
       insertTypesEntry: true,
-    }),
+    })
   ],
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
   },
   build: {
+    target: ['es2015'], // ES2015로 타겟 설정
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: '@wepin/sdk-js',

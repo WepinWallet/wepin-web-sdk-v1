@@ -1,3 +1,8 @@
+## [Version 0.0.6](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.5) (2024-06-26)
+
+#### Bug Fixes:
+- remove localhost webview dev
+
 ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.5) (2024-06-26)
 
 #### Bug Fixes:

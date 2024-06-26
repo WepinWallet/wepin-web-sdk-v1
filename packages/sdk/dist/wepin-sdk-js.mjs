@@ -292,7 +292,7 @@ class SafeEventEmitter extends eventsExports.EventEmitter {
     return !0;
   }
 }
-const name$2 = "@wepin/sdk-js", version$2 = "0.0.5", description$2 = "Wepin Widget Javascript SDK for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-sdk-js.mjs", jsdelivr = "./dist/wepin-sdk-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
+const name$2 = "@wepin/sdk-js", version$2 = "0.0.6", description$2 = "Wepin Widget Javascript SDK for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-sdk-js.mjs", jsdelivr = "./dist/wepin-sdk-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
   "dist"
 ], scripts$2 = {
   build: "vite build --mode production",
@@ -357,8 +357,8 @@ const Gt = class Gt {
         };
       case "development":
         return {
-          wepinWebview: "https://localhost:8989"
-          //wepinWebview: 'https://dev-v1-widget.wepin.io',
+          //wepinWebview: `https://localhost:8989`,
+          wepinWebview: "https://dev-v1-widget.wepin.io"
         };
       case "local":
         return {

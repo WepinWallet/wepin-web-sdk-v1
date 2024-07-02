@@ -19,9 +19,9 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@wepin/fetch-js": "link:../fetch",
-    "@wepin/modal-js": "link:../modal",
-    "@wepin/storage-js": "link:../storage",
+    "@wepin/fetch-js": "^0.0.4",
+    "@wepin/modal-js": "^0.0.2",
+    "@wepin/storage-js": "^0.0.3",
     "events": "^3.3.0",
     "secp256k1": "^5.0.0",
     "sha256": "^0.2.0",

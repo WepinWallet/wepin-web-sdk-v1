@@ -35,7 +35,7 @@ After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the d
 <br>
 
 ## ⏩ Selecting Modules
-To integrate Wepin into your web application, you have two module options to get started:
+To integrate Wepin into your web application, use the module below to start:
 
  - [`@wepin/sdk-js`](./packages/sdk/README.md): Module for using Wepin features along with the Wepin widget.
 

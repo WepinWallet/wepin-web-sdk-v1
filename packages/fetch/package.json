@@ -19,7 +19,7 @@
     
   },
   "devDependencies": {
-    "@wepin/storage-js": "link:../storage",
+    "@wepin/storage-js": "^0.0.3",
     "@types/bcryptjs": "^2.4.6",
     "bcryptjs": "^2.4.3",
     "eventemitter2": "^6.4.9",

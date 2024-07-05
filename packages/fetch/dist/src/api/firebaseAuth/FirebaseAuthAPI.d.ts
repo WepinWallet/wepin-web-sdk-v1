@@ -1,5 +1,5 @@
-import { FirebaseAPI } from './IAPI';
 import { ResponseUserInfo, ResponseResetPassword, ResponseVerifyEmail, ResponseSignUp, ResponseSignInWithPassword, ResponseUpdatePassword } from '../../types/firebaseAuthAPI';
+import { FirebaseAPI } from './IAPI';
 
 declare class FirebaseAuthAPI implements FirebaseAPI {
     private fetcher;

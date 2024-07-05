@@ -1,5 +1,5 @@
-import { default as FirebaseAuthAPI } from './api/firebaseAuth/FirebaseAuthAPI';
 import { IWepinStorage } from '@wepin/storage-js';
+import { default as FirebaseAuthAPI } from './api/firebaseAuth/FirebaseAuthAPI';
 import { default as WepinSdkAPI } from './api/wepin/WepinSdkAPI';
 
 export declare class WepinFetch {

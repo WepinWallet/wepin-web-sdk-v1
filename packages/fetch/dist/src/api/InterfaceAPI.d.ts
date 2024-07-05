@@ -1,8 +1,8 @@
 import { EventEmitter2, Listener, OnOptions } from 'eventemitter2';
-import { APIEvents, EventListenerFunctions } from './APIEvents';
 import { default as APIRequest } from './APIRequest';
 import { default as APIResponse } from './APIResponse';
 import { Headers, URLParams, RequestData } from './APITypes';
+import { APIEvents, EventListenerFunctions } from './APIEvents';
 
 interface InterfaceAPI extends EventEmitter2 {
     send: <THeaders extends Headers | undefined, TData extends RequestData, TURLParams extends URLParams, TAPIRequest extends APIRequest<THeaders, TData, TURLParams>, TAPIResponse extends APIResponse<unknown, unknown, TAPIRequest>>(request: TAPIRequest, middlewareOptions?: any) => Promise<TAPIResponse>;

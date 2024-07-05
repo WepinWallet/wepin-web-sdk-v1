@@ -1,7 +1,7 @@
-import { CheckEmailRequestParams, CheckEmailResponseBody, GetTermsAcceptedResponseBody, GetUserInfoResponseBody, GetUserPasswordStateRequestBody, GetUserPasswordStateResponseBody, LoginAccessTokenRequestBody, LoginAccessTokenResponseBody, LoginIdTokenRequestBody, LoginIdTokenResponseBody, LoginResponseBody, OauthTokenRequestBody, OauthTokenRequestQuery, OauthTokenResponseBody, UpdateTermsAcceptedRequestBody, UpdateTermsAcceptedResponseBody, UpdateUserPasswordStateRequestBody, UpdateUserPasswordStateResponseBody, VerifyRequestBody, VerifyResponseBody, oAuthRequest, oAuthResponseBody } from '../../../types';
 import { ErrorResponse } from '../../APITypes';
-import { default as InterfaceAPI } from '../../InterfaceAPI';
 import { default as IUserAPI } from './IUserAPI';
+import { default as InterfaceAPI } from '../../InterfaceAPI';
+import { CheckEmailRequestParams, CheckEmailResponseBody, GetTermsAcceptedResponseBody, GetUserInfoResponseBody, GetUserPasswordStateRequestBody, GetUserPasswordStateResponseBody, LoginAccessTokenRequestBody, LoginAccessTokenResponseBody, LoginIdTokenRequestBody, LoginIdTokenResponseBody, LoginResponseBody, UpdateTermsAcceptedRequestBody, UpdateTermsAcceptedResponseBody, UpdateUserPasswordStateRequestBody, UpdateUserPasswordStateResponseBody, VerifyRequestBody, VerifyResponseBody, oAuthRequest, oAuthResponseBody } from '../../../types';
 
 declare class UserAPI implements IUserAPI {
     private fetcher;
@@ -39,7 +39,6 @@ declare class UserAPI implements IUserAPI {
     getFirebaseConfig(): Promise<string | ErrorResponse>;
     loginOAuthIdToken(body: LoginIdTokenRequestBody): Promise<LoginIdTokenResponseBody | ErrorResponse>;
     loginOAuthAccessToken(body: LoginAccessTokenRequestBody): Promise<LoginAccessTokenResponseBody | ErrorResponse>;
-    OAuthTokenRequest(queries: OauthTokenRequestQuery, body: OauthTokenRequestBody): Promise<OauthTokenResponseBody | ErrorResponse>;
     getUserInfo(params: {
         userId: string;
     }): Promise<GetUserInfoResponseBody | ErrorResponse>;

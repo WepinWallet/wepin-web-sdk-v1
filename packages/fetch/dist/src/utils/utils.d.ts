@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../api/APITypes';
 import { FirebaseAuthError } from '../types/firebaseAuthAPI';
+import { ErrorResponse } from '../api/APITypes';
 
 export declare const isErrorResponse: (result: any) => result is ErrorResponse;
 export declare const isFirebaseErrorResponse: (result: any) => result is FirebaseAuthError;

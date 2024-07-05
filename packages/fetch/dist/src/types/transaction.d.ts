@@ -1,5 +1,5 @@
-import { EncUVD, OTP } from './wepinUtil';
 import { WepinAccount } from './account';
+import { EncUVD, OTP } from './wepinUtil';
 
 export interface prepareTransactionResult {
     tokenId?: number;

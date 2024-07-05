@@ -117,3 +117,21 @@ export interface LoginIdTokenResponseBody {
 }
 export type LoginAccessTokenResponseBody = LoginIdTokenResponseBody;
 export type GetUserInfoResponseBody = IAppUser;
+export interface OauthTokenRequestQuery {
+    provider: string;
+}
+export interface OauthTokenRequestBody {
+    code: string;
+    state: string;
+    clientId: string;
+    redirectUri: string;
+    codeVerifier?: string;
+}
+export interface OauthTokenResponseBody {
+    id_token?: string;
+    access_token?: string;
+    token_type: string;
+    expires_in?: string | number;
+    refresh_token?: string;
+    scope?: string;
+}

@@ -1,5 +1,5 @@
-import { ErrorResponse } from '../../APITypes';
 import { IApp, ProjectPlatformKind, RegisterRequestBody, TypeLayoutByIdResponse, TypeLayoutResponse, TypeThemeResponse, ICoinInfo } from '../../../types';
+import { ErrorResponse } from '../../APITypes';
 
 interface IAppAPI {
     getThemeById(params: {

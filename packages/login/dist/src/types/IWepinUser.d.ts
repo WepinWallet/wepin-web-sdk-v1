@@ -3,7 +3,7 @@ export interface IWepinUser {
     status: 'success' | 'fail';
     userInfo?: UserInfo;
     walletId?: string;
-    userStatue?: {
+    userStatus?: {
         loginStatus: 'complete' | 'pinRequired' | 'registerRequired';
         pinRequired?: boolean;
     };

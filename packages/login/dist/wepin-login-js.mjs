@@ -14,641 +14,10 @@ var Nt = (w, c, $) => new Promise((l, G) => {
   }, g = (F) => F.done ? l(F.value) : Promise.resolve(F.value).then(e, O);
   g(($ = $.apply(w, c)).next());
 });
-const OAUTH2 = ["google", "naver", "discord", "apple"];
-class Utils {
-  static getBaseUrl(c) {
-    if (c.slice(0, 8) === "ak_live_")
-      return new URL("https://v1-widget.wepin.io");
-    if (c.slice(0, 8) === "ak_test_")
-      return new URL("https://stage-v1-widget.wepin.io");
-    if (c.slice(0, 7) === "ak_dev_")
-      return new URL("https://dev-v1-widget.wepin.io");
-    if (c.slice(0, 13) === "local_ak_dev_")
-      return new URL("https://local-widget.wepin.io");
-    throw new Error("Invalid appKey");
-  }
-  static getWalletUrl(c) {
-    if (c.slice(0, 8) === "ak_live_")
-      return new URL("https://app.wepin.io");
-    if (c.slice(0, 8) === "ak_test_")
-      return new URL("https://stage-app.wepin.io");
-    if (c.slice(0, 7) === "ak_dev_")
-      return new URL("https://dev-app.wepin.io");
-    if (c.slice(0, 13) === "local_ak_dev_")
-      return new URL("https://local-app.wepin.io");
-    throw new Error("Invalid appKey");
-  }
-  static uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function(c) {
-        const $ = Math.random() * 16 | 0;
-        return (c == "x" ? $ : $ & 3 | 8).toString(16);
-      }
-    );
-  }
-}
-var define_import_meta_env_default = { BASE_URL: "/", MODE: "production", DEV: !1, PROD: !0, SSR: !1 };
-const Ht = class Ht {
-};
-Ht.test = console.warn.bind(window.console, "[LOGIN][test]"), Ht.warn = console.warn.bind(window.console, "[LOGIN][warn]"), Ht.error = console.error.bind(window.console, "[LOGIN][error]"), Ht.todo = console.warn.bind(window.console, "[LOGIN][todo]"), Ht.assert = console.assert.bind(window.console), Ht.debug = define_import_meta_env_default.NODE_ENV !== "development" ? () => {
-} : console.log.bind(window.console, "[LOGIN][debug]");
-let LOG = Ht;
 var commonjsGlobal$1 = typeof globalThis != "undefined" ? globalThis : typeof window != "undefined" ? window : typeof global != "undefined" ? global : typeof self != "undefined" ? self : {};
 function getDefaultExportFromCjs$1(w) {
   return w && w.__esModule && Object.prototype.hasOwnProperty.call(w, "default") ? w.default : w;
 }
-var events$1 = { exports: {} }, R = typeof Reflect == "object" ? Reflect : null, ReflectApply = R && typeof R.apply == "function" ? R.apply : function(c, $, l) {
-  return Function.prototype.apply.call(c, $, l);
-}, ReflectOwnKeys;
-R && typeof R.ownKeys == "function" ? ReflectOwnKeys = R.ownKeys : Object.getOwnPropertySymbols ? ReflectOwnKeys = function(c) {
-  return Object.getOwnPropertyNames(c).concat(Object.getOwnPropertySymbols(c));
-} : ReflectOwnKeys = function(c) {
-  return Object.getOwnPropertyNames(c);
-};
-function ProcessEmitWarning(w) {
-  console && console.warn && console.warn(w);
-}
-var NumberIsNaN = Number.isNaN || function(c) {
-  return c !== c;
-};
-function EventEmitter$1() {
-  EventEmitter$1.init.call(this);
-}
-events$1.exports = EventEmitter$1;
-events$1.exports.once = once;
-EventEmitter$1.EventEmitter = EventEmitter$1;
-EventEmitter$1.prototype._events = void 0;
-EventEmitter$1.prototype._eventsCount = 0;
-EventEmitter$1.prototype._maxListeners = void 0;
-var defaultMaxListeners = 10;
-function checkListener(w) {
-  if (typeof w != "function")
-    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof w);
-}
-Object.defineProperty(EventEmitter$1, "defaultMaxListeners", {
-  enumerable: !0,
-  get: function() {
-    return defaultMaxListeners;
-  },
-  set: function(w) {
-    if (typeof w != "number" || w < 0 || NumberIsNaN(w))
-      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + w + ".");
-    defaultMaxListeners = w;
-  }
-});
-EventEmitter$1.init = function() {
-  (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) && (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
-};
-EventEmitter$1.prototype.setMaxListeners = function(c) {
-  if (typeof c != "number" || c < 0 || NumberIsNaN(c))
-    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + c + ".");
-  return this._maxListeners = c, this;
-};
-function _getMaxListeners(w) {
-  return w._maxListeners === void 0 ? EventEmitter$1.defaultMaxListeners : w._maxListeners;
-}
-EventEmitter$1.prototype.getMaxListeners = function() {
-  return _getMaxListeners(this);
-};
-EventEmitter$1.prototype.emit = function(c) {
-  for (var $ = [], l = 1; l < arguments.length; l++) $.push(arguments[l]);
-  var G = c === "error", e = this._events;
-  if (e !== void 0)
-    G = G && e.error === void 0;
-  else if (!G)
-    return !1;
-  if (G) {
-    var O;
-    if ($.length > 0 && (O = $[0]), O instanceof Error)
-      throw O;
-    var g = new Error("Unhandled error." + (O ? " (" + O.message + ")" : ""));
-    throw g.context = O, g;
-  }
-  var F = e[c];
-  if (F === void 0)
-    return !1;
-  if (typeof F == "function")
-    ReflectApply(F, this, $);
-  else
-    for (var D = F.length, q = arrayClone$1(F, D), l = 0; l < D; ++l)
-      ReflectApply(q[l], this, $);
-  return !0;
-};
-function _addListener(w, c, $, l) {
-  var G, e, O;
-  if (checkListener($), e = w._events, e === void 0 ? (e = w._events = /* @__PURE__ */ Object.create(null), w._eventsCount = 0) : (e.newListener !== void 0 && (w.emit(
-    "newListener",
-    c,
-    $.listener ? $.listener : $
-  ), e = w._events), O = e[c]), O === void 0)
-    O = e[c] = $, ++w._eventsCount;
-  else if (typeof O == "function" ? O = e[c] = l ? [$, O] : [O, $] : l ? O.unshift($) : O.push($), G = _getMaxListeners(w), G > 0 && O.length > G && !O.warned) {
-    O.warned = !0;
-    var g = new Error("Possible EventEmitter memory leak detected. " + O.length + " " + String(c) + " listeners added. Use emitter.setMaxListeners() to increase limit");
-    g.name = "MaxListenersExceededWarning", g.emitter = w, g.type = c, g.count = O.length, ProcessEmitWarning(g);
-  }
-  return w;
-}
-EventEmitter$1.prototype.addListener = function(c, $) {
-  return _addListener(this, c, $, !1);
-};
-EventEmitter$1.prototype.on = EventEmitter$1.prototype.addListener;
-EventEmitter$1.prototype.prependListener = function(c, $) {
-  return _addListener(this, c, $, !0);
-};
-function onceWrapper() {
-  if (!this.fired)
-    return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
-}
-function _onceWrap(w, c, $) {
-  var l = { fired: !1, wrapFn: void 0, target: w, type: c, listener: $ }, G = onceWrapper.bind(l);
-  return G.listener = $, l.wrapFn = G, G;
-}
-EventEmitter$1.prototype.once = function(c, $) {
-  return checkListener($), this.on(c, _onceWrap(this, c, $)), this;
-};
-EventEmitter$1.prototype.prependOnceListener = function(c, $) {
-  return checkListener($), this.prependListener(c, _onceWrap(this, c, $)), this;
-};
-EventEmitter$1.prototype.removeListener = function(c, $) {
-  var l, G, e, O, g;
-  if (checkListener($), G = this._events, G === void 0)
-    return this;
-  if (l = G[c], l === void 0)
-    return this;
-  if (l === $ || l.listener === $)
-    --this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : (delete G[c], G.removeListener && this.emit("removeListener", c, l.listener || $));
-  else if (typeof l != "function") {
-    for (e = -1, O = l.length - 1; O >= 0; O--)
-      if (l[O] === $ || l[O].listener === $) {
-        g = l[O].listener, e = O;
-        break;
-      }
-    if (e < 0)
-      return this;
-    e === 0 ? l.shift() : spliceOne(l, e), l.length === 1 && (G[c] = l[0]), G.removeListener !== void 0 && this.emit("removeListener", c, g || $);
-  }
-  return this;
-};
-EventEmitter$1.prototype.off = EventEmitter$1.prototype.removeListener;
-EventEmitter$1.prototype.removeAllListeners = function(c) {
-  var $, l, G;
-  if (l = this._events, l === void 0)
-    return this;
-  if (l.removeListener === void 0)
-    return arguments.length === 0 ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : l[c] !== void 0 && (--this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : delete l[c]), this;
-  if (arguments.length === 0) {
-    var e = Object.keys(l), O;
-    for (G = 0; G < e.length; ++G)
-      O = e[G], O !== "removeListener" && this.removeAllListeners(O);
-    return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
-  }
-  if ($ = l[c], typeof $ == "function")
-    this.removeListener(c, $);
-  else if ($ !== void 0)
-    for (G = $.length - 1; G >= 0; G--)
-      this.removeListener(c, $[G]);
-  return this;
-};
-function _listeners(w, c, $) {
-  var l = w._events;
-  if (l === void 0)
-    return [];
-  var G = l[c];
-  return G === void 0 ? [] : typeof G == "function" ? $ ? [G.listener || G] : [G] : $ ? unwrapListeners(G) : arrayClone$1(G, G.length);
-}
-EventEmitter$1.prototype.listeners = function(c) {
-  return _listeners(this, c, !0);
-};
-EventEmitter$1.prototype.rawListeners = function(c) {
-  return _listeners(this, c, !1);
-};
-EventEmitter$1.listenerCount = function(w, c) {
-  return typeof w.listenerCount == "function" ? w.listenerCount(c) : listenerCount.call(w, c);
-};
-EventEmitter$1.prototype.listenerCount = listenerCount;
-function listenerCount(w) {
-  var c = this._events;
-  if (c !== void 0) {
-    var $ = c[w];
-    if (typeof $ == "function")
-      return 1;
-    if ($ !== void 0)
-      return $.length;
-  }
-  return 0;
-}
-EventEmitter$1.prototype.eventNames = function() {
-  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
-};
-function arrayClone$1(w, c) {
-  for (var $ = new Array(c), l = 0; l < c; ++l)
-    $[l] = w[l];
-  return $;
-}
-function spliceOne(w, c) {
-  for (; c + 1 < w.length; c++)
-    w[c] = w[c + 1];
-  w.pop();
-}
-function unwrapListeners(w) {
-  for (var c = new Array(w.length), $ = 0; $ < c.length; ++$)
-    c[$] = w[$].listener || w[$];
-  return c;
-}
-function once(w, c) {
-  return new Promise(function($, l) {
-    function G(O) {
-      w.removeListener(c, e), l(O);
-    }
-    function e() {
-      typeof w.removeListener == "function" && w.removeListener("error", G), $([].slice.call(arguments));
-    }
-    eventTargetAgnosticAddListener(w, c, e, { once: !0 }), c !== "error" && addErrorHandlerIfEventEmitter(w, G, { once: !0 });
-  });
-}
-function addErrorHandlerIfEventEmitter(w, c, $) {
-  typeof w.on == "function" && eventTargetAgnosticAddListener(w, "error", c, $);
-}
-function eventTargetAgnosticAddListener(w, c, $, l) {
-  if (typeof w.on == "function")
-    l.once ? w.once(c, $) : w.on(c, $);
-  else if (typeof w.addEventListener == "function")
-    w.addEventListener(c, function G(e) {
-      l.once && w.removeEventListener(c, G), $(e);
-    });
-  else
-    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof w);
-}
-var eventsExports = events$1.exports;
-function safeApply(w, c, $) {
-  try {
-    Reflect.apply(w, c, $);
-  } catch (l) {
-    setTimeout(() => {
-      throw l;
-    });
-  }
-}
-function arrayClone(w) {
-  const c = w.length, $ = new Array(c);
-  for (let l = 0; l < c; l += 1)
-    $[l] = w[l];
-  return $;
-}
-class SafeEventEmitter extends eventsExports.EventEmitter {
-  emit(c, ...$) {
-    let l = c === "error";
-    const G = this._events;
-    if (G !== void 0)
-      l = l && G.error === void 0;
-    else if (!l)
-      return !1;
-    if (l) {
-      let O;
-      if ($.length > 0 && ([O] = $), O instanceof Error)
-        throw O;
-      const g = new Error(`Unhandled error.${O ? ` (${O.message})` : ""}`);
-      throw g.context = O, g;
-    }
-    const e = G[c];
-    if (e === void 0)
-      return !1;
-    if (typeof e == "function")
-      safeApply(e, this, $);
-    else {
-      const O = e.length, g = arrayClone(e);
-      for (let F = 0; F < O; F += 1)
-        safeApply(g[F], this, $);
-    }
-    return !0;
-  }
-}
-var d = (w, c, $) => new Promise((l, G) => {
-  var e = (F) => {
-    try {
-      g($.next(F));
-    } catch (D) {
-      G(D);
-    }
-  }, O = (F) => {
-    try {
-      g($.throw(F));
-    } catch (D) {
-      G(D);
-    }
-  }, g = (F) => F.done ? l(F.value) : Promise.resolve(F.value).then(e, O);
-  g(($ = $.apply(w, c)).next());
-});
-const v = class {
-  static closeOverlay(c) {
-    const $ = document.querySelector(`#${c}`);
-    $ && $.parentNode && $.parentNode.removeChild($);
-  }
-  static openOverlay(c) {
-    const $ = document.createElement("div");
-    $.id = c, $.classList.add(this.CONST.overlayClassName), $.style.zIndex = "2147483647", $.style.display = "flex", $.style.alignItems = "center", $.style.justifyContent = "center", $.style.textAlign = "center", $.style.position = "fixed", $.style.left = "0px", $.style.right = "0px", $.style.top = "0px", $.style.bottom = "0px", $.style.left = "0px", $.style.background = "rgba(0,0,0,0.6)", $.style.color = "white", $.style.border = "2px solid #f1f1f1";
-    const l = document.getElementsByClassName(
-      this.CONST.overlayClassName
-    );
-    for (let G = 0; G < l.length; G++) {
-      const e = l.item(G);
-      e && e.remove();
-    }
-    document.body.appendChild($);
-  }
-};
-v.CONST = {
-  overlayClassName: "wepin-widget__overlay"
-};
-let m$2 = v;
-const x = (w) => {
-  const c = (w == null ? void 0 : w.width) || 375, $ = (w == null ? void 0 : w.height) || 604, l = w != null && w.sLeft ? w == null ? void 0 : w.sLeft : window.screenLeft ? window.screenLeft : window.screenX ? window.screenX : 0, G = w != null && w.sTop ? w == null ? void 0 : w.sTop : window.screenTop ? window.screenTop : window.screenY ? window.screenY : 0, e = screen.width / 2 - c / 2 + l, O = screen.height / 2 - $ / 2 + G;
-  return `width=${c}, height=${$}, left=${e}, top=${O}scrollbars=yes, resizable=1, menubar=no, toolbar=no`;
-}, b = (w) => {
-  const c = document.createElement("iframe");
-  return c.classList.add("wepin-sdk-widget-iframe"), c.setAttribute("frameborder", "0"), c.setAttribute("marginwidth", "0"), c.setAttribute("marginheight", "0"), c.style.width = "100%", w && w != null && w.isHide ? c.style.height = "0" : c.style.height = "100%", c.style.maxHeight = "100%", c.style.position = "fixed", c.style.bottom = "0", c.style.left = "0", c.style.zIndex = "408888000000", c.title = "wepin sdk webview", c.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; camera; clipboard-read", c.allowFullscreen = !0, c;
-}, f$3 = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(w) {
-  const c = Math.random() * 16 | 0;
-  return (w == "x" ? c : c & 3 | 8).toString(16);
-}), a = class Wt extends m$2 {
-  constructor(c, $, l, G, e) {
-    super(), this.isWidgetReady = !1, this.url = c, this.id = `id-${f$3()}`, this.isHide = e, e || Wt.openOverlay(this.id), Wt._webview[this.id] = $, this.type = l, this.EL = G, window.addEventListener("message", this.EL), this._open = !0;
-  }
-  get isOpen() {
-    return this._open;
-  }
-  // For communicating with the Wepin instance
-  // private _wepin: Wepin
-  // public get Wepin() {
-  //   return this._wepin
-  // }
-  // For communicating with the Webview
-  // private _webview: HTMLIFrameElement
-  static getWebview(c) {
-    return Wt._webview[c];
-  }
-  static clearWebview(c) {
-    delete Wt._webview[c];
-  }
-  static clearAllWebview() {
-    this._webview = {};
-  }
-  close() {
-    this.isHide || Wt.closeOverlay(this.id), window.removeEventListener("message", this.EL), this._open = !1, this.isWidgetReady = !1, this._closeWebview();
-  }
-  response(c) {
-    try {
-      this._post(c);
-    } catch ($) {
-      console.error("Can not response message to the webview", $);
-    }
-  }
-  request(c) {
-    try {
-      this._post(c);
-    } catch ($) {
-      console.error("Can not send message to the webview", $);
-    }
-  }
-};
-a._webview = {};
-let r$3 = a, h$2 = class Kt extends r$3 {
-  // is it necessary ?
-  constructor({
-    url: c,
-    // wepin,
-    frame: $,
-    EL: l,
-    isHide: G
-  }) {
-    super(c, $, "Frame", l, G), $.src = c, $.id = this.id;
-    const e = document.querySelector("body");
-    Kt.scrollPosition = window.pageYOffset, e.style.overflow = "hidden", e.style.position = "fixed", e.style.top = `-${Kt.scrollPosition}px`, e.style.width = "100%", document.body.appendChild($);
-  }
-  static openNew(c) {
-    return d(this, arguments, function* ({
-      url: $,
-      EL: l,
-      widgetOptions: G
-    }) {
-      const e = b({ isHide: G == null ? void 0 : G.isHide });
-      return new Kt({
-        url: $,
-        // wepin,
-        frame: e,
-        EL: l,
-        isHide: G == null ? void 0 : G.isHide
-      });
-    });
-  }
-  expand() {
-    const c = r$3.getWebview(this.id);
-    c.style.height = "100%", c.style.borderRadius = "0";
-  }
-  shrink() {
-    const c = r$3.getWebview(this.id);
-    c.style.height = "604px", c.style.borderRadius = "12px 12px 0 0 ";
-  }
-  _closeWebview() {
-    const c = setTimeout(() => {
-      const $ = r$3.getWebview(this.id), l = document.querySelector("body");
-      l.style.removeProperty("overflow"), l.style.removeProperty("position"), l.style.removeProperty("top"), l.style.removeProperty("width"), window.scrollTo(0, Kt.scrollPosition), $ && document.body.removeChild($), r$3.clearWebview(this.id), clearTimeout(c);
-    }, 500);
-  }
-  _post(c) {
-    r$3.getWebview(this.id).contentWindow.postMessage(c, this.url);
-  }
-};
-class p extends r$3 {
-  constructor({
-    url: c,
-    webview: $,
-    EL: l
-  }) {
-    super(c, $, "Window", l, !1);
-  }
-  //: NodeJS.Timer | number
-  static openNew(c) {
-    return d(this, arguments, function* ({
-      url: $,
-      EL: l,
-      widgetFeatures: G
-    }) {
-      const e = x(G), O = window.open($, "Wepin_Widget", e), g = new p({
-        url: $,
-        webview: O,
-        EL: l
-      });
-      if (!O)
-        throw g.close(), new Error("popup window blocked");
-      return this.timer = setInterval(() => {
-        try {
-          O && O.closed && (clearInterval(this.timer), g.close());
-        } catch (F) {
-          clearInterval(this.timer), g.close();
-        }
-      }, 200), g;
-    });
-  }
-  expand() {
-  }
-  shrink() {
-  }
-  _closeWebview() {
-    p.timer && (clearInterval(p.timer), p.timer = void 0);
-    const c = r$3.getWebview(this.id);
-    c && c.close(), r$3.clearWebview(this.id);
-  }
-  _post(c) {
-    r$3.getWebview(this.id).postMessage(c, this.url);
-  }
-}
-const u = "@wepin/modal-js", W = "0.0.2", C = "wepin widget modal", T = "IoTrust, Co., Ltd.", L = "MIT", N = "./dist/wepin-modal-js.mjs", _ = "dist/wepin-modal-js.umd.js", j = "./dist/src/index.d.ts", E = [
-  "dist"
-], I = {
-  build: "vite build --mode production",
-  dev: "vite build --mode development",
-  watch: "vite build --watch",
-  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-}, k = [
-  "wepin",
-  "wepinwallet",
-  "wallet",
-  "wepin-modal"
-], M = {
-  name: u,
-  version: W,
-  description: C,
-  author: T,
-  license: L,
-  main: N,
-  jsdelivr: _,
-  types: j,
-  files: E,
-  scripts: I,
-  keywords: k
-};
-class A {
-  //   constructor(appKey: string, appId: string) {
-  constructor() {
-    this.platformType = "web", this._modalWindow = null, this._modalFrame = null, console.log(`WepinModal v${M.version}`), this.domain = window.location.origin;
-  }
-  //   async init() {
-  //     // getAppInfo수행해보고기..
-  //     this._appId
-  //     this._appKey
-  //     this._isInitialized = true
-  //     return this._isInitialized
-  //   }
-  openAuthBrowser(c, $) {
-    return d(this, null, function* () {
-      return this._modalWindow = yield p.openNew({
-        url: c,
-        EL: $
-      }), this._modalWindow;
-    });
-  }
-  openModal(c, $, l) {
-    return d(this, null, function* () {
-      return this._modalFrame = yield h$2.openNew({
-        url: c,
-        EL: $,
-        widgetOptions: l
-      }), this._modalFrame;
-    });
-  }
-  closeAuthBrowser() {
-    return d(this, null, function* () {
-      this._modalWindow && this._modalWindow.close();
-    });
-  }
-  closeModal() {
-    return d(this, null, function* () {
-      this._modalFrame && this._modalFrame.close();
-    });
-  }
-}
-const name$3 = "@wepin/login-js", version$3 = "0.0.4", description$3 = "Wepin Login Library V1 for Web", author$3 = "IoTrust, Co., Ltd.", homepage$2 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$3 = "MIT", main$3 = "./dist/wepin-login-js.mjs", types$3 = "./dist/src/index.d.ts", files$3 = [
-  "dist"
-], scripts$3 = {
-  build: "vite build --mode production",
-  dev: "vite build --mode development",
-  watch: "vite build --watch",
-  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-}, dependencies$3 = {}, devDependencies$3 = {
-  "@wepin/fetch-js": "link:../fetch",
-  "@wepin/modal-js": "link:../modal",
-  "@wepin/storage-js": "link:../storage",
-  events: "^3.3.0",
-  secp256k1: "^5.0.0",
-  sha256: "^0.2.0",
-  "@types/events": "^3.0.3",
-  "@types/secp256k1": "^4.0.6",
-  "@types/sha256": "^0.2.2"
-}, packageJson$1 = {
-  name: name$3,
-  version: version$3,
-  description: description$3,
-  author: author$3,
-  homepage: homepage$2,
-  license: license$3,
-  main: main$3,
-  types: types$3,
-  files: files$3,
-  scripts: scripts$3,
-  dependencies: dependencies$3,
-  devDependencies: devDependencies$3
-};
-class Timer {
-  setInterval(c, $) {
-    this.intervalTimer = setInterval(c, $);
-  }
-  clearInterval() {
-    clearInterval(this.intervalTimer), this.intervalTimer = void 0;
-  }
-  setTimeout(c, $) {
-    this.timeoutTimer = setTimeout(c, $);
-  }
-  clearTimeout() {
-    clearTimeout(this.timeoutTimer), this.timeoutTimer = void 0;
-  }
-}
-class TimerPromise extends Promise {
-  constructor(c, $) {
-    super(c), this.timer = $;
-  }
-}
-const WebviewRequestHandler = (w, c) => {
-  const $ = {
-    header: {
-      response_from: "web",
-      response_to: "wepin_widget",
-      id: w.header.id
-    }
-  };
-  switch (w.body.command) {
-    case "set_token":
-      LOG.debug("set_token", w.body.parameter), c.emit("setToken", w.body.parameter);
-      break;
-    default:
-      throw new Error(`Command ${w.body.command} is not supported.`);
-  }
-  c.widget.isOpen && c.widget.response($);
-}, WebviewResponseHandler = (w, c) => {
-  LOG.debug("Got Response from webview =>", w), c.emit(w.header.id.toString(), w);
-}, getEventListener = (w) => {
-  const c = ($) => !(!Object.prototype.hasOwnProperty.call($.data, "header") || !Object.prototype.hasOwnProperty.call($.data, "body"));
-  return ($) => {
-    c($) && handleMessage(
-      $.data,
-      w
-    );
-  };
-}, handleMessage = (w, c) => {
-  w.header.request_to === "web" ? WebviewRequestHandler(w, c) : w.header.response_to === "web" ? WebviewResponseHandler(w, c) : LOG.error("Failed to handle message:", w);
-};
 var buffer$3 = {}, base64Js$1 = {};
 base64Js$1.byteLength = byteLength;
 base64Js$1.toByteArray = toByteArray;
@@ -1650,14 +1019,14 @@ var _globalThis = function(w) {
   }, g = (F) => F.done ? l(F.value) : Promise.resolve(F.value).then(e, O);
   g(($ = $.apply(w, c)).next());
 });
-const name$1 = "@wepin/fetch-js", version$1 = "0.0.4", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
+const name$1$1 = "@wepin/fetch-js", version$1$1 = "0.0.4", description$1$1 = "Wepin fetch library for Web", author$1$1 = "IoTrust, Co., Ltd.", license$1$1 = "MIT", main$1$1 = "./dist/wepin-fetch-js.mjs", types$1$1 = "./dist/src/index.d.ts", files$1$1 = [
   "dist"
-], scripts$1 = {
+], scripts$1$1 = {
   build: "vite build --mode production",
   dev: "vite build --mode development",
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-}, dependencies$1 = {}, devDependencies$1 = {
+}, dependencies$1$1 = {}, devDependencies$1$1 = {
   "@wepin/storage-js": "link:../storage",
   "@types/bcryptjs": "^2.4.6",
   bcryptjs: "^2.4.3",
@@ -1668,18 +1037,18 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.4", description$1 = "Wepin fe
   "wepinwallet",
   "wallet",
   "wepin-fetch"
-], packageJson = {
-  name: name$1,
-  version: version$1,
-  description: description$1,
-  author: author$1,
-  license: license$1,
-  main: main$1,
-  types: types$1,
-  files: files$1,
-  scripts: scripts$1,
-  dependencies: dependencies$1,
-  devDependencies: devDependencies$1,
+], packageJson$1 = {
+  name: name$1$1,
+  version: version$1$1,
+  description: description$1$1,
+  author: author$1$1,
+  license: license$1$1,
+  main: main$1$1,
+  types: types$1$1,
+  files: files$1$1,
+  scripts: scripts$1$1,
+  dependencies: dependencies$1$1,
+  devDependencies: devDependencies$1$1,
   keywords: keywords$1
 };
 class APIResponse {
@@ -3370,8 +2739,8 @@ var eventemitter2 = { exports: {} };
   })();
 })(eventemitter2);
 var eventemitter2Exports = eventemitter2.exports;
-const EventEmitter = /* @__PURE__ */ getDefaultExportFromCjs(eventemitter2Exports);
-class FetchAPI extends EventEmitter {
+const EventEmitter$1 = /* @__PURE__ */ getDefaultExportFromCjs(eventemitter2Exports);
+class FetchAPI extends EventEmitter$1 {
   constructor(c) {
     super(), this.baseUrl = c;
   }
@@ -3514,9 +2883,9 @@ function requireInherits_browser() {
     }
   }), inherits_browser$1.exports;
 }
-var readableBrowser$1$1 = { exports: {} }, events = { exports: {} }, hasRequiredEvents;
+var readableBrowser$1$1 = { exports: {} }, events$1 = { exports: {} }, hasRequiredEvents;
 function requireEvents() {
-  if (hasRequiredEvents) return events.exports;
+  if (hasRequiredEvents) return events$1.exports;
   hasRequiredEvents = 1;
   var w = typeof Reflect == "object" ? Reflect : null, c = w && typeof w.apply == "function" ? w.apply : function(de, ge, $e) {
     return Function.prototype.apply.call(de, ge, $e);
@@ -3535,7 +2904,7 @@ function requireEvents() {
   function e() {
     e.init.call(this);
   }
-  events.exports = e, events.exports.once = ie, e.EventEmitter = e, e.prototype._events = void 0, e.prototype._eventsCount = 0, e.prototype._maxListeners = void 0;
+  events$1.exports = e, events$1.exports.once = ie, e.EventEmitter = e, e.prototype._events = void 0, e.prototype._eventsCount = 0, e.prototype._maxListeners = void 0;
   var O = 10;
   function g(de) {
     if (typeof de != "function")
@@ -3724,7 +3093,7 @@ function requireEvents() {
     else
       throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof de);
   }
-  return events.exports;
+  return events$1.exports;
 }
 var streamBrowser$1$1, hasRequiredStreamBrowser$1$1;
 function requireStreamBrowser$1$1() {
@@ -13119,7 +12488,7 @@ const name$2 = "elliptic", version$2 = "6.5.5", description$2 = "EC cryptography
   "Cryptography"
 ], author$2 = "Fedor Indutny <fedor@indutny.com>", license$2 = "MIT", bugs$1 = {
   url: "https://github.com/indutny/elliptic/issues"
-}, homepage$1 = "https://github.com/indutny/elliptic", devDependencies$2 = {
+}, homepage$2 = "https://github.com/indutny/elliptic", devDependencies$2 = {
   brfs: "^2.0.2",
   coveralls: "^3.1.0",
   eslint: "^7.6.0",
@@ -13153,7 +12522,7 @@ const name$2 = "elliptic", version$2 = "6.5.5", description$2 = "EC cryptography
   author: author$2,
   license: license$2,
   bugs: bugs$1,
-  homepage: homepage$1,
+  homepage: homepage$2,
   devDependencies: devDependencies$2,
   dependencies: dependencies$2
 };
@@ -21051,7 +20420,7 @@ class FirebaseAuthAPI {
 }
 var S$1 = (w) => {
   throw TypeError(w);
-}, h$1 = (w, c, $) => c.has(w) || S$1("Cannot " + $), n$1 = (w, c, $) => (h$1(w, c, "read from private field"), $ ? $.call(w) : c.get(w)), f$2 = (w, c, $) => c.has(w) ? S$1("Cannot add the same private member more than once") : c instanceof WeakSet ? c.add(w) : c.set(w, $), s$2 = (w, c, $) => new Promise((l, G) => {
+}, h$2 = (w, c, $) => c.has(w) || S$1("Cannot " + $), n$1 = (w, c, $) => (h$2(w, c, "read from private field"), $ ? $.call(w) : c.get(w)), f$3 = (w, c, $) => c.has(w) ? S$1("Cannot add the same private member more than once") : c instanceof WeakSet ? c.add(w) : c.set(w, $), s$2 = (w, c, $) => new Promise((l, G) => {
   var e = (F) => {
     try {
       g($.next(F));
@@ -21067,7 +20436,7 @@ var S$1 = (w) => {
   }, g = (F) => F.done ? l(F.value) : Promise.resolve(F.value).then(e, O);
   g(($ = $.apply(w, c)).next());
 }), i$1;
-const r$2 = class Ut {
+const r$3 = class Ut {
   constructor() {
     this.platform = "web";
   }
@@ -21217,8 +20586,8 @@ const r$2 = class Ut {
     });
   }
 };
-i$1 = /* @__PURE__ */ new WeakMap(), f$2(r$2, i$1, "wepin:auth:");
-let m$1 = r$2;
+i$1 = /* @__PURE__ */ new WeakMap(), f$3(r$3, i$1, "wepin:auth:");
+let m$2 = r$3;
 const isErrorResponse = (w) => {
   const c = w.statusCode !== void 0 || w.status !== void 0, $ = w.timestamp !== void 0 && w.message !== void 0 && w.path !== void 0;
   return c && $;
@@ -21888,7 +21257,7 @@ class WepinFetch {
     sdk: G,
     storage: e
   }) {
-    this.version = packageJson.version, this.appId = c, this._appKey = $, this._domain = l, this._token = void 0, this.sdk = G, this._wepinStorage = e != null ? e : new m$1();
+    this.version = packageJson$1.version, this.appId = c, this._appKey = $, this._domain = l, this._token = void 0, this.sdk = G, this._wepinStorage = e != null ? e : new m$2();
   }
   init() {
     return Be(this, null, function* () {
@@ -21947,7 +21316,251 @@ class WepinFetch {
   //   this._wepinStorage.clearLocalStorage(this.appId, 'wepin:connectUser')
   // }
 }
-var ProjectPlatformKind = /* @__PURE__ */ ((w) => (w[w.web = 1] = "web", w[w.android = 2] = "android", w[w.ios = 3] = "ios", w))(ProjectPlatformKind || {}), S = (w) => {
+var ProjectPlatformKind = /* @__PURE__ */ ((w) => (w[w.web = 1] = "web", w[w.android = 2] = "android", w[w.ios = 3] = "ios", w))(ProjectPlatformKind || {}), d = (w, c, $) => new Promise((l, G) => {
+  var e = (F) => {
+    try {
+      g($.next(F));
+    } catch (D) {
+      G(D);
+    }
+  }, O = (F) => {
+    try {
+      g($.throw(F));
+    } catch (D) {
+      G(D);
+    }
+  }, g = (F) => F.done ? l(F.value) : Promise.resolve(F.value).then(e, O);
+  g(($ = $.apply(w, c)).next());
+});
+const x = "@wepin/modal-js", b = "0.0.2", f$2 = "wepin widget modal", u = "IoTrust, Co., Ltd.", W = "MIT", C = "./dist/wepin-modal-js.mjs", T = "dist/wepin-modal-js.umd.js", L = "./dist/src/index.d.ts", N = [
+  "dist"
+], _ = {
+  build: "vite build --mode production",
+  dev: "vite build --mode development",
+  watch: "vite build --watch",
+  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+}, j = [
+  "wepin",
+  "wepinwallet",
+  "wallet",
+  "wepin-modal"
+], E = {
+  name: x,
+  version: b,
+  description: f$2,
+  author: u,
+  license: W,
+  main: C,
+  jsdelivr: T,
+  types: L,
+  files: N,
+  scripts: _,
+  keywords: j
+}, v = class {
+  static closeOverlay(c) {
+    const $ = document.querySelector(`#${c}`);
+    $ && $.parentNode && $.parentNode.removeChild($);
+  }
+  static openOverlay(c) {
+    const $ = document.createElement("div");
+    $.id = c, $.classList.add(this.CONST.overlayClassName), $.style.zIndex = "2147483647", $.style.display = "flex", $.style.alignItems = "center", $.style.justifyContent = "center", $.style.textAlign = "center", $.style.position = "fixed", $.style.left = "0px", $.style.right = "0px", $.style.top = "0px", $.style.bottom = "0px", $.style.left = "0px", $.style.background = "rgba(0,0,0,0.6)", $.style.color = "white", $.style.border = "2px solid #f1f1f1";
+    const l = document.getElementsByClassName(
+      this.CONST.overlayClassName
+    );
+    for (let G = 0; G < l.length; G++) {
+      const e = l.item(G);
+      e && e.remove();
+    }
+    document.body.appendChild($);
+  }
+};
+v.CONST = {
+  overlayClassName: "wepin-widget__overlay"
+};
+let m$1 = v;
+const I = (w) => {
+  const c = (w == null ? void 0 : w.width) || 375, $ = (w == null ? void 0 : w.height) || 604, l = w != null && w.sLeft ? w == null ? void 0 : w.sLeft : window.screenLeft ? window.screenLeft : window.screenX ? window.screenX : 0, G = w != null && w.sTop ? w == null ? void 0 : w.sTop : window.screenTop ? window.screenTop : window.screenY ? window.screenY : 0, e = screen.width / 2 - c / 2 + l, O = screen.height / 2 - $ / 2 + G;
+  return `width=${c}, height=${$}, left=${e}, top=${O}scrollbars=yes, resizable=1, menubar=no, toolbar=no`;
+}, k = (w) => {
+  const c = document.createElement("iframe");
+  return c.classList.add("wepin-sdk-widget-iframe"), c.setAttribute("frameborder", "0"), c.setAttribute("marginwidth", "0"), c.setAttribute("marginheight", "0"), c.style.width = "100%", w && w != null && w.isHide ? c.style.height = "0" : c.style.height = "100%", c.style.maxHeight = "100%", c.style.position = "fixed", c.style.bottom = "0", c.style.left = "0", c.style.zIndex = "408888000000", c.title = "wepin sdk webview", c.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; camera; clipboard-read", c.allowFullscreen = !0, c;
+}, M = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(w) {
+  const c = Math.random() * 16 | 0;
+  return (w == "x" ? c : c & 3 | 8).toString(16);
+}), a = class Wt extends m$1 {
+  constructor(c, $, l, G, e) {
+    super(), this.isWidgetReady = !1, this.url = c, this.id = `id-${M()}`, this.isHide = e, e || Wt.openOverlay(this.id), Wt._webview[this.id] = $, this.type = l, this.EL = G, window.addEventListener("message", this.EL), this._open = !0;
+  }
+  get isOpen() {
+    return this._open;
+  }
+  // For communicating with the Wepin instance
+  // private _wepin: Wepin
+  // public get Wepin() {
+  //   return this._wepin
+  // }
+  // For communicating with the Webview
+  // private _webview: HTMLIFrameElement
+  static getWebview(c) {
+    return Wt._webview[c];
+  }
+  static clearWebview(c) {
+    delete Wt._webview[c];
+  }
+  static clearAllWebview() {
+    this._webview = {};
+  }
+  close() {
+    this.isHide || Wt.closeOverlay(this.id), window.removeEventListener("message", this.EL), this._open = !1, this.isWidgetReady = !1, this._closeWebview();
+  }
+  response(c) {
+    try {
+      this._post(c);
+    } catch ($) {
+      console.error("Can not response message to the webview", $);
+    }
+  }
+  request(c) {
+    try {
+      this._post(c);
+    } catch ($) {
+      console.error("Can not send message to the webview", $);
+    }
+  }
+};
+a._webview = {};
+let r$2 = a, h$1 = class Kt extends r$2 {
+  // is it necessary ?
+  constructor({
+    url: c,
+    // wepin,
+    frame: $,
+    EL: l,
+    isHide: G
+  }) {
+    super(c, $, "Frame", l, G), $.src = c, $.id = this.id;
+    const e = document.querySelector("body");
+    Kt.scrollPosition = window.pageYOffset, e.style.overflow = "hidden", e.style.position = "fixed", e.style.top = `-${Kt.scrollPosition}px`, e.style.width = "100%", document.body.appendChild($);
+  }
+  static openNew(c) {
+    return d(this, arguments, function* ({
+      url: $,
+      EL: l,
+      widgetOptions: G
+    }) {
+      const e = k({ isHide: G == null ? void 0 : G.isHide });
+      return new Kt({
+        url: $,
+        // wepin,
+        frame: e,
+        EL: l,
+        isHide: G == null ? void 0 : G.isHide
+      });
+    });
+  }
+  expand() {
+    const c = r$2.getWebview(this.id);
+    c.style.height = "100%", c.style.borderRadius = "0";
+  }
+  shrink() {
+    const c = r$2.getWebview(this.id);
+    c.style.height = "604px", c.style.borderRadius = "12px 12px 0 0 ";
+  }
+  _closeWebview() {
+    const c = setTimeout(() => {
+      const $ = r$2.getWebview(this.id), l = document.querySelector("body");
+      l.style.removeProperty("overflow"), l.style.removeProperty("position"), l.style.removeProperty("top"), l.style.removeProperty("width"), window.scrollTo(0, Kt.scrollPosition), $ && document.body.removeChild($), r$2.clearWebview(this.id), clearTimeout(c);
+    }, 500);
+  }
+  _post(c) {
+    r$2.getWebview(this.id).contentWindow.postMessage(c, this.url);
+  }
+};
+class p extends r$2 {
+  constructor({
+    url: c,
+    webview: $,
+    EL: l
+  }) {
+    super(c, $, "Window", l, !1);
+  }
+  //: NodeJS.Timer | number
+  static openNew(c) {
+    return d(this, arguments, function* ({
+      url: $,
+      EL: l,
+      widgetFeatures: G
+    }) {
+      const e = I(G), O = window.open($, "Wepin_Widget", e), g = new p({
+        url: $,
+        webview: O,
+        EL: l
+      });
+      if (!O)
+        throw g.close(), new Error("popup window blocked");
+      return this.timer = setInterval(() => {
+        try {
+          O && O.closed && (clearInterval(this.timer), g.close());
+        } catch (F) {
+          clearInterval(this.timer), g.close();
+        }
+      }, 200), g;
+    });
+  }
+  expand() {
+  }
+  shrink() {
+  }
+  _closeWebview() {
+    p.timer && (clearInterval(p.timer), p.timer = void 0);
+    const c = r$2.getWebview(this.id);
+    c && c.close(), r$2.clearWebview(this.id);
+  }
+  _post(c) {
+    r$2.getWebview(this.id).postMessage(c, this.url);
+  }
+}
+class A {
+  //   constructor(appKey: string, appId: string) {
+  constructor() {
+    this.platformType = "web", this._modalWindow = null, this._modalFrame = null, console.log(`WepinModal v${E.version}`), this.domain = window.location.origin;
+  }
+  //   async init() {
+  //     // getAppInfo수행해보고기..
+  //     this._appId
+  //     this._appKey
+  //     this._isInitialized = true
+  //     return this._isInitialized
+  //   }
+  openAuthBrowser(c, $) {
+    return d(this, null, function* () {
+      return this._modalWindow = yield p.openNew({
+        url: c,
+        EL: $
+      }), this._modalWindow;
+    });
+  }
+  openModal(c, $, l) {
+    return d(this, null, function* () {
+      return this._modalFrame = yield h$1.openNew({
+        url: c,
+        EL: $,
+        widgetOptions: l
+      }), this._modalFrame;
+    });
+  }
+  closeAuthBrowser() {
+    return d(this, null, function* () {
+      this._modalWindow && this._modalWindow.close();
+    });
+  }
+  closeModal() {
+    return d(this, null, function* () {
+      this._modalFrame && this._modalFrame.close();
+    });
+  }
+}
+var S = (w) => {
   throw TypeError(w);
 }, h = (w, c, $) => c.has(w) || S("Cannot " + $), n = (w, c, $) => (h(w, c, "read from private field"), $ ? $.call(w) : c.get(w)), f$1 = (w, c, $) => c.has(w) ? S("Cannot add the same private member more than once") : c instanceof WeakSet ? c.add(w) : c.set(w, $), s$1 = (w, c, $) => new Promise((l, G) => {
   var e = (F) => {
@@ -22028,8 +21641,7 @@ const r$1 = class Ft {
         if (l)
           return JSON.parse(l[$]);
       } catch (G) {
-        if (l)
-          return l[$];
+        if (l) return l[$];
       }
     });
   }
@@ -22117,7 +21729,359 @@ const r$1 = class Ft {
 };
 i = /* @__PURE__ */ new WeakMap(), f$1(r$1, i, "wepin:auth:");
 let m = r$1;
-const COOKIE_NAME = "firebase:wepin", checkAndVerifyEmail = (O) => Nt(void 0, [O], function* ({
+const name$1 = "@wepin/login-js", version$1 = "0.0.5", description$1 = "Wepin Login Library V1 for Web", author$1 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$1 = "MIT", main$1 = "./dist/wepin-login-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
+  "dist"
+], scripts$1 = {
+  build: "vite build --mode production",
+  dev: "vite build --mode development",
+  watch: "vite build --watch",
+  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+}, dependencies$1 = {}, devDependencies$1 = {
+  "@wepin/fetch-js": "^0.0.4",
+  "@wepin/modal-js": "^0.0.2",
+  "@wepin/storage-js": "^0.0.3",
+  events: "^3.3.0",
+  secp256k1: "^5.0.0",
+  sha256: "^0.2.0",
+  "@types/events": "^3.0.3",
+  "@types/secp256k1": "^4.0.6",
+  "@types/sha256": "^0.2.2"
+}, packageJson = {
+  name: name$1,
+  version: version$1,
+  description: description$1,
+  author: author$1,
+  homepage: homepage$1,
+  license: license$1,
+  main: main$1,
+  types: types$1,
+  files: files$1,
+  scripts: scripts$1,
+  dependencies: dependencies$1,
+  devDependencies: devDependencies$1
+}, COOKIE_NAME = "firebase:wepin", OAUTH2 = ["google", "naver", "discord", "apple"], emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,128}$/;
+var define_import_meta_env_default = { BASE_URL: "/", MODE: "production", DEV: !1, PROD: !0, SSR: !1 };
+const Ht = class Ht {
+};
+Ht.test = console.warn.bind(window.console, "[LOGIN][test]"), Ht.warn = console.warn.bind(window.console, "[LOGIN][warn]"), Ht.error = console.error.bind(window.console, "[LOGIN][error]"), Ht.todo = console.warn.bind(window.console, "[LOGIN][todo]"), Ht.assert = console.assert.bind(window.console), Ht.debug = define_import_meta_env_default.NODE_ENV !== "development" ? () => {
+} : console.log.bind(window.console, "[LOGIN][debug]");
+let LOG = Ht;
+const WebviewRequestHandler = (w, c) => {
+  const $ = {
+    header: {
+      response_from: "web",
+      response_to: "wepin_widget",
+      id: w.header.id
+    }
+  };
+  switch (w.body.command) {
+    case "set_token":
+      LOG.debug("set_token", w.body.parameter), c.emit("setToken", w.body.parameter);
+      break;
+    default:
+      throw new Error(`Command ${w.body.command} is not supported.`);
+  }
+  c.widget.isOpen && c.widget.response($);
+}, WebviewResponseHandler = (w, c) => {
+  LOG.debug("Got Response from webview =>", w), c.emit(w.header.id.toString(), w);
+}, getEventListener = (w) => {
+  const c = ($) => !(!Object.prototype.hasOwnProperty.call($.data, "header") || !Object.prototype.hasOwnProperty.call($.data, "body"));
+  return ($) => {
+    c($) && handleMessage(
+      $.data,
+      w
+    );
+  };
+}, handleMessage = (w, c) => {
+  w.header.request_to === "web" ? WebviewRequestHandler(w, c) : w.header.response_to === "web" ? WebviewResponseHandler(w, c) : LOG.error("Failed to handle message:", w);
+};
+class Timer {
+  setInterval(c, $) {
+    this.intervalTimer = setInterval(c, $);
+  }
+  clearInterval() {
+    clearInterval(this.intervalTimer), this.intervalTimer = void 0;
+  }
+  setTimeout(c, $) {
+    this.timeoutTimer = setTimeout(c, $);
+  }
+  clearTimeout() {
+    clearTimeout(this.timeoutTimer), this.timeoutTimer = void 0;
+  }
+}
+class TimerPromise extends Promise {
+  constructor(c, $) {
+    super(c), this.timer = $;
+  }
+}
+var events = { exports: {} }, R = typeof Reflect == "object" ? Reflect : null, ReflectApply = R && typeof R.apply == "function" ? R.apply : function w(c, $, l) {
+  return Function.prototype.apply.call(c, $, l);
+}, ReflectOwnKeys;
+R && typeof R.ownKeys == "function" ? ReflectOwnKeys = R.ownKeys : Object.getOwnPropertySymbols ? ReflectOwnKeys = function(c) {
+  return Object.getOwnPropertyNames(c).concat(Object.getOwnPropertySymbols(c));
+} : ReflectOwnKeys = function(c) {
+  return Object.getOwnPropertyNames(c);
+};
+function ProcessEmitWarning(w) {
+  console && console.warn && console.warn(w);
+}
+var NumberIsNaN = Number.isNaN || function w(c) {
+  return c !== c;
+};
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+events.exports = EventEmitter;
+events.exports.once = once;
+EventEmitter.EventEmitter = EventEmitter;
+EventEmitter.prototype._events = void 0;
+EventEmitter.prototype._eventsCount = 0;
+EventEmitter.prototype._maxListeners = void 0;
+var defaultMaxListeners = 10;
+function checkListener(w) {
+  if (typeof w != "function")
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof w);
+}
+Object.defineProperty(EventEmitter, "defaultMaxListeners", {
+  enumerable: !0,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(w) {
+    if (typeof w != "number" || w < 0 || NumberIsNaN(w))
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + w + ".");
+    defaultMaxListeners = w;
+  }
+});
+EventEmitter.init = function() {
+  (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) && (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
+};
+EventEmitter.prototype.setMaxListeners = function w(c) {
+  if (typeof c != "number" || c < 0 || NumberIsNaN(c))
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + c + ".");
+  return this._maxListeners = c, this;
+};
+function _getMaxListeners(w) {
+  return w._maxListeners === void 0 ? EventEmitter.defaultMaxListeners : w._maxListeners;
+}
+EventEmitter.prototype.getMaxListeners = function w() {
+  return _getMaxListeners(this);
+};
+EventEmitter.prototype.emit = function w(c) {
+  for (var $ = [], l = 1; l < arguments.length; l++) $.push(arguments[l]);
+  var G = c === "error", e = this._events;
+  if (e !== void 0)
+    G = G && e.error === void 0;
+  else if (!G)
+    return !1;
+  if (G) {
+    var O;
+    if ($.length > 0 && (O = $[0]), O instanceof Error)
+      throw O;
+    var g = new Error("Unhandled error." + (O ? " (" + O.message + ")" : ""));
+    throw g.context = O, g;
+  }
+  var F = e[c];
+  if (F === void 0)
+    return !1;
+  if (typeof F == "function")
+    ReflectApply(F, this, $);
+  else
+    for (var D = F.length, q = arrayClone$1(F, D), l = 0; l < D; ++l)
+      ReflectApply(q[l], this, $);
+  return !0;
+};
+function _addListener(w, c, $, l) {
+  var G, e, O;
+  if (checkListener($), e = w._events, e === void 0 ? (e = w._events = /* @__PURE__ */ Object.create(null), w._eventsCount = 0) : (e.newListener !== void 0 && (w.emit(
+    "newListener",
+    c,
+    $.listener ? $.listener : $
+  ), e = w._events), O = e[c]), O === void 0)
+    O = e[c] = $, ++w._eventsCount;
+  else if (typeof O == "function" ? O = e[c] = l ? [$, O] : [O, $] : l ? O.unshift($) : O.push($), G = _getMaxListeners(w), G > 0 && O.length > G && !O.warned) {
+    O.warned = !0;
+    var g = new Error("Possible EventEmitter memory leak detected. " + O.length + " " + String(c) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+    g.name = "MaxListenersExceededWarning", g.emitter = w, g.type = c, g.count = O.length, ProcessEmitWarning(g);
+  }
+  return w;
+}
+EventEmitter.prototype.addListener = function w(c, $) {
+  return _addListener(this, c, $, !1);
+};
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+EventEmitter.prototype.prependListener = function w(c, $) {
+  return _addListener(this, c, $, !0);
+};
+function onceWrapper() {
+  if (!this.fired)
+    return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
+}
+function _onceWrap(w, c, $) {
+  var l = { fired: !1, wrapFn: void 0, target: w, type: c, listener: $ }, G = onceWrapper.bind(l);
+  return G.listener = $, l.wrapFn = G, G;
+}
+EventEmitter.prototype.once = function w(c, $) {
+  return checkListener($), this.on(c, _onceWrap(this, c, $)), this;
+};
+EventEmitter.prototype.prependOnceListener = function w(c, $) {
+  return checkListener($), this.prependListener(c, _onceWrap(this, c, $)), this;
+};
+EventEmitter.prototype.removeListener = function w(c, $) {
+  var l, G, e, O, g;
+  if (checkListener($), G = this._events, G === void 0)
+    return this;
+  if (l = G[c], l === void 0)
+    return this;
+  if (l === $ || l.listener === $)
+    --this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : (delete G[c], G.removeListener && this.emit("removeListener", c, l.listener || $));
+  else if (typeof l != "function") {
+    for (e = -1, O = l.length - 1; O >= 0; O--)
+      if (l[O] === $ || l[O].listener === $) {
+        g = l[O].listener, e = O;
+        break;
+      }
+    if (e < 0)
+      return this;
+    e === 0 ? l.shift() : spliceOne(l, e), l.length === 1 && (G[c] = l[0]), G.removeListener !== void 0 && this.emit("removeListener", c, g || $);
+  }
+  return this;
+};
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+EventEmitter.prototype.removeAllListeners = function w(c) {
+  var $, l, G;
+  if (l = this._events, l === void 0)
+    return this;
+  if (l.removeListener === void 0)
+    return arguments.length === 0 ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : l[c] !== void 0 && (--this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : delete l[c]), this;
+  if (arguments.length === 0) {
+    var e = Object.keys(l), O;
+    for (G = 0; G < e.length; ++G)
+      O = e[G], O !== "removeListener" && this.removeAllListeners(O);
+    return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
+  }
+  if ($ = l[c], typeof $ == "function")
+    this.removeListener(c, $);
+  else if ($ !== void 0)
+    for (G = $.length - 1; G >= 0; G--)
+      this.removeListener(c, $[G]);
+  return this;
+};
+function _listeners(w, c, $) {
+  var l = w._events;
+  if (l === void 0)
+    return [];
+  var G = l[c];
+  return G === void 0 ? [] : typeof G == "function" ? $ ? [G.listener || G] : [G] : $ ? unwrapListeners(G) : arrayClone$1(G, G.length);
+}
+EventEmitter.prototype.listeners = function w(c) {
+  return _listeners(this, c, !0);
+};
+EventEmitter.prototype.rawListeners = function w(c) {
+  return _listeners(this, c, !1);
+};
+EventEmitter.listenerCount = function(w, c) {
+  return typeof w.listenerCount == "function" ? w.listenerCount(c) : listenerCount.call(w, c);
+};
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(w) {
+  var c = this._events;
+  if (c !== void 0) {
+    var $ = c[w];
+    if (typeof $ == "function")
+      return 1;
+    if ($ !== void 0)
+      return $.length;
+  }
+  return 0;
+}
+EventEmitter.prototype.eventNames = function w() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+function arrayClone$1(w, c) {
+  for (var $ = new Array(c), l = 0; l < c; ++l)
+    $[l] = w[l];
+  return $;
+}
+function spliceOne(w, c) {
+  for (; c + 1 < w.length; c++)
+    w[c] = w[c + 1];
+  w.pop();
+}
+function unwrapListeners(w) {
+  for (var c = new Array(w.length), $ = 0; $ < c.length; ++$)
+    c[$] = w[$].listener || w[$];
+  return c;
+}
+function once(w, c) {
+  return new Promise(function($, l) {
+    function G(O) {
+      w.removeListener(c, e), l(O);
+    }
+    function e() {
+      typeof w.removeListener == "function" && w.removeListener("error", G), $([].slice.call(arguments));
+    }
+    eventTargetAgnosticAddListener(w, c, e, { once: !0 }), c !== "error" && addErrorHandlerIfEventEmitter(w, G, { once: !0 });
+  });
+}
+function addErrorHandlerIfEventEmitter(w, c, $) {
+  typeof w.on == "function" && eventTargetAgnosticAddListener(w, "error", c, $);
+}
+function eventTargetAgnosticAddListener(w, c, $, l) {
+  if (typeof w.on == "function")
+    l.once ? w.once(c, $) : w.on(c, $);
+  else if (typeof w.addEventListener == "function")
+    w.addEventListener(c, function G(e) {
+      l.once && w.removeEventListener(c, G), $(e);
+    });
+  else
+    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof w);
+}
+var eventsExports = events.exports;
+function safeApply(w, c, $) {
+  try {
+    Reflect.apply(w, c, $);
+  } catch (l) {
+    setTimeout(() => {
+      throw l;
+    });
+  }
+}
+function arrayClone(w) {
+  const c = w.length, $ = new Array(c);
+  for (let l = 0; l < c; l += 1)
+    $[l] = w[l];
+  return $;
+}
+class SafeEventEmitter extends eventsExports.EventEmitter {
+  emit(c, ...$) {
+    let l = c === "error";
+    const G = this._events;
+    if (G !== void 0)
+      l = l && G.error === void 0;
+    else if (!l)
+      return !1;
+    if (l) {
+      let O;
+      if ($.length > 0 && ([O] = $), O instanceof Error)
+        throw O;
+      const g = new Error(`Unhandled error.${O ? ` (${O.message})` : ""}`);
+      throw g.context = O, g;
+    }
+    const e = G[c];
+    if (e === void 0)
+      return !1;
+    if (typeof e == "function")
+      safeApply(e, this, $);
+    else {
+      const O = e.length, g = arrayClone(e);
+      for (let F = 0; F < O; F += 1)
+        safeApply(g[F], this, $);
+    }
+    return !0;
+  }
+}
+const checkAndVerifyEmail = (O) => Nt(void 0, [O], function* ({
   isRequireVerified: w,
   email: c,
   locale: $,
@@ -22170,10 +22134,43 @@ const COOKIE_NAME = "firebase:wepin", checkAndVerifyEmail = (O) => Nt(void 0, [O
   } catch (O) {
     throw new Error("signUpEmail error" + O.message);
   }
-}), emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, passwordRegExp = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,128}$/;
+});
+class Utils {
+  static getBaseUrl(c) {
+    if (c.slice(0, 8) === "ak_live_")
+      return new URL("https://v1-widget.wepin.io");
+    if (c.slice(0, 8) === "ak_test_")
+      return new URL("https://stage-v1-widget.wepin.io");
+    if (c.slice(0, 7) === "ak_dev_")
+      return new URL("https://dev-v1-widget.wepin.io");
+    if (c.slice(0, 13) === "local_ak_dev_")
+      return new URL("https://local-widget.wepin.io");
+    throw new Error("Invalid appKey");
+  }
+  static getWalletUrl(c) {
+    if (c.slice(0, 8) === "ak_live_")
+      return new URL("https://app.wepin.io");
+    if (c.slice(0, 8) === "ak_test_")
+      return new URL("https://stage-app.wepin.io");
+    if (c.slice(0, 7) === "ak_dev_")
+      return new URL("https://dev-app.wepin.io");
+    if (c.slice(0, 13) === "local_ak_dev_")
+      return new URL("https://local-app.wepin.io");
+    throw new Error("Invalid appKey");
+  }
+  static uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function(c) {
+        const $ = Math.random() * 16 | 0;
+        return (c == "x" ? $ : $ & 3 | 8).toString(16);
+      }
+    );
+  }
+}
 class WepinLogin extends SafeEventEmitter {
   constructor({ appId: c, appKey: $ }) {
-    super(), this.version = packageJson$1.version, this.appId = c, this._appKey = $, this._isInitialized = !1, this.widget = void 0, this._wepinModal = new A(), this._wepinStorage = new m(), this.type = this._wepinStorage.platform, this._url = Utils.getBaseUrl($), console.log(`WepinLogin v${this.version}`);
+    super(), this.version = packageJson.version, this.appId = c, this._appKey = $, this._isInitialized = !1, this.widget = void 0, this._wepinModal = new A(), this._wepinStorage = new m(), this.type = this._wepinStorage.platform, this._url = Utils.getBaseUrl($), console.log(`WepinLogin v${this.version}`);
   }
   init(c) {
     return Nt(this, null, function* () {
@@ -22228,7 +22225,7 @@ class WepinLogin extends SafeEventEmitter {
       this.widget.type === "Window" && c.setInterval(() => {
         var e, O;
         try {
-          const g = r$3.getWebview(this.widget.id);
+          const g = r$2.getWebview(this.widget.id);
           (!g || g.closed) && (LOG.debug("widget is closed"), c.clearInterval(), (e = this.widget) == null || e.close(), G(new Error("User canceled")));
         } catch (g) {
           c.clearInterval(), (O = this.widget) == null || O.close(), G(new Error("Internal error"));
@@ -22523,7 +22520,11 @@ class WepinLogin extends SafeEventEmitter {
         this.appId,
         "wallet_id"
       );
-      return O.loginStatus === "pinRequired" && (O.pinRequired = !0), Object.assign(e.userInfo, { walletId: g, userStatus: O, token: e.connectUser });
+      return O.loginStatus === "pinRequired" && (O.pinRequired = !0), Object.assign(e.userInfo, {
+        walletId: g,
+        userStatus: O,
+        token: e.connectUser
+      });
     });
   }
   openWidget(c, $) {
@@ -22533,10 +22534,10 @@ class WepinLogin extends SafeEventEmitter {
         if ($ == "Frame")
           this.widget = yield this._wepinModal.openModal(c, l, {
             isHide: !0
-          }), r$3.getWebview(this.widget.id).src = c;
+          }), r$2.getWebview(this.widget.id).src = c;
         else {
           this.widget = yield this._wepinModal.openAuthBrowser(c, l);
-          const G = r$3.getWebview(this.widget.id);
+          const G = r$2.getWebview(this.widget.id);
           G.location.href = c, G ? G.focus() : (this.widget = yield this._wepinModal.openAuthBrowser(c, l), G.location.href = c);
         }
         return !0;

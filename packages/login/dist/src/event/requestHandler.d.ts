@@ -1,5 +1,5 @@
-import { WebviewRequestMessage } from '../types/LoginMessage';
 import { WepinLogin } from '../WepinLogin';
+import { WebviewRequestMessage } from '../types/LoginMessage';
 
 /**
  * It handles all the request from the webview.

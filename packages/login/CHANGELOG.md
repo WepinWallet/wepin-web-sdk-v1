@@ -1,3 +1,10 @@
+## [Version 0.0.5](https://www.npmjs.com/package/@wepin/login-js/v/0.0.5) (2024-07-04)
+
+#### Bug Fixes:
+
+- Fix Typo in `IWepinUser` Type Definition
+  - Corrected a typo in the `IWepinUser` type definition.
+  
 ## [Version 0.0.4](https://www.npmjs.com/package/@wepin/login-js/v/0.0.4) (2024-06-26)
 
 #### Bug Fixes:

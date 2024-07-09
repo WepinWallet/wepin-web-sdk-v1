@@ -1,4 +1,12 @@
-## [Version 0.0.6](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.5) (2024-06-26)
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.7) (2024-07-09)
+
+#### New Features:
+- WepinSDK Events Registration:
+  - New events: `wepinLifeCycleChange`, `send_in_process`, `send_complete`.
+  - Functionality to register and handle these events using on(EVENT, CALLBACK).
+
+
+## [Version 0.0.6](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.6) (2024-06-26)
 
 #### Bug Fixes:
 - remove localhost webview dev

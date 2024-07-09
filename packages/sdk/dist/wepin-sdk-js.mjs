@@ -25,714 +25,6 @@ var wt = (P, c, O) => new Promise((q, X) => {
   }, l = (U) => U.done ? q(U.value) : Promise.resolve(U.value).then(t, F);
   l((O = O.apply(P, c)).next());
 });
-var events$1 = { exports: {} }, R = typeof Reflect == "object" ? Reflect : null, ReflectApply = R && typeof R.apply == "function" ? R.apply : function(c, O, q) {
-  return Function.prototype.apply.call(c, O, q);
-}, ReflectOwnKeys;
-R && typeof R.ownKeys == "function" ? ReflectOwnKeys = R.ownKeys : Object.getOwnPropertySymbols ? ReflectOwnKeys = function(c) {
-  return Object.getOwnPropertyNames(c).concat(Object.getOwnPropertySymbols(c));
-} : ReflectOwnKeys = function(c) {
-  return Object.getOwnPropertyNames(c);
-};
-function ProcessEmitWarning(P) {
-  console && console.warn && console.warn(P);
-}
-var NumberIsNaN = Number.isNaN || function(c) {
-  return c !== c;
-};
-function EventEmitter$1() {
-  EventEmitter$1.init.call(this);
-}
-events$1.exports = EventEmitter$1;
-events$1.exports.once = once;
-EventEmitter$1.EventEmitter = EventEmitter$1;
-EventEmitter$1.prototype._events = void 0;
-EventEmitter$1.prototype._eventsCount = 0;
-EventEmitter$1.prototype._maxListeners = void 0;
-var defaultMaxListeners = 10;
-function checkListener(P) {
-  if (typeof P != "function")
-    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof P);
-}
-Object.defineProperty(EventEmitter$1, "defaultMaxListeners", {
-  enumerable: !0,
-  get: function() {
-    return defaultMaxListeners;
-  },
-  set: function(P) {
-    if (typeof P != "number" || P < 0 || NumberIsNaN(P))
-      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + P + ".");
-    defaultMaxListeners = P;
-  }
-});
-EventEmitter$1.init = function() {
-  (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) && (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
-};
-EventEmitter$1.prototype.setMaxListeners = function(c) {
-  if (typeof c != "number" || c < 0 || NumberIsNaN(c))
-    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + c + ".");
-  return this._maxListeners = c, this;
-};
-function _getMaxListeners(P) {
-  return P._maxListeners === void 0 ? EventEmitter$1.defaultMaxListeners : P._maxListeners;
-}
-EventEmitter$1.prototype.getMaxListeners = function() {
-  return _getMaxListeners(this);
-};
-EventEmitter$1.prototype.emit = function(c) {
-  for (var O = [], q = 1; q < arguments.length; q++) O.push(arguments[q]);
-  var X = c === "error", t = this._events;
-  if (t !== void 0)
-    X = X && t.error === void 0;
-  else if (!X)
-    return !1;
-  if (X) {
-    var F;
-    if (O.length > 0 && (F = O[0]), F instanceof Error)
-      throw F;
-    var l = new Error("Unhandled error." + (F ? " (" + F.message + ")" : ""));
-    throw l.context = F, l;
-  }
-  var U = t[c];
-  if (U === void 0)
-    return !1;
-  if (typeof U == "function")
-    ReflectApply(U, this, O);
-  else
-    for (var $ = U.length, D = arrayClone$1(U, $), q = 0; q < $; ++q)
-      ReflectApply(D[q], this, O);
-  return !0;
-};
-function _addListener(P, c, O, q) {
-  var X, t, F;
-  if (checkListener(O), t = P._events, t === void 0 ? (t = P._events = /* @__PURE__ */ Object.create(null), P._eventsCount = 0) : (t.newListener !== void 0 && (P.emit(
-    "newListener",
-    c,
-    O.listener ? O.listener : O
-  ), t = P._events), F = t[c]), F === void 0)
-    F = t[c] = O, ++P._eventsCount;
-  else if (typeof F == "function" ? F = t[c] = q ? [O, F] : [F, O] : q ? F.unshift(O) : F.push(O), X = _getMaxListeners(P), X > 0 && F.length > X && !F.warned) {
-    F.warned = !0;
-    var l = new Error("Possible EventEmitter memory leak detected. " + F.length + " " + String(c) + " listeners added. Use emitter.setMaxListeners() to increase limit");
-    l.name = "MaxListenersExceededWarning", l.emitter = P, l.type = c, l.count = F.length, ProcessEmitWarning(l);
-  }
-  return P;
-}
-EventEmitter$1.prototype.addListener = function(c, O) {
-  return _addListener(this, c, O, !1);
-};
-EventEmitter$1.prototype.on = EventEmitter$1.prototype.addListener;
-EventEmitter$1.prototype.prependListener = function(c, O) {
-  return _addListener(this, c, O, !0);
-};
-function onceWrapper() {
-  if (!this.fired)
-    return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
-}
-function _onceWrap(P, c, O) {
-  var q = { fired: !1, wrapFn: void 0, target: P, type: c, listener: O }, X = onceWrapper.bind(q);
-  return X.listener = O, q.wrapFn = X, X;
-}
-EventEmitter$1.prototype.once = function(c, O) {
-  return checkListener(O), this.on(c, _onceWrap(this, c, O)), this;
-};
-EventEmitter$1.prototype.prependOnceListener = function(c, O) {
-  return checkListener(O), this.prependListener(c, _onceWrap(this, c, O)), this;
-};
-EventEmitter$1.prototype.removeListener = function(c, O) {
-  var q, X, t, F, l;
-  if (checkListener(O), X = this._events, X === void 0)
-    return this;
-  if (q = X[c], q === void 0)
-    return this;
-  if (q === O || q.listener === O)
-    --this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : (delete X[c], X.removeListener && this.emit("removeListener", c, q.listener || O));
-  else if (typeof q != "function") {
-    for (t = -1, F = q.length - 1; F >= 0; F--)
-      if (q[F] === O || q[F].listener === O) {
-        l = q[F].listener, t = F;
-        break;
-      }
-    if (t < 0)
-      return this;
-    t === 0 ? q.shift() : spliceOne(q, t), q.length === 1 && (X[c] = q[0]), X.removeListener !== void 0 && this.emit("removeListener", c, l || O);
-  }
-  return this;
-};
-EventEmitter$1.prototype.off = EventEmitter$1.prototype.removeListener;
-EventEmitter$1.prototype.removeAllListeners = function(c) {
-  var O, q, X;
-  if (q = this._events, q === void 0)
-    return this;
-  if (q.removeListener === void 0)
-    return arguments.length === 0 ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : q[c] !== void 0 && (--this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : delete q[c]), this;
-  if (arguments.length === 0) {
-    var t = Object.keys(q), F;
-    for (X = 0; X < t.length; ++X)
-      F = t[X], F !== "removeListener" && this.removeAllListeners(F);
-    return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
-  }
-  if (O = q[c], typeof O == "function")
-    this.removeListener(c, O);
-  else if (O !== void 0)
-    for (X = O.length - 1; X >= 0; X--)
-      this.removeListener(c, O[X]);
-  return this;
-};
-function _listeners(P, c, O) {
-  var q = P._events;
-  if (q === void 0)
-    return [];
-  var X = q[c];
-  return X === void 0 ? [] : typeof X == "function" ? O ? [X.listener || X] : [X] : O ? unwrapListeners(X) : arrayClone$1(X, X.length);
-}
-EventEmitter$1.prototype.listeners = function(c) {
-  return _listeners(this, c, !0);
-};
-EventEmitter$1.prototype.rawListeners = function(c) {
-  return _listeners(this, c, !1);
-};
-EventEmitter$1.listenerCount = function(P, c) {
-  return typeof P.listenerCount == "function" ? P.listenerCount(c) : listenerCount.call(P, c);
-};
-EventEmitter$1.prototype.listenerCount = listenerCount;
-function listenerCount(P) {
-  var c = this._events;
-  if (c !== void 0) {
-    var O = c[P];
-    if (typeof O == "function")
-      return 1;
-    if (O !== void 0)
-      return O.length;
-  }
-  return 0;
-}
-EventEmitter$1.prototype.eventNames = function() {
-  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
-};
-function arrayClone$1(P, c) {
-  for (var O = new Array(c), q = 0; q < c; ++q)
-    O[q] = P[q];
-  return O;
-}
-function spliceOne(P, c) {
-  for (; c + 1 < P.length; c++)
-    P[c] = P[c + 1];
-  P.pop();
-}
-function unwrapListeners(P) {
-  for (var c = new Array(P.length), O = 0; O < c.length; ++O)
-    c[O] = P[O].listener || P[O];
-  return c;
-}
-function once(P, c) {
-  return new Promise(function(O, q) {
-    function X(F) {
-      P.removeListener(c, t), q(F);
-    }
-    function t() {
-      typeof P.removeListener == "function" && P.removeListener("error", X), O([].slice.call(arguments));
-    }
-    eventTargetAgnosticAddListener(P, c, t, { once: !0 }), c !== "error" && addErrorHandlerIfEventEmitter(P, X, { once: !0 });
-  });
-}
-function addErrorHandlerIfEventEmitter(P, c, O) {
-  typeof P.on == "function" && eventTargetAgnosticAddListener(P, "error", c, O);
-}
-function eventTargetAgnosticAddListener(P, c, O, q) {
-  if (typeof P.on == "function")
-    q.once ? P.once(c, O) : P.on(c, O);
-  else if (typeof P.addEventListener == "function")
-    P.addEventListener(c, function X(t) {
-      q.once && P.removeEventListener(c, X), O(t);
-    });
-  else
-    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof P);
-}
-var eventsExports = events$1.exports;
-function safeApply(P, c, O) {
-  try {
-    Reflect.apply(P, c, O);
-  } catch (q) {
-    setTimeout(() => {
-      throw q;
-    });
-  }
-}
-function arrayClone(P) {
-  const c = P.length, O = new Array(c);
-  for (let q = 0; q < c; q += 1)
-    O[q] = P[q];
-  return O;
-}
-class SafeEventEmitter extends eventsExports.EventEmitter {
-  emit(c, ...O) {
-    let q = c === "error";
-    const X = this._events;
-    if (X !== void 0)
-      q = q && X.error === void 0;
-    else if (!q)
-      return !1;
-    if (q) {
-      let F;
-      if (O.length > 0 && ([F] = O), F instanceof Error)
-        throw F;
-      const l = new Error(`Unhandled error.${F ? ` (${F.message})` : ""}`);
-      throw l.context = F, l;
-    }
-    const t = X[c];
-    if (t === void 0)
-      return !1;
-    if (typeof t == "function")
-      safeApply(t, this, O);
-    else {
-      const F = t.length, l = arrayClone(t);
-      for (let U = 0; U < F; U += 1)
-        safeApply(l[U], this, O);
-    }
-    return !0;
-  }
-}
-const name$2 = "@wepin/sdk-js", version$2 = "0.0.6", description$2 = "Wepin Widget Javascript SDK for Web", author$2 = "IoTrust, Co., Ltd.", homepage$1 = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license$2 = "MIT", main$2 = "./dist/wepin-sdk-js.mjs", jsdelivr = "./dist/wepin-sdk-js.umd.js", types$2 = "./dist/src/index.d.ts", files$2 = [
-  "dist"
-], scripts$2 = {
-  build: "vite build --mode production",
-  dev: "vite build --mode development",
-  watch: "vite build --watch",
-  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-}, keywords$2 = [
-  "wepin",
-  "wepinwallet",
-  "wallet"
-], dependencies$2 = {}, devDependencies$2 = {
-  "@wepin/fetch-js": "link:../fetch",
-  "@wepin/modal-js": "link:../modal",
-  "@wepin/storage-js": "link:../storage",
-  "@types/events": "^3.0.3",
-  events: "^3.3.0",
-  "jwt-decode": "^4.0.0"
-}, PackageJson = {
-  name: name$2,
-  version: version$2,
-  description: description$2,
-  author: author$2,
-  homepage: homepage$1,
-  license: license$2,
-  main: main$2,
-  jsdelivr,
-  types: types$2,
-  files: files$2,
-  scripts: scripts$2,
-  keywords: keywords$2,
-  dependencies: dependencies$2,
-  devDependencies: devDependencies$2
-}, WEPIN_DEFAULT_LANG = "ko", WEPIN_DEFAULT_CURRENCY = "krw", Dt = class Dt {
-};
-Dt.test = console.warn.bind(window.console, "[SDK][test] "), Dt.warn = console.warn.bind(window.console, "[SDK][warn] "), Dt.error = console.error.bind(window.console, "[SDK][error] "), Dt.todo = console.warn.bind(window.console, "[SDK][todo] "), Dt.assert = console.assert.bind(window.console), Dt.debug = () => {
-};
-let LOG = Dt;
-const Gt = class Gt {
-  static isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  }
-  static messages(c) {
-    return {
-      hasValidOrigin: (O) => O.origin === Gt.getUrls(c).wepinWebview
-      // hasCorrectCorrelationID(message: MessageEvent,
-      //                         correlationID: string | undefined) {
-      //     return correlationID && message.data && message.data.correlationID === correlationID;
-      // }
-    };
-  }
-  static getUrls(c) {
-    switch (c) {
-      case "production":
-        return {
-          wepinWebview: "https://v1-widget.wepin.io"
-        };
-      case "test":
-        return {
-          wepinWebview: "https://stage-v1-widget.wepin.io"
-        };
-      case "development":
-        return {
-          //wepinWebview: `https://localhost:8989`,
-          wepinWebview: "https://dev-v1-widget.wepin.io"
-        };
-      case "local":
-        return {
-          wepinWebview: "https://local-widget.wepin.io"
-        };
-      default:
-        throw new Error("Utils.getUrls: invalid mode");
-    }
-  }
-  static uuidv4() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function(c) {
-        const O = Math.random() * 16 | 0;
-        return (c == "x" ? O : O & 3 | 8).toString(16);
-      }
-    );
-  }
-};
-Gt.checkSameNumber = (c, O, q) => {
-  if (q) return !1;
-  const X = [...Array(10)].map(Number.prototype.valueOf, 0);
-  let t = !1;
-  return [...c].forEach((l) => {
-    if (X[Number(l)]++, X[Number(l)] >= O) {
-      t = !0;
-      return;
-    }
-  }), t;
-};
-let Utils = Gt;
-var d = (P, c, O) => new Promise((q, X) => {
-  var t = (U) => {
-    try {
-      l(O.next(U));
-    } catch ($) {
-      X($);
-    }
-  }, F = (U) => {
-    try {
-      l(O.throw(U));
-    } catch ($) {
-      X($);
-    }
-  }, l = (U) => U.done ? q(U.value) : Promise.resolve(U.value).then(t, F);
-  l((O = O.apply(P, c)).next());
-});
-const v = class {
-  static closeOverlay(c) {
-    const O = document.querySelector(`#${c}`);
-    O && O.parentNode && O.parentNode.removeChild(O);
-  }
-  static openOverlay(c) {
-    const O = document.createElement("div");
-    O.id = c, O.classList.add(this.CONST.overlayClassName), O.style.zIndex = "2147483647", O.style.display = "flex", O.style.alignItems = "center", O.style.justifyContent = "center", O.style.textAlign = "center", O.style.position = "fixed", O.style.left = "0px", O.style.right = "0px", O.style.top = "0px", O.style.bottom = "0px", O.style.left = "0px", O.style.background = "rgba(0,0,0,0.6)", O.style.color = "white", O.style.border = "2px solid #f1f1f1";
-    const q = document.getElementsByClassName(
-      this.CONST.overlayClassName
-    );
-    for (let X = 0; X < q.length; X++) {
-      const t = q.item(X);
-      t && t.remove();
-    }
-    document.body.appendChild(O);
-  }
-};
-v.CONST = {
-  overlayClassName: "wepin-widget__overlay"
-};
-let m$2 = v;
-const x = (P) => {
-  const c = (P == null ? void 0 : P.width) || 375, O = (P == null ? void 0 : P.height) || 604, q = P != null && P.sLeft ? P == null ? void 0 : P.sLeft : window.screenLeft ? window.screenLeft : window.screenX ? window.screenX : 0, X = P != null && P.sTop ? P == null ? void 0 : P.sTop : window.screenTop ? window.screenTop : window.screenY ? window.screenY : 0, t = screen.width / 2 - c / 2 + q, F = screen.height / 2 - O / 2 + X;
-  return `width=${c}, height=${O}, left=${t}, top=${F}scrollbars=yes, resizable=1, menubar=no, toolbar=no`;
-}, b = (P) => {
-  const c = document.createElement("iframe");
-  return c.classList.add("wepin-sdk-widget-iframe"), c.setAttribute("frameborder", "0"), c.setAttribute("marginwidth", "0"), c.setAttribute("marginheight", "0"), c.style.width = "100%", P && P != null && P.isHide ? c.style.height = "0" : c.style.height = "100%", c.style.maxHeight = "100%", c.style.position = "fixed", c.style.bottom = "0", c.style.left = "0", c.style.zIndex = "408888000000", c.title = "wepin sdk webview", c.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; camera; clipboard-read", c.allowFullscreen = !0, c;
-}, f$2 = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(P) {
-  const c = Math.random() * 16 | 0;
-  return (P == "x" ? c : c & 3 | 8).toString(16);
-}), a = class Ft extends m$2 {
-  constructor(c, O, q, X, t) {
-    super(), this.isWidgetReady = !1, this.url = c, this.id = `id-${f$2()}`, this.isHide = t, t || Ft.openOverlay(this.id), Ft._webview[this.id] = O, this.type = q, this.EL = X, window.addEventListener("message", this.EL), this._open = !0;
-  }
-  get isOpen() {
-    return this._open;
-  }
-  // For communicating with the Wepin instance
-  // private _wepin: Wepin
-  // public get Wepin() {
-  //   return this._wepin
-  // }
-  // For communicating with the Webview
-  // private _webview: HTMLIFrameElement
-  static getWebview(c) {
-    return Ft._webview[c];
-  }
-  static clearWebview(c) {
-    delete Ft._webview[c];
-  }
-  static clearAllWebview() {
-    this._webview = {};
-  }
-  close() {
-    this.isHide || Ft.closeOverlay(this.id), window.removeEventListener("message", this.EL), this._open = !1, this.isWidgetReady = !1, this._closeWebview();
-  }
-  response(c) {
-    try {
-      this._post(c);
-    } catch (O) {
-      console.error("Can not response message to the webview", O);
-    }
-  }
-  request(c) {
-    try {
-      this._post(c);
-    } catch (O) {
-      console.error("Can not send message to the webview", O);
-    }
-  }
-};
-a._webview = {};
-let r$2 = a, h$2 = class zt extends r$2 {
-  // is it necessary ?
-  constructor({
-    url: c,
-    // wepin,
-    frame: O,
-    EL: q,
-    isHide: X
-  }) {
-    super(c, O, "Frame", q, X), O.src = c, O.id = this.id;
-    const t = document.querySelector("body");
-    zt.scrollPosition = window.pageYOffset, t.style.overflow = "hidden", t.style.position = "fixed", t.style.top = `-${zt.scrollPosition}px`, t.style.width = "100%", document.body.appendChild(O);
-  }
-  static openNew(c) {
-    return d(this, arguments, function* ({
-      url: O,
-      EL: q,
-      widgetOptions: X
-    }) {
-      const t = b({ isHide: X == null ? void 0 : X.isHide });
-      return new zt({
-        url: O,
-        // wepin,
-        frame: t,
-        EL: q,
-        isHide: X == null ? void 0 : X.isHide
-      });
-    });
-  }
-  expand() {
-    const c = r$2.getWebview(this.id);
-    c.style.height = "100%", c.style.borderRadius = "0";
-  }
-  shrink() {
-    const c = r$2.getWebview(this.id);
-    c.style.height = "604px", c.style.borderRadius = "12px 12px 0 0 ";
-  }
-  _closeWebview() {
-    const c = setTimeout(() => {
-      const O = r$2.getWebview(this.id), q = document.querySelector("body");
-      q.style.removeProperty("overflow"), q.style.removeProperty("position"), q.style.removeProperty("top"), q.style.removeProperty("width"), window.scrollTo(0, zt.scrollPosition), O && document.body.removeChild(O), r$2.clearWebview(this.id), clearTimeout(c);
-    }, 500);
-  }
-  _post(c) {
-    r$2.getWebview(this.id).contentWindow.postMessage(c, this.url);
-  }
-};
-class p extends r$2 {
-  constructor({
-    url: c,
-    webview: O,
-    EL: q
-  }) {
-    super(c, O, "Window", q, !1);
-  }
-  //: NodeJS.Timer | number
-  static openNew(c) {
-    return d(this, arguments, function* ({
-      url: O,
-      EL: q,
-      widgetFeatures: X
-    }) {
-      const t = x(X), F = window.open(O, "Wepin_Widget", t), l = new p({
-        url: O,
-        webview: F,
-        EL: q
-      });
-      if (!F)
-        throw l.close(), new Error("popup window blocked");
-      return this.timer = setInterval(() => {
-        try {
-          F && F.closed && (clearInterval(this.timer), l.close());
-        } catch (U) {
-          clearInterval(this.timer), l.close();
-        }
-      }, 200), l;
-    });
-  }
-  expand() {
-  }
-  shrink() {
-  }
-  _closeWebview() {
-    p.timer && (clearInterval(p.timer), p.timer = void 0);
-    const c = r$2.getWebview(this.id);
-    c && c.close(), r$2.clearWebview(this.id);
-  }
-  _post(c) {
-    r$2.getWebview(this.id).postMessage(c, this.url);
-  }
-}
-const u = "@wepin/modal-js", W = "0.0.2", C = "wepin widget modal", T = "IoTrust, Co., Ltd.", L = "MIT", N = "./dist/wepin-modal-js.mjs", _ = "dist/wepin-modal-js.umd.js", j = "./dist/src/index.d.ts", E = [
-  "dist"
-], I = {
-  build: "vite build --mode production",
-  dev: "vite build --mode development",
-  watch: "vite build --watch",
-  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
-}, k = [
-  "wepin",
-  "wepinwallet",
-  "wallet",
-  "wepin-modal"
-], M = {
-  name: u,
-  version: W,
-  description: C,
-  author: T,
-  license: L,
-  main: N,
-  jsdelivr: _,
-  types: j,
-  files: E,
-  scripts: I,
-  keywords: k
-};
-class A {
-  //   constructor(appKey: string, appId: string) {
-  constructor() {
-    this.platformType = "web", this._modalWindow = null, this._modalFrame = null, console.log(`WepinModal v${M.version}`), this.domain = window.location.origin;
-  }
-  //   async init() {
-  //     // getAppInfo수행해보고기..
-  //     this._appId
-  //     this._appKey
-  //     this._isInitialized = true
-  //     return this._isInitialized
-  //   }
-  openAuthBrowser(c, O) {
-    return d(this, null, function* () {
-      return this._modalWindow = yield p.openNew({
-        url: c,
-        EL: O
-      }), this._modalWindow;
-    });
-  }
-  openModal(c, O, q) {
-    return d(this, null, function* () {
-      return this._modalFrame = yield h$2.openNew({
-        url: c,
-        EL: O,
-        widgetOptions: q
-      }), this._modalFrame;
-    });
-  }
-  closeAuthBrowser() {
-    return d(this, null, function* () {
-      this._modalWindow && this._modalWindow.close();
-    });
-  }
-  closeModal() {
-    return d(this, null, function* () {
-      this._modalFrame && this._modalFrame.close();
-    });
-  }
-}
-const proxyToObject = (P) => {
-  if (typeof P != "object" || P === null)
-    return P;
-  if (Array.isArray(P))
-    return P.map(proxyToObject);
-  const c = {};
-  for (const O of Object.keys(P))
-    c[O] = proxyToObject(P[O]);
-  return c;
-};
-var Platform = /* @__PURE__ */ ((P) => (P[P.web = 1] = "web", P[P.android = 2] = "android", P[P.ios = 3] = "ios", P))(Platform || {});
-const WebviewRequestHandler = (P, c, O) => {
-  var t, F, l, U;
-  const q = {
-    header: {
-      response_from: "web",
-      response_to: "wepin_widget",
-      id: P.header.id
-    }
-  };
-  let X = O.appKey;
-  switch (O.appKey.slice(0, 13) === "local_ak_dev_" ? X = O.appKey.slice(6) : X = O.appKey, P.body.command) {
-    case "ready_to_widget":
-      LOG.debug("ready_to_widget"), c.wepinStorage.getAllLocalStorage(O.appId).then(($) => {
-        var te, ie, ne;
-        const D = $ != null ? $ : {}, Q = Object.assign({}, c.wepinAppAttributes), V = (te = c.wepinAppAttributes.loginProviders) != null && te.length || ((ie = c.wepinAppAttributes.loginProviders) == null ? void 0 : ie.length) === 0 ? Array.from(c.wepinAppAttributes.loginProviders) : void 0;
-        Q.loginProviders = V, q.body = {
-          command: "ready_to_widget",
-          state: "SUCCESS",
-          data: {
-            appKey: X,
-            appId: O.appId,
-            domain: c.wepinDomain,
-            platform: Platform[c.type],
-            attributes: Q,
-            //Object.assign({}, wepinSDK.wepinAppAttributes),
-            version: c.version.includes("-alpha") ? c.version.substring(0, c.version.indexOf("-")) : c.version,
-            type: `${c.type}-sdk`,
-            localDate: D
-          }
-        }, (ne = c.wepinWidget) != null && ne.isOpen && c.wepinWidget.response(q);
-      });
-      break;
-    case "close_wepin_widget":
-      c.wepinWidget && (c.wepinWidget.close(), c.wepinWidget = void 0), c.wepinStorage.getLocalStorage(
-        O.appId,
-        "user_info"
-      ).then(($) => {
-        var D;
-        $ ? c.setUserInfo($, !0) : c.setUserInfo({ status: "fail" }, !0), c.removeAllListeners(), c.specifiedEmail = void 0, (D = c.wepinWidget) != null && D.isOpen && c.wepinWidget.response(q);
-      });
-      break;
-    case "set_local_storage":
-      c.wepinStorage.setAllLocalStorage(
-        O.appId,
-        P.body.parameter.data
-      ).then(() => wt(void 0, null, function* () {
-        var $;
-        P.body.parameter.data && P.body.parameter.data.user_info && c.setUserInfo(P.body.parameter.data.user_info, !0), P.body.parameter.data && P.body.parameter.data["wepin:connectUser"] && (yield c.setToken(P.body.parameter.data["wepin:connectUser"])), q.body = {
-          command: "set_local_storage",
-          state: "SUCCESS",
-          data: ""
-        }, ($ = c.wepinWidget) != null && $.isOpen && c.wepinWidget.response(q);
-      }));
-      break;
-    case "set_user_email":
-      q.body = {
-        command: "set_user_email",
-        state: "SUCCESS",
-        data: {
-          email: c.specifiedEmail
-        }
-      }, (t = c.wepinWidget) != null && t.isOpen && c.wepinWidget.response(q);
-      break;
-    case "get_sdk_request":
-      LOG.debug("get_sdk_request", (F = c.getSDKRequest()) != null ? F : "No request"), q.body = {
-        command: "get_sdk_request",
-        state: "SUCCESS",
-        data: (l = proxyToObject(c.getSDKRequest())) != null ? l : "No request"
-      }, (U = c.wepinWidget) != null && U.isOpen && c.wepinWidget.response(q);
-      break;
-    default:
-      throw new Error(`Command ${P.body.command} is not supported.`);
-  }
-}, WebviewResponseHandler = (P, c) => {
-  LOG.debug("Got Response from webview =>", P), c.emit(P.header.id.toString(), P);
-}, getEventListener = (P, c) => {
-  const O = (q) => !(!(P.wepinWidget.url.includes("/wepin-sdk-login") || P.wepinWidget.url.includes(q.origin)) && q.origin !== P.wepinWidget.url || !Object.prototype.hasOwnProperty.call(q.data, "header") || !Object.prototype.hasOwnProperty.call(q.data, "body"));
-  return (q) => {
-    O(q) && handleMessage(
-      q.data,
-      P,
-      c
-    );
-  };
-}, handleMessage = (P, c, O) => {
-  P.header.request_to === "web" ? WebviewRequestHandler(P, c, O) : P.header.response_to === "web" ? WebviewResponseHandler(P, c) : LOG.error("Failed to handle message:", P);
-}, emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;
 var buffer$2 = {}, base64Js$1 = {};
 base64Js$1.byteLength = byteLength;
 base64Js$1.toByteArray = toByteArray;
@@ -1731,8 +1023,176 @@ var _globalThis = function(P) {
     }
   }, l = (U) => U.done ? q(U.value) : Promise.resolve(U.value).then(t, F);
   l((O = O.apply(P, c)).next());
-});
-const name$1 = "@wepin/fetch-js", version$1 = "0.0.4", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
+}), S$1 = (P) => {
+  throw TypeError(P);
+}, h$2 = (P, c, O) => c.has(P) || S$1("Cannot " + O), n$1 = (P, c, O) => (h$2(P, c, "read from private field"), O ? O.call(P) : c.get(P)), f$2 = (P, c, O) => c.has(P) ? S$1("Cannot add the same private member more than once") : c instanceof WeakSet ? c.add(P) : c.set(P, O), s$1 = (P, c, O) => new Promise((q, X) => {
+  var t = (U) => {
+    try {
+      l(O.next(U));
+    } catch ($) {
+      X($);
+    }
+  }, F = (U) => {
+    try {
+      l(O.throw(U));
+    } catch ($) {
+      X($);
+    }
+  }, l = (U) => U.done ? q(U.value) : Promise.resolve(U.value).then(t, F);
+  l((O = O.apply(P, c)).next());
+}), i$1;
+const r$2 = class jt {
+  constructor() {
+    this.platform = "web";
+  }
+  getLocalStorageEnabled() {
+    let c = !1;
+    try {
+      c = window.localStorage && !0;
+    } catch (O) {
+      c = !1;
+    }
+    return c;
+  }
+  setAllLocalStorage(c, O) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const q = JSON.stringify(O);
+      localStorage.setItem(n$1(jt, i$1) + c, q);
+    });
+  }
+  setLocalStorage(c, O, q) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const X = yield this.getAllLocalStorage(c);
+      if (X) {
+        X[O] = q, localStorage.setItem(
+          n$1(jt, i$1) + c,
+          // btoa(JSON.stringify(localData)),
+          JSON.stringify(X)
+        );
+        return;
+      }
+      const t = { [O]: q };
+      localStorage.setItem(
+        n$1(jt, i$1) + c,
+        // btoa(JSON.stringify(newData)),
+        JSON.stringify(t)
+      );
+    });
+  }
+  getLocalStorage(c, O) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const q = yield this.getAllLocalStorage(c);
+      try {
+        if (q)
+          return JSON.parse(q[O]);
+      } catch (X) {
+        if (q) return q[O];
+      }
+    });
+  }
+  getAllLocalStorage(c) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      try {
+        return localStorage.getItem(n$1(jt, i$1) + c) ? (
+          // ? JSON.parse(atob(localStorage.getItem(this.#COOKIE_NAME + appId)))
+          JSON.parse(localStorage.getItem(n$1(jt, i$1) + c))
+        ) : void 0;
+      } catch (O) {
+        return;
+      }
+    });
+  }
+  clearLocalStorage(c, O) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      if (yield this.getLocalStorage(c, O)) {
+        const q = yield this.getAllLocalStorage(c);
+        if (!q)
+          return;
+        delete q[O], localStorage.setItem(
+          n$1(jt, i$1) + c,
+          // btoa(JSON.stringify(localData)),
+          JSON.stringify(q)
+        );
+      }
+    });
+  }
+  clearAllLocalStorage(c) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      localStorage.removeItem(n$1(jt, i$1) + c);
+    });
+  }
+  setLoginUserLocalStorage(c, O, q) {
+    return s$1(this, null, function* () {
+      if (!this.getLocalStorageEnabled()) {
+        console.error(
+          "Local storage is not available. We recommend using local storage to maintain login sessions."
+        );
+        return;
+      }
+      const X = {};
+      return X["firebase:wepin"] = Object.assign(
+        { provider: O == null ? void 0 : O.provider },
+        O == null ? void 0 : O.token
+      ), X["wepin:connectUser"] = {
+        accessToken: q.token.access,
+        refreshToken: q.token.refresh
+      }, X.user_id = q.userInfo.userId, X.user_info = {
+        status: "success",
+        userInfo: {
+          userId: q.userInfo.userId,
+          email: q.userInfo.email,
+          provider: O.provider,
+          use2FA: q.userInfo.use2FA >= 2
+        }
+      }, X.user_status = {
+        loginStatus: q.loginStatus,
+        pinRequired: q.loginStatus === "registerRequired" ? q.pinRequired : !1
+      }, q.loginStatus !== "pinRequired" && q.walletId && (X.wallet_id = q.walletId, X.user_info.walletId = q.walletId), X.oauth_provider_pending = O.provider, this.setAllLocalStorage(c, X), {
+        userInfo: X.user_info,
+        connectUser: X["wepin:connectUser"]
+      };
+    });
+  }
+};
+i$1 = /* @__PURE__ */ new WeakMap(), f$2(r$2, i$1, "wepin:auth:");
+let m$2 = r$2;
+const name$1 = "@wepin/fetch-js", version$1 = "0.0.6", description$1 = "Wepin fetch library for Web", author$1 = "IoTrust, Co., Ltd.", license$1 = "MIT", main$1 = "./dist/wepin-fetch-js.mjs", types$1 = "./dist/src/index.d.ts", files$1 = [
   "dist"
 ], scripts$1 = {
   build: "vite build --mode production",
@@ -1740,7 +1200,7 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.4", description$1 = "Wepin fe
   watch: "vite build --watch",
   lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
 }, dependencies$1 = {}, devDependencies$1 = {
-  "@wepin/storage-js": "link:../storage",
+  "@wepin/storage-js": "^0.0.3",
   "@types/bcryptjs": "^2.4.6",
   bcryptjs: "^2.4.3",
   eventemitter2: "^6.4.9",
@@ -1764,16 +1224,6 @@ const name$1 = "@wepin/fetch-js", version$1 = "0.0.4", description$1 = "Wepin fe
   devDependencies: devDependencies$1,
   keywords: keywords$1
 };
-class APIResponse {
-  constructor({
-    data: c,
-    status: O,
-    headers: q,
-    request: X
-  }) {
-    this.data = c, this.status = O, this.headers = q, this.request = X;
-  }
-}
 var commonjsGlobal = typeof globalThis != "undefined" ? globalThis : typeof window != "undefined" ? window : typeof _global != "undefined" ? _global : typeof self != "undefined" ? self : {};
 function getDefaultExportFromCjs(P) {
   return P && P.__esModule && Object.prototype.hasOwnProperty.call(P, "default") ? P.default : P;
@@ -2769,750 +2219,6 @@ const process$1 = /* @__PURE__ */ getDefaultExportFromCjs(browserExports);
   var O = __magic__;
   return O;
 })(Object);
-var eventemitter2 = { exports: {} };
-(function(P, c) {
-  (function(O) {
-    var q = Object.hasOwnProperty, X = Array.isArray ? Array.isArray : function(B) {
-      return Object.prototype.toString.call(B) === "[object Array]";
-    }, t = 10, F = typeof process$1 == "object" && typeof process$1.nextTick == "function", l = typeof Symbol == "function", U = typeof Reflect == "object", $ = typeof setImmediate == "function", D = $ ? setImmediate : setTimeout, Q = l ? U && typeof Reflect.ownKeys == "function" ? Reflect.ownKeys : function(B) {
-      var w = Object.getOwnPropertyNames(B);
-      return w.push.apply(w, Object.getOwnPropertySymbols(B)), w;
-    } : Object.keys;
-    function V() {
-      this._events = {}, this._conf && te.call(this, this._conf);
-    }
-    function te(B) {
-      B && (this._conf = B, B.delimiter && (this.delimiter = B.delimiter), B.maxListeners !== O && (this._maxListeners = B.maxListeners), B.wildcard && (this.wildcard = B.wildcard), B.newListener && (this._newListener = B.newListener), B.removeListener && (this._removeListener = B.removeListener), B.verboseMemoryLeak && (this.verboseMemoryLeak = B.verboseMemoryLeak), B.ignoreErrors && (this.ignoreErrors = B.ignoreErrors), this.wildcard && (this.listenerTree = {}));
-    }
-    function ie(B, w) {
-      var G = "(node) warning: possible EventEmitter memory leak detected. " + B + " listeners added. Use emitter.setMaxListeners() to increase limit.";
-      if (this.verboseMemoryLeak && (G += " Event name: " + w + "."), typeof process$1 != "undefined" && process$1.emitWarning) {
-        var g = new Error(G);
-        g.name = "MaxListenersExceededWarning", g.emitter = this, g.count = B, process$1.emitWarning(g);
-      } else
-        console.error(G), console.trace && console.trace();
-    }
-    var ne = function(B, w, G) {
-      var g = arguments.length;
-      switch (g) {
-        case 0:
-          return [];
-        case 1:
-          return [B];
-        case 2:
-          return [B, w];
-        case 3:
-          return [B, w, G];
-        default:
-          for (var J = new Array(g); g--; )
-            J[g] = arguments[g];
-          return J;
-      }
-    };
-    function se(B, w) {
-      for (var G = {}, g, J = B.length, le = 0, ge = 0; ge < J; ge++)
-        g = B[ge], G[g] = ge < le ? w[ge] : O;
-      return G;
-    }
-    function ae(B, w, G) {
-      this._emitter = B, this._target = w, this._listeners = {}, this._listenersCount = 0;
-      var g, J;
-      if ((G.on || G.off) && (g = G.on, J = G.off), w.addEventListener ? (g = w.addEventListener, J = w.removeEventListener) : w.addListener ? (g = w.addListener, J = w.removeListener) : w.on && (g = w.on, J = w.off), !g && !J)
-        throw Error("target does not implement any known event API");
-      if (typeof g != "function")
-        throw TypeError("on method must be a function");
-      if (typeof J != "function")
-        throw TypeError("off method must be a function");
-      this._on = g, this._off = J;
-      var le = B._observers;
-      le ? le.push(this) : B._observers = [this];
-    }
-    Object.assign(ae.prototype, {
-      subscribe: function(B, w, G) {
-        var g = this, J = this._target, le = this._emitter, ge = this._listeners, Se = function() {
-          var ye = ne.apply(null, arguments), fe = {
-            data: ye,
-            name: w,
-            original: B
-          };
-          if (G) {
-            var he = G.call(J, fe);
-            he !== !1 && le.emit.apply(le, [fe.name].concat(ye));
-            return;
-          }
-          le.emit.apply(le, [w].concat(ye));
-        };
-        if (ge[B])
-          throw Error("Event '" + B + "' is already listening");
-        this._listenersCount++, le._newListener && le._removeListener && !g._onNewListener ? (this._onNewListener = function(ye) {
-          ye === w && ge[B] === null && (ge[B] = Se, g._on.call(J, B, Se));
-        }, le.on("newListener", this._onNewListener), this._onRemoveListener = function(ye) {
-          ye === w && !le.hasListeners(ye) && ge[B] && (ge[B] = null, g._off.call(J, B, Se));
-        }, ge[B] = null, le.on("removeListener", this._onRemoveListener)) : (ge[B] = Se, g._on.call(J, B, Se));
-      },
-      unsubscribe: function(B) {
-        var w = this, G = this._listeners, g = this._emitter, J, le, ge = this._off, Se = this._target, ye;
-        if (B && typeof B != "string")
-          throw TypeError("event must be a string");
-        function fe() {
-          w._onNewListener && (g.off("newListener", w._onNewListener), g.off("removeListener", w._onRemoveListener), w._onNewListener = null, w._onRemoveListener = null);
-          var he = ce.call(g, w);
-          g._observers.splice(he, 1);
-        }
-        if (B) {
-          if (J = G[B], !J) return;
-          ge.call(Se, B, J), delete G[B], --this._listenersCount || fe();
-        } else {
-          for (le = Q(G), ye = le.length; ye-- > 0; )
-            B = le[ye], ge.call(Se, B, G[B]);
-          this._listeners = {}, this._listenersCount = 0, fe();
-        }
-      }
-    });
-    function oe(B, w, G, g) {
-      var J = Object.assign({}, w);
-      if (!B) return J;
-      if (typeof B != "object")
-        throw TypeError("options must be an object");
-      var le = Object.keys(B), ge = le.length, Se, ye, fe;
-      function he(ke) {
-        throw Error('Invalid "' + Se + '" option value' + (ke ? ". Reason: " + ke : ""));
-      }
-      for (var Re = 0; Re < ge; Re++) {
-        if (Se = le[Re], !q.call(w, Se))
-          throw Error('Unknown "' + Se + '" option');
-        ye = B[Se], ye !== O && (fe = G[Se], J[Se] = fe ? fe(ye, he) : ye);
-      }
-      return J;
-    }
-    function be(B, w) {
-      return (typeof B != "function" || !B.hasOwnProperty("prototype")) && w("value must be a constructor"), B;
-    }
-    function de(B) {
-      var w = "value must be type of " + B.join("|"), G = B.length, g = B[0], J = B[1];
-      return G === 1 ? function(le, ge) {
-        if (typeof le === g)
-          return le;
-        ge(w);
-      } : G === 2 ? function(le, ge) {
-        var Se = typeof le;
-        if (Se === g || Se === J) return le;
-        ge(w);
-      } : function(le, ge) {
-        for (var Se = typeof le, ye = G; ye-- > 0; )
-          if (Se === B[ye]) return le;
-        ge(w);
-      };
-    }
-    var _e = de(["function"]), qe = de(["object", "function"]);
-    function Te(B, w, G) {
-      var g, J, le = 0, ge, Se = new B(function(ye, fe, he) {
-        G = oe(G, {
-          timeout: 0,
-          overload: !1
-        }, {
-          timeout: function(ve, Ae) {
-            return ve *= 1, (typeof ve != "number" || ve < 0 || !Number.isFinite(ve)) && Ae("timeout must be a positive number"), ve;
-          }
-        }), g = !G.overload && typeof B.prototype.cancel == "function" && typeof he == "function";
-        function Re() {
-          J && (J = null), le && (clearTimeout(le), le = 0);
-        }
-        var ke = function(ve) {
-          Re(), ye(ve);
-        }, me = function(ve) {
-          Re(), fe(ve);
-        };
-        g ? w(ke, me, he) : (J = [function(ve) {
-          me(ve || Error("canceled"));
-        }], w(ke, me, function(ve) {
-          if (ge)
-            throw Error("Unable to subscribe on cancel event asynchronously");
-          if (typeof ve != "function")
-            throw TypeError("onCancel callback must be a function");
-          J.push(ve);
-        }), ge = !0), G.timeout > 0 && (le = setTimeout(function() {
-          var ve = Error("timeout");
-          ve.code = "ETIMEDOUT", le = 0, Se.cancel(ve), fe(ve);
-        }, G.timeout));
-      });
-      return g || (Se.cancel = function(ye) {
-        if (J) {
-          for (var fe = J.length, he = 1; he < fe; he++)
-            J[he](ye);
-          J[0](ye), J = null;
-        }
-      }), Se;
-    }
-    function ce(B) {
-      var w = this._observers;
-      if (!w)
-        return -1;
-      for (var G = w.length, g = 0; g < G; g++)
-        if (w[g]._target === B) return g;
-      return -1;
-    }
-    function pe(B, w, G, g, J) {
-      if (!G)
-        return null;
-      if (g === 0) {
-        var le = typeof w;
-        if (le === "string") {
-          var ge, Se, ye = 0, fe = 0, he = this.delimiter, Re = he.length;
-          if ((Se = w.indexOf(he)) !== -1) {
-            ge = new Array(5);
-            do
-              ge[ye++] = w.slice(fe, Se), fe = Se + Re;
-            while ((Se = w.indexOf(he, fe)) !== -1);
-            ge[ye++] = w.slice(fe), w = ge, J = ye;
-          } else
-            w = [w], J = 1;
-        } else le === "object" ? J = w.length : (w = [w], J = 1);
-      }
-      var ke = null, me, ve, Ae, $e, Oe, Y = w[g], Z = w[g + 1], re, ue;
-      if (g === J)
-        G._listeners && (typeof G._listeners == "function" ? (B && B.push(G._listeners), ke = [G]) : (B && B.push.apply(B, G._listeners), ke = [G]));
-      else if (Y === "*") {
-        for (re = Q(G), Se = re.length; Se-- > 0; )
-          me = re[Se], me !== "_listeners" && (ue = pe(B, w, G[me], g + 1, J), ue && (ke ? ke.push.apply(ke, ue) : ke = ue));
-        return ke;
-      } else if (Y === "**") {
-        for (Oe = g + 1 === J || g + 2 === J && Z === "*", Oe && G._listeners && (ke = pe(B, w, G, J, J)), re = Q(G), Se = re.length; Se-- > 0; )
-          me = re[Se], me !== "_listeners" && (me === "*" || me === "**" ? (G[me]._listeners && !Oe && (ue = pe(B, w, G[me], J, J), ue && (ke ? ke.push.apply(ke, ue) : ke = ue)), ue = pe(B, w, G[me], g, J)) : me === Z ? ue = pe(B, w, G[me], g + 2, J) : ue = pe(B, w, G[me], g, J), ue && (ke ? ke.push.apply(ke, ue) : ke = ue));
-        return ke;
-      } else G[Y] && (ke = pe(B, w, G[Y], g + 1, J));
-      if (ve = G["*"], ve && pe(B, w, ve, g + 1, J), Ae = G["**"], Ae)
-        if (g < J)
-          for (Ae._listeners && pe(B, w, Ae, J, J), re = Q(Ae), Se = re.length; Se-- > 0; )
-            me = re[Se], me !== "_listeners" && (me === Z ? pe(B, w, Ae[me], g + 2, J) : me === Y ? pe(B, w, Ae[me], g + 1, J) : ($e = {}, $e[me] = Ae[me], pe(B, w, { "**": $e }, g + 1, J)));
-        else Ae._listeners ? pe(B, w, Ae, J, J) : Ae["*"] && Ae["*"]._listeners && pe(B, w, Ae["*"], J, J);
-      return ke;
-    }
-    function Me(B, w, G) {
-      var g = 0, J = 0, le, ge = this.delimiter, Se = ge.length, ye;
-      if (typeof B == "string")
-        if ((le = B.indexOf(ge)) !== -1) {
-          ye = new Array(5);
-          do
-            ye[g++] = B.slice(J, le), J = le + Se;
-          while ((le = B.indexOf(ge, J)) !== -1);
-          ye[g++] = B.slice(J);
-        } else
-          ye = [B], g = 1;
-      else
-        ye = B, g = B.length;
-      if (g > 1) {
-        for (le = 0; le + 1 < g; le++)
-          if (ye[le] === "**" && ye[le + 1] === "**")
-            return;
-      }
-      var fe = this.listenerTree, he;
-      for (le = 0; le < g; le++)
-        if (he = ye[le], fe = fe[he] || (fe[he] = {}), le === g - 1)
-          return fe._listeners ? (typeof fe._listeners == "function" && (fe._listeners = [fe._listeners]), G ? fe._listeners.unshift(w) : fe._listeners.push(w), !fe._listeners.warned && this._maxListeners > 0 && fe._listeners.length > this._maxListeners && (fe._listeners.warned = !0, ie.call(this, fe._listeners.length, he))) : fe._listeners = w, !0;
-      return !0;
-    }
-    function K(B, w, G, g) {
-      for (var J = Q(B), le = J.length, ge, Se, ye, fe = B._listeners, he; le-- > 0; )
-        Se = J[le], ge = B[Se], Se === "_listeners" ? ye = G : ye = G ? G.concat(Se) : [Se], he = g || typeof Se == "symbol", fe && w.push(he ? ye : ye.join(this.delimiter)), typeof ge == "object" && K.call(this, ge, w, ye, he);
-      return w;
-    }
-    function ee(B) {
-      for (var w = Q(B), G = w.length, g, J, le; G-- > 0; )
-        J = w[G], g = B[J], g && (le = !0, J !== "_listeners" && !ee(g) && delete B[J]);
-      return le;
-    }
-    function e(B, w, G) {
-      this.emitter = B, this.event = w, this.listener = G;
-    }
-    e.prototype.off = function() {
-      return this.emitter.off(this.event, this.listener), this;
-    };
-    function o(B, w, G) {
-      if (G === !0)
-        J = !0;
-      else if (G === !1)
-        g = !0;
-      else {
-        if (!G || typeof G != "object")
-          throw TypeError("options should be an object or true");
-        var g = G.async, J = G.promisify, le = G.nextTick, ge = G.objectify;
-      }
-      if (g || le || J) {
-        var Se = w, ye = w._origin || w;
-        if (le && !F)
-          throw Error("process.nextTick is not supported");
-        J === O && (J = w.constructor.name === "AsyncFunction"), w = function() {
-          var fe = arguments, he = this, Re = this.event;
-          return J ? le ? Promise.resolve() : new Promise(function(ke) {
-            D(ke);
-          }).then(function() {
-            return he.event = Re, Se.apply(he, fe);
-          }) : (le ? process$1.nextTick : D)(function() {
-            he.event = Re, Se.apply(he, fe);
-          });
-        }, w._async = !0, w._origin = ye;
-      }
-      return [w, ge ? new e(this, B, w) : this];
-    }
-    function y(B) {
-      this._events = {}, this._newListener = !1, this._removeListener = !1, this.verboseMemoryLeak = !1, te.call(this, B);
-    }
-    y.EventEmitter2 = y, y.prototype.listenTo = function(B, w, G) {
-      if (typeof B != "object")
-        throw TypeError("target musts be an object");
-      var g = this;
-      G = oe(G, {
-        on: O,
-        off: O,
-        reducers: O
-      }, {
-        on: _e,
-        off: _e,
-        reducers: qe
-      });
-      function J(le) {
-        if (typeof le != "object")
-          throw TypeError("events must be an object");
-        var ge = G.reducers, Se = ce.call(g, B), ye;
-        Se === -1 ? ye = new ae(g, B, G) : ye = g._observers[Se];
-        for (var fe = Q(le), he = fe.length, Re, ke = typeof ge == "function", me = 0; me < he; me++)
-          Re = fe[me], ye.subscribe(
-            Re,
-            le[Re] || Re,
-            ke ? ge : ge && ge[Re]
-          );
-      }
-      return X(w) ? J(se(w)) : J(typeof w == "string" ? se(w.split(/\s+/)) : w), this;
-    }, y.prototype.stopListeningTo = function(B, w) {
-      var G = this._observers;
-      if (!G)
-        return !1;
-      var g = G.length, J, le = !1;
-      if (B && typeof B != "object")
-        throw TypeError("target should be an object");
-      for (; g-- > 0; )
-        J = G[g], (!B || J._target === B) && (J.unsubscribe(w), le = !0);
-      return le;
-    }, y.prototype.delimiter = ".", y.prototype.setMaxListeners = function(B) {
-      B !== O && (this._maxListeners = B, this._conf || (this._conf = {}), this._conf.maxListeners = B);
-    }, y.prototype.getMaxListeners = function() {
-      return this._maxListeners;
-    }, y.prototype.event = "", y.prototype.once = function(B, w, G) {
-      return this._once(B, w, !1, G);
-    }, y.prototype.prependOnceListener = function(B, w, G) {
-      return this._once(B, w, !0, G);
-    }, y.prototype._once = function(B, w, G, g) {
-      return this._many(B, 1, w, G, g);
-    }, y.prototype.many = function(B, w, G, g) {
-      return this._many(B, w, G, !1, g);
-    }, y.prototype.prependMany = function(B, w, G, g) {
-      return this._many(B, w, G, !0, g);
-    }, y.prototype._many = function(B, w, G, g, J) {
-      var le = this;
-      if (typeof G != "function")
-        throw new Error("many only accepts instances of Function");
-      function ge() {
-        return --w === 0 && le.off(B, ge), G.apply(this, arguments);
-      }
-      return ge._origin = G, this._on(B, ge, g, J);
-    }, y.prototype.emit = function() {
-      if (!this._events && !this._all)
-        return !1;
-      this._events || V.call(this);
-      var B = arguments[0], w, G = this.wildcard, g, J, le, ge, Se;
-      if (B === "newListener" && !this._newListener && !this._events.newListener)
-        return !1;
-      if (G && (w = B, B !== "newListener" && B !== "removeListener" && typeof B == "object")) {
-        if (J = B.length, l) {
-          for (le = 0; le < J; le++)
-            if (typeof B[le] == "symbol") {
-              Se = !0;
-              break;
-            }
-        }
-        Se || (B = B.join(this.delimiter));
-      }
-      var ye = arguments.length, fe;
-      if (this._all && this._all.length)
-        for (fe = this._all.slice(), le = 0, J = fe.length; le < J; le++)
-          switch (this.event = B, ye) {
-            case 1:
-              fe[le].call(this, B);
-              break;
-            case 2:
-              fe[le].call(this, B, arguments[1]);
-              break;
-            case 3:
-              fe[le].call(this, B, arguments[1], arguments[2]);
-              break;
-            default:
-              fe[le].apply(this, arguments);
-          }
-      if (G)
-        fe = [], pe.call(this, fe, w, this.listenerTree, 0, J);
-      else if (fe = this._events[B], typeof fe == "function") {
-        switch (this.event = B, ye) {
-          case 1:
-            fe.call(this);
-            break;
-          case 2:
-            fe.call(this, arguments[1]);
-            break;
-          case 3:
-            fe.call(this, arguments[1], arguments[2]);
-            break;
-          default:
-            for (g = new Array(ye - 1), ge = 1; ge < ye; ge++) g[ge - 1] = arguments[ge];
-            fe.apply(this, g);
-        }
-        return !0;
-      } else fe && (fe = fe.slice());
-      if (fe && fe.length) {
-        if (ye > 3)
-          for (g = new Array(ye - 1), ge = 1; ge < ye; ge++) g[ge - 1] = arguments[ge];
-        for (le = 0, J = fe.length; le < J; le++)
-          switch (this.event = B, ye) {
-            case 1:
-              fe[le].call(this);
-              break;
-            case 2:
-              fe[le].call(this, arguments[1]);
-              break;
-            case 3:
-              fe[le].call(this, arguments[1], arguments[2]);
-              break;
-            default:
-              fe[le].apply(this, g);
-          }
-        return !0;
-      } else if (!this.ignoreErrors && !this._all && B === "error")
-        throw arguments[1] instanceof Error ? arguments[1] : new Error("Uncaught, unspecified 'error' event.");
-      return !!this._all;
-    }, y.prototype.emitAsync = function() {
-      if (!this._events && !this._all)
-        return !1;
-      this._events || V.call(this);
-      var B = arguments[0], w = this.wildcard, G, g, J, le, ge, Se;
-      if (B === "newListener" && !this._newListener && !this._events.newListener)
-        return Promise.resolve([!1]);
-      if (w && (G = B, B !== "newListener" && B !== "removeListener" && typeof B == "object")) {
-        if (le = B.length, l) {
-          for (ge = 0; ge < le; ge++)
-            if (typeof B[ge] == "symbol") {
-              g = !0;
-              break;
-            }
-        }
-        g || (B = B.join(this.delimiter));
-      }
-      var ye = [], fe = arguments.length, he;
-      if (this._all)
-        for (ge = 0, le = this._all.length; ge < le; ge++)
-          switch (this.event = B, fe) {
-            case 1:
-              ye.push(this._all[ge].call(this, B));
-              break;
-            case 2:
-              ye.push(this._all[ge].call(this, B, arguments[1]));
-              break;
-            case 3:
-              ye.push(this._all[ge].call(this, B, arguments[1], arguments[2]));
-              break;
-            default:
-              ye.push(this._all[ge].apply(this, arguments));
-          }
-      if (w ? (he = [], pe.call(this, he, G, this.listenerTree, 0)) : he = this._events[B], typeof he == "function")
-        switch (this.event = B, fe) {
-          case 1:
-            ye.push(he.call(this));
-            break;
-          case 2:
-            ye.push(he.call(this, arguments[1]));
-            break;
-          case 3:
-            ye.push(he.call(this, arguments[1], arguments[2]));
-            break;
-          default:
-            for (J = new Array(fe - 1), Se = 1; Se < fe; Se++) J[Se - 1] = arguments[Se];
-            ye.push(he.apply(this, J));
-        }
-      else if (he && he.length) {
-        if (he = he.slice(), fe > 3)
-          for (J = new Array(fe - 1), Se = 1; Se < fe; Se++) J[Se - 1] = arguments[Se];
-        for (ge = 0, le = he.length; ge < le; ge++)
-          switch (this.event = B, fe) {
-            case 1:
-              ye.push(he[ge].call(this));
-              break;
-            case 2:
-              ye.push(he[ge].call(this, arguments[1]));
-              break;
-            case 3:
-              ye.push(he[ge].call(this, arguments[1], arguments[2]));
-              break;
-            default:
-              ye.push(he[ge].apply(this, J));
-          }
-      } else if (!this.ignoreErrors && !this._all && B === "error")
-        return arguments[1] instanceof Error ? Promise.reject(arguments[1]) : Promise.reject("Uncaught, unspecified 'error' event.");
-      return Promise.all(ye);
-    }, y.prototype.on = function(B, w, G) {
-      return this._on(B, w, !1, G);
-    }, y.prototype.prependListener = function(B, w, G) {
-      return this._on(B, w, !0, G);
-    }, y.prototype.onAny = function(B) {
-      return this._onAny(B, !1);
-    }, y.prototype.prependAny = function(B) {
-      return this._onAny(B, !0);
-    }, y.prototype.addListener = y.prototype.on, y.prototype._onAny = function(B, w) {
-      if (typeof B != "function")
-        throw new Error("onAny only accepts instances of Function");
-      return this._all || (this._all = []), w ? this._all.unshift(B) : this._all.push(B), this;
-    }, y.prototype._on = function(B, w, G, g) {
-      if (typeof B == "function")
-        return this._onAny(B, w), this;
-      if (typeof w != "function")
-        throw new Error("on only accepts instances of Function");
-      this._events || V.call(this);
-      var J = this, le;
-      return g !== O && (le = o.call(this, B, w, g), w = le[0], J = le[1]), this._newListener && this.emit("newListener", B, w), this.wildcard ? (Me.call(this, B, w, G), J) : (this._events[B] ? (typeof this._events[B] == "function" && (this._events[B] = [this._events[B]]), G ? this._events[B].unshift(w) : this._events[B].push(w), !this._events[B].warned && this._maxListeners > 0 && this._events[B].length > this._maxListeners && (this._events[B].warned = !0, ie.call(this, this._events[B].length, B))) : this._events[B] = w, J);
-    }, y.prototype.off = function(B, w) {
-      if (typeof w != "function")
-        throw new Error("removeListener only takes instances of Function");
-      var G, g = [];
-      if (this.wildcard) {
-        var J = typeof B == "string" ? B.split(this.delimiter) : B.slice();
-        if (g = pe.call(this, null, J, this.listenerTree, 0), !g) return this;
-      } else {
-        if (!this._events[B]) return this;
-        G = this._events[B], g.push({ _listeners: G });
-      }
-      for (var le = 0; le < g.length; le++) {
-        var ge = g[le];
-        if (G = ge._listeners, X(G)) {
-          for (var Se = -1, ye = 0, fe = G.length; ye < fe; ye++)
-            if (G[ye] === w || G[ye].listener && G[ye].listener === w || G[ye]._origin && G[ye]._origin === w) {
-              Se = ye;
-              break;
-            }
-          if (Se < 0)
-            continue;
-          return this.wildcard ? ge._listeners.splice(Se, 1) : this._events[B].splice(Se, 1), G.length === 0 && (this.wildcard ? delete ge._listeners : delete this._events[B]), this._removeListener && this.emit("removeListener", B, w), this;
-        } else (G === w || G.listener && G.listener === w || G._origin && G._origin === w) && (this.wildcard ? delete ge._listeners : delete this._events[B], this._removeListener && this.emit("removeListener", B, w));
-      }
-      return this.listenerTree && ee(this.listenerTree), this;
-    }, y.prototype.offAny = function(B) {
-      var w = 0, G = 0, g;
-      if (B && this._all && this._all.length > 0) {
-        for (g = this._all, w = 0, G = g.length; w < G; w++)
-          if (B === g[w])
-            return g.splice(w, 1), this._removeListener && this.emit("removeListenerAny", B), this;
-      } else {
-        if (g = this._all, this._removeListener)
-          for (w = 0, G = g.length; w < G; w++)
-            this.emit("removeListenerAny", g[w]);
-        this._all = [];
-      }
-      return this;
-    }, y.prototype.removeListener = y.prototype.off, y.prototype.removeAllListeners = function(B) {
-      if (B === O)
-        return !this._events || V.call(this), this;
-      if (this.wildcard) {
-        var w = pe.call(this, null, B, this.listenerTree, 0), G, g;
-        if (!w) return this;
-        for (g = 0; g < w.length; g++)
-          G = w[g], G._listeners = null;
-        this.listenerTree && ee(this.listenerTree);
-      } else this._events && (this._events[B] = null);
-      return this;
-    }, y.prototype.listeners = function(B) {
-      var w = this._events, G, g, J, le, ge;
-      if (B === O) {
-        if (this.wildcard)
-          throw Error("event name required for wildcard emitter");
-        if (!w)
-          return [];
-        for (G = Q(w), le = G.length, J = []; le-- > 0; )
-          g = w[G[le]], typeof g == "function" ? J.push(g) : J.push.apply(J, g);
-        return J;
-      } else {
-        if (this.wildcard) {
-          if (ge = this.listenerTree, !ge) return [];
-          var Se = [], ye = typeof B == "string" ? B.split(this.delimiter) : B.slice();
-          return pe.call(this, Se, ye, ge, 0), Se;
-        }
-        return w ? (g = w[B], g ? typeof g == "function" ? [g] : g : []) : [];
-      }
-    }, y.prototype.eventNames = function(B) {
-      var w = this._events;
-      return this.wildcard ? K.call(this, this.listenerTree, [], null, B) : w ? Q(w) : [];
-    }, y.prototype.listenerCount = function(B) {
-      return this.listeners(B).length;
-    }, y.prototype.hasListeners = function(B) {
-      if (this.wildcard) {
-        var w = [], G = typeof B == "string" ? B.split(this.delimiter) : B.slice();
-        return pe.call(this, w, G, this.listenerTree, 0), w.length > 0;
-      }
-      var g = this._events, J = this._all;
-      return !!(J && J.length || g && (B === O ? Q(g).length : g[B]));
-    }, y.prototype.listenersAny = function() {
-      return this._all ? this._all : [];
-    }, y.prototype.waitFor = function(B, w) {
-      var G = this, g = typeof w;
-      return g === "number" ? w = { timeout: w } : g === "function" && (w = { filter: w }), w = oe(w, {
-        timeout: 0,
-        filter: O,
-        handleError: !1,
-        Promise,
-        overload: !1
-      }, {
-        filter: _e,
-        Promise: be
-      }), Te(w.Promise, function(J, le, ge) {
-        function Se() {
-          var ye = w.filter;
-          if (!(ye && !ye.apply(G, arguments)))
-            if (G.off(B, Se), w.handleError) {
-              var fe = arguments[0];
-              fe ? le(fe) : J(ne.apply(null, arguments).slice(1));
-            } else
-              J(ne.apply(null, arguments));
-        }
-        ge(function() {
-          G.off(B, Se);
-        }), G._on(B, Se, !1);
-      }, {
-        timeout: w.timeout,
-        overload: w.overload
-      });
-    };
-    function H(B, w, G) {
-      G = oe(G, {
-        Promise,
-        timeout: 0,
-        overload: !1
-      }, {
-        Promise: be
-      });
-      var g = G.Promise;
-      return Te(g, function(J, le, ge) {
-        var Se;
-        if (typeof B.addEventListener == "function") {
-          Se = function() {
-            J(ne.apply(null, arguments));
-          }, ge(function() {
-            B.removeEventListener(w, Se);
-          }), B.addEventListener(
-            w,
-            Se,
-            { once: !0 }
-          );
-          return;
-        }
-        var ye = function() {
-          fe && B.removeListener("error", fe), J(ne.apply(null, arguments));
-        }, fe;
-        w !== "error" && (fe = function(he) {
-          B.removeListener(w, ye), le(he);
-        }, B.once("error", fe)), ge(function() {
-          fe && B.removeListener("error", fe), B.removeListener(w, ye);
-        }), B.once(w, ye);
-      }, {
-        timeout: G.timeout,
-        overload: G.overload
-      });
-    }
-    var z = y.prototype;
-    Object.defineProperties(y, {
-      defaultMaxListeners: {
-        get: function() {
-          return z._maxListeners;
-        },
-        set: function(B) {
-          if (typeof B != "number" || B < 0 || Number.isNaN(B))
-            throw TypeError("n must be a non-negative number");
-          z._maxListeners = B;
-        },
-        enumerable: !0
-      },
-      once: {
-        value: H,
-        writable: !0,
-        configurable: !0
-      }
-    }), Object.defineProperties(z, {
-      _maxListeners: {
-        value: t,
-        writable: !0,
-        configurable: !0
-      },
-      _observers: { value: null, writable: !0, configurable: !0 }
-    }), P.exports = y;
-  })();
-})(eventemitter2);
-var eventemitter2Exports = eventemitter2.exports;
-const EventEmitter = /* @__PURE__ */ getDefaultExportFromCjs(eventemitter2Exports);
-class FetchAPI extends EventEmitter {
-  constructor(c) {
-    super(), this.baseUrl = c;
-  }
-  send(c, O) {
-    return Be(this, null, function* () {
-      const { url: q, query: X, method: t, data: F, headers: l } = c, [U, $] = F instanceof FormData ? [F, {}] : [
-        typeof F != "string" ? JSON.stringify(F) : F,
-        {
-          "Content-Type": "application/json"
-        }
-      ], D = this.baseUrl + q, Q = this.getUrlWithParams(D, X), V = yield fetch(Q, {
-        method: t,
-        headers: Object.assign(l || {}, $),
-        body: U,
-        credentials: c.withCredentials ? "include" : "same-origin"
-      }), te = yield V.json(), ie = this.convertHeadersToPlainObject(V.headers);
-      return new APIResponse({
-        data: te,
-        status: V.status,
-        headers: ie,
-        request: c
-      });
-    });
-  }
-  getUrlWithParams(c, O) {
-    if (!O) return c;
-    const q = new URL(c);
-    return Object.entries(O).forEach(
-      ([X, t]) => {
-        q.searchParams.append(X, t);
-      }
-    ), q.toString();
-  }
-  convertHeadersToPlainObject(c) {
-    const O = {};
-    for (const q of Object.keys(c))
-      O[q] = c.get(q);
-    return O;
-  }
-  // type override 를 위해서 구현 class 에서 메서드들을 재정의 해줘야함..
-  addListener(c, O) {
-    return super.addListener(c, O);
-  }
-  on(c, O, q) {
-    return super.on(c, O, q);
-  }
-  prependListener(c, O, q) {
-    return super.prependListener(c, O, q);
-  }
-  once(c, O, q) {
-    return super.once(c, O, q);
-  }
-  emit(c, ...O) {
-    return super.emit(c, ...O);
-  }
-  emitAsync(c, ...O) {
-    return super.emitAsync(c, ...O);
-  }
-}
 function commonjsRequire(P) {
   throw new Error('Could not dynamically require "' + P + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
 }
@@ -3596,9 +2302,9 @@ function requireInherits_browser() {
     }
   }), inherits_browser.exports;
 }
-var readableBrowser$1 = { exports: {} }, events = { exports: {} }, hasRequiredEvents;
+var readableBrowser$1 = { exports: {} }, events$1 = { exports: {} }, hasRequiredEvents;
 function requireEvents() {
-  if (hasRequiredEvents) return events.exports;
+  if (hasRequiredEvents) return events$1.exports;
   hasRequiredEvents = 1;
   var P = typeof Reflect == "object" ? Reflect : null, c = P && typeof P.apply == "function" ? P.apply : function(de, _e, qe) {
     return Function.prototype.apply.call(de, _e, qe);
@@ -3617,7 +2323,7 @@ function requireEvents() {
   function t() {
     t.init.call(this);
   }
-  events.exports = t, events.exports.once = ae, t.EventEmitter = t, t.prototype._events = void 0, t.prototype._eventsCount = 0, t.prototype._maxListeners = void 0;
+  events$1.exports = t, events$1.exports.once = ae, t.EventEmitter = t, t.prototype._events = void 0, t.prototype._eventsCount = 0, t.prototype._maxListeners = void 0;
   var F = 10;
   function l(de) {
     if (typeof de != "function")
@@ -3806,13 +2512,13 @@ function requireEvents() {
     else
       throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof de);
   }
-  return events.exports;
+  return events$1.exports;
 }
 var streamBrowser$1, hasRequiredStreamBrowser$1;
 function requireStreamBrowser$1() {
   return hasRequiredStreamBrowser$1 || (hasRequiredStreamBrowser$1 = 1, streamBrowser$1 = requireEvents().EventEmitter), streamBrowser$1;
 }
-var util$1 = {}, types = {}, shams$1, hasRequiredShams$1;
+var util$1 = {}, types$2 = {}, shams$1, hasRequiredShams$1;
 function requireShams$1() {
   return hasRequiredShams$1 || (hasRequiredShams$1 = 1, shams$1 = function() {
     if (typeof Symbol != "function" || typeof Object.getOwnPropertySymbols != "function")
@@ -4747,7 +3453,7 @@ function requireTypes() {
         }
       });
     });
-  }(types)), types;
+  }(types$2)), types$2;
 }
 var isBufferBrowser, hasRequiredIsBufferBrowser;
 function requireIsBufferBrowser() {
@@ -13183,9 +11889,9 @@ function requireBrowserifyRsa() {
   return X.getr = q, browserifyRsa = X, browserifyRsa;
 }
 var elliptic = {};
-const name = "elliptic", version = "6.5.5", description = "EC cryptography", main = "lib/elliptic.js", files = [
+const name$2 = "elliptic", version$2 = "6.5.5", description$2 = "EC cryptography", main$2 = "lib/elliptic.js", files$2 = [
   "lib"
-], scripts = {
+], scripts$2 = {
   lint: "eslint lib test",
   "lint:fix": "npm run lint -- --fix",
   unit: "istanbul test _mocha --reporter=spec test/index.js",
@@ -13194,14 +11900,14 @@ const name = "elliptic", version = "6.5.5", description = "EC cryptography", mai
 }, repository = {
   type: "git",
   url: "git@github.com:indutny/elliptic"
-}, keywords = [
+}, keywords$2 = [
   "EC",
   "Elliptic",
   "curve",
   "Cryptography"
-], author = "Fedor Indutny <fedor@indutny.com>", license = "MIT", bugs = {
+], author$2 = "Fedor Indutny <fedor@indutny.com>", license$2 = "MIT", bugs = {
   url: "https://github.com/indutny/elliptic/issues"
-}, homepage = "https://github.com/indutny/elliptic", devDependencies = {
+}, homepage$1 = "https://github.com/indutny/elliptic", devDependencies$2 = {
   brfs: "^2.0.2",
   coveralls: "^3.1.0",
   eslint: "^7.6.0",
@@ -13215,7 +11921,7 @@ const name = "elliptic", version = "6.5.5", description = "EC cryptography", mai
   "grunt-saucelabs": "^9.0.1",
   istanbul: "^0.4.5",
   mocha: "^8.0.1"
-}, dependencies = {
+}, dependencies$2 = {
   "bn.js": "^4.11.9",
   brorand: "^1.1.0",
   "hash.js": "^1.0.0",
@@ -13224,20 +11930,20 @@ const name = "elliptic", version = "6.5.5", description = "EC cryptography", mai
   "minimalistic-assert": "^1.0.1",
   "minimalistic-crypto-utils": "^1.0.1"
 }, require$$0 = {
-  name,
-  version,
-  description,
-  main,
-  files,
-  scripts,
+  name: name$2,
+  version: version$2,
+  description: description$2,
+  main: main$2,
+  files: files$2,
+  scripts: scripts$2,
   repository,
-  keywords,
-  author,
-  license,
+  keywords: keywords$2,
+  author: author$2,
+  license: license$2,
   bugs,
-  homepage,
-  devDependencies,
-  dependencies
+  homepage: homepage$1,
+  devDependencies: devDependencies$2,
+  dependencies: dependencies$2
 };
 var utils$2 = {}, utils$1 = {}, hasRequiredUtils$2;
 function requireUtils$2() {
@@ -20972,6 +19678,760 @@ function requireCryptoBrowserify() {
 })(bcrypt$1);
 var bcryptExports = bcrypt$1.exports;
 const bcrypt = /* @__PURE__ */ getDefaultExportFromCjs(bcryptExports);
+var eventemitter2 = { exports: {} };
+(function(P, c) {
+  (function(O) {
+    var q = Object.hasOwnProperty, X = Array.isArray ? Array.isArray : function(B) {
+      return Object.prototype.toString.call(B) === "[object Array]";
+    }, t = 10, F = typeof process$1 == "object" && typeof process$1.nextTick == "function", l = typeof Symbol == "function", U = typeof Reflect == "object", $ = typeof setImmediate == "function", D = $ ? setImmediate : setTimeout, Q = l ? U && typeof Reflect.ownKeys == "function" ? Reflect.ownKeys : function(B) {
+      var w = Object.getOwnPropertyNames(B);
+      return w.push.apply(w, Object.getOwnPropertySymbols(B)), w;
+    } : Object.keys;
+    function V() {
+      this._events = {}, this._conf && te.call(this, this._conf);
+    }
+    function te(B) {
+      B && (this._conf = B, B.delimiter && (this.delimiter = B.delimiter), B.maxListeners !== O && (this._maxListeners = B.maxListeners), B.wildcard && (this.wildcard = B.wildcard), B.newListener && (this._newListener = B.newListener), B.removeListener && (this._removeListener = B.removeListener), B.verboseMemoryLeak && (this.verboseMemoryLeak = B.verboseMemoryLeak), B.ignoreErrors && (this.ignoreErrors = B.ignoreErrors), this.wildcard && (this.listenerTree = {}));
+    }
+    function ie(B, w) {
+      var G = "(node) warning: possible EventEmitter memory leak detected. " + B + " listeners added. Use emitter.setMaxListeners() to increase limit.";
+      if (this.verboseMemoryLeak && (G += " Event name: " + w + "."), typeof process$1 != "undefined" && process$1.emitWarning) {
+        var g = new Error(G);
+        g.name = "MaxListenersExceededWarning", g.emitter = this, g.count = B, process$1.emitWarning(g);
+      } else
+        console.error(G), console.trace && console.trace();
+    }
+    var ne = function(B, w, G) {
+      var g = arguments.length;
+      switch (g) {
+        case 0:
+          return [];
+        case 1:
+          return [B];
+        case 2:
+          return [B, w];
+        case 3:
+          return [B, w, G];
+        default:
+          for (var J = new Array(g); g--; )
+            J[g] = arguments[g];
+          return J;
+      }
+    };
+    function se(B, w) {
+      for (var G = {}, g, J = B.length, le = 0, ge = 0; ge < J; ge++)
+        g = B[ge], G[g] = ge < le ? w[ge] : O;
+      return G;
+    }
+    function ae(B, w, G) {
+      this._emitter = B, this._target = w, this._listeners = {}, this._listenersCount = 0;
+      var g, J;
+      if ((G.on || G.off) && (g = G.on, J = G.off), w.addEventListener ? (g = w.addEventListener, J = w.removeEventListener) : w.addListener ? (g = w.addListener, J = w.removeListener) : w.on && (g = w.on, J = w.off), !g && !J)
+        throw Error("target does not implement any known event API");
+      if (typeof g != "function")
+        throw TypeError("on method must be a function");
+      if (typeof J != "function")
+        throw TypeError("off method must be a function");
+      this._on = g, this._off = J;
+      var le = B._observers;
+      le ? le.push(this) : B._observers = [this];
+    }
+    Object.assign(ae.prototype, {
+      subscribe: function(B, w, G) {
+        var g = this, J = this._target, le = this._emitter, ge = this._listeners, Se = function() {
+          var ye = ne.apply(null, arguments), fe = {
+            data: ye,
+            name: w,
+            original: B
+          };
+          if (G) {
+            var he = G.call(J, fe);
+            he !== !1 && le.emit.apply(le, [fe.name].concat(ye));
+            return;
+          }
+          le.emit.apply(le, [w].concat(ye));
+        };
+        if (ge[B])
+          throw Error("Event '" + B + "' is already listening");
+        this._listenersCount++, le._newListener && le._removeListener && !g._onNewListener ? (this._onNewListener = function(ye) {
+          ye === w && ge[B] === null && (ge[B] = Se, g._on.call(J, B, Se));
+        }, le.on("newListener", this._onNewListener), this._onRemoveListener = function(ye) {
+          ye === w && !le.hasListeners(ye) && ge[B] && (ge[B] = null, g._off.call(J, B, Se));
+        }, ge[B] = null, le.on("removeListener", this._onRemoveListener)) : (ge[B] = Se, g._on.call(J, B, Se));
+      },
+      unsubscribe: function(B) {
+        var w = this, G = this._listeners, g = this._emitter, J, le, ge = this._off, Se = this._target, ye;
+        if (B && typeof B != "string")
+          throw TypeError("event must be a string");
+        function fe() {
+          w._onNewListener && (g.off("newListener", w._onNewListener), g.off("removeListener", w._onRemoveListener), w._onNewListener = null, w._onRemoveListener = null);
+          var he = ce.call(g, w);
+          g._observers.splice(he, 1);
+        }
+        if (B) {
+          if (J = G[B], !J) return;
+          ge.call(Se, B, J), delete G[B], --this._listenersCount || fe();
+        } else {
+          for (le = Q(G), ye = le.length; ye-- > 0; )
+            B = le[ye], ge.call(Se, B, G[B]);
+          this._listeners = {}, this._listenersCount = 0, fe();
+        }
+      }
+    });
+    function oe(B, w, G, g) {
+      var J = Object.assign({}, w);
+      if (!B) return J;
+      if (typeof B != "object")
+        throw TypeError("options must be an object");
+      var le = Object.keys(B), ge = le.length, Se, ye, fe;
+      function he(ke) {
+        throw Error('Invalid "' + Se + '" option value' + (ke ? ". Reason: " + ke : ""));
+      }
+      for (var Re = 0; Re < ge; Re++) {
+        if (Se = le[Re], !q.call(w, Se))
+          throw Error('Unknown "' + Se + '" option');
+        ye = B[Se], ye !== O && (fe = G[Se], J[Se] = fe ? fe(ye, he) : ye);
+      }
+      return J;
+    }
+    function be(B, w) {
+      return (typeof B != "function" || !B.hasOwnProperty("prototype")) && w("value must be a constructor"), B;
+    }
+    function de(B) {
+      var w = "value must be type of " + B.join("|"), G = B.length, g = B[0], J = B[1];
+      return G === 1 ? function(le, ge) {
+        if (typeof le === g)
+          return le;
+        ge(w);
+      } : G === 2 ? function(le, ge) {
+        var Se = typeof le;
+        if (Se === g || Se === J) return le;
+        ge(w);
+      } : function(le, ge) {
+        for (var Se = typeof le, ye = G; ye-- > 0; )
+          if (Se === B[ye]) return le;
+        ge(w);
+      };
+    }
+    var _e = de(["function"]), qe = de(["object", "function"]);
+    function Te(B, w, G) {
+      var g, J, le = 0, ge, Se = new B(function(ye, fe, he) {
+        G = oe(G, {
+          timeout: 0,
+          overload: !1
+        }, {
+          timeout: function(ve, Ae) {
+            return ve *= 1, (typeof ve != "number" || ve < 0 || !Number.isFinite(ve)) && Ae("timeout must be a positive number"), ve;
+          }
+        }), g = !G.overload && typeof B.prototype.cancel == "function" && typeof he == "function";
+        function Re() {
+          J && (J = null), le && (clearTimeout(le), le = 0);
+        }
+        var ke = function(ve) {
+          Re(), ye(ve);
+        }, me = function(ve) {
+          Re(), fe(ve);
+        };
+        g ? w(ke, me, he) : (J = [function(ve) {
+          me(ve || Error("canceled"));
+        }], w(ke, me, function(ve) {
+          if (ge)
+            throw Error("Unable to subscribe on cancel event asynchronously");
+          if (typeof ve != "function")
+            throw TypeError("onCancel callback must be a function");
+          J.push(ve);
+        }), ge = !0), G.timeout > 0 && (le = setTimeout(function() {
+          var ve = Error("timeout");
+          ve.code = "ETIMEDOUT", le = 0, Se.cancel(ve), fe(ve);
+        }, G.timeout));
+      });
+      return g || (Se.cancel = function(ye) {
+        if (J) {
+          for (var fe = J.length, he = 1; he < fe; he++)
+            J[he](ye);
+          J[0](ye), J = null;
+        }
+      }), Se;
+    }
+    function ce(B) {
+      var w = this._observers;
+      if (!w)
+        return -1;
+      for (var G = w.length, g = 0; g < G; g++)
+        if (w[g]._target === B) return g;
+      return -1;
+    }
+    function pe(B, w, G, g, J) {
+      if (!G)
+        return null;
+      if (g === 0) {
+        var le = typeof w;
+        if (le === "string") {
+          var ge, Se, ye = 0, fe = 0, he = this.delimiter, Re = he.length;
+          if ((Se = w.indexOf(he)) !== -1) {
+            ge = new Array(5);
+            do
+              ge[ye++] = w.slice(fe, Se), fe = Se + Re;
+            while ((Se = w.indexOf(he, fe)) !== -1);
+            ge[ye++] = w.slice(fe), w = ge, J = ye;
+          } else
+            w = [w], J = 1;
+        } else le === "object" ? J = w.length : (w = [w], J = 1);
+      }
+      var ke = null, me, ve, Ae, $e, Oe, Y = w[g], Z = w[g + 1], re, ue;
+      if (g === J)
+        G._listeners && (typeof G._listeners == "function" ? (B && B.push(G._listeners), ke = [G]) : (B && B.push.apply(B, G._listeners), ke = [G]));
+      else if (Y === "*") {
+        for (re = Q(G), Se = re.length; Se-- > 0; )
+          me = re[Se], me !== "_listeners" && (ue = pe(B, w, G[me], g + 1, J), ue && (ke ? ke.push.apply(ke, ue) : ke = ue));
+        return ke;
+      } else if (Y === "**") {
+        for (Oe = g + 1 === J || g + 2 === J && Z === "*", Oe && G._listeners && (ke = pe(B, w, G, J, J)), re = Q(G), Se = re.length; Se-- > 0; )
+          me = re[Se], me !== "_listeners" && (me === "*" || me === "**" ? (G[me]._listeners && !Oe && (ue = pe(B, w, G[me], J, J), ue && (ke ? ke.push.apply(ke, ue) : ke = ue)), ue = pe(B, w, G[me], g, J)) : me === Z ? ue = pe(B, w, G[me], g + 2, J) : ue = pe(B, w, G[me], g, J), ue && (ke ? ke.push.apply(ke, ue) : ke = ue));
+        return ke;
+      } else G[Y] && (ke = pe(B, w, G[Y], g + 1, J));
+      if (ve = G["*"], ve && pe(B, w, ve, g + 1, J), Ae = G["**"], Ae)
+        if (g < J)
+          for (Ae._listeners && pe(B, w, Ae, J, J), re = Q(Ae), Se = re.length; Se-- > 0; )
+            me = re[Se], me !== "_listeners" && (me === Z ? pe(B, w, Ae[me], g + 2, J) : me === Y ? pe(B, w, Ae[me], g + 1, J) : ($e = {}, $e[me] = Ae[me], pe(B, w, { "**": $e }, g + 1, J)));
+        else Ae._listeners ? pe(B, w, Ae, J, J) : Ae["*"] && Ae["*"]._listeners && pe(B, w, Ae["*"], J, J);
+      return ke;
+    }
+    function Me(B, w, G) {
+      var g = 0, J = 0, le, ge = this.delimiter, Se = ge.length, ye;
+      if (typeof B == "string")
+        if ((le = B.indexOf(ge)) !== -1) {
+          ye = new Array(5);
+          do
+            ye[g++] = B.slice(J, le), J = le + Se;
+          while ((le = B.indexOf(ge, J)) !== -1);
+          ye[g++] = B.slice(J);
+        } else
+          ye = [B], g = 1;
+      else
+        ye = B, g = B.length;
+      if (g > 1) {
+        for (le = 0; le + 1 < g; le++)
+          if (ye[le] === "**" && ye[le + 1] === "**")
+            return;
+      }
+      var fe = this.listenerTree, he;
+      for (le = 0; le < g; le++)
+        if (he = ye[le], fe = fe[he] || (fe[he] = {}), le === g - 1)
+          return fe._listeners ? (typeof fe._listeners == "function" && (fe._listeners = [fe._listeners]), G ? fe._listeners.unshift(w) : fe._listeners.push(w), !fe._listeners.warned && this._maxListeners > 0 && fe._listeners.length > this._maxListeners && (fe._listeners.warned = !0, ie.call(this, fe._listeners.length, he))) : fe._listeners = w, !0;
+      return !0;
+    }
+    function K(B, w, G, g) {
+      for (var J = Q(B), le = J.length, ge, Se, ye, fe = B._listeners, he; le-- > 0; )
+        Se = J[le], ge = B[Se], Se === "_listeners" ? ye = G : ye = G ? G.concat(Se) : [Se], he = g || typeof Se == "symbol", fe && w.push(he ? ye : ye.join(this.delimiter)), typeof ge == "object" && K.call(this, ge, w, ye, he);
+      return w;
+    }
+    function ee(B) {
+      for (var w = Q(B), G = w.length, g, J, le; G-- > 0; )
+        J = w[G], g = B[J], g && (le = !0, J !== "_listeners" && !ee(g) && delete B[J]);
+      return le;
+    }
+    function e(B, w, G) {
+      this.emitter = B, this.event = w, this.listener = G;
+    }
+    e.prototype.off = function() {
+      return this.emitter.off(this.event, this.listener), this;
+    };
+    function o(B, w, G) {
+      if (G === !0)
+        J = !0;
+      else if (G === !1)
+        g = !0;
+      else {
+        if (!G || typeof G != "object")
+          throw TypeError("options should be an object or true");
+        var g = G.async, J = G.promisify, le = G.nextTick, ge = G.objectify;
+      }
+      if (g || le || J) {
+        var Se = w, ye = w._origin || w;
+        if (le && !F)
+          throw Error("process.nextTick is not supported");
+        J === O && (J = w.constructor.name === "AsyncFunction"), w = function() {
+          var fe = arguments, he = this, Re = this.event;
+          return J ? le ? Promise.resolve() : new Promise(function(ke) {
+            D(ke);
+          }).then(function() {
+            return he.event = Re, Se.apply(he, fe);
+          }) : (le ? process$1.nextTick : D)(function() {
+            he.event = Re, Se.apply(he, fe);
+          });
+        }, w._async = !0, w._origin = ye;
+      }
+      return [w, ge ? new e(this, B, w) : this];
+    }
+    function y(B) {
+      this._events = {}, this._newListener = !1, this._removeListener = !1, this.verboseMemoryLeak = !1, te.call(this, B);
+    }
+    y.EventEmitter2 = y, y.prototype.listenTo = function(B, w, G) {
+      if (typeof B != "object")
+        throw TypeError("target musts be an object");
+      var g = this;
+      G = oe(G, {
+        on: O,
+        off: O,
+        reducers: O
+      }, {
+        on: _e,
+        off: _e,
+        reducers: qe
+      });
+      function J(le) {
+        if (typeof le != "object")
+          throw TypeError("events must be an object");
+        var ge = G.reducers, Se = ce.call(g, B), ye;
+        Se === -1 ? ye = new ae(g, B, G) : ye = g._observers[Se];
+        for (var fe = Q(le), he = fe.length, Re, ke = typeof ge == "function", me = 0; me < he; me++)
+          Re = fe[me], ye.subscribe(
+            Re,
+            le[Re] || Re,
+            ke ? ge : ge && ge[Re]
+          );
+      }
+      return X(w) ? J(se(w)) : J(typeof w == "string" ? se(w.split(/\s+/)) : w), this;
+    }, y.prototype.stopListeningTo = function(B, w) {
+      var G = this._observers;
+      if (!G)
+        return !1;
+      var g = G.length, J, le = !1;
+      if (B && typeof B != "object")
+        throw TypeError("target should be an object");
+      for (; g-- > 0; )
+        J = G[g], (!B || J._target === B) && (J.unsubscribe(w), le = !0);
+      return le;
+    }, y.prototype.delimiter = ".", y.prototype.setMaxListeners = function(B) {
+      B !== O && (this._maxListeners = B, this._conf || (this._conf = {}), this._conf.maxListeners = B);
+    }, y.prototype.getMaxListeners = function() {
+      return this._maxListeners;
+    }, y.prototype.event = "", y.prototype.once = function(B, w, G) {
+      return this._once(B, w, !1, G);
+    }, y.prototype.prependOnceListener = function(B, w, G) {
+      return this._once(B, w, !0, G);
+    }, y.prototype._once = function(B, w, G, g) {
+      return this._many(B, 1, w, G, g);
+    }, y.prototype.many = function(B, w, G, g) {
+      return this._many(B, w, G, !1, g);
+    }, y.prototype.prependMany = function(B, w, G, g) {
+      return this._many(B, w, G, !0, g);
+    }, y.prototype._many = function(B, w, G, g, J) {
+      var le = this;
+      if (typeof G != "function")
+        throw new Error("many only accepts instances of Function");
+      function ge() {
+        return --w === 0 && le.off(B, ge), G.apply(this, arguments);
+      }
+      return ge._origin = G, this._on(B, ge, g, J);
+    }, y.prototype.emit = function() {
+      if (!this._events && !this._all)
+        return !1;
+      this._events || V.call(this);
+      var B = arguments[0], w, G = this.wildcard, g, J, le, ge, Se;
+      if (B === "newListener" && !this._newListener && !this._events.newListener)
+        return !1;
+      if (G && (w = B, B !== "newListener" && B !== "removeListener" && typeof B == "object")) {
+        if (J = B.length, l) {
+          for (le = 0; le < J; le++)
+            if (typeof B[le] == "symbol") {
+              Se = !0;
+              break;
+            }
+        }
+        Se || (B = B.join(this.delimiter));
+      }
+      var ye = arguments.length, fe;
+      if (this._all && this._all.length)
+        for (fe = this._all.slice(), le = 0, J = fe.length; le < J; le++)
+          switch (this.event = B, ye) {
+            case 1:
+              fe[le].call(this, B);
+              break;
+            case 2:
+              fe[le].call(this, B, arguments[1]);
+              break;
+            case 3:
+              fe[le].call(this, B, arguments[1], arguments[2]);
+              break;
+            default:
+              fe[le].apply(this, arguments);
+          }
+      if (G)
+        fe = [], pe.call(this, fe, w, this.listenerTree, 0, J);
+      else if (fe = this._events[B], typeof fe == "function") {
+        switch (this.event = B, ye) {
+          case 1:
+            fe.call(this);
+            break;
+          case 2:
+            fe.call(this, arguments[1]);
+            break;
+          case 3:
+            fe.call(this, arguments[1], arguments[2]);
+            break;
+          default:
+            for (g = new Array(ye - 1), ge = 1; ge < ye; ge++) g[ge - 1] = arguments[ge];
+            fe.apply(this, g);
+        }
+        return !0;
+      } else fe && (fe = fe.slice());
+      if (fe && fe.length) {
+        if (ye > 3)
+          for (g = new Array(ye - 1), ge = 1; ge < ye; ge++) g[ge - 1] = arguments[ge];
+        for (le = 0, J = fe.length; le < J; le++)
+          switch (this.event = B, ye) {
+            case 1:
+              fe[le].call(this);
+              break;
+            case 2:
+              fe[le].call(this, arguments[1]);
+              break;
+            case 3:
+              fe[le].call(this, arguments[1], arguments[2]);
+              break;
+            default:
+              fe[le].apply(this, g);
+          }
+        return !0;
+      } else if (!this.ignoreErrors && !this._all && B === "error")
+        throw arguments[1] instanceof Error ? arguments[1] : new Error("Uncaught, unspecified 'error' event.");
+      return !!this._all;
+    }, y.prototype.emitAsync = function() {
+      if (!this._events && !this._all)
+        return !1;
+      this._events || V.call(this);
+      var B = arguments[0], w = this.wildcard, G, g, J, le, ge, Se;
+      if (B === "newListener" && !this._newListener && !this._events.newListener)
+        return Promise.resolve([!1]);
+      if (w && (G = B, B !== "newListener" && B !== "removeListener" && typeof B == "object")) {
+        if (le = B.length, l) {
+          for (ge = 0; ge < le; ge++)
+            if (typeof B[ge] == "symbol") {
+              g = !0;
+              break;
+            }
+        }
+        g || (B = B.join(this.delimiter));
+      }
+      var ye = [], fe = arguments.length, he;
+      if (this._all)
+        for (ge = 0, le = this._all.length; ge < le; ge++)
+          switch (this.event = B, fe) {
+            case 1:
+              ye.push(this._all[ge].call(this, B));
+              break;
+            case 2:
+              ye.push(this._all[ge].call(this, B, arguments[1]));
+              break;
+            case 3:
+              ye.push(this._all[ge].call(this, B, arguments[1], arguments[2]));
+              break;
+            default:
+              ye.push(this._all[ge].apply(this, arguments));
+          }
+      if (w ? (he = [], pe.call(this, he, G, this.listenerTree, 0)) : he = this._events[B], typeof he == "function")
+        switch (this.event = B, fe) {
+          case 1:
+            ye.push(he.call(this));
+            break;
+          case 2:
+            ye.push(he.call(this, arguments[1]));
+            break;
+          case 3:
+            ye.push(he.call(this, arguments[1], arguments[2]));
+            break;
+          default:
+            for (J = new Array(fe - 1), Se = 1; Se < fe; Se++) J[Se - 1] = arguments[Se];
+            ye.push(he.apply(this, J));
+        }
+      else if (he && he.length) {
+        if (he = he.slice(), fe > 3)
+          for (J = new Array(fe - 1), Se = 1; Se < fe; Se++) J[Se - 1] = arguments[Se];
+        for (ge = 0, le = he.length; ge < le; ge++)
+          switch (this.event = B, fe) {
+            case 1:
+              ye.push(he[ge].call(this));
+              break;
+            case 2:
+              ye.push(he[ge].call(this, arguments[1]));
+              break;
+            case 3:
+              ye.push(he[ge].call(this, arguments[1], arguments[2]));
+              break;
+            default:
+              ye.push(he[ge].apply(this, J));
+          }
+      } else if (!this.ignoreErrors && !this._all && B === "error")
+        return arguments[1] instanceof Error ? Promise.reject(arguments[1]) : Promise.reject("Uncaught, unspecified 'error' event.");
+      return Promise.all(ye);
+    }, y.prototype.on = function(B, w, G) {
+      return this._on(B, w, !1, G);
+    }, y.prototype.prependListener = function(B, w, G) {
+      return this._on(B, w, !0, G);
+    }, y.prototype.onAny = function(B) {
+      return this._onAny(B, !1);
+    }, y.prototype.prependAny = function(B) {
+      return this._onAny(B, !0);
+    }, y.prototype.addListener = y.prototype.on, y.prototype._onAny = function(B, w) {
+      if (typeof B != "function")
+        throw new Error("onAny only accepts instances of Function");
+      return this._all || (this._all = []), w ? this._all.unshift(B) : this._all.push(B), this;
+    }, y.prototype._on = function(B, w, G, g) {
+      if (typeof B == "function")
+        return this._onAny(B, w), this;
+      if (typeof w != "function")
+        throw new Error("on only accepts instances of Function");
+      this._events || V.call(this);
+      var J = this, le;
+      return g !== O && (le = o.call(this, B, w, g), w = le[0], J = le[1]), this._newListener && this.emit("newListener", B, w), this.wildcard ? (Me.call(this, B, w, G), J) : (this._events[B] ? (typeof this._events[B] == "function" && (this._events[B] = [this._events[B]]), G ? this._events[B].unshift(w) : this._events[B].push(w), !this._events[B].warned && this._maxListeners > 0 && this._events[B].length > this._maxListeners && (this._events[B].warned = !0, ie.call(this, this._events[B].length, B))) : this._events[B] = w, J);
+    }, y.prototype.off = function(B, w) {
+      if (typeof w != "function")
+        throw new Error("removeListener only takes instances of Function");
+      var G, g = [];
+      if (this.wildcard) {
+        var J = typeof B == "string" ? B.split(this.delimiter) : B.slice();
+        if (g = pe.call(this, null, J, this.listenerTree, 0), !g) return this;
+      } else {
+        if (!this._events[B]) return this;
+        G = this._events[B], g.push({ _listeners: G });
+      }
+      for (var le = 0; le < g.length; le++) {
+        var ge = g[le];
+        if (G = ge._listeners, X(G)) {
+          for (var Se = -1, ye = 0, fe = G.length; ye < fe; ye++)
+            if (G[ye] === w || G[ye].listener && G[ye].listener === w || G[ye]._origin && G[ye]._origin === w) {
+              Se = ye;
+              break;
+            }
+          if (Se < 0)
+            continue;
+          return this.wildcard ? ge._listeners.splice(Se, 1) : this._events[B].splice(Se, 1), G.length === 0 && (this.wildcard ? delete ge._listeners : delete this._events[B]), this._removeListener && this.emit("removeListener", B, w), this;
+        } else (G === w || G.listener && G.listener === w || G._origin && G._origin === w) && (this.wildcard ? delete ge._listeners : delete this._events[B], this._removeListener && this.emit("removeListener", B, w));
+      }
+      return this.listenerTree && ee(this.listenerTree), this;
+    }, y.prototype.offAny = function(B) {
+      var w = 0, G = 0, g;
+      if (B && this._all && this._all.length > 0) {
+        for (g = this._all, w = 0, G = g.length; w < G; w++)
+          if (B === g[w])
+            return g.splice(w, 1), this._removeListener && this.emit("removeListenerAny", B), this;
+      } else {
+        if (g = this._all, this._removeListener)
+          for (w = 0, G = g.length; w < G; w++)
+            this.emit("removeListenerAny", g[w]);
+        this._all = [];
+      }
+      return this;
+    }, y.prototype.removeListener = y.prototype.off, y.prototype.removeAllListeners = function(B) {
+      if (B === O)
+        return !this._events || V.call(this), this;
+      if (this.wildcard) {
+        var w = pe.call(this, null, B, this.listenerTree, 0), G, g;
+        if (!w) return this;
+        for (g = 0; g < w.length; g++)
+          G = w[g], G._listeners = null;
+        this.listenerTree && ee(this.listenerTree);
+      } else this._events && (this._events[B] = null);
+      return this;
+    }, y.prototype.listeners = function(B) {
+      var w = this._events, G, g, J, le, ge;
+      if (B === O) {
+        if (this.wildcard)
+          throw Error("event name required for wildcard emitter");
+        if (!w)
+          return [];
+        for (G = Q(w), le = G.length, J = []; le-- > 0; )
+          g = w[G[le]], typeof g == "function" ? J.push(g) : J.push.apply(J, g);
+        return J;
+      } else {
+        if (this.wildcard) {
+          if (ge = this.listenerTree, !ge) return [];
+          var Se = [], ye = typeof B == "string" ? B.split(this.delimiter) : B.slice();
+          return pe.call(this, Se, ye, ge, 0), Se;
+        }
+        return w ? (g = w[B], g ? typeof g == "function" ? [g] : g : []) : [];
+      }
+    }, y.prototype.eventNames = function(B) {
+      var w = this._events;
+      return this.wildcard ? K.call(this, this.listenerTree, [], null, B) : w ? Q(w) : [];
+    }, y.prototype.listenerCount = function(B) {
+      return this.listeners(B).length;
+    }, y.prototype.hasListeners = function(B) {
+      if (this.wildcard) {
+        var w = [], G = typeof B == "string" ? B.split(this.delimiter) : B.slice();
+        return pe.call(this, w, G, this.listenerTree, 0), w.length > 0;
+      }
+      var g = this._events, J = this._all;
+      return !!(J && J.length || g && (B === O ? Q(g).length : g[B]));
+    }, y.prototype.listenersAny = function() {
+      return this._all ? this._all : [];
+    }, y.prototype.waitFor = function(B, w) {
+      var G = this, g = typeof w;
+      return g === "number" ? w = { timeout: w } : g === "function" && (w = { filter: w }), w = oe(w, {
+        timeout: 0,
+        filter: O,
+        handleError: !1,
+        Promise,
+        overload: !1
+      }, {
+        filter: _e,
+        Promise: be
+      }), Te(w.Promise, function(J, le, ge) {
+        function Se() {
+          var ye = w.filter;
+          if (!(ye && !ye.apply(G, arguments)))
+            if (G.off(B, Se), w.handleError) {
+              var fe = arguments[0];
+              fe ? le(fe) : J(ne.apply(null, arguments).slice(1));
+            } else
+              J(ne.apply(null, arguments));
+        }
+        ge(function() {
+          G.off(B, Se);
+        }), G._on(B, Se, !1);
+      }, {
+        timeout: w.timeout,
+        overload: w.overload
+      });
+    };
+    function H(B, w, G) {
+      G = oe(G, {
+        Promise,
+        timeout: 0,
+        overload: !1
+      }, {
+        Promise: be
+      });
+      var g = G.Promise;
+      return Te(g, function(J, le, ge) {
+        var Se;
+        if (typeof B.addEventListener == "function") {
+          Se = function() {
+            J(ne.apply(null, arguments));
+          }, ge(function() {
+            B.removeEventListener(w, Se);
+          }), B.addEventListener(
+            w,
+            Se,
+            { once: !0 }
+          );
+          return;
+        }
+        var ye = function() {
+          fe && B.removeListener("error", fe), J(ne.apply(null, arguments));
+        }, fe;
+        w !== "error" && (fe = function(he) {
+          B.removeListener(w, ye), le(he);
+        }, B.once("error", fe)), ge(function() {
+          fe && B.removeListener("error", fe), B.removeListener(w, ye);
+        }), B.once(w, ye);
+      }, {
+        timeout: G.timeout,
+        overload: G.overload
+      });
+    }
+    var z = y.prototype;
+    Object.defineProperties(y, {
+      defaultMaxListeners: {
+        get: function() {
+          return z._maxListeners;
+        },
+        set: function(B) {
+          if (typeof B != "number" || B < 0 || Number.isNaN(B))
+            throw TypeError("n must be a non-negative number");
+          z._maxListeners = B;
+        },
+        enumerable: !0
+      },
+      once: {
+        value: H,
+        writable: !0,
+        configurable: !0
+      }
+    }), Object.defineProperties(z, {
+      _maxListeners: {
+        value: t,
+        writable: !0,
+        configurable: !0
+      },
+      _observers: { value: null, writable: !0, configurable: !0 }
+    }), P.exports = y;
+  })();
+})(eventemitter2);
+var eventemitter2Exports = eventemitter2.exports;
+const EventEmitter$1 = /* @__PURE__ */ getDefaultExportFromCjs(eventemitter2Exports);
+class APIResponse {
+  constructor({
+    data: c,
+    status: O,
+    headers: q,
+    request: X
+  }) {
+    this.data = c, this.status = O, this.headers = q, this.request = X;
+  }
+}
+class FetchAPI extends EventEmitter$1 {
+  constructor(c) {
+    super(), this.baseUrl = c;
+  }
+  send(c, O) {
+    return Be(this, null, function* () {
+      const { url: q, query: X, method: t, data: F, headers: l } = c, [U, $] = F instanceof FormData ? [F, {}] : [
+        typeof F != "string" ? JSON.stringify(F) : F,
+        {
+          "Content-Type": "application/json"
+        }
+      ], D = this.baseUrl + q, Q = this.getUrlWithParams(D, X), V = yield fetch(Q, {
+        method: t,
+        headers: Object.assign(l || {}, $),
+        body: U,
+        credentials: c.withCredentials ? "include" : "same-origin"
+      }), te = yield V.json(), ie = this.convertHeadersToPlainObject(V.headers);
+      return new APIResponse({
+        data: te,
+        status: V.status,
+        headers: ie,
+        request: c
+      });
+    });
+  }
+  getUrlWithParams(c, O) {
+    if (!O) return c;
+    const q = new URL(c);
+    return Object.entries(O).forEach(
+      ([X, t]) => {
+        q.searchParams.append(X, t);
+      }
+    ), q.toString();
+  }
+  convertHeadersToPlainObject(c) {
+    const O = {};
+    for (const q of Object.keys(c))
+      O[q] = c.get(q);
+    return O;
+  }
+  // type override 를 위해서 구현 class 에서 메서드들을 재정의 해줘야함..
+  addListener(c, O) {
+    return super.addListener(c, O);
+  }
+  on(c, O, q) {
+    return super.on(c, O, q);
+  }
+  prependListener(c, O, q) {
+    return super.prependListener(c, O, q);
+  }
+  once(c, O, q) {
+    return super.once(c, O, q);
+  }
+  emit(c, ...O) {
+    return super.emit(c, ...O);
+  }
+  emitAsync(c, ...O) {
+    return super.emitAsync(c, ...O);
+  }
+}
 class FirebaseAuthAPI {
   constructor(c) {
     this.FIREBASE_AUTH_URL = "https://identitytoolkit.googleapis.com/v1/", this.BCRYPT_SALT = "$2a$10$QCJoWqnN.acrjPIgKYCthu";
@@ -21131,176 +20591,6 @@ class FirebaseAuthAPI {
     });
   }
 }
-var S$1 = (P) => {
-  throw TypeError(P);
-}, h$1 = (P, c, O) => c.has(P) || S$1("Cannot " + O), n$1 = (P, c, O) => (h$1(P, c, "read from private field"), O ? O.call(P) : c.get(P)), f$1 = (P, c, O) => c.has(P) ? S$1("Cannot add the same private member more than once") : c instanceof WeakSet ? c.add(P) : c.set(P, O), s$1 = (P, c, O) => new Promise((q, X) => {
-  var t = (U) => {
-    try {
-      l(O.next(U));
-    } catch ($) {
-      X($);
-    }
-  }, F = (U) => {
-    try {
-      l(O.throw(U));
-    } catch ($) {
-      X($);
-    }
-  }, l = (U) => U.done ? q(U.value) : Promise.resolve(U.value).then(t, F);
-  l((O = O.apply(P, c)).next());
-}), i$1;
-const r$1 = class jt {
-  constructor() {
-    this.platform = "web";
-  }
-  getLocalStorageEnabled() {
-    let c = !1;
-    try {
-      c = window.localStorage && !0;
-    } catch (O) {
-      c = !1;
-    }
-    return c;
-  }
-  setAllLocalStorage(c, O) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      const q = JSON.stringify(O);
-      localStorage.setItem(n$1(jt, i$1) + c, q);
-    });
-  }
-  setLocalStorage(c, O, q) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      const X = yield this.getAllLocalStorage(c);
-      if (X) {
-        X[O] = q, localStorage.setItem(
-          n$1(jt, i$1) + c,
-          // btoa(JSON.stringify(localData)),
-          JSON.stringify(X)
-        );
-        return;
-      }
-      const t = { [O]: q };
-      localStorage.setItem(
-        n$1(jt, i$1) + c,
-        // btoa(JSON.stringify(newData)),
-        JSON.stringify(t)
-      );
-    });
-  }
-  getLocalStorage(c, O) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      const q = yield this.getAllLocalStorage(c);
-      try {
-        if (q)
-          return JSON.parse(q[O]);
-      } catch (X) {
-        if (q)
-          return q[O];
-      }
-    });
-  }
-  getAllLocalStorage(c) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      try {
-        return localStorage.getItem(n$1(jt, i$1) + c) ? (
-          // ? JSON.parse(atob(localStorage.getItem(this.#COOKIE_NAME + appId)))
-          JSON.parse(localStorage.getItem(n$1(jt, i$1) + c))
-        ) : void 0;
-      } catch (O) {
-        return;
-      }
-    });
-  }
-  clearLocalStorage(c, O) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      if (yield this.getLocalStorage(c, O)) {
-        const q = yield this.getAllLocalStorage(c);
-        if (!q)
-          return;
-        delete q[O], localStorage.setItem(
-          n$1(jt, i$1) + c,
-          // btoa(JSON.stringify(localData)),
-          JSON.stringify(q)
-        );
-      }
-    });
-  }
-  clearAllLocalStorage(c) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      localStorage.removeItem(n$1(jt, i$1) + c);
-    });
-  }
-  setLoginUserLocalStorage(c, O, q) {
-    return s$1(this, null, function* () {
-      if (!this.getLocalStorageEnabled()) {
-        console.error(
-          "Local storage is not available. We recommend using local storage to maintain login sessions."
-        );
-        return;
-      }
-      const X = {};
-      return X["firebase:wepin"] = Object.assign(
-        { provider: O == null ? void 0 : O.provider },
-        O == null ? void 0 : O.token
-      ), X["wepin:connectUser"] = {
-        accessToken: q.token.access,
-        refreshToken: q.token.refresh
-      }, X.user_id = q.userInfo.userId, X.user_info = {
-        status: "success",
-        userInfo: {
-          userId: q.userInfo.userId,
-          email: q.userInfo.email,
-          provider: O.provider,
-          use2FA: q.userInfo.use2FA >= 2
-        }
-      }, X.user_status = {
-        loginStatus: q.loginStatus,
-        pinRequired: q.loginStatus === "registerRequired" ? q.pinRequired : !1
-      }, q.loginStatus !== "pinRequired" && q.walletId && (X.wallet_id = q.walletId, X.user_info.walletId = q.walletId), X.oauth_provider_pending = O.provider, this.setAllLocalStorage(c, X), {
-        userInfo: X.user_info,
-        connectUser: X["wepin:connectUser"]
-      };
-    });
-  }
-};
-i$1 = /* @__PURE__ */ new WeakMap(), f$1(r$1, i$1, "wepin:auth:");
-let m$1 = r$1;
 const isErrorResponse = (P) => {
   const c = P.statusCode !== void 0 || P.status !== void 0, O = P.timestamp !== void 0 && P.message !== void 0 && P.path !== void 0;
   return c && O;
@@ -21314,6 +20604,9 @@ const isErrorResponse = (P) => {
   if (P.slice(0, 13) === "local_ak_dev_")
     return "https://local-sdk.wepin.io/v1";
   throw new Error("Invalid appKey");
+}, APIEvents = {
+  request: "request",
+  response: "response"
 };
 class APIRequest {
   constructor({
@@ -21327,10 +20620,6 @@ class APIRequest {
     this.data = c, this.headers = O, this.url = q, this.query = X, this.withCredentials = t, this.method = F;
   }
 }
-const APIEvents = {
-  request: "request",
-  response: "response"
-};
 let InvalidTokenError$1 = class extends Error {
 };
 InvalidTokenError$1.prototype.name = "InvalidTokenError";
@@ -21481,6 +20770,219 @@ class WepinSDKFetchAPI extends FetchAPI {
   //     }
   //   }
   // }
+}
+class AccountAPI {
+  constructor(c) {
+    this.fetcher = c, this.basePath = "/account";
+  }
+  // 4.1 Readdress
+  readdress(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/readdress`,
+        data: c,
+        method: "PATCH",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+  // 4.2 Get App Account
+  getAppAccountList(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}`,
+        query: c,
+        method: "GET",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+}
+class AppAPI {
+  constructor(c) {
+    this.fetcher = c, this.basePath = "/app";
+  }
+  // 1.1 Get Theme
+  getThemeById(c) {
+    return Be(this, null, function* () {
+      return (yield fetch(`${this.fetcher.baseUrl}/app/theme/${c.id}`, {
+        method: "GET"
+      })).json();
+    });
+  }
+  getLayoutById(c) {
+    return Be(this, null, function* () {
+      return (yield fetch(`${this.fetcher.baseUrl}/app/layout/${c.id}`, {
+        method: "GET"
+      })).json();
+    });
+  }
+  // 1.3 Get App Info
+  getAppInfo(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/info`,
+        query: c,
+        method: "GET",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O, {
+        ignoreCheckToken: !0
+      })).data;
+    });
+  }
+  // 1.4 Get App Coins
+  getAppCoins(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/coins`,
+        method: "GET",
+        query: c,
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O, {
+        ignoreCheckToken: !0
+      })).data;
+    });
+  }
+  // 1.5 Get App Theme
+  getAppTheme() {
+    return Be(this, null, function* () {
+      const c = new APIRequest({
+        url: `${this.basePath}/theme`,
+        method: "GET",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(c, {
+        ignoreCheckToken: !0
+      })).data;
+    });
+  }
+  // 1.6 Register
+  register(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/register`,
+        method: "POST",
+        data: c,
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+}
+class AccountBalanceAPI {
+  constructor(c) {
+    this.fetcher = c, this.basePath = "/accountbalance";
+  }
+  // 5.1 Get Account Balance
+  getAccountBalance(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/${c.accountId}/balance`,
+        method: "GET",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+}
+class NFTAPI {
+  constructor(c) {
+    this.fetcher = c, this.basePath = "/nft";
+  }
+  // 6.1 Get NFT supporting network list
+  getSupportingNetworkList() {
+    return Be(this, null, function* () {
+      const c = new APIRequest({
+        url: `${this.basePath}/support-network`,
+        method: "GET",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(c, {
+        // ignoreCheckToken: true,
+      })).data;
+    });
+  }
+  // 6.2 Get App NFTs
+  getAppNFTList(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: this.basePath,
+        method: "GET",
+        query: c,
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+  // 6.3 Refresh NFTs
+  refreshAppNFTList(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/refresh`,
+        method: "GET",
+        query: c,
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+}
+class TransactionAPI {
+  constructor(c) {
+    this.fetcher = c, this.basePath = "/tx";
+  }
+  // 7.1 Sign transaction
+  sign(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/sign`,
+        data: c,
+        method: "POST",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+  // 7.2 Broadcast Transaction
+  broadCast(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/broadcast`,
+        data: c,
+        method: "POST",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+  // 7.3 Get prepare transaction data
+  prepareTransaction(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/prepare`,
+        data: c,
+        method: "POST",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
+  // 7.4 Check Address validation
+  checkAddressValidation(c) {
+    return Be(this, null, function* () {
+      const O = new APIRequest({
+        url: `${this.basePath}/check_address`,
+        query: c,
+        method: "GET",
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(O)).data;
+    });
+  }
 }
 class UserAPI {
   constructor(c) {
@@ -21663,6 +21165,18 @@ class UserAPI {
       return (yield this.fetcher.send(O, { ignoreCheckToken: !0 })).data;
     });
   }
+  // 2.17 OAuth Token Request
+  OAuthTokenRequest(c, O) {
+    return Be(this, null, function* () {
+      const q = new APIRequest({
+        url: `${this.basePath}/oauth/token/${c.provider}`,
+        method: "POST",
+        data: O,
+        withCredentials: !0
+      });
+      return (yield this.fetcher.send(q, { ignoreCheckToken: !0 })).data;
+    });
+  }
   // 2.18 Get User Info
   getUserInfo(c) {
     return Be(this, null, function* () {
@@ -21740,219 +21254,6 @@ class WalletAPI {
     });
   }
 }
-class AppAPI {
-  constructor(c) {
-    this.fetcher = c, this.basePath = "/app";
-  }
-  // 1.1 Get Theme
-  getThemeById(c) {
-    return Be(this, null, function* () {
-      return (yield fetch(`${this.fetcher.baseUrl}/app/theme/${c.id}`, {
-        method: "GET"
-      })).json();
-    });
-  }
-  getLayoutById(c) {
-    return Be(this, null, function* () {
-      return (yield fetch(`${this.fetcher.baseUrl}/app/layout/${c.id}`, {
-        method: "GET"
-      })).json();
-    });
-  }
-  // 1.3 Get App Info
-  getAppInfo(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/info`,
-        query: c,
-        method: "GET",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O, {
-        ignoreCheckToken: !0
-      })).data;
-    });
-  }
-  // 1.4 Get App Coins
-  getAppCoins(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/coins`,
-        method: "GET",
-        query: c,
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O, {
-        ignoreCheckToken: !0
-      })).data;
-    });
-  }
-  // 1.5 Get App Theme
-  getAppTheme() {
-    return Be(this, null, function* () {
-      const c = new APIRequest({
-        url: `${this.basePath}/theme`,
-        method: "GET",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(c, {
-        ignoreCheckToken: !0
-      })).data;
-    });
-  }
-  // 1.6 Register
-  register(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/register`,
-        method: "POST",
-        data: c,
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-}
-class AccountAPI {
-  constructor(c) {
-    this.fetcher = c, this.basePath = "/account";
-  }
-  // 4.1 Readdress
-  readdress(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/readdress`,
-        data: c,
-        method: "PATCH",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-  // 4.2 Get App Account
-  getAppAccountList(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}`,
-        query: c,
-        method: "GET",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-}
-class AccountBalanceAPI {
-  constructor(c) {
-    this.fetcher = c, this.basePath = "/accountbalance";
-  }
-  // 5.1 Get Account Balance
-  getAccountBalance(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/${c.accountId}/balance`,
-        method: "GET",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-}
-class NFTAPI {
-  constructor(c) {
-    this.fetcher = c, this.basePath = "/nft";
-  }
-  // 6.1 Get NFT supporting network list
-  getSupportingNetworkList() {
-    return Be(this, null, function* () {
-      const c = new APIRequest({
-        url: `${this.basePath}/support-network`,
-        method: "GET",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(c, {
-        // ignoreCheckToken: true,
-      })).data;
-    });
-  }
-  // 6.2 Get App NFTs
-  getAppNFTList(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: this.basePath,
-        method: "GET",
-        query: c,
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-  // 6.3 Refresh NFTs
-  refreshAppNFTList(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/refresh`,
-        method: "GET",
-        query: c,
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-}
-class TransactionAPI {
-  constructor(c) {
-    this.fetcher = c, this.basePath = "/tx";
-  }
-  // 7.1 Sign transaction
-  sign(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/sign`,
-        data: c,
-        method: "POST",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-  // 7.2 Broadcast Transaction
-  broadCast(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/broadcast`,
-        data: c,
-        method: "POST",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-  // 7.3 Get prepare transaction data
-  prepareTransaction(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/prepare`,
-        data: c,
-        method: "POST",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-  // 7.4 Check Address validation
-  checkAddressValidation(c) {
-    return Be(this, null, function* () {
-      const O = new APIRequest({
-        url: `${this.basePath}/check_address`,
-        query: c,
-        method: "GET",
-        withCredentials: !0
-      });
-      return (yield this.fetcher.send(O)).data;
-    });
-  }
-}
 class WepinSdkAPI {
   constructor(c, O) {
     const q = new WepinSDKFetchAPI(c, O);
@@ -21967,7 +21268,7 @@ class WepinFetch {
     sdk: X,
     storage: t
   }) {
-    this.version = packageJson.version, this.appId = c, this._appKey = O, this._domain = q, this._token = void 0, this.sdk = X, this._wepinStorage = t != null ? t : new m$1();
+    this.version = packageJson.version, this.appId = c, this._appKey = O, this._domain = q, this._token = void 0, this.sdk = X, this._wepinStorage = t != null ? t : new m$2();
   }
   init() {
     return Be(this, null, function* () {
@@ -22026,75 +21327,250 @@ class WepinFetch {
   //   this._wepinStorage.clearLocalStorage(this.appId, 'wepin:connectUser')
   // }
 }
-var ProjectPlatformKind = /* @__PURE__ */ ((P) => (P[P.web = 1] = "web", P[P.android = 2] = "android", P[P.ios = 3] = "ios", P))(ProjectPlatformKind || {});
-class InvalidTokenError extends Error {
-}
-InvalidTokenError.prototype.name = "InvalidTokenError";
-function b64DecodeUnicode(P) {
-  return decodeURIComponent(atob(P).replace(/(.)/g, (c, O) => {
-    let q = O.charCodeAt(0).toString(16).toUpperCase();
-    return q.length < 2 && (q = "0" + q), "%" + q;
-  }));
-}
-function base64UrlDecode(P) {
-  let c = P.replace(/-/g, "+").replace(/_/g, "/");
-  switch (c.length % 4) {
-    case 0:
-      break;
-    case 2:
-      c += "==";
-      break;
-    case 3:
-      c += "=";
-      break;
-    default:
-      throw new Error("base64 string is not of the correct length");
+var ProjectPlatformKind = /* @__PURE__ */ ((P) => (P[P.web = 1] = "web", P[P.android = 2] = "android", P[P.ios = 3] = "ios", P))(ProjectPlatformKind || {}), d = (P, c, O) => new Promise((q, X) => {
+  var t = (U) => {
+    try {
+      l(O.next(U));
+    } catch ($) {
+      X($);
+    }
+  }, F = (U) => {
+    try {
+      l(O.throw(U));
+    } catch ($) {
+      X($);
+    }
+  }, l = (U) => U.done ? q(U.value) : Promise.resolve(U.value).then(t, F);
+  l((O = O.apply(P, c)).next());
+});
+const x = "@wepin/modal-js", b = "0.0.2", f$1 = "wepin widget modal", u = "IoTrust, Co., Ltd.", W = "MIT", C = "./dist/wepin-modal-js.mjs", T = "dist/wepin-modal-js.umd.js", L = "./dist/src/index.d.ts", N = [
+  "dist"
+], _ = {
+  build: "vite build --mode production",
+  dev: "vite build --mode development",
+  watch: "vite build --watch",
+  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+}, j = [
+  "wepin",
+  "wepinwallet",
+  "wallet",
+  "wepin-modal"
+], E = {
+  name: x,
+  version: b,
+  description: f$1,
+  author: u,
+  license: W,
+  main: C,
+  jsdelivr: T,
+  types: L,
+  files: N,
+  scripts: _,
+  keywords: j
+}, v = class {
+  static closeOverlay(c) {
+    const O = document.querySelector(`#${c}`);
+    O && O.parentNode && O.parentNode.removeChild(O);
   }
-  try {
-    return b64DecodeUnicode(c);
-  } catch (O) {
-    return atob(c);
-  }
-}
-function jwtDecode(P, c) {
-  if (typeof P != "string")
-    throw new InvalidTokenError("Invalid token specified: must be a string");
-  c || (c = {});
-  const O = c.header === !0 ? 0 : 1, q = P.split(".")[O];
-  if (typeof q != "string")
-    throw new InvalidTokenError(`Invalid token specified: missing part #${O + 1}`);
-  let X;
-  try {
-    X = base64UrlDecode(q);
-  } catch (t) {
-    throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${O + 1} (${t.message})`);
-  }
-  try {
-    return JSON.parse(X);
-  } catch (t) {
-    throw new InvalidTokenError(`Invalid token specified: invalid json for part #${O + 1} (${t.message})`);
-  }
-}
-const getAccountSDK = (P) => {
-  let c = [];
-  return P != null && P.length && (c = P.map((O) => O.contract && O.accountTokenId ? {
-    network: O.network,
-    address: O.address,
-    contract: O.contract
-    // name: account.name,
-  } : {
-    network: O.network,
-    address: O.address
-  })), c;
-}, filterAccountList = (P, c) => {
-  const { accounts: O, aa_accounts: q } = P;
-  return c ? q ? O.concat(q) : O : O.map((t) => {
-    const F = q == null ? void 0 : q.find(
-      (l) => l.coinId === t.coinId && (l == null ? void 0 : l.contract) === (t == null ? void 0 : t.contract) && (l == null ? void 0 : l.eoaAddress) === t.address
+  static openOverlay(c) {
+    const O = document.createElement("div");
+    O.id = c, O.classList.add(this.CONST.overlayClassName), O.style.zIndex = "2147483647", O.style.display = "flex", O.style.alignItems = "center", O.style.justifyContent = "center", O.style.textAlign = "center", O.style.position = "fixed", O.style.left = "0px", O.style.right = "0px", O.style.top = "0px", O.style.bottom = "0px", O.style.left = "0px", O.style.background = "rgba(0,0,0,0.6)", O.style.color = "white", O.style.border = "2px solid #f1f1f1";
+    const q = document.getElementsByClassName(
+      this.CONST.overlayClassName
     );
-    return F || t;
-  });
+    for (let X = 0; X < q.length; X++) {
+      const t = q.item(X);
+      t && t.remove();
+    }
+    document.body.appendChild(O);
+  }
 };
+v.CONST = {
+  overlayClassName: "wepin-widget__overlay"
+};
+let m$1 = v;
+const I = (P) => {
+  const c = (P == null ? void 0 : P.width) || 375, O = (P == null ? void 0 : P.height) || 604, q = P != null && P.sLeft ? P == null ? void 0 : P.sLeft : window.screenLeft ? window.screenLeft : window.screenX ? window.screenX : 0, X = P != null && P.sTop ? P == null ? void 0 : P.sTop : window.screenTop ? window.screenTop : window.screenY ? window.screenY : 0, t = screen.width / 2 - c / 2 + q, F = screen.height / 2 - O / 2 + X;
+  return `width=${c}, height=${O}, left=${t}, top=${F}scrollbars=yes, resizable=1, menubar=no, toolbar=no`;
+}, k = (P) => {
+  const c = document.createElement("iframe");
+  return c.classList.add("wepin-sdk-widget-iframe"), c.setAttribute("frameborder", "0"), c.setAttribute("marginwidth", "0"), c.setAttribute("marginheight", "0"), c.style.width = "100%", P && P != null && P.isHide ? c.style.height = "0" : c.style.height = "100%", c.style.maxHeight = "100%", c.style.position = "fixed", c.style.bottom = "0", c.style.left = "0", c.style.zIndex = "408888000000", c.title = "wepin sdk webview", c.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; camera; clipboard-read", c.allowFullscreen = !0, c;
+}, M = () => "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(P) {
+  const c = Math.random() * 16 | 0;
+  return (P == "x" ? c : c & 3 | 8).toString(16);
+}), a = class Ft extends m$1 {
+  constructor(c, O, q, X, t) {
+    super(), this.isWidgetReady = !1, this.url = c, this.id = `id-${M()}`, this.isHide = t, t || Ft.openOverlay(this.id), Ft._webview[this.id] = O, this.type = q, this.EL = X, window.addEventListener("message", this.EL), this._open = !0;
+  }
+  get isOpen() {
+    return this._open;
+  }
+  // For communicating with the Wepin instance
+  // private _wepin: Wepin
+  // public get Wepin() {
+  //   return this._wepin
+  // }
+  // For communicating with the Webview
+  // private _webview: HTMLIFrameElement
+  static getWebview(c) {
+    return Ft._webview[c];
+  }
+  static clearWebview(c) {
+    delete Ft._webview[c];
+  }
+  static clearAllWebview() {
+    this._webview = {};
+  }
+  close() {
+    this.isHide || Ft.closeOverlay(this.id), window.removeEventListener("message", this.EL), this._open = !1, this.isWidgetReady = !1, this._closeWebview();
+  }
+  response(c) {
+    try {
+      this._post(c);
+    } catch (O) {
+      console.error("Can not response message to the webview", O);
+    }
+  }
+  request(c) {
+    try {
+      this._post(c);
+    } catch (O) {
+      console.error("Can not send message to the webview", O);
+    }
+  }
+};
+a._webview = {};
+let r$1 = a, h$1 = class zt extends r$1 {
+  // is it necessary ?
+  constructor({
+    url: c,
+    // wepin,
+    frame: O,
+    EL: q,
+    isHide: X
+  }) {
+    super(c, O, "Frame", q, X), O.src = c, O.id = this.id;
+    const t = document.querySelector("body");
+    zt.scrollPosition = window.pageYOffset, t.style.overflow = "hidden", t.style.position = "fixed", t.style.top = `-${zt.scrollPosition}px`, t.style.width = "100%", document.body.appendChild(O);
+  }
+  static openNew(c) {
+    return d(this, arguments, function* ({
+      url: O,
+      EL: q,
+      widgetOptions: X
+    }) {
+      const t = k({ isHide: X == null ? void 0 : X.isHide });
+      return new zt({
+        url: O,
+        // wepin,
+        frame: t,
+        EL: q,
+        isHide: X == null ? void 0 : X.isHide
+      });
+    });
+  }
+  expand() {
+    const c = r$1.getWebview(this.id);
+    c.style.height = "100%", c.style.borderRadius = "0";
+  }
+  shrink() {
+    const c = r$1.getWebview(this.id);
+    c.style.height = "604px", c.style.borderRadius = "12px 12px 0 0 ";
+  }
+  _closeWebview() {
+    const c = setTimeout(() => {
+      const O = r$1.getWebview(this.id), q = document.querySelector("body");
+      q.style.removeProperty("overflow"), q.style.removeProperty("position"), q.style.removeProperty("top"), q.style.removeProperty("width"), window.scrollTo(0, zt.scrollPosition), O && document.body.removeChild(O), r$1.clearWebview(this.id), clearTimeout(c);
+    }, 500);
+  }
+  _post(c) {
+    r$1.getWebview(this.id).contentWindow.postMessage(c, this.url);
+  }
+};
+class p extends r$1 {
+  constructor({
+    url: c,
+    webview: O,
+    EL: q
+  }) {
+    super(c, O, "Window", q, !1);
+  }
+  //: NodeJS.Timer | number
+  static openNew(c) {
+    return d(this, arguments, function* ({
+      url: O,
+      EL: q,
+      widgetFeatures: X
+    }) {
+      const t = I(X), F = window.open(O, "Wepin_Widget", t), l = new p({
+        url: O,
+        webview: F,
+        EL: q
+      });
+      if (!F)
+        throw l.close(), new Error("popup window blocked");
+      return this.timer = setInterval(() => {
+        try {
+          F && F.closed && (clearInterval(this.timer), l.close());
+        } catch (U) {
+          clearInterval(this.timer), l.close();
+        }
+      }, 200), l;
+    });
+  }
+  expand() {
+  }
+  shrink() {
+  }
+  _closeWebview() {
+    p.timer && (clearInterval(p.timer), p.timer = void 0);
+    const c = r$1.getWebview(this.id);
+    c && c.close(), r$1.clearWebview(this.id);
+  }
+  _post(c) {
+    r$1.getWebview(this.id).postMessage(c, this.url);
+  }
+}
+class A {
+  //   constructor(appKey: string, appId: string) {
+  constructor() {
+    this.platformType = "web", this._modalWindow = null, this._modalFrame = null, console.log(`WepinModal v${E.version}`), this.domain = window.location.origin;
+  }
+  //   async init() {
+  //     // getAppInfo수행해보고기..
+  //     this._appId
+  //     this._appKey
+  //     this._isInitialized = true
+  //     return this._isInitialized
+  //   }
+  openAuthBrowser(c, O) {
+    return d(this, null, function* () {
+      return this._modalWindow = yield p.openNew({
+        url: c,
+        EL: O
+      }), this._modalWindow;
+    });
+  }
+  openModal(c, O, q) {
+    return d(this, null, function* () {
+      return this._modalFrame = yield h$1.openNew({
+        url: c,
+        EL: O,
+        widgetOptions: q
+      }), this._modalFrame;
+    });
+  }
+  closeAuthBrowser() {
+    return d(this, null, function* () {
+      this._modalWindow && this._modalWindow.close();
+    });
+  }
+  closeModal() {
+    return d(this, null, function* () {
+      this._modalFrame && this._modalFrame.close();
+    });
+  }
+}
 var S = (P) => {
   throw TypeError(P);
 }, h = (P, c, O) => c.has(P) || S("Cannot " + O), n = (P, c, O) => (h(P, c, "read from private field"), O ? O.call(P) : c.get(P)), f = (P, c, O) => c.has(P) ? S("Cannot add the same private member more than once") : c instanceof WeakSet ? c.add(P) : c.set(P, O), s = (P, c, O) => new Promise((q, X) => {
@@ -22176,8 +21652,7 @@ const r = class Nt {
         if (q)
           return JSON.parse(q[O]);
       } catch (X) {
-        if (q)
-          return q[O];
+        if (q) return q[O];
       }
     });
   }
@@ -22265,7 +21740,197 @@ const r = class Nt {
 };
 i = /* @__PURE__ */ new WeakMap(), f(r, i, "wepin:auth:");
 let m = r;
-var isNumeric = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i, mathceil = Math.ceil, mathfloor = Math.floor, bignumberError = "[BigNumber Error] ", tooManyDigits = bignumberError + "Number primitive has more than 15 significant digits: ", BASE = 1e14, LOG_BASE = 14, MAX_SAFE_INTEGER = 9007199254740991, POWS_TEN = [1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13], SQRT_BASE = 1e7, MAX = 1e9;
+class InvalidTokenError extends Error {
+}
+InvalidTokenError.prototype.name = "InvalidTokenError";
+function b64DecodeUnicode(P) {
+  return decodeURIComponent(atob(P).replace(/(.)/g, (c, O) => {
+    let q = O.charCodeAt(0).toString(16).toUpperCase();
+    return q.length < 2 && (q = "0" + q), "%" + q;
+  }));
+}
+function base64UrlDecode(P) {
+  let c = P.replace(/-/g, "+").replace(/_/g, "/");
+  switch (c.length % 4) {
+    case 0:
+      break;
+    case 2:
+      c += "==";
+      break;
+    case 3:
+      c += "=";
+      break;
+    default:
+      throw new Error("base64 string is not of the correct length");
+  }
+  try {
+    return b64DecodeUnicode(c);
+  } catch (O) {
+    return atob(c);
+  }
+}
+function jwtDecode(P, c) {
+  if (typeof P != "string")
+    throw new InvalidTokenError("Invalid token specified: must be a string");
+  c || (c = {});
+  const O = c.header === !0 ? 0 : 1, q = P.split(".")[O];
+  if (typeof q != "string")
+    throw new InvalidTokenError(`Invalid token specified: missing part #${O + 1}`);
+  let X;
+  try {
+    X = base64UrlDecode(q);
+  } catch (t) {
+    throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${O + 1} (${t.message})`);
+  }
+  try {
+    return JSON.parse(X);
+  } catch (t) {
+    throw new InvalidTokenError(`Invalid token specified: invalid json for part #${O + 1} (${t.message})`);
+  }
+}
+const name = "@wepin/sdk-js", version = "0.0.7", description = "Wepin Widget Javascript SDK for Web", author = "IoTrust, Co., Ltd.", homepage = "https://github.com/WepinWallet/wepin-web-sdk-v1/", license = "MIT", main = "./dist/wepin-sdk-js.mjs", jsdelivr = "./dist/wepin-sdk-js.umd.js", types = "./dist/src/index.d.ts", files = [
+  "dist"
+], scripts = {
+  build: "vite build --mode production",
+  dev: "vite build --mode development",
+  watch: "vite build --watch",
+  lint: "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+}, keywords = [
+  "wepin",
+  "wepinwallet",
+  "wallet"
+], dependencies = {}, devDependencies = {
+  "@wepin/fetch-js": "link:../fetch",
+  "@wepin/modal-js": "link:../modal",
+  "@wepin/storage-js": "link:../storage",
+  "@types/events": "^3.0.3",
+  events: "^3.3.0",
+  "jwt-decode": "^4.0.0"
+}, PackageJson = {
+  name,
+  version,
+  description,
+  author,
+  homepage,
+  license,
+  main,
+  jsdelivr,
+  types,
+  files,
+  scripts,
+  keywords,
+  dependencies,
+  devDependencies
+}, WEPIN_DEFAULT_LANG = "ko", WEPIN_DEFAULT_CURRENCY = "krw", emailRegExp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, Dt = class Dt {
+};
+Dt.test = console.warn.bind(window.console, "[SDK][test] "), Dt.warn = console.warn.bind(window.console, "[SDK][warn] "), Dt.error = console.error.bind(window.console, "[SDK][error] "), Dt.todo = console.warn.bind(window.console, "[SDK][todo] "), Dt.assert = console.assert.bind(window.console), Dt.debug = () => {
+};
+let LOG = Dt;
+const proxyToObject = (P) => {
+  if (typeof P != "object" || P === null)
+    return P;
+  if (Array.isArray(P))
+    return P.map(proxyToObject);
+  const c = {};
+  for (const O of Object.keys(P))
+    c[O] = proxyToObject(P[O]);
+  return c;
+};
+var Platform = /* @__PURE__ */ ((P) => (P[P.web = 1] = "web", P[P.android = 2] = "android", P[P.ios = 3] = "ios", P))(Platform || {});
+const WebviewRequestHandler = (P, c, O) => {
+  var t, F, l, U;
+  const q = {
+    header: {
+      response_from: "web",
+      response_to: "wepin_widget",
+      id: P.header.id
+    }
+  };
+  let X = O.appKey;
+  switch (O.appKey.slice(0, 13) === "local_ak_dev_" ? X = O.appKey.slice(6) : X = O.appKey, P.body.command) {
+    case "ready_to_widget":
+      LOG.debug("ready_to_widget"), c.wepinStorage.getAllLocalStorage(O.appId).then(($) => {
+        var te, ie, ne;
+        const D = $ != null ? $ : {}, Q = Object.assign({}, c.wepinAppAttributes), V = (te = c.wepinAppAttributes.loginProviders) != null && te.length || ((ie = c.wepinAppAttributes.loginProviders) == null ? void 0 : ie.length) === 0 ? Array.from(c.wepinAppAttributes.loginProviders) : void 0;
+        Q.loginProviders = V, q.body = {
+          command: "ready_to_widget",
+          state: "SUCCESS",
+          data: {
+            appKey: X,
+            appId: O.appId,
+            domain: c.wepinDomain,
+            platform: Platform[c.type],
+            attributes: Q,
+            //Object.assign({}, wepinSDK.wepinAppAttributes),
+            version: c.version.includes("-alpha") ? c.version.substring(0, c.version.indexOf("-")) : c.version,
+            type: `${c.type}-sdk`,
+            localDate: D
+          }
+        }, (ne = c.wepinWidget) != null && ne.isOpen && c.wepinWidget.response(q);
+      });
+      break;
+    case "close_wepin_widget":
+      c.wepinWidget && (c.wepinWidget.close(), c.wepinWidget = void 0), c.wepinStorage.getAllLocalStorage(O.appId).then(($) => {
+        var Q;
+        const D = $.user_info;
+        if (D) {
+          const V = $.user_status;
+          D.userStatus = V, c.setUserInfo(D, !0);
+        } else
+          c.setUserInfo({ status: "fail" }, !0);
+        c.specifiedEmail = void 0, (Q = c.wepinWidget) != null && Q.isOpen && c.wepinWidget.response(q);
+      });
+      break;
+    case "set_local_storage":
+      c.wepinStorage.setAllLocalStorage(O.appId, P.body.parameter.data).then(() => wt(void 0, null, function* () {
+        var $;
+        if (P.body.parameter.data && P.body.parameter.data.user_info) {
+          const D = P.body.parameter.data.user_info, Q = P.body.parameter.data.user_status;
+          D.userStatus = Q, c.setUserInfo(D, !0);
+        }
+        P.body.parameter.data && P.body.parameter.data["wepin:connectUser"] && (yield c.setToken(
+          P.body.parameter.data["wepin:connectUser"]
+        )), q.body = {
+          command: "set_local_storage",
+          state: "SUCCESS",
+          data: ""
+        }, ($ = c.wepinWidget) != null && $.isOpen && c.wepinWidget.response(q);
+      }));
+      break;
+    case "set_user_email":
+      q.body = {
+        command: "set_user_email",
+        state: "SUCCESS",
+        data: {
+          email: c.specifiedEmail
+        }
+      }, (t = c.wepinWidget) != null && t.isOpen && c.wepinWidget.response(q);
+      break;
+    case "get_sdk_request":
+      LOG.debug("get_sdk_request", (F = c.getSDKRequest()) != null ? F : "No request"), q.body = {
+        command: "get_sdk_request",
+        state: "SUCCESS",
+        data: (l = proxyToObject(c.getSDKRequest())) != null ? l : "No request"
+      }, (U = c.wepinWidget) != null && U.isOpen && c.wepinWidget.response(q);
+      break;
+    default:
+      throw new Error(`Command ${P.body.command} is not supported.`);
+  }
+}, WebviewResponseHandler = (P, c) => {
+  LOG.debug("Got Response from webview =>", P), c.emit(P.header.id.toString(), P);
+}, getEventListener = (P, c) => {
+  const O = (q) => !(!(P.wepinWidget.url.includes("/wepin-sdk-login") || P.wepinWidget.url.includes(q.origin)) && q.origin !== P.wepinWidget.url || !Object.prototype.hasOwnProperty.call(q.data, "header") || !Object.prototype.hasOwnProperty.call(q.data, "body"));
+  return (q) => {
+    O(q) && handleMessage(
+      q.data,
+      P,
+      c
+    );
+  };
+}, handleMessage = (P, c, O) => {
+  P.header.request_to === "web" ? WebviewRequestHandler(P, c, O) : P.header.response_to === "web" ? WebviewResponseHandler(P, c) : LOG.error("Failed to handle message:", P);
+};
+var WEPIN_SDK_EVENTS = /* @__PURE__ */ ((P) => (P.WEPIN_LIFECYCLE_CHANGE = "wepin_lifecycle_change", P.SEND_IN_PROGRESS = "send_in_progress", P.SEND_COMPLETE = "send_complete", P))(WEPIN_SDK_EVENTS || {}), isNumeric = /^-?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i, mathceil = Math.ceil, mathfloor = Math.floor, bignumberError = "[BigNumber Error] ", tooManyDigits = bignumberError + "Number primitive has more than 15 significant digits: ", BASE = 1e14, LOG_BASE = 14, MAX_SAFE_INTEGER = 9007199254740991, POWS_TEN = [1, 10, 100, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13], SQRT_BASE = 1e7, MAX = 1e9;
 function clone(P) {
   var c, O, q, X = oe.prototype = { constructor: oe, toString: null, valueOf: null }, t = new oe(1), F = 20, l = 4, U = -7, $ = 21, D = -1e7, Q = 1e7, V = !1, te = 1, ie = 0, ne = {
     prefix: "",
@@ -22903,7 +22568,353 @@ const filterAccountBalance = (P, c, O) => {
   if (!c || !P) return "0";
   const O = new BigNumber(P).shiftedBy(-c).toFixed();
   return O === "NaN" ? "0" : O;
+}, getAccountSDK = (P) => {
+  let c = [];
+  return P != null && P.length && (c = P.map((O) => O.contract && O.accountTokenId ? {
+    network: O.network,
+    address: O.address,
+    contract: O.contract
+    // name: account.name,
+  } : {
+    network: O.network,
+    address: O.address
+  })), c;
+}, filterAccountList = (P, c) => {
+  const { accounts: O, aa_accounts: q } = P;
+  return c ? q ? O.concat(q) : O : O.map((t) => {
+    const F = q == null ? void 0 : q.find(
+      (l) => l.coinId === t.coinId && (l == null ? void 0 : l.contract) === (t == null ? void 0 : t.contract) && (l == null ? void 0 : l.eoaAddress) === t.address
+    );
+    return F || t;
+  });
 };
+var events = { exports: {} }, R = typeof Reflect == "object" ? Reflect : null, ReflectApply = R && typeof R.apply == "function" ? R.apply : function P(c, O, q) {
+  return Function.prototype.apply.call(c, O, q);
+}, ReflectOwnKeys;
+R && typeof R.ownKeys == "function" ? ReflectOwnKeys = R.ownKeys : Object.getOwnPropertySymbols ? ReflectOwnKeys = function(c) {
+  return Object.getOwnPropertyNames(c).concat(Object.getOwnPropertySymbols(c));
+} : ReflectOwnKeys = function(c) {
+  return Object.getOwnPropertyNames(c);
+};
+function ProcessEmitWarning(P) {
+  console && console.warn && console.warn(P);
+}
+var NumberIsNaN = Number.isNaN || function P(c) {
+  return c !== c;
+};
+function EventEmitter() {
+  EventEmitter.init.call(this);
+}
+events.exports = EventEmitter;
+events.exports.once = once;
+EventEmitter.EventEmitter = EventEmitter;
+EventEmitter.prototype._events = void 0;
+EventEmitter.prototype._eventsCount = 0;
+EventEmitter.prototype._maxListeners = void 0;
+var defaultMaxListeners = 10;
+function checkListener(P) {
+  if (typeof P != "function")
+    throw new TypeError('The "listener" argument must be of type Function. Received type ' + typeof P);
+}
+Object.defineProperty(EventEmitter, "defaultMaxListeners", {
+  enumerable: !0,
+  get: function() {
+    return defaultMaxListeners;
+  },
+  set: function(P) {
+    if (typeof P != "number" || P < 0 || NumberIsNaN(P))
+      throw new RangeError('The value of "defaultMaxListeners" is out of range. It must be a non-negative number. Received ' + P + ".");
+    defaultMaxListeners = P;
+  }
+});
+EventEmitter.init = function() {
+  (this._events === void 0 || this._events === Object.getPrototypeOf(this)._events) && (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0), this._maxListeners = this._maxListeners || void 0;
+};
+EventEmitter.prototype.setMaxListeners = function P(c) {
+  if (typeof c != "number" || c < 0 || NumberIsNaN(c))
+    throw new RangeError('The value of "n" is out of range. It must be a non-negative number. Received ' + c + ".");
+  return this._maxListeners = c, this;
+};
+function _getMaxListeners(P) {
+  return P._maxListeners === void 0 ? EventEmitter.defaultMaxListeners : P._maxListeners;
+}
+EventEmitter.prototype.getMaxListeners = function P() {
+  return _getMaxListeners(this);
+};
+EventEmitter.prototype.emit = function P(c) {
+  for (var O = [], q = 1; q < arguments.length; q++) O.push(arguments[q]);
+  var X = c === "error", t = this._events;
+  if (t !== void 0)
+    X = X && t.error === void 0;
+  else if (!X)
+    return !1;
+  if (X) {
+    var F;
+    if (O.length > 0 && (F = O[0]), F instanceof Error)
+      throw F;
+    var l = new Error("Unhandled error." + (F ? " (" + F.message + ")" : ""));
+    throw l.context = F, l;
+  }
+  var U = t[c];
+  if (U === void 0)
+    return !1;
+  if (typeof U == "function")
+    ReflectApply(U, this, O);
+  else
+    for (var $ = U.length, D = arrayClone$1(U, $), q = 0; q < $; ++q)
+      ReflectApply(D[q], this, O);
+  return !0;
+};
+function _addListener(P, c, O, q) {
+  var X, t, F;
+  if (checkListener(O), t = P._events, t === void 0 ? (t = P._events = /* @__PURE__ */ Object.create(null), P._eventsCount = 0) : (t.newListener !== void 0 && (P.emit(
+    "newListener",
+    c,
+    O.listener ? O.listener : O
+  ), t = P._events), F = t[c]), F === void 0)
+    F = t[c] = O, ++P._eventsCount;
+  else if (typeof F == "function" ? F = t[c] = q ? [O, F] : [F, O] : q ? F.unshift(O) : F.push(O), X = _getMaxListeners(P), X > 0 && F.length > X && !F.warned) {
+    F.warned = !0;
+    var l = new Error("Possible EventEmitter memory leak detected. " + F.length + " " + String(c) + " listeners added. Use emitter.setMaxListeners() to increase limit");
+    l.name = "MaxListenersExceededWarning", l.emitter = P, l.type = c, l.count = F.length, ProcessEmitWarning(l);
+  }
+  return P;
+}
+EventEmitter.prototype.addListener = function P(c, O) {
+  return _addListener(this, c, O, !1);
+};
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+EventEmitter.prototype.prependListener = function P(c, O) {
+  return _addListener(this, c, O, !0);
+};
+function onceWrapper() {
+  if (!this.fired)
+    return this.target.removeListener(this.type, this.wrapFn), this.fired = !0, arguments.length === 0 ? this.listener.call(this.target) : this.listener.apply(this.target, arguments);
+}
+function _onceWrap(P, c, O) {
+  var q = { fired: !1, wrapFn: void 0, target: P, type: c, listener: O }, X = onceWrapper.bind(q);
+  return X.listener = O, q.wrapFn = X, X;
+}
+EventEmitter.prototype.once = function P(c, O) {
+  return checkListener(O), this.on(c, _onceWrap(this, c, O)), this;
+};
+EventEmitter.prototype.prependOnceListener = function P(c, O) {
+  return checkListener(O), this.prependListener(c, _onceWrap(this, c, O)), this;
+};
+EventEmitter.prototype.removeListener = function P(c, O) {
+  var q, X, t, F, l;
+  if (checkListener(O), X = this._events, X === void 0)
+    return this;
+  if (q = X[c], q === void 0)
+    return this;
+  if (q === O || q.listener === O)
+    --this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : (delete X[c], X.removeListener && this.emit("removeListener", c, q.listener || O));
+  else if (typeof q != "function") {
+    for (t = -1, F = q.length - 1; F >= 0; F--)
+      if (q[F] === O || q[F].listener === O) {
+        l = q[F].listener, t = F;
+        break;
+      }
+    if (t < 0)
+      return this;
+    t === 0 ? q.shift() : spliceOne(q, t), q.length === 1 && (X[c] = q[0]), X.removeListener !== void 0 && this.emit("removeListener", c, l || O);
+  }
+  return this;
+};
+EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
+EventEmitter.prototype.removeAllListeners = function P(c) {
+  var O, q, X;
+  if (q = this._events, q === void 0)
+    return this;
+  if (q.removeListener === void 0)
+    return arguments.length === 0 ? (this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0) : q[c] !== void 0 && (--this._eventsCount === 0 ? this._events = /* @__PURE__ */ Object.create(null) : delete q[c]), this;
+  if (arguments.length === 0) {
+    var t = Object.keys(q), F;
+    for (X = 0; X < t.length; ++X)
+      F = t[X], F !== "removeListener" && this.removeAllListeners(F);
+    return this.removeAllListeners("removeListener"), this._events = /* @__PURE__ */ Object.create(null), this._eventsCount = 0, this;
+  }
+  if (O = q[c], typeof O == "function")
+    this.removeListener(c, O);
+  else if (O !== void 0)
+    for (X = O.length - 1; X >= 0; X--)
+      this.removeListener(c, O[X]);
+  return this;
+};
+function _listeners(P, c, O) {
+  var q = P._events;
+  if (q === void 0)
+    return [];
+  var X = q[c];
+  return X === void 0 ? [] : typeof X == "function" ? O ? [X.listener || X] : [X] : O ? unwrapListeners(X) : arrayClone$1(X, X.length);
+}
+EventEmitter.prototype.listeners = function P(c) {
+  return _listeners(this, c, !0);
+};
+EventEmitter.prototype.rawListeners = function P(c) {
+  return _listeners(this, c, !1);
+};
+EventEmitter.listenerCount = function(P, c) {
+  return typeof P.listenerCount == "function" ? P.listenerCount(c) : listenerCount.call(P, c);
+};
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(P) {
+  var c = this._events;
+  if (c !== void 0) {
+    var O = c[P];
+    if (typeof O == "function")
+      return 1;
+    if (O !== void 0)
+      return O.length;
+  }
+  return 0;
+}
+EventEmitter.prototype.eventNames = function P() {
+  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];
+};
+function arrayClone$1(P, c) {
+  for (var O = new Array(c), q = 0; q < c; ++q)
+    O[q] = P[q];
+  return O;
+}
+function spliceOne(P, c) {
+  for (; c + 1 < P.length; c++)
+    P[c] = P[c + 1];
+  P.pop();
+}
+function unwrapListeners(P) {
+  for (var c = new Array(P.length), O = 0; O < c.length; ++O)
+    c[O] = P[O].listener || P[O];
+  return c;
+}
+function once(P, c) {
+  return new Promise(function(O, q) {
+    function X(F) {
+      P.removeListener(c, t), q(F);
+    }
+    function t() {
+      typeof P.removeListener == "function" && P.removeListener("error", X), O([].slice.call(arguments));
+    }
+    eventTargetAgnosticAddListener(P, c, t, { once: !0 }), c !== "error" && addErrorHandlerIfEventEmitter(P, X, { once: !0 });
+  });
+}
+function addErrorHandlerIfEventEmitter(P, c, O) {
+  typeof P.on == "function" && eventTargetAgnosticAddListener(P, "error", c, O);
+}
+function eventTargetAgnosticAddListener(P, c, O, q) {
+  if (typeof P.on == "function")
+    q.once ? P.once(c, O) : P.on(c, O);
+  else if (typeof P.addEventListener == "function")
+    P.addEventListener(c, function X(t) {
+      q.once && P.removeEventListener(c, X), O(t);
+    });
+  else
+    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof P);
+}
+var eventsExports = events.exports;
+function safeApply(P, c, O) {
+  try {
+    Reflect.apply(P, c, O);
+  } catch (q) {
+    setTimeout(() => {
+      throw q;
+    });
+  }
+}
+function arrayClone(P) {
+  const c = P.length, O = new Array(c);
+  for (let q = 0; q < c; q += 1)
+    O[q] = P[q];
+  return O;
+}
+class SafeEventEmitter extends eventsExports.EventEmitter {
+  emit(c, ...O) {
+    let q = c === "error";
+    const X = this._events;
+    if (X !== void 0)
+      q = q && X.error === void 0;
+    else if (!q)
+      return !1;
+    if (q) {
+      let F;
+      if (O.length > 0 && ([F] = O), F instanceof Error)
+        throw F;
+      const l = new Error(`Unhandled error.${F ? ` (${F.message})` : ""}`);
+      throw l.context = F, l;
+    }
+    const t = X[c];
+    if (t === void 0)
+      return !1;
+    if (typeof t == "function")
+      safeApply(t, this, O);
+    else {
+      const F = t.length, l = arrayClone(t);
+      for (let U = 0; U < F; U += 1)
+        safeApply(l[U], this, O);
+    }
+    return !0;
+  }
+}
+const Gt = class Gt {
+  static isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  }
+  static messages(c) {
+    return {
+      hasValidOrigin: (O) => O.origin === Gt.getUrls(c).wepinWebview
+      // hasCorrectCorrelationID(message: MessageEvent,
+      //                         correlationID: string | undefined) {
+      //     return correlationID && message.data && message.data.correlationID === correlationID;
+      // }
+    };
+  }
+  static getUrls(c) {
+    switch (c) {
+      case "production":
+        return {
+          wepinWebview: "https://v1-widget.wepin.io"
+        };
+      case "test":
+        return {
+          wepinWebview: "https://stage-v1-widget.wepin.io"
+        };
+      case "development":
+        return {
+          //wepinWebview: `https://localhost:8989`,
+          wepinWebview: "https://dev-v1-widget.wepin.io"
+        };
+      case "local":
+        return {
+          wepinWebview: "https://local-widget.wepin.io"
+        };
+      default:
+        throw new Error("Utils.getUrls: invalid mode");
+    }
+  }
+  static uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function(c) {
+        const O = Math.random() * 16 | 0;
+        return (c == "x" ? O : O & 3 | 8).toString(16);
+      }
+    );
+  }
+};
+Gt.checkSameNumber = (c, O, q) => {
+  if (q) return !1;
+  const X = [...Array(10)].map(Number.prototype.valueOf, 0);
+  let t = !1;
+  return [...c].forEach((l) => {
+    if (X[Number(l)]++, X[Number(l)] >= O) {
+      t = !0;
+      return;
+    }
+  }), t;
+};
+let Utils = Gt;
 class WepinSDK extends SafeEventEmitter {
   // _userInfo: IWepinUser
   constructor({
@@ -22912,7 +22923,25 @@ class WepinSDK extends SafeEventEmitter {
     wepinModal: q,
     wepinStorage: X
   }) {
-    super(), this.version = PackageJson.version, console.log(`WepinWeb SDK v${this.version}`), this._isInitialized = !1, this._wepinLifeCycle = "not_initialized", this._wepinAppId = c, this._wepinAppKey = O, this._wepinModal = q || new A(), this._wepinStorage = X || new m(), this.type = this._wepinStorage.platform, this.setModeByAppKey(O);
+    super(), this.version = PackageJson.version, console.log(`WepinWeb SDK v${this.version}`), this._isInitialized = !1, this.wepinLifeCycle = "not_initialized", this._wepinAppId = c, this._wepinAppKey = O, this._wepinModal = q || new A(), this._wepinStorage = X || new m(), this.type = this._wepinStorage.platform, this.setModeByAppKey(O);
+  }
+  // _wepinLifeCycle 값에 대한 getter
+  get wepinLifeCycle() {
+    return this._wepinLifeCycle;
+  }
+  // _wepinLifeCycle 값에 대한 setter
+  set wepinLifeCycle(c) {
+    if (c !== this._wepinLifeCycle) {
+      if (this._wepinLifeCycle = c, this._wepinLifeCycle === "login" || this._wepinLifeCycle === "login_before_register") {
+        this.emit(
+          WEPIN_SDK_EVENTS.WEPIN_LIFECYCLE_CHANGE,
+          c,
+          this._userInfo
+        );
+        return;
+      }
+      this.emit(WEPIN_SDK_EVENTS.WEPIN_LIFECYCLE_CHANGE, c);
+    }
   }
   setModeByAppKey(c) {
     if (c.slice(0, 8) === "ak_live_") {
@@ -22954,7 +22983,7 @@ class WepinSDK extends SafeEventEmitter {
       var X, t, F;
       if (this._isInitialized)
         throw new Error("Wepin is already initialized!");
-      LOG.debug("attributes", c), c && (c.defaultLanguage = (X = c.defaultLanguage) != null ? X : WEPIN_DEFAULT_LANG, c.defaultCurrency = (t = c.defaultCurrency) != null ? t : WEPIN_DEFAULT_CURRENCY, c.type = (F = c.type) != null ? F : "hide"), this.wepinAppAttributes = c, LOG.debug("wepinAppAttributes", this.wepinAppAttributes), this.wepinDomain = this._wepinModal.domain, this._isInitialized = !1, this._wepinLifeCycle = "initializing", this._wepinFetch = new WepinFetch({
+      LOG.debug("attributes", c), c && (c.defaultLanguage = (X = c.defaultLanguage) != null ? X : WEPIN_DEFAULT_LANG, c.defaultCurrency = (t = c.defaultCurrency) != null ? t : WEPIN_DEFAULT_CURRENCY, c.type = (F = c.type) != null ? F : "hide"), this.wepinAppAttributes = c, LOG.debug("wepinAppAttributes", this.wepinAppAttributes), this.wepinDomain = this._wepinModal.domain, this._isInitialized = !1, this.wepinLifeCycle = "initializing", this._wepinFetch = new WepinFetch({
         appId: this._wepinAppId,
         appKey: this._wepinAppKey,
         domain: this.wepinDomain,
@@ -22972,7 +23001,7 @@ class WepinSDK extends SafeEventEmitter {
         this._wepinAppId,
         "wepin:connectUser"
       );
-      q && (LOG.debug("wepinToken", q), yield this._wepinFetch.setToken(q), LOG.debug("token", this._wepinFetch.Token)), this._isInitialized = !0, (yield this.checkExpiredToken()) ? this._wepinLifeCycle = "initialized" : this._wepinLifeCycle = "login";
+      q && (LOG.debug("wepinToken", q), yield this._wepinFetch.setToken(q), LOG.debug("token", this._wepinFetch.Token)), this._isInitialized = !0, (yield this.checkExpiredToken()) ? this.wepinLifeCycle = "initialized" : this.wepinLifeCycle = "login";
     });
   }
   get wepinWidget() {
@@ -23059,7 +23088,7 @@ class WepinSDK extends SafeEventEmitter {
       throw new Error("Wepin.closeWidget: wepin sdk widget is not exist");
   }
   _close() {
-    LOG.debug("close this._widget", this._widget), this.removeAllListeners(), this._widget && (this._widget.close(), this._widget = void 0), this.specifiedEmail = void 0;
+    LOG.debug("close this._widget", this._widget), this.removeAllListeners("onUserInfoSet"), this.wepinRequest && this.removeAllListeners(this.wepinRequest.header.id.toString()), this._widget && (this._widget.close(), this._widget = void 0), this.specifiedEmail = void 0;
   }
   setToken(c) {
     return wt(this, null, function* () {
@@ -23082,12 +23111,14 @@ class WepinSDK extends SafeEventEmitter {
           ), X = yield this._wepinFetch.wepinApi.user.refreshToken({
             userId: q
           });
-          return isErrorResponse(X) ? !0 : (c.accessToken = X.token, yield this._wepinStorage.setLocalStorage(
+          if (isErrorResponse(X)) return !0;
+          c.accessToken = X.token, yield this._wepinStorage.setLocalStorage(
             this._wepinAppId,
             "wepin:connectUser",
             c
-          ), !1);
-        } else return !1;
+          );
+        }
+        return yield this.getWepinUserInfo(), !1;
       } catch (c) {
         return !0;
       }
@@ -23129,8 +23160,8 @@ class WepinSDK extends SafeEventEmitter {
           );
         this.specifiedEmail = c == null ? void 0 : c.email;
       } else this.specifiedEmail = void 0;
-      if (this._wepinLifeCycle = "before_login", O && q && (q && (O != null && O.refreshToken) && (c != null && c.email) && (q == null ? void 0 : q.userInfo.email) !== (c == null ? void 0 : c.email) && (yield this.logout()), O != null && O.refreshToken && (LOG.debug("currentUserInfo", q), !(yield this.checkExpiredToken()) && q && q.status === "success"))) {
-        this._wepinLifeCycle = "login";
+      if (this.wepinLifeCycle = "before_login", O && q && (q && (O != null && O.refreshToken) && (c != null && c.email) && (q == null ? void 0 : q.userInfo.email) !== (c == null ? void 0 : c.email) && (yield this.logout()), O != null && O.refreshToken && (LOG.debug("currentUserInfo", q), !(yield this.checkExpiredToken()) && q && q.status === "success"))) {
+        this.wepinLifeCycle = "login";
         const t = yield this._wepinStorage.getLocalStorage(
           this._wepinAppId,
           "user_status"
@@ -23138,21 +23169,52 @@ class WepinSDK extends SafeEventEmitter {
         return Object.assign(q, { userStatus: t });
       }
       return yield this._open(), new Promise((X, t) => {
-        this.once("onUserInfoSet", (F) => wt(this, null, function* () {
+        this.once("onUserInfoSet", () => wt(this, null, function* () {
           try {
-            const l = yield this._wepinStorage.getLocalStorage(
+            const F = yield this._wepinStorage.getLocalStorage(
               this._wepinAppId,
               "wepin:connectUser"
-            ), U = yield this._wepinStorage.getLocalStorage(
-              this._wepinAppId,
-              "user_status"
             );
-            this._close(), yield this._wepinFetch.setToken(l), this.specifiedEmail = void 0, X(Object.assign(F, { userStatus: U }));
-          } catch (l) {
-            t(new Error(l));
+            this._close(), yield this._wepinFetch.setToken(F), this.specifiedEmail = void 0, yield this.getWepinUserInfo(), X(this._userInfo);
+          } catch (F) {
+            t(new Error(F));
           }
         }));
       });
+    });
+  }
+  getWepinUserInfo(c) {
+    return wt(this, null, function* () {
+      const O = yield this._wepinStorage.getLocalStorage(
+        this._wepinAppId,
+        "user_info"
+      ), q = yield this._wepinStorage.getLocalStorage(
+        this._wepinAppId,
+        "user_status"
+      );
+      return c && (O.walletId = c, yield this._wepinStorage.setLocalStorage(
+        this._wepinAppId,
+        "user_status",
+        {
+          loginStatus: "complete"
+        }
+      ), yield this._wepinStorage.setLocalStorage(
+        this._wepinAppId,
+        "user_info",
+        O
+      ), yield this._wepinStorage.setLocalStorage(
+        this._wepinAppId,
+        "wallet_id",
+        c
+      ), yield this._wepinStorage.setLocalStorage(
+        this._wepinAppId,
+        "user_status",
+        {
+          loginStatus: "complete"
+        }
+      )), this._userInfo = Object.assign(O, {
+        userStatus: q
+      }), O && O.status === "success" ? q && q.loginStatus === "complete" ? this.wepinLifeCycle = "login" : this.wepinLifeCycle = "login_before_register" : this.wepinLifeCycle = "initialized", this._userInfo;
     });
   }
   register() {
@@ -23163,7 +23225,7 @@ class WepinSDK extends SafeEventEmitter {
         this._wepinAppId,
         "user_status"
       );
-      if ((c.loginStatus === "registerRequired" || c.loginStatus === "pinRequired") && this._wepinLifeCycle, (yield this.getStatus()) !== "login_before_register")
+      if ((c.loginStatus === "registerRequired" || c.loginStatus === "pinRequired") && this.wepinLifeCycle, (yield this.getStatus()) !== "login_before_register")
         throw new Error(
           "Wepin.register: The LifeCycle of wepin sdk has to be login_before_register"
         );
@@ -23193,26 +23255,9 @@ class WepinSDK extends SafeEventEmitter {
             }
           }
         );
-        if (isErrorResponse(t) || !Object.values(t.termsAccepted).every((U) => U === !0))
+        if (isErrorResponse(t) || !Object.values(t.termsAccepted).every((F) => F === !0))
           throw new Error("unknown/updateTermsAccepted");
-        yield this._wepinStorage.setLocalStorage(this._wepinAppId, "user_status", {
-          loginStatus: "complete"
-        });
-        const F = yield this._wepinStorage.getLocalStorage(
-          this._wepinAppId,
-          "user_info"
-        );
-        this._userInfo = F, X.walletId && (yield this._wepinStorage.setLocalStorage(
-          this._wepinAppId,
-          "wallet_id",
-          X.walletId
-        ), F.walletId = this._userInfo.walletId = X.walletId, yield this._wepinStorage.setLocalStorage(
-          this._wepinAppId,
-          "user_info",
-          F
-        )), this._wepinLifeCycle = "login";
-        const l = yield this._wepinStorage.getLocalStorage(this._wepinAppId, "user_status");
-        return Object.assign(F, { userStatus: l });
+        return yield this.getWepinUserInfo(X.walletId);
       } else {
         const O = (/* @__PURE__ */ new Date()).getTime();
         return this.wepinRequest = {
@@ -23233,24 +23278,7 @@ class WepinSDK extends SafeEventEmitter {
             var F;
             if (LOG.debug("response data: ", t.body.data), this.wepinRequest = void 0, this._close(), t.body.state === "SUCCESS") {
               const l = (F = t.body.data) == null ? void 0 : F.walletId;
-              yield this._wepinStorage.setLocalStorage(
-                this._wepinAppId,
-                "user_status",
-                {
-                  loginStatus: "complete"
-                }
-              );
-              const U = yield this._wepinStorage.getLocalStorage(
-                this._wepinAppId,
-                "user_info"
-              );
-              this._userInfo = U, U.walletId = this._userInfo.walletId = l, yield this._wepinStorage.setLocalStorage(
-                this._wepinAppId,
-                "user_info",
-                U
-              ), this._wepinLifeCycle = "login";
-              const $ = yield this._wepinStorage.getLocalStorage(this._wepinAppId, "user_status");
-              q(Object.assign(U, { userStatus: $ }));
+              yield this.getWepinUserInfo(l), q(this._userInfo);
             } else
               t.body.data ? X(new Error(`Wepin.register: ${t.body.data}`)) : X(new Error("unknown/error"));
           })), this._open({ url: "/sdk-register" });
@@ -23270,7 +23298,7 @@ class WepinSDK extends SafeEventEmitter {
         throw new Error("Wepin.logout: wepin sdk has to be initialized");
       if (c !== "login" && c !== "login_before_register")
         throw new Error("Wepin.logout: Only if you're logged in to the wepin");
-      yield this._wepinStorage.clearAllLocalStorage(this._wepinAppId), this._wepinLifeCycle = "initialized", this._userInfo = void 0, this._accountInfo = void 0, this._detailAccount = void 0;
+      yield this._wepinStorage.clearAllLocalStorage(this._wepinAppId), this.wepinLifeCycle = "initialized", this._userInfo = void 0, this._accountInfo = void 0, this._detailAccount = void 0;
     });
   }
   /**
@@ -23309,7 +23337,7 @@ class WepinSDK extends SafeEventEmitter {
     });
   }
   setUserInfo(c, O) {
-    this._userInfo = c, c && c.status === "success" ? this._wepinLifeCycle = "login" : this._wepinLifeCycle = "initialized", O && this.emit("onUserInfoSet", c);
+    this._userInfo = c, c && c.status === "success" ? c.userStatus && c.userStatus.loginStatus === "complete" ? this.wepinLifeCycle = "login" : this.wepinLifeCycle = "login_before_register" : this.wepinLifeCycle = "initialized", O && this.emit("onUserInfoSet", c);
   }
   /**
    * Returns lifecycle of wepin.
@@ -23326,7 +23354,7 @@ class WepinSDK extends SafeEventEmitter {
   getStatus() {
     return wt(this, null, function* () {
       if (yield this.checkExpiredToken())
-        this._wepinLifeCycle = "initialized";
+        this.wepinLifeCycle = "initialized";
       else {
         const c = yield this._wepinStorage.getLocalStorage(
           this._wepinAppId,
@@ -23335,9 +23363,9 @@ class WepinSDK extends SafeEventEmitter {
           this._wepinAppId,
           "user_info"
         );
-        this._userInfo = O, c.loginStatus === "registerRequired" || c.loginStatus === "pinRequired" ? this._wepinLifeCycle = "login_before_register" : this._wepinLifeCycle = "login";
+        this._userInfo = O, c.loginStatus === "registerRequired" || c.loginStatus === "pinRequired" ? this.wepinLifeCycle = "login_before_register" : this.wepinLifeCycle = "login";
       }
-      return this._wepinLifeCycle;
+      return this.wepinLifeCycle;
     });
   }
   /**
@@ -23409,9 +23437,10 @@ class WepinSDK extends SafeEventEmitter {
         throw new Error("Wepin.send: wepin sdk has to be initialized");
       if ((yield this.getStatus()) !== "login")
         throw new Error("Wepin.send: Only if you're logged in to the wepin");
-      if (yield this.getAccounts(), !this._detailAccount.find(
+      if (this.emit(WEPIN_SDK_EVENTS.SEND_IN_PROGRESS), yield this.getAccounts(), !this._detailAccount.find(
         (F) => c.network === F.network && c.address === F.address
-      )) throw new Error("Wepin.send: Account not found");
+      ))
+        throw this.emit(WEPIN_SDK_EVENTS.SEND_COMPLETE, !1, "Account not found"), new Error("Wepin.send: Account not found");
       const t = (/* @__PURE__ */ new Date()).getTime();
       return this.wepinRequest = {
         header: {
@@ -23434,21 +23463,28 @@ class WepinSDK extends SafeEventEmitter {
         }
       }, new Promise((F, l) => {
         this.once(t.toString(), (U) => wt(this, null, function* () {
-          if (LOG.debug("response data: ", U.body.data), this.wepinRequest = void 0, this._close(), U.body.state === "SUCCESS") {
-            const $ = U.body.data;
-            F({ txId: $ });
+          LOG.debug("response data: ", U.body.data);
+          const $ = U.body.state === "SUCCESS";
+          if (this.wepinRequest = void 0, this._close(), $) {
+            const D = U.body.data;
+            this.emit(WEPIN_SDK_EVENTS.SEND_COMPLETE, $, D), F({ txId: D });
           } else
-            U.body.data ? l(new Error(`Wepin.send: ${U.body.data}`)) : l(new Error("unknown/error"));
+            U.body.data ? (this.emit(WEPIN_SDK_EVENTS.SEND_COMPLETE, $, U.body.data), l(new Error(`Wepin.send: ${U.body.data}`))) : (this.emit(
+              WEPIN_SDK_EVENTS.SEND_COMPLETE,
+              $,
+              "unknown/error"
+            ), l(new Error("unknown/error")));
         })), this._open({ url: "/sdk-send" });
       });
     });
   }
   finalize() {
     return wt(this, null, function* () {
-      this._close(), yield this._wepinStorage.clearAllLocalStorage(this._wepinAppId), this._isInitialized = !1, this._wepinLifeCycle = "not_initialized", this._userInfo = void 0, this._accountInfo = void 0, this._detailAccount = void 0, this.specifiedEmail = void 0;
+      this._close(), yield this._wepinStorage.clearAllLocalStorage(this._wepinAppId), this._isInitialized = !1, this.wepinLifeCycle = "not_initialized", this._userInfo = void 0, this._accountInfo = void 0, this._detailAccount = void 0, this.specifiedEmail = void 0;
     });
   }
 }
 export {
+  WEPIN_SDK_EVENTS,
   WepinSDK
 };

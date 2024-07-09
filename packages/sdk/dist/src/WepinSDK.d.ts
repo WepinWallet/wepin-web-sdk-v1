@@ -1,13 +1,13 @@
-import { default as SafeEventEmitter } from './utils/safeEventEmitter';
-import { modeByAppKey } from './types/modeByAppKey';
-import { Account } from './types/Account';
-import { WepinLifeCycle } from './types/WepinLifeCycle';
 import { Widget, IWepinModal } from '@wepin/modal-js';
-import { IWepinUser } from './types/IWepinUser';
 import { IWepinStorage } from '@wepin/storage-js';
+import { Account } from './types/Account';
 import { AccountBalanceInfo } from './types/AccountBalanceInfo';
-import { WepinRequestMessage } from './types/Message';
 import { IWepinSDKAttributes } from './types/IWepinSDKAttributes';
+import { IWepinUser } from './types/IWepinUser';
+import { WepinRequestMessage } from './types/Message';
+import { WepinLifeCycle } from './types/WepinLifeCycle';
+import { modeByAppKey } from './types/modeByAppKey';
+import { default as SafeEventEmitter } from './utils/safeEventEmitter';
 
 export declare class WepinSDK extends SafeEventEmitter {
     version: string;
@@ -34,6 +34,8 @@ export declare class WepinSDK extends SafeEventEmitter {
         wepinModal?: IWepinModal;
         wepinStorage?: IWepinStorage;
     });
+    private get wepinLifeCycle();
+    private set wepinLifeCycle(value);
     private setModeByAppKey;
     get modeByAppKey(): modeByAppKey;
     toJSON(): string;
@@ -112,6 +114,7 @@ export declare class WepinSDK extends SafeEventEmitter {
     loginWithUI(options?: {
         email?: string;
     }): Promise<IWepinUser>;
+    private getWepinUserInfo;
     register(): Promise<IWepinUser>;
     /**
      * Function to handle user logout.

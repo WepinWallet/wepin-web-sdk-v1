@@ -5,3 +5,4 @@ export type { IWepinSDKAttributes } from './IWepinSDKAttributes';
 export type { IWepinUser, providerType } from './IWepinUser';
 export type { LoginProviders } from './LoginProviders';
 export type { WepinLifeCycle } from './WepinLifeCycle';
+export { WEPIN_SDK_EVENTS } from './WepinSDKEvent';

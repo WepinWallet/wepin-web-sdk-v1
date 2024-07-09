@@ -139,7 +139,7 @@ Returns lifecycle of wepin.
      - `'initialized'`: if wepin is initialized
      - `'before_login'`: if wepin is initialized but the user is not logged in
      - `'login'`: if the user is logged in
-     - `'login_before_register'`: if the user is email logged in but the user is NOT registered in wepin 
+     - `'login_before_register'`: if the user is logged in but the user is NOT registered in wepin 
 
 #### Example
 
@@ -432,4 +432,47 @@ The `finalize()` method finalizes the Wepin SDK.
 #### Example
 ```js
 await wepinSdk.finalize()
+```
+
+## ⏩ WepinSDK Events Registration
+Registering WepinSDK events allows you to trigger responses based on changes in the user's connection status. WepinSDK triggers specific events such as `wepinLifeCycleChange`, `send_in_process`, `send_complete`, and more. Generally, this is not a mandatory step and is only performed when necessary.
+
+### on(EVENT, CALLBACK)
+WepinSDK defines the following events to monitor state changes.
+
+#### Events
+|Event Name               | WEPIN_SDK_EVENTS                          | Event Text              | Description                                       |
+|-------------------------|-------------------------------------------|-------------------------|---------------------------------------------------|
+| `wepinLifeCycleChange`  | `WEPIN_SDK_EVENTS.WEPIN_LIFECYCLE_CHANGE` | “wepinLifeCycleChange”	| Triggered when the lifeCycle of WepinSDK changes  |
+| `send_in_process`       | `WEPIN_SDK_EVENTS.SEND_IN_PROGRESS`       | send_in_progress	      | Triggered when a send is in progress              |
+| `send_complete`         | `WEPIN_SDK_EVENTS.SEND_COMPLETE`          | send_complete	          | Triggered when a send is complete                 |
+
+#### Example
+```js
+import { WEPIN_SDK_EVENTS, WepinLifeCycle, IWepinUser, WepinSDK } from "@wepin/sdk-js";
+
+const subscribeWepinEvents = (wepinSDK: WepinSDK) => {
+  wepinSDK.on(
+    WEPIN_SDK_EVENTS.WEPIN_LIFECYCLE_CHANGE,
+    (lifecycle: WepinLifeCycle, userInfo?: IWepinUser) => {
+      console.log('wepinLifeCycleChange', lifecycle)
+      if (lifecycle == 'login' || lifecycle === 'login_before_register') {
+        console.log('userInfo', userInfo)
+      }
+    }
+  )
+  wepinSDK.on(WEPIN_SDK_EVENTS.SEND_IN_PROGRESS, () => {
+    console.log('send_in_progress')
+  })
+  wepinSDK.on(
+    WEPIN_SDK_EVENTS.SEND_COMPLETE,
+    (success: boolean, message?: string) => {
+      if (success) {
+        console.log('send_complete: success', message)
+      } else {
+        console.log('send_complete: failure', message)
+      }
+    }
+  )
+}
 ```

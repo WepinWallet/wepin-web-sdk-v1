@@ -1,5 +1,5 @@
-import { Account } from '../types/Account';
 import { IAppAccount } from '@wepin/fetch-js';
+import { Account } from '../types/Account';
 
 export declare const getAccountSDK: (accountList: IAppAccount[]) => Account[];
 /**

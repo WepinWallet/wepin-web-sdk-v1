@@ -1,6 +1,6 @@
 {
   "name": "@wepin/sdk-js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Wepin Widget Javascript SDK for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",

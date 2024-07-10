@@ -1,0 +1,1 @@
+export function getUrlsByAppKey(e){switch(e){case"production":return{wepinWebview:"https://v1-widget.wepin.io"};case"test":return{wepinWebview:"https://stage-v1-widget.wepin.io"};case"development":return{wepinWebview:"https://localhost:8989"};case"local":return{wepinWebview:"https://local-widget.wepin.io"};default:throw Error("Utils.getUrls: invalid mode")}}

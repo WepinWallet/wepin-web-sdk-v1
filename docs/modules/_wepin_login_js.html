@@ -1,0 +1,343 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@wepin/login-js | Wepin SDK</title><meta name="description" content="Documentation for Wepin SDK"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base=".."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">Wepin SDK</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><ul class="tsd-breadcrumb"><li><a href="../index.html">Wepin SDK</a></li><li><a href="_wepin_login_js.html">@wepin/login-js</a></li></ul><h1>Module @wepin/login-js</h1></div><section class="tsd-panel tsd-typography"><br/>
+<p align="center">
+  <a href="https://www.wepin.io/">
+      <picture>
+        <source media="(prefers-color-scheme: dark)">
+        <img alt="wepin logo" src="https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/assets/wepin_logo_color.png?raw=true" width="250" height="auto">
+      </picture>
+</a>
+</p>
+<br>
+<a id="md:wepinlogin-js" class="tsd-anchor"></a><h1 class="tsd-anchor-link">@wepin/login-js<a href="#md:wepinlogin-js" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h1><p><a href="https://www.npmjs.org/package/@wepin/login-js"><img src="https://img.shields.io/npm/v/@wepin/login-js?style=for-the-badge" alt="npm version"></a> <a href="https://www.npmjs.org/package/@wepin/login-js"><img src="https://img.shields.io/npm/dt/@wepin/login-js.svg?label=downloads&amp;style=for-the-badge" alt="npm downloads"></a></p>
+<p>Wepin Login Library V1 from Web. This package is exclusively available for use in web environments.</p>
+<a id="md:⏩-get-app-id-and-key" class="tsd-anchor"></a><h2 class="tsd-anchor-link">⏩ Get App ID and Key<a href="#md:⏩-get-app-id-and-key" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>After signing up for <a href="https://workspace.wepin.io/">Wepin Workspace</a>, go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.</p>
+<a id="md:⏩-install" class="tsd-anchor"></a><h2 class="tsd-anchor-link">⏩ Install<a href="#md:⏩-install" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code><span class="hl-4">npm</span><span class="hl-1"> </span><span class="hl-4">install</span><span class="hl-1"> @</span><span class="hl-4">wepin</span><span class="hl-1">/</span><span class="hl-4">login</span><span class="hl-1">-</span><span class="hl-4">js</span>
+</code><button>Copy</button></pre>
+
+<p>or</p>
+<pre><code><span class="hl-4">yarn</span><span class="hl-1"> </span><span class="hl-4">add</span><span class="hl-1"> @</span><span class="hl-4">wepin</span><span class="hl-1">/</span><span class="hl-4">login</span><span class="hl-1">-</span><span class="hl-4">js</span>
+</code><button>Copy</button></pre>
+
+<a id="md:⏩-import-sdk" class="tsd-anchor"></a><h2 class="tsd-anchor-link">⏩ Import SDK<a href="#md:⏩-import-sdk" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="js"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">WepinLogin</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@wepin/login-js&#39;</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:⏩-initialize" class="tsd-anchor"></a><h2 class="tsd-anchor-link">⏩ Initialize<a href="#md:⏩-initialize" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="js"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">wepinLogin</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-0">WepinLogin</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-4">appId:</span><span class="hl-1"> </span><span class="hl-2">&#39;wepinAppId&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">appKey:</span><span class="hl-1"> </span><span class="hl-2">&#39;wepinAppKey&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">})</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:init" class="tsd-anchor"></a><h3 class="tsd-anchor-link">init<a href="#md:init" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="js"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">init</span><span class="hl-1">(</span><span class="hl-4">language</span><span class="hl-1">?)</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:parameters" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>language</code> &lt;string&gt; <strong>optional</strong>
+<ul>
+<li>The language to be displayed on the widget (default: <code>'ko'</code>)
+Currently, only <code>'ko'</code> and <code>'en'</code> are supported.</li>
+</ul>
+</li>
+</ul>
+<a id="md:example" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="js"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">init</span><span class="hl-1">(</span><span class="hl-2">&#39;ko&#39;</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:isinitialized" class="tsd-anchor"></a><h3 class="tsd-anchor-link">isInitialized<a href="#md:isinitialized" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="js"><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">isInitialized</span><span class="hl-1">()</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The <code>isInitialized()</code> method checks Wepin Login Library is initialized.</p>
+<a id="md:returns" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>&lt;boolean&gt;
+<ul>
+<li>true if Wepin Login Library is already initialized.</li>
+</ul>
+</li>
+</ul>
+<a id="md:changelanguage" class="tsd-anchor"></a><h3 class="tsd-anchor-link">changeLanguage<a href="#md:changelanguage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">changeLanguage</span><span class="hl-1">(</span><span class="hl-4">language</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:parameters-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>language</code> &lt;string&gt;
+<ul>
+<li>The language to be displayed on the widget.
+Currently, only <code>'ko'</code> and <code>'en'</code> are supported.</li>
+</ul>
+</li>
+</ul>
+<a id="md:returns-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>void</li>
+</ul>
+<a id="md:example-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">changeLanguage</span><span class="hl-1">(</span><span class="hl-2">&#39;ko&#39;</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:⏩-method" class="tsd-anchor"></a><h2 class="tsd-anchor-link">⏩ Method<a href="#md:⏩-method" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Methods can be used after initialization of Wepin Login Library.</p>
+<a id="md:loginwithoauthprovider" class="tsd-anchor"></a><h3 class="tsd-anchor-link">loginWithOauthProvider<a href="#md:loginwithoauthprovider" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithOauthProvider</span><span class="hl-1">(</span><span class="hl-4">params</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>A new window will open and proceed to log in to wepin firebase. Returns firebase login info upon successful login.</p>
+<a id="md:parameters-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>params</code> &lt;object&gt;
+<ul>
+<li><code>provider</code> &lt;'google'|'naver'|'discord'|'apple'&gt; - Provider for Firebase login</li>
+<li><code>withLogout</code> &lt;boolean&gt; <strong>optional</strong> -</li>
+</ul>
+</li>
+</ul>
+<a id="md:returns-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;LoginResult&gt;
+<ul>
+<li><code>provider</code> &lt;'google'|'apple'|'discord'|'naver'&gt;</li>
+<li><code>token</code> &lt;object&gt;
+<ul>
+<li><code>idToken</code> &lt;string&gt; - wepin firebase idToken</li>
+<li><code>refreshToken</code> `<string> - wepin firebase refreshToken</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="md:exception" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Exception<a href="#md:exception" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>Invalid provider</code>: Incorrect value of provider parameter</li>
+<li><code>User canceled</code> : When the user closes the window during the login process.</li>
+<li><code>Internal error</code> : In others error situations.</li>
+</ul>
+<a id="md:example-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">user</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithOauthProvider</span><span class="hl-1">(</span><span class="hl-5">true</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li>response</li>
+</ul>
+<pre><code class="json"><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;provider&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;google&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;token&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;idToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ab2231df....ad0f3291&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;refreshToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;eyJHGciO....adQssw5c&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:signupwithemailandpassword" class="tsd-anchor"></a><h3 class="tsd-anchor-link">signUpWithEmailAndPassword<a href="#md:signupwithemailandpassword" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">signUpWithEmailAndPassword</span><span class="hl-1">(</span><span class="hl-4">email</span><span class="hl-1">, </span><span class="hl-4">password</span><span class="hl-1">, </span><span class="hl-4">openWepinWallet</span><span class="hl-1">?)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>It signs up on the wepin firebase with your email and password. Returns firebase login info upon successful login.</p>
+<a id="md:parameters-3" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>email</code> &lt;string&gt; - User email</li>
+<li><code>password</code> &lt;string&gt; -  User password</li>
+<li><code>openWepinWallet</code> &lt;boolean&gt; - <strong>optional</strong> Whether to open the authentication email sending page of the Wepin Wallet.</li>
+</ul>
+<a id="md:returns-3" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;LoginResult&gt;
+<ul>
+<li><code>provider</code> &lt;'email'&gt;</li>
+<li><code>token</code> &lt;object&gt;
+<ul>
+<li><code>idToken</code> &lt;string&gt; - wepin firebase idToken</li>
+<li><code>refreshToken</code> `<string> - wepin firebase refreshToken</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="md:exception-1" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Exception<a href="#md:exception-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>auth/email-verified</code>: An authentication email has been sent for registration, and email verification is required.</li>
+<li><code>auth/existed-email</code> : The email is already registered.</li>
+<li><code>fail/send-email</code> : Failed to send authentication email.</li>
+<li><code>fail/email-verified</code> : Email verification failed.</li>
+</ul>
+<a id="md:example-3" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">user</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">signUpWithEmailAndPassword</span><span class="hl-1">(</span><span class="hl-2">&#39;abc@defg.com&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;abcdef123&amp;&#39;</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li>response</li>
+</ul>
+<pre><code class="json"><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;provider&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;email&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;token&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;idToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ab2231df....ad0f3291&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;refreshToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;eyJHGciO....adQssw5c&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:loginwithemailandpassword" class="tsd-anchor"></a><h3 class="tsd-anchor-link">loginWithEmailAndPassword<a href="#md:loginwithemailandpassword" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithEmailAndPassword</span><span class="hl-1">(</span><span class="hl-4">email</span><span class="hl-1">, </span><span class="hl-4">password</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>It logs in to the Wepin firebase with your email and password. Returns firebase login info upon successful login.</p>
+<a id="md:parameters-4" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>email</code> &lt;string&gt; - User email</li>
+<li><code>password</code> &lt;string&gt; -  User password</li>
+</ul>
+<a id="md:returns-4" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;LoginResult&gt;
+<ul>
+<li><code>provider</code> &lt;'email'&gt;</li>
+<li><code>token</code> &lt;object&gt;
+<ul>
+<li><code>idToken</code> &lt;string&gt; - wepin firebase idToken</li>
+<li><code>refreshToken</code> `<string> - wepin firebase refreshToken</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="md:example-4" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">user</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithEmailAndPassword</span><span class="hl-1">(</span><span class="hl-2">&#39;abc@defg.com&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;abcdef123&amp;&#39;</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li>response</li>
+</ul>
+<pre><code class="json"><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;provider&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;email&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;token&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;idToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ab2231df....ad0f3291&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;refreshToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;eyJHGciO....adQssw5c&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:loginwithidtoken" class="tsd-anchor"></a><h3 class="tsd-anchor-link">loginWithIdToken<a href="#md:loginwithidtoken" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithIdToken</span><span class="hl-1">(</span><span class="hl-4">params</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>It logs in to the Wepin firebase with external id token. Returns firebase login info upon successful login.</p>
+<a id="md:parameters-5" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>params</code> &lt;object&gt;
+<ul>
+<li><code>token</code> &lt;string&gt; - id token value to be used for login</li>
+<li><code>sign</code> &lt;string&gt; - signature value for the token provided as the first parameter.(<a href="./SignatureGenerationMethods.md">Signature Generation Methods</a>)</li>
+</ul>
+</li>
+</ul>
+<a id="md:returns-5" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;LoginResult&gt;
+<ul>
+<li><code>provider</code> &lt;'external_token'&gt;</li>
+<li><code>token</code> &lt;object&gt;
+<ul>
+<li><code>idToken</code> &lt;string&gt; - wepin firebase idToken</li>
+<li><code>refreshToken</code> `<string> - wepin firebase refreshToken</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="md:example-5" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">user</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithIdToken</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-4">token:</span><span class="hl-2">&#39;eyJHGciO....adQssw5c&#39;</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-4">sign:</span><span class="hl-2">&#39;9753d4dc...c63466b9&#39;</span><br/><span class="hl-1">})</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li>response</li>
+</ul>
+<pre><code class="json"><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;provider&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;external_token&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;token&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;idToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ab2231df....ad0f3291&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;refreshToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;eyJHGciO....adQssw5c&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:loginwithaccesstoken" class="tsd-anchor"></a><h3 class="tsd-anchor-link">loginWithAccessToken<a href="#md:loginwithaccesstoken" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithAccessToken</span><span class="hl-1">(</span><span class="hl-4">params</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>It logs in to the Wepin firebase with external access token. Returns firebase login info upon successful login.</p>
+<a id="md:parameters-6" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>params</code> &lt;object&gt;
+<ul>
+<li><code>provider</code> &lt;'naver'|'discord'&gt; - provider that issued the access token</li>
+<li><code>token</code> &lt;string&gt; - access token value to be used for login</li>
+<li><code>sign</code> &lt;string&gt; - signature value for the token provided as the first parameter.(<a href="../media/SignatureGenerationMethods.md">Signature Generation Methods</a>)</li>
+</ul>
+</li>
+</ul>
+<a id="md:returns-6" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;LoginResult&gt;
+<ul>
+<li><code>provider</code> &lt;'external_token'&gt;</li>
+<li><code>token</code> &lt;object&gt;
+<ul>
+<li><code>idToken</code> &lt;string&gt; - wepin firebase idToken</li>
+<li><code>refreshToken</code> `<string> - wepin firebase refreshToken</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="md:example-6" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">user</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithAccessToken</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-4">provider:</span><span class="hl-1"> </span><span class="hl-2">&#39;naver&#39;</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-4">token:</span><span class="hl-2">&#39;eyJHGciO....adQssw5c&#39;</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-4">sign:</span><span class="hl-2">&#39;9753d4dc...c63466b9&#39;</span><br/><span class="hl-1">})</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li>response</li>
+</ul>
+<pre><code class="json"><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;provider&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;external_token&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;token&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;idToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ab2231df....ad0f3291&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-7">&quot;refreshToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;eyJHGciO....adQssw5c&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    }</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:getsignforlogin" class="tsd-anchor"></a><h3 class="tsd-anchor-link">getSignForLogin<a href="#md:getsignforlogin" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Generates signatures to verify the issuer. It is mainly used to generate signatures for login-related information such as ID Tokens and Access Tokens.</p>
+<pre><code class="js"><span class="hl-3">import</span><span class="hl-1"> {</span><span class="hl-4">getSignForLogin</span><span class="hl-1">} </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@wepin/login-js&#39;</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">result</span><span class="hl-1"> = </span><span class="hl-0">getSignForLogin</span><span class="hl-1">(</span><span class="hl-4">privKey</span><span class="hl-1">, </span><span class="hl-4">message</span><span class="hl-1">);</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:parameters-7" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>privKey</code> &lt;string&gt; - The authentication key used for signature generation.</li>
+<li><code>message</code> &lt;string&gt; - The message or payload to be signed.</li>
+</ul>
+<a id="md:returns-7" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>string - The generated signature.</li>
+</ul>
+<blockquote>
+<p>‼️ Caution ‼️</p>
+<p>The authentication key (<code>privKey</code>) must be stored securely and must not be exposed to the outside. It is recommended to execute the <code>getSignForLogin()</code> method on the backend rather than the frontend for enhanced security and protection of sensitive information.</p>
+</blockquote>
+<a id="md:example-7" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="js"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">privKey</span><span class="hl-1"> = </span><span class="hl-2">&#39;0400112233445566778899001122334455667788990011223344556677889900&#39;</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">idToken</span><span class="hl-1"> = </span><span class="hl-2">&#39;idtokenabcdef&#39;</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">sign</span><span class="hl-1"> = </span><span class="hl-0">getSignForLogin</span><span class="hl-1">(</span><span class="hl-4">privKey</span><span class="hl-1">, </span><span class="hl-4">idToken</span><span class="hl-1">)</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">res</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithIdToken</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-4">token:</span><span class="hl-1"> </span><span class="hl-4">idToken</span><span class="hl-1">, </span><br/><span class="hl-1">    </span><span class="hl-4">sign</span><br/><span class="hl-1">})</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:loginwepin" class="tsd-anchor"></a><h3 class="tsd-anchor-link">loginWepin<a href="#md:loginwepin" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWepin</span><span class="hl-1">({</span><span class="hl-4">provider</span><span class="hl-1">, </span><span class="hl-4">token</span><span class="hl-1">})</span>
+</code><button type="button">Copy</button></pre>
+
+<p>This method logs the user into the Wepin application using the specified provider and token.</p>
+<a id="md:parameters-8" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The parameters should utilize the return values from the <code>loginWithOauthProvider()</code>, <code>loginWithEmailAndPassword()</code>, <code>loginWithIdToken()</code>, and <code>loginWithAccessToken()</code> methods within the this module.</p>
+<ul>
+<li><code>provider</code> &lt;'google'|'apple'|'naver'|'discord'|'external_token'|'email'&gt; - The login provider.</li>
+<li><code>token</code> &lt;{idToken: string; refreshToken: string}&gt; - The login tokens.</li>
+</ul>
+<a id="md:returns-8" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;IWepinUser&gt; - A promise that resolves to an object containing the user's login status and information. The object includes:
+<ul>
+<li>status &lt;'success'|'fail'&gt;  - The login status.</li>
+<li>userInfo &lt;object&gt; <strong>optional</strong> - The user's information, including:
+<ul>
+<li>userId &lt;string&gt; - The user's ID.</li>
+<li>email &lt;string&gt; - The user's email.</li>
+<li>provider &lt;'google'|'apple'|'naver'|'discord'|'email'|'external_token'&gt; - The login provider.</li>
+<li>use2FA &lt;boolean&gt; - Whether the user uses two-factor authentication.</li>
+</ul>
+</li>
+<li>walletId &lt;string&gt; = The user's wallet ID.</li>
+<li>userStatus: &lt;object&gt; - The user's status of wepin login. including:
+<ul>
+<li>loginStatus: &lt;'complete' | 'pinRequired' | 'registerRequired'&gt; - If the user's loginStatus value is not complete, it must be registered in the wepin.</li>
+<li>pinRequired?: <boolean></li>
+</ul>
+</li>
+<li>token: &lt;object&gt; - The user's token of wepin.
+<ul>
+<li>accessToken: &lt;string&gt;</li>
+<li>refreshToken &lt;string&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="md:example-8" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="javascript"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">wepinLogin</span><span class="hl-1"> = </span><span class="hl-0">WepinLogin</span><span class="hl-1">({ </span><span class="hl-4">appId:</span><span class="hl-1"> </span><span class="hl-2">&#39;appId&#39;</span><span class="hl-1">, </span><span class="hl-4">appKey:</span><span class="hl-1"> </span><span class="hl-2">&#39;appKey&#39;</span><span class="hl-1"> })</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">res</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWithOauthProvider</span><span class="hl-1">({ </span><span class="hl-4">provider:</span><span class="hl-1"> </span><span class="hl-2">&#39;google&#39;</span><span class="hl-1"> })</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">userInfo</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">loginWepin</span><span class="hl-1">(</span><span class="hl-4">res</span><span class="hl-1">)</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">userStatus</span><span class="hl-1"> = </span><span class="hl-4">userInfo</span><span class="hl-1">.</span><span class="hl-4">userStatus</span><br/><span class="hl-3">if</span><span class="hl-1">(</span><span class="hl-4">userStatus</span><span class="hl-1">.</span><span class="hl-4">loginStatus</span><span class="hl-1"> === </span><span class="hl-2">&#39;pinRequired&#39;</span><span class="hl-1">||</span><span class="hl-4">userStatus</span><span class="hl-1">.</span><span class="hl-4">loginStatus</span><span class="hl-1"> === </span><span class="hl-2">&#39;registerRequired&#39;</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-10">// wepin register</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<ul>
+<li>response</li>
+</ul>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;status&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;success&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;userInfo&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">      </span><span class="hl-7">&quot;userId&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;120349034824234234&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-7">&quot;email&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;abc@gmail.com&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-7">&quot;provider&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;google&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-7">&quot;use2FA&quot;</span><span class="hl-1">: </span><span class="hl-5">true</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;walletId&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;abcdsfsf123&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;userStatus&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;loginRequired&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;completed&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;pinRequired&quot;</span><span class="hl-1">: </span><span class="hl-5">false</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-7">&quot;token&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;accessToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-7">&quot;refreshToken&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:logout" class="tsd-anchor"></a><h3 class="tsd-anchor-link">logout<a href="#md:logout" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="js"><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">logout</span><span class="hl-1">()</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The <code>logout()</code> method logs out the user logged into Wepin.</p>
+<a id="md:parameters-9" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>void</li>
+</ul>
+<a id="md:returns-9" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>Promise&lt;boolean&gt;
+<ul>
+<li>true if success</li>
+</ul>
+</li>
+</ul>
+<a id="md:exception-2" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Exception<a href="#md:exception-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><code>Wepin login module Not initialized</code>: If the Wepin login library is not initialized</li>
+<li><code>Already logout</code> : If the user is already logged out</li>
+</ul>
+<a id="md:example-9" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="js"><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">result</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">logout</span><span class="hl-1">()</span>
+</code><button type="button">Copy</button></pre>
+
+<a id="md:finalize" class="tsd-anchor"></a><h3 class="tsd-anchor-link">finalize<a href="#md:finalize" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="js"><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">finalize</span><span class="hl-1">()</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The <code>finalize()</code> method finalizes the Wepin Login Library.</p>
+<a id="md:parameters-10" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Parameters<a href="#md:parameters-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>void</li>
+</ul>
+<a id="md:returns-10" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Returns<a href="#md:returns-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li>void</li>
+</ul>
+<a id="md:example-10" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Example<a href="#md:example-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="js"><span class="hl-4">wepinLogin</span><span class="hl-1">.</span><span class="hl-0">finalize</span><span class="hl-1">()</span>
+</code><button type="button">Copy</button></pre>
+
+</section></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:wepinlogin-js"><span>@wepin/login-<wbr/>js</span></a><ul><li><a href="#md:⏩-get-app-id-and-key"><span>⏩ <wbr/>Get <wbr/>App ID and <wbr/>Key</span></a></li><li><a href="#md:⏩-install"><span>⏩ <wbr/>Install</span></a></li><li><a href="#md:⏩-import-sdk"><span>⏩ <wbr/>Import SDK</span></a></li><li><a href="#md:⏩-initialize"><span>⏩ <wbr/>Initialize</span></a></li><li><ul><li><a href="#md:init"><span>init</span></a></li><li><ul><li><a href="#md:parameters"><span>Parameters</span></a></li><li><a href="#md:example"><span>Example</span></a></li></ul></li><li><a href="#md:isinitialized"><span>is<wbr/>Initialized</span></a></li><li><ul><li><a href="#md:returns"><span>Returns</span></a></li></ul></li><li><a href="#md:changelanguage"><span>change<wbr/>Language</span></a></li><li><ul><li><a href="#md:parameters-1"><span>Parameters</span></a></li><li><a href="#md:returns-1"><span>Returns</span></a></li><li><a href="#md:example-1"><span>Example</span></a></li></ul></li></ul></li><li><a href="#md:⏩-method"><span>⏩ <wbr/>Method</span></a></li><li><ul><li><a href="#md:loginwithoauthprovider"><span>login<wbr/>With<wbr/>Oauth<wbr/>Provider</span></a></li><li><ul><li><a href="#md:parameters-2"><span>Parameters</span></a></li><li><a href="#md:returns-2"><span>Returns</span></a></li><li><a href="#md:exception"><span>Exception</span></a></li><li><a href="#md:example-2"><span>Example</span></a></li></ul></li><li><a href="#md:signupwithemailandpassword"><span>sign<wbr/>Up<wbr/>With<wbr/>Email<wbr/>And<wbr/>Password</span></a></li><li><ul><li><a href="#md:parameters-3"><span>Parameters</span></a></li><li><a href="#md:returns-3"><span>Returns</span></a></li><li><a href="#md:exception-1"><span>Exception</span></a></li><li><a href="#md:example-3"><span>Example</span></a></li></ul></li><li><a href="#md:loginwithemailandpassword"><span>login<wbr/>With<wbr/>Email<wbr/>And<wbr/>Password</span></a></li><li><ul><li><a href="#md:parameters-4"><span>Parameters</span></a></li><li><a href="#md:returns-4"><span>Returns</span></a></li><li><a href="#md:example-4"><span>Example</span></a></li></ul></li><li><a href="#md:loginwithidtoken"><span>login<wbr/>With<wbr/>Id<wbr/>Token</span></a></li><li><ul><li><a href="#md:parameters-5"><span>Parameters</span></a></li><li><a href="#md:returns-5"><span>Returns</span></a></li><li><a href="#md:example-5"><span>Example</span></a></li></ul></li><li><a href="#md:loginwithaccesstoken"><span>login<wbr/>With<wbr/>Access<wbr/>Token</span></a></li><li><ul><li><a href="#md:parameters-6"><span>Parameters</span></a></li><li><a href="#md:returns-6"><span>Returns</span></a></li><li><a href="#md:example-6"><span>Example</span></a></li></ul></li><li><a href="#md:getsignforlogin"><span>get<wbr/>Sign<wbr/>For<wbr/>Login</span></a></li><li><ul><li><a href="#md:parameters-7"><span>Parameters</span></a></li><li><a href="#md:returns-7"><span>Returns</span></a></li><li><a href="#md:example-7"><span>Example</span></a></li></ul></li><li><a href="#md:loginwepin"><span>login<wbr/>Wepin</span></a></li><li><ul><li><a href="#md:parameters-8"><span>Parameters</span></a></li><li><a href="#md:returns-8"><span>Returns</span></a></li><li><a href="#md:example-8"><span>Example</span></a></li></ul></li><li><a href="#md:logout"><span>logout</span></a></li><li><ul><li><a href="#md:parameters-9"><span>Parameters</span></a></li><li><a href="#md:returns-9"><span>Returns</span></a></li><li><a href="#md:exception-2"><span>Exception</span></a></li><li><a href="#md:example-9"><span>Example</span></a></li></ul></li><li><a href="#md:finalize"><span>finalize</span></a></li><li><ul><li><a href="#md:parameters-10"><span>Parameters</span></a></li><li><a href="#md:returns-10"><span>Returns</span></a></li><li><a href="#md:example-10"><span>Example</span></a></li></ul></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="../index.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="../assets/icons.svg#icon-1"></use></svg><span>Wepin SDK</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base=".."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

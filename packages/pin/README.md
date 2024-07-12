@@ -16,6 +16,9 @@
 
 [![npm version](https://img.shields.io/npm/v/@wepin/pin-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/pin-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/pin-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/pin-js)
 
+## ⏩ Document
+[![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_pin_js.html)
+
 ## ⏩ Get App Key
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.
 
@@ -56,7 +59,7 @@ The `isInitialized()` method checks WepinPin is initialized.
 ## ⏩ Examples
 
 ### Open Pinpad For Register
-- [generateRegistrationPINBlock](./classes/WepinPin#generateRegistrationPINBlock)
+- [generateRegistrationPINBlock](../classes/_wepin_pin_js.WepinPin.html#generateRegistrationPINBlock)
 ```typescript
 const pinBlock = await wepinPin.generateRegistrationPINBlock()
 
@@ -72,10 +75,12 @@ fetch({
 })
 ```
 
+file:///D:/git/iotrust/wepin/sdk/v1-git/wepin-web-sdk-v1/lib-docs/classes/_wepin_pin_js.WepinPin.html#generateAuthPINBlock
+
 ### Open PinPad for sign
-- [generateAuthPINBlock](./classes/WepinPin#generateAuthPINBlock)
+- [generateAuthPINBlock](../classes/_wepin_pin_js.WepinPin.html#generateAuthPINBlock)
 ```typescript
-const pinBlock = await wepinPin.value.generateAuthPINBlock(count)
+const pinBlock = await wepinPin.generateAuthPINBlock(count)
 // Sort seqNum of uvd in ascending order from 1 because I need to write it in order starting from 1
 pinBlock.UVDs.sort((a, b) => (a.seqNum ?? 0) - (b.seqNum ?? 0))
 
@@ -102,9 +107,9 @@ for (const encUVD of pinBlock.UVDs) {
 ```
 
 ### Open Pinpad for change pin
-- [generateChangePINBlock](./classes/WepinPin#generateChangePINBlock)
+- [generateChangePINBlock](../classes/_wepin_pin_js.WepinPin.html#generateChangePINBlock)
 ```typescript
-const pinBlock = await wepinPin.value.generateChangePINBlock()
+const pinBlock = await wepinPin.generateChangePINBlock()
 const res = await fetch({
   url: 'https://sdk.wepin.io/v1/wallet/pin/change'
   body: {
@@ -113,7 +118,7 @@ const res = await fetch({
     UVD: pinBlock.UVD,
     newUVD: pinBlock.newUVD,
     hint: pinBlock.hint,
-    otp: {
+    otpCode: {
       code: pinBlock.otp
     }
   }
@@ -121,7 +126,7 @@ const res = await fetch({
 ```
 
 ### Open OTP for failed verify otp
-- [generateAuthOTP](./classes/WepinPin#generateAuthOTP)
+- [generateAuthOTP](../classes/_wepin_pin_js.WepinPin.html#generateAuthOTP)
 ```typescript
 let res = await getWepinSignMessage(pinBlocks.UVDs, pinBlock.otp)
 if (res.body[0].message === 'OTP_MISMATCH_WRONG_CODE') {

@@ -1,6 +1,6 @@
 {
   "name": "@wepin/pin-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wepin Widget Javascript SDK for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -26,9 +26,9 @@
   ],
   "dependencies": {
     "@wepin/common": "^0.0.1",
-    "@wepin/fetch-js": "^0.0.6",
-    "@wepin/modal-js": "^0.0.2",
-    "@wepin/storage-js": "^0.0.3"
+    "@wepin/fetch-js": "^0.0.7",
+    "@wepin/modal-js": "^0.0.3",
+    "@wepin/storage-js": "^0.0.4"
   },
   "devDependencies": {
   }

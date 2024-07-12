@@ -10,5 +10,5 @@ export interface ChangePinBlock {
      */
     newUVD: EncUVD;
     hint: EncPinHint;
-    otp: string;
+    otp?: string;
 }

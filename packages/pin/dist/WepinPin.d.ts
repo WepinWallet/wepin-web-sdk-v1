@@ -36,11 +36,8 @@ export declare class WepinPin extends SafeEventEmitter {
     isInitialized(): boolean;
     private checkExpiredToken;
     private initEventHandler;
-    setUserInfo(userInfo: IWepinUser, withEmit?: boolean): void;
-    setToken(token: {
-        accessToken: string;
-        refreshToken: string;
-    }): Promise<void>;
+    private setUserInfo;
+    private setToken;
     /**
      * widget 이 실행될때 바로 실행시켜야 하는 request 가 있을 때,
      * 날려야 할 request 를 전달해주고 response 를 처리하는 함수

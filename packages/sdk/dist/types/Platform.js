@@ -1,0 +1,1 @@
+var o;export var Platform;(o=Platform||(Platform={}))[o.web=1]="web",o[o.android=2]="android",o[o.ios=3]="ios";

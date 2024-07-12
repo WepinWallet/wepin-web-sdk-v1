@@ -18,6 +18,9 @@
 
 The Wepin SDK is designed for use in both Web environments. This package is exclusively available for use in web environments.
 
+## ⏩ Document
+[![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_sdk_js.html)
+
 
 ## ⏩ Get App ID and Key
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.

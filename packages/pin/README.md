@@ -75,8 +75,6 @@ fetch({
 })
 ```
 
-file:///D:/git/iotrust/wepin/sdk/v1-git/wepin-web-sdk-v1/lib-docs/classes/_wepin_pin_js.WepinPin.html#generateAuthPINBlock
-
 ### Open PinPad for sign
 - [generateAuthPINBlock](../classes/_wepin_pin_js.WepinPin.html#generateAuthPINBlock)
 ```typescript

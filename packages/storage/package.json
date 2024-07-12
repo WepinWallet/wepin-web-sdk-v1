@@ -1,20 +1,22 @@
 {
   "name": "@wepin/storage-js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Wepin SDK storage for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
-  "main": "./dist/wepin-storage-js.mjs",
-  "jsdelivr": "./dist/wepin-storage-js.umd.js",
-  "types": "./dist/src/index.d.ts",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "vite build --mode production",
-    "dev": "vite build --mode development",
-    "watch": "vite build --watch",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "build": "run-s -l build:swc build:dts",
+    "build:swc": "yarn run swc ./src -d ./dist --strip-leading-paths",
+    "build:dts": "tsc --declaration --emitDeclarationOnly --outDir dist",
+    "dev": "run-p -l dev:swc dev:dts",
+    "dev:swc": "yarn build:swc -w --source-maps inline",
+    "dev:dts": "yarn build:dts --watch --preserveWatchOutput"
   },
   "keywords": [
     "wepin",

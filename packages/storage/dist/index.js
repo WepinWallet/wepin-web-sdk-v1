@@ -1,0 +1,1 @@
+import e from"./WepinStorage";export default e;

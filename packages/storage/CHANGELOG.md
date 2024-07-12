@@ -1,3 +1,8 @@
+## [Version 0.0.4](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.4) (2024-07-12)
+
+#### Breaking Changes:
+ - Build Process: Switched from Vite bundling to SWC compilation for improved performance and build speed.
+
 ## [Version 0.0.3](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.2) (2024-06-26)
 
 #### Bug Fixes:

@@ -4,7 +4,7 @@
   <a href="https://www.wepin.io/">
       <picture>
         <source media="(prefers-color-scheme: dark)">
-        <img alt="wepin logo" src="./assets/wepin_logo_color.png" width="250" height="auto">
+        <img alt="wepin logo" src="https://github.com/WepinWallet/wepin-web-sdk-v1/blob/main/assets/wepin_logo_color.png?raw=true" width="250" height="auto">
       </picture>
 </a>
 </p>
@@ -14,7 +14,7 @@
 
 # @wepin/storage-js
 
-[![npm version](https://img.shields.io/npm/v/@wepin/storage-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/storage-js). [![npm downloads](https://img.shields.io/npm/dt/@wepin/storage-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/storage-js)
+[![npm version](https://img.shields.io/npm/v/@wepin/storage-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/storage-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/storage-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/storage-js)
 
 Wepin Storage Library from Web. This package is only available in the web environment.
 

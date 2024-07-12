@@ -1,0 +1,1 @@
+var e,t;export var AppState;(e=AppState||(AppState={}))[e.Activated=1]="Activated",e[e.Deactivated=2]="Deactivated",e[e.Recovered=3]="Recovered";export var ProjectPlatformKind;(t=ProjectPlatformKind||(ProjectPlatformKind={}))[t.web=1]="web",t[t.android=2]="android",t[t.ios=3]="ios";

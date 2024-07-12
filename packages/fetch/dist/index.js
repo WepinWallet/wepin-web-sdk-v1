@@ -1,0 +1,1 @@
+export{WepinFetch}from"./WepinFetch";export{isErrorResponse,isFirebaseErrorResponse}from"./utils/utils";export{ProjectPlatformKind as WepinPlatformType}from"./types/app";export*from"./types/coin";

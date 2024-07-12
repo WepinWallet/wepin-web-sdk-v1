@@ -1,0 +1,1 @@
+export var isErrorResponse=function(r){var o=void 0!==r.statusCode||void 0!==r.status,e=void 0!==r.timestamp&&void 0!==r.message&&void 0!==r.path;return o&&e};export var isFirebaseErrorResponse=function(r){var o,e;return void 0!==r.error||(null===(o=r.error)||void 0===o?void 0:o.code)!==void 0||(null===(e=r.error)||void 0===e?void 0:e.message)!==void 0};

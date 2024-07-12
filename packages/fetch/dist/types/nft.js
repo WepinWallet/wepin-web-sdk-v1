@@ -1,0 +1,1 @@
+var e,t;export var NFTContractScheme;(e=NFTContractScheme||(NFTContractScheme={}))[e.ERC721=1]="ERC721",e[e.ERC1155=2]="ERC1155";export var NFTTokenContentType;(t=NFTTokenContentType||(NFTTokenContentType={}))[t.image=1]="image",t[t.video=2]="video";

@@ -1,15 +1,16 @@
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/login-js/v/0.0.7) (2024-07-12)
+
+#### Breaking Changes:
+ - Build Process: Switched from Vite bundling to SWC compilation for improved performance and build speed.
+
 ## [Version 0.0.6](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.6) (2024-07-05)
-
-#### Verion Up:
-
-- Just Version up to 0.0.6
-
-## [Version 0.0.5](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.5) (2024-07-04)
 
 #### New Features:
 
 - Added Oauth Token Request API.
-  
+
+~~ ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.5) (2024-07-04) ~~ - (deprecated)
+
 ## [Version 0.0.4](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.4) (2024-06-26)
 
 #### Bug Fixes:

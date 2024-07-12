@@ -1,0 +1,1 @@
+function o(o,e,n){return e in o?Object.defineProperty(o,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):o[e]=n,o}var e=function o(){!function(o,e){if(!(o instanceof e))throw TypeError("Cannot call a class as a function")}(this,o)};o(e,"test",void 0),o(e,"warn",void 0),o(e,"error",void 0),o(e,"todo",void 0),o(e,"assert",void 0),o(e,"debug",void 0);export{e as default};

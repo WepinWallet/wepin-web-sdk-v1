@@ -1,0 +1,1 @@
+export var WEPIN_DEFAULT_LANG="ko";export var WEPIN_DEFAULT_CURRENCY="krw";

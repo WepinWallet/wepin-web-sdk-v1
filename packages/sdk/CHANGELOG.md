@@ -1,3 +1,15 @@
+## [Version 0.0.8](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.8) (2024-07-12)
+
+#### Bug Fixes:
+- fixed wepin lifecycle error
+
+#### Breaking Changes:
+ - Build Process: Switched from Vite bundling to SWC compilation for improved performance and build speed.
+
+#### New Features:
+  - TypeDoc: Applied TypeDoc for generating documentation from TypeScript comments.
+
+
 ## [Version 0.0.7](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.7) (2024-07-09)
 
 #### New Features:

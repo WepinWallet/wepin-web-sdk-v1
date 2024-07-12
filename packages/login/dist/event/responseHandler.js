@@ -1,0 +1,1 @@
+export var WebviewResponseHandler=function(e,i){i.emit(e.header.id.toString(),e)};

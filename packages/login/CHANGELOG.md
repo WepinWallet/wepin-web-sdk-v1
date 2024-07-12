@@ -1,3 +1,8 @@
+## [Version 0.0.6](https://www.npmjs.com/package/@wepin/login-js/v/0.0.6) (2024-07-12)
+
+#### Breaking Changes:
+ - Build Process: Switched from Vite bundling to SWC compilation for improved performance and build speed.
+
 ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/login-js/v/0.0.5) (2024-07-04)
 
 #### Bug Fixes:

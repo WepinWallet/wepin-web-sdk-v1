@@ -1,0 +1,1 @@
+export var WebviewRequestHandler=function(e,o){var r={header:{response_from:"web",response_to:"wepin_widget",id:e.header.id}};if("set_token"===e.body.command)o.emit("setToken",e.body.parameter);else throw Error("Command ".concat(e.body.command," is not supported."));o.widget.isOpen&&o.widget.response(r)};

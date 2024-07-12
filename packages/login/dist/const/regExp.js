@@ -1,0 +1,1 @@
+export var emailRegExp=/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i;export var passwordRegExp=/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,128}$/;export var pinRegExp=/^\d{6,8}$/;

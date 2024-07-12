@@ -1,0 +1,1 @@
+export{WepinLogin}from"./WepinLogin";export{getSignForLogin}from"./utils/sign";

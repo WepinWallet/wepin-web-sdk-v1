@@ -1,0 +1,1 @@
+import r from"secp256k1";import e from"sha256";export function getSignForLogin(f,o){var t=Buffer.from(f,"hex"),i=e(o),n=Buffer.from(i,"hex"),m=r.ecdsaSign(n,t);return Buffer.from(m.signature).toString("hex")}

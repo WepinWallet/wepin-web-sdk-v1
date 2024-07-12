@@ -1,0 +1,1 @@
+export var COOKIE_NAME="firebase:wepin";

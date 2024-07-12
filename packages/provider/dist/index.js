@@ -1,0 +1,1 @@
+export{WepinProvider}from"./WepinProvider";export{getNetworkByChainId,getNetworkInfoByName}from"./utils/info";

@@ -1,0 +1,1 @@
+export var InfoUrl="https://delivery.wepin.io/sdk/provider/info.json";

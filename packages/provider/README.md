@@ -16,7 +16,11 @@
 
 [![npm version](https://img.shields.io/npm/v/@wepin/provider-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/provider-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/provider-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/provider-js)
 
-Wepin Provider V1 for Web. This package is exclusively available for use in web environments.
+Wepin Provider V1 for Web. This package is exclusively available for use in web 
+environments.
+
+## ⏩ Document
+[![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_provider_js.html)
 
 ## ⏩ Get App ID and Key
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.

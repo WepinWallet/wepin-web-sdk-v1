@@ -1,0 +1,1 @@
+export var PROVIDER_COOKIE_NAME="provider:";

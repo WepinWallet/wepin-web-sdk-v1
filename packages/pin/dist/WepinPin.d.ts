@@ -1,9 +1,11 @@
 import { IWepinSDKAttributes, IWepinUser, SafeEventEmitter, WebviewEventHandler } from '@wepin/common';
 import { WepinFetch } from '@wepin/fetch-js';
+import { WepinLogin } from '@wepin/login-js';
 import { IWepinModal, Widget } from '@wepin/modal-js';
 import { IWepinStorage } from '@wepin/storage-js';
 import { ChangePinBlock, AuthOTP, AuthPinBlock, RegistrationPinBlock } from './types';
 export declare class WepinPin extends SafeEventEmitter {
+    private _login;
     protected modal: IWepinModal;
     protected webviewEventHandler: WebviewEventHandler;
     protected widget?: Widget;
@@ -21,7 +23,9 @@ export declare class WepinPin extends SafeEventEmitter {
      */
     constructor(params: {
         appKey: string;
+        wepinLogin?: WepinLogin;
     });
+    get login(): WepinLogin;
     /**
      * Initialize Wepin Object. It returns widget instance.
      *
@@ -35,6 +39,7 @@ export declare class WepinPin extends SafeEventEmitter {
      */
     isInitialized(): boolean;
     private checkExpiredToken;
+    finalize(): void;
     private initEventHandler;
     private setUserInfo;
     private setToken;

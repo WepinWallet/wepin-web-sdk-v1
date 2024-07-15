@@ -49,11 +49,32 @@ await wepinPin.init({
 })
 ```
 
+Then use [login](../modules/_wepin_login_js.html) to log in to wepin.
+```js
+const loginRes = await wepinPin.login.loginWithEmailAndPassword(...)
+await wepinPin.login.loginWepin(loginRes)
+```
+
+Or you can also pass in the [WepinLogin](../classes/_wepin_login_js.WepinLogin.html) library you created.
+```js
+const wepinLogin = new WepinLogin()
+const wepinPin = new WepinPin({
+  appKey: 'your-wepin-api-key',
+  wepinLogin,
+})
+await wepinPin.init({
+  defaultLanguage: 'ko',
+})
+const loginRes = await wepinPin.login.loginWithEmailAndPassword(...)
+await wepinPin.login.loginWepin(loginRes)
+```
+
 ### isInitialized
 ```js
 wepinPin.isInitialized()
 ```
 The `isInitialized()` method checks WepinPin is initialized.
+
 
 
 ## ⏩ Examples
@@ -135,7 +156,7 @@ if (res.body[0].message === 'OTP_MISMATCH_WRONG_CODE') {
 
 ### finalize
 ```js
-wepinSdk.finalize()
+wepinPin.finalize()
 ```
 
-The `finalize()` method finalizes the Wepin SDK.
+The `finalize()` method finalizes the WepinPin.

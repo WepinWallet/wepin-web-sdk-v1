@@ -1,1 +1,1 @@
-export type LocaleTpe = 'ko' | 'en';
+export type LocaleType = 'ko' | 'en';

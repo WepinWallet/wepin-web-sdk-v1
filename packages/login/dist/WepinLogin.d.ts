@@ -1,7 +1,7 @@
 import { SafeEventEmitter } from '@wepin/common';
 import { Widget } from '@wepin/modal-js';
 import { IWepinUser } from './types/IWepinUser';
-import { LocaleTpe } from './types/Locale';
+import { LocaleType } from './types/Locale';
 import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params } from './types/LoginRequest';
 import { LoginResult, providerType } from './types/LoginResult';
 export declare class WepinLogin extends SafeEventEmitter {
@@ -16,7 +16,7 @@ export declare class WepinLogin extends SafeEventEmitter {
     widget: Widget;
     private _url;
     appEmailVerified: boolean;
-    language: LocaleTpe;
+    language: LocaleType;
     constructor({ appId, appKey }: {
         appId: string;
         appKey: string;
@@ -25,7 +25,7 @@ export declare class WepinLogin extends SafeEventEmitter {
      *  Initialize Wepin Login Object.
      * @param language 'ko' | 'en' - The language to be displayed on the widget.
      */
-    init(language?: LocaleTpe): Promise<void>;
+    init(language?: LocaleType): Promise<void>;
     /**
      * Finalize wepin login module.
      */

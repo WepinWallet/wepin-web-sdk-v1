@@ -51,6 +51,7 @@ export declare class WepinPin extends SafeEventEmitter {
      * @param data
      */
     private openAndRequestWepinWidget;
+    private checkLogin;
     /**
      * generate pin block for registration
      *

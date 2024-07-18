@@ -4,6 +4,11 @@ export interface IWepinUser {
     userInfo?: UserInfo;
     walletId?: string;
     userStatus?: UserStatus;
+    token?: UserToken;
+}
+interface UserToken {
+    accessToken: string;
+    refreshToken: string;
 }
 interface UserStatus {
     loginStatus: 'complete' | 'pinRequired' | 'registerRequired';

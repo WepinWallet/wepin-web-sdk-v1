@@ -1,6 +1,6 @@
 {
   "name": "@wepin/common",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Wepin API library for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",

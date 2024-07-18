@@ -289,6 +289,42 @@ const user = await wepinLogin.loginWithAccessToken({
     }
 ```
 
+### getRefreshFirebaseToken
+```javascript
+await wepinLogin.getRefreshFirebaseToken()
+```
+
+This method retrieves the current firebase token's information from the Wepin.
+
+#### Parameters
+- void
+
+
+#### Returns
+- Promise\<LoginResult>
+  - `provider` \<'external_token'>
+  - `token` \<object>
+    - `idToken` \<string> - wepin firebase idToken
+    - `refreshToken` `<string> - wepin firebase refreshToken
+
+
+#### Example
+
+```javascript
+const user = await wepinLogin.getRefreshFirebaseToken()
+```
+- response
+```json
+    {
+        "provider": "external_token",
+        "token": {
+            "idToken": "ab2231df....ad0f3291",
+            "refreshToken": "eyJHGciO....adQssw5c",
+        }
+    }
+```
+
+
 ### getSignForLogin
 Generates signatures to verify the issuer. It is mainly used to generate signatures for login-related information such as ID Tokens and Access Tokens.
 
@@ -356,6 +392,64 @@ const wepinLogin = WepinLogin({ appId: 'appId', appKey: 'appKey' })
 const res = await wepinLogin.loginWithOauthProvider({ provider: 'google' })
 
 const userInfo = await wepinLogin.loginWepin(res)
+const userStatus = userInfo.userStatus
+if(userStatus.loginStatus === 'pinRequired'||userStatus.loginStatus === 'registerRequired') {
+    // wepin register
+}
+```
+- response
+```json
+{
+    "status": "success",
+    "userInfo": {
+      "userId": "120349034824234234",
+      "email": "abc@gmail.com",
+      "provider": "google",
+      "use2FA": true,
+    },
+    "walletId": "abcdsfsf123",
+    "userStatus": {
+        "loginRequired": "completed",
+        "pinRequired": false,
+    },
+    "token": {
+        "accessToken": "",
+        "refreshToken": "",
+    }
+}
+```
+
+
+### getCurrentWepinUser
+```javascript
+await wepinLogin.getCurrentWepinUser()
+```
+
+This method retrieves the current logged-in user's information from the Wepin.
+
+#### Parameters
+- void
+
+#### Returns
+- Promise\<IWepinUser> - A promise that resolves to an object containing the user's login status and information. The object includes:
+  - status \<'success'|'fail'>  - The login status.
+  - userInfo \<object> __optional__ - The user's information, including:
+    - userId \<string> - The user's ID.
+    - email \<string> - The user's email.
+    - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'> - The login provider.
+    - use2FA \<boolean> - Whether the user uses two-factor authentication.
+  - walletId \<string> = The user's wallet ID.
+  - userStatus: \<object> - The user's status of wepin login. including:
+    - loginStatus: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
+    - pinRequired?: <boolean> 
+  - token: \<object> - The user's token of wepin.
+    - accessToken: \<string>
+    - refreshToken \<string>
+
+#### Example
+
+```javascript
+const userInfo = await wepinLogin.getCurrentWepinUser()
 const userStatus = userInfo.userStatus
 if(userStatus.loginStatus === 'pinRequired'||userStatus.loginStatus === 'registerRequired') {
     // wepin register

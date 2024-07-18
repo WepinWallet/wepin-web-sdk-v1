@@ -1,6 +1,5 @@
-import { SafeEventEmitter } from '@wepin/common';
+import { SafeEventEmitter, IWepinUser } from '@wepin/common';
 import { Widget } from '@wepin/modal-js';
-import { IWepinUser } from './types/IWepinUser';
 import { LocaleType } from './types/Locale';
 import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params } from './types/LoginRequest';
 import { LoginResult, providerType } from './types/LoginResult';
@@ -87,6 +86,11 @@ export declare class WepinLogin extends SafeEventEmitter {
      **/
     loginWithAccessToken(params: ILoginAccessTokenParams): Promise<LoginResult>;
     /**
+     * This method retrieves the current firebase token's information from the Wepin.
+     * @returns {Promise<LoginResult>}
+     */
+    getRefreshFirebaseToken(): Promise<LoginResult>;
+    /**
      * Returns the user's login information.
      * This method with the same as `loginWithUI()` of WepinSDK module, but it doesn't show the widget.
      *
@@ -110,6 +114,11 @@ export declare class WepinLogin extends SafeEventEmitter {
             refreshToken: string;
         };
     }): Promise<IWepinUser>;
+    /**
+     * This method retrieves the current logged-in user's information from the Wepin.
+     * @returns {Promise<IWepinUser>}
+     */
+    getCurrentWepinUser(): Promise<IWepinUser>;
     private openWidget;
     private closeWidget;
 }

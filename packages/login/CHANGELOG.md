@@ -1,3 +1,16 @@
+## [Version 0.0.8](https://www.npmjs.com/package/@wepin/login-js/v/0.0.8) (2024-07-17)
+
+#### New Features
+  - Added `getRefreshFirebaseToken` method:
+    - Retrieves the current Firebase token's information from Wepin, including idToken and refreshToken.
+  - Added `getCurrentWepinUser` method:
+    - Retrieves the current logged-in user's information from Wepin, including user details, login status, and tokens.
+
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/login-js/v/0.0.7) (2024-07-15)
+
+#### Bug Fixes:
+ - Corrected a typo in `LocaleTpe` to `LocaleType`.
+
 ## [Version 0.0.6](https://www.npmjs.com/package/@wepin/login-js/v/0.0.6) (2024-07-12)
 
 #### Breaking Changes:

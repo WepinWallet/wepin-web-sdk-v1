@@ -1,6 +1,6 @@
 {
   "name": "@wepin/login-js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Wepin Login Library V1 for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -20,7 +20,7 @@
     "dev:dts": "yarn build:dts --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@wepin/common": "^0.0.1",
+    "@wepin/common": "^0.0.2",
     "@wepin/fetch-js": "^0.0.7",
     "@wepin/modal-js": "^0.0.3",
     "@wepin/storage-js": "^0.0.4",

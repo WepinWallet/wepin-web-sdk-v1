@@ -1,3 +1,8 @@
+## [Version 0.0.9](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.9) (2024-07-22)
+
+#### package update:
+ - Updated `@wepin/modal-js` package to v0.0.4.
+
 ## [Version 0.0.8](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.8) (2024-07-12)
 
 #### Bug Fixes:

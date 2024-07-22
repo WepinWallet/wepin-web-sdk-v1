@@ -1,3 +1,11 @@
+## [Version 0.0.5](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.5) (2024-07-22)
+
+#### package update:
+ - Updated `@wepin/modal-js` package to v0.0.4.
+
+#### Bug Fixes:
+ - Added cache usage option when fetching network info.
+  
 ## [Version 0.0.4](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.4) (2024-07-12)
 
 #### Breaking Changes:

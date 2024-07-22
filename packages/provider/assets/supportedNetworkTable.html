@@ -50,11 +50,11 @@
 <script>
 // JSON 데이터 URL
 const url = 'https://delivery.wepin.io/sdk/provider/info.json';
-
 // JSON 데이터 불러오기
-fetch(url)
-    .then(response => response.json())
-    .then(data => {
+fetch(url, { 
+    method: 'GET' , 
+    cache: 'reload', // 캐시된 응답 대신 서버에서 새로운 응답을 가져옴
+}).then(response => response.json()).then(data => {
         // 데이터를 테이블로 변환
         const tableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
         data?.networks.forEach(item => {
@@ -65,8 +65,7 @@ fetch(url)
             </tr>`;
             tableBody.innerHTML += row;
         });
-    })
-    .catch(error => console.error('Error:', error));
+    }).catch(error => console.error('Error:', error));
 </script>
 
 </body>

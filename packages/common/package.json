@@ -1,6 +1,6 @@
 {
   "name": "@wepin/common",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wepin API library for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -25,6 +25,7 @@
     "wallet"
   ],
   "dependencies": {
+    "@metamask/safe-event-emitter": "^3.1.1",
     "events": "^3.3.0"
   },
   "devDependencies": {

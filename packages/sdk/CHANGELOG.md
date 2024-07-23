@@ -1,4 +1,4 @@
-## [Version 0.0.10](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.10) (2024-07-23)
+## [Version 0.0.11](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.11) (2024-07-23)
 
 #### Package Update:
  - Updated `@wepin/common` package to v0.0.3.
@@ -12,6 +12,8 @@
 #### Refactoring
  - Change to use the WebviewRequestHandler, Platform from @wepin/common
  - Change to import from SafeEventEmitter npm
+  
+## ~~[Version 0.0.10](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.10) (2024-07-23)~~ (deprecated)
  
 ## [Version 0.0.9](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.9) (2024-07-22)
 

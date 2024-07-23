@@ -1,11 +1,11 @@
-import { SafeEventEmitter, IWepinUser } from '@wepin/common';
+import { WebviewEventHandler, IWepinUser, Platform } from '@wepin/common';
 import { Widget } from '@wepin/modal-js';
 import { LocaleType } from './types/Locale';
 import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params } from './types/LoginRequest';
 import { LoginResult, providerType } from './types/LoginResult';
-export declare class WepinLogin extends SafeEventEmitter {
+export declare class WepinLogin {
     version: string;
-    type: 'web' | 'ios' | 'android';
+    type: keyof typeof Platform;
     appId: string;
     private _appKey;
     private _isInitialized;
@@ -16,6 +16,7 @@ export declare class WepinLogin extends SafeEventEmitter {
     private _url;
     appEmailVerified: boolean;
     language: LocaleType;
+    protected webviewEventHandler: WebviewEventHandler;
     constructor({ appId, appKey }: {
         appId: string;
         appKey: string;

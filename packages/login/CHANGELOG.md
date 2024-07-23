@@ -1,3 +1,14 @@
+## [Version 0.0.9](https://www.npmjs.com/package/@wepin/login-js/v/0.0.9) (2024-07-23)
+
+#### package update:
+ - Updated `@wepin/common` package to v0.0.3.
+ - Updated `@wepin/fetch-js` package to v0.0.8.
+ - Updated `@wepin/modal-js` package to v0.0.5.
+ - Updated `@wepin/storage-js` package to v0.0.5.
+
+#### Refactoring
+  - Change to use the WebviewRequestHandler from @wepin/common
+  
 ## [Version 0.0.8](https://www.npmjs.com/package/@wepin/login-js/v/0.0.8) (2024-07-17)
 
 #### New Features

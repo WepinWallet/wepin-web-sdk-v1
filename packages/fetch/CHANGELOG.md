@@ -1,4 +1,10 @@
-## [Version 0.0.7](https://www.npmjs.com/package/@wepin/login-js/v/0.0.7) (2024-07-12)
+## [Version 0.0.8](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.8) (2024-07-23)
+
+#### package update:
+ - Updated `@wepin/common` package to v0.0.3.
+ - Updated `@wepin/storage` package to v0.0.5.
+
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.7) (2024-07-12)
 
 #### Breaking Changes:
  - Build Process: Switched from Vite bundling to SWC compilation for improved performance and build speed.

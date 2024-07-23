@@ -1,6 +1,21 @@
+## [Version 0.0.10](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.10) (2024-07-23)
+
+#### Package Update:
+ - Updated `@wepin/common` package to v0.0.3.
+ - Updated `@wepin/fetch-js` package to v0.0.8.
+ - Updated `@wepin/modal-js` package to v0.0.5.
+ - Updated `@wepin/storage-js` package to v0.0.5.
+  
+#### Bug Fixes:
+- Added `bignumber.js` to dependencies.
+  
+#### Refactoring
+ - Change to use the WebviewRequestHandler, Platform from @wepin/common
+ - Change to import from SafeEventEmitter npm
+ 
 ## [Version 0.0.9](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.9) (2024-07-22)
 
-#### package update:
+#### Package Update:
  - Updated `@wepin/modal-js` package to v0.0.4.
 
 ## [Version 0.0.8](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.8) (2024-07-12)

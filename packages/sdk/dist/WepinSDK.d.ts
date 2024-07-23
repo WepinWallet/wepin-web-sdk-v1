@@ -1,16 +1,14 @@
-import { SafeEventEmitter, modeByAppKey } from '@wepin/common';
+import SafeEventEmitter from '@metamask/safe-event-emitter';
+import { modeByAppKey, WebviewEventHandler, Platform, WepinRequestMessage, IWepinSDKAttributes, IWepinUser } from '@wepin/common';
 import type { Widget, IWepinModal } from '@wepin/modal-js';
 import { IWepinStorage } from '@wepin/storage-js';
 import { Account } from './types/Account';
 import { AccountBalanceInfo } from './types/AccountBalanceInfo';
-import { IWepinSDKAttributes } from './types/IWepinSDKAttributes';
-import { IWepinUser } from './types/IWepinUser';
-import { WepinRequestMessage } from './types/Message';
 import { WepinLifeCycle } from './types/WepinLifeCycle';
 export declare class WepinSDK extends SafeEventEmitter {
     version: string;
     /** @ignore */
-    type: 'web' | 'android' | 'ios';
+    type: keyof typeof Platform;
     /** @ignore */
     wepinAppAttributes: IWepinSDKAttributes;
     /** @ignore */
@@ -29,13 +27,14 @@ export declare class WepinSDK extends SafeEventEmitter {
     private _accountInfo;
     private _detailAccount;
     private _userInfo;
-    private _EL;
+    protected webviewEventHandler: WebviewEventHandler;
     constructor({ appId, appKey, wepinModal, wepinStorage, }: {
         appId: string;
         appKey: string;
         wepinModal?: IWepinModal;
         wepinStorage?: IWepinStorage;
     });
+    private initEventHandler;
     private get wepinLifeCycle();
     private set wepinLifeCycle(value);
     /** @ignore */

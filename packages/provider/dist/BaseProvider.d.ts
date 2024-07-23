@@ -1,4 +1,4 @@
-import { SafeEventEmitter } from '@wepin/common';
+import SafeEventEmitter from '@metamask/safe-event-emitter';
 import { JsonRpcEngine, JsonRpcMiddleware } from 'json-rpc-engine';
 import { BaseProviderState, RequestArguments, InvalidatedJsonRpcRequest } from './types/EIP1193';
 import type { ProviderInfo } from './types/EIP5749';

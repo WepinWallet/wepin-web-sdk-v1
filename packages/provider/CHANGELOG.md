@@ -1,3 +1,15 @@
+## [Version 0.0.6](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.6) (2024-07-23)
+
+#### Package Update:
+ - Updated `@wepin/common` package to v0.0.3.
+ - Updated `@wepin/fetch-js` package to v0.0.8.
+ - Updated `@wepin/modal-js` package to v0.0.5.
+ - Updated `@wepin/storage-js` package to v0.0.5.
+  
+#### Refactoring
+ - Change to use the WebviewRequestHandler, Platform from @wepin/common
+ - Change to import from SafeEventEmitter npm
+  
 ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.5) (2024-07-22)
 
 #### package update:

@@ -1,11 +1,10 @@
-import { SafeEventEmitter } from '@wepin/common';
+import { Platform, WebviewEventHandler, WepinRequestMessage } from '@wepin/common';
 import { Widget, IWepinModal } from '@wepin/modal-js';
 import { IWepinStorage } from '@wepin/storage-js';
 import { BaseProvider } from './BaseProvider';
-import { WepinRequestMessage } from './types/Message';
-export declare class WepinProvider extends SafeEventEmitter {
+export declare class WepinProvider {
     version: string;
-    type: 'web' | 'ios' | 'android';
+    type: keyof typeof Platform;
     wepinDomain: string;
     wepinAppAttributes: {
         defaultLanguage: string;
@@ -19,7 +18,7 @@ export declare class WepinProvider extends SafeEventEmitter {
     private _wepinStorage;
     _isInitialized: boolean;
     private _url;
-    private _EL;
+    webviewEventHandler: WebviewEventHandler;
     queue: WepinRequestMessage[];
     constructor({ appId, appKey, modal, storage, }: {
         appId: string;
@@ -29,6 +28,7 @@ export declare class WepinProvider extends SafeEventEmitter {
     });
     /** @ignore */
     get wepinStorage(): IWepinStorage;
+    private initEventHandler;
     private _initQueue;
     /** @ignore */
     get wepinModal(): IWepinModal;

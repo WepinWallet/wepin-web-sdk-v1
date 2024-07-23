@@ -8,4 +8,3 @@ export declare const getRpcPromiseCallback: (resolve: (value?: any) => void, rej
  * @returns Whether the given chain ID is valid.
  */
 export declare const isValidChainId: (chainId: unknown) => chainId is string;
-export declare const proxyToObject: (target: any) => any;

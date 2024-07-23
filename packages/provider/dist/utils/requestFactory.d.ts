@@ -1,4 +1,4 @@
-import { WepinRequestMessage } from '../types/Message';
+import { WepinRequestMessage } from '@wepin/common';
 import { CreateWepinMiddlewareOptions } from '../types/wepinMiddlewareOptions';
 export declare const makeRequestID: () => number;
 export declare const requestFactory: ({ wepinProvider, network, req, res, next, end, command, parameter, }: {

@@ -3,4 +3,3 @@ export declare const getWindowFeaturesOption: (widgetFeatures?: WidgetWindowFeat
 export declare const getIFrameElement: (widgetFeatures?: {
     isHide: boolean;
 }) => HTMLIFrameElement;
-export declare const uuidv4: () => string;

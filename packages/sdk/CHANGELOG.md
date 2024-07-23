@@ -1,3 +1,8 @@
+## [Version 0.0.12](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.12) (2024-07-23)
+
+#### Bug Fixes:
+- Added `bignumber.js` to dependencies.
+- 
 ## [Version 0.0.11](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.11) (2024-07-23)
 
 #### Package Update:
@@ -5,9 +10,6 @@
  - Updated `@wepin/fetch-js` package to v0.0.8.
  - Updated `@wepin/modal-js` package to v0.0.5.
  - Updated `@wepin/storage-js` package to v0.0.5.
-  
-#### Bug Fixes:
-- Added `bignumber.js` to dependencies.
   
 #### Refactoring
  - Change to use the WebviewRequestHandler, Platform from @wepin/common

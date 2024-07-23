@@ -1,10 +1,10 @@
-import { IWepinSDKAttributes, IWepinUser, SafeEventEmitter, WebviewEventHandler } from '@wepin/common';
+import { IWepinSDKAttributes, IWepinUser, Platform, WebviewEventHandler } from '@wepin/common';
 import { WepinFetch } from '@wepin/fetch-js';
 import { WepinLogin } from '@wepin/login-js';
 import { IWepinModal, Widget } from '@wepin/modal-js';
 import { IWepinStorage } from '@wepin/storage-js';
 import { ChangePinBlock, AuthOTP, AuthPinBlock, RegistrationPinBlock } from './types';
-export declare class WepinPin extends SafeEventEmitter {
+export declare class WepinPin {
     private _login;
     protected modal: IWepinModal;
     protected webviewEventHandler: WebviewEventHandler;
@@ -17,6 +17,7 @@ export declare class WepinPin extends SafeEventEmitter {
     protected _userInfo: IWepinUser;
     protected appId: string;
     protected appKey: string;
+    protected type: keyof typeof Platform;
     /**
      * @param params
      * @param params.appKey appKey in your workspace app
@@ -41,8 +42,6 @@ export declare class WepinPin extends SafeEventEmitter {
     private checkExpiredToken;
     finalize(): void;
     private initEventHandler;
-    private setUserInfo;
-    private setToken;
     /**
      * widget 이 실행될때 바로 실행시켜야 하는 request 가 있을 때,
      * 날려야 할 request 를 전달해주고 response 를 처리하는 함수

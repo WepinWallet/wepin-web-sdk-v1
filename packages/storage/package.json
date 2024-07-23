@@ -1,6 +1,6 @@
 {
   "name": "@wepin/storage-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Wepin SDK storage for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -24,6 +24,8 @@
     "wallet",
     "wepin-storage"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@wepin/common": "^0.0.3"
+  },
   "devDependencies": {}
 }

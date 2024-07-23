@@ -1,8 +1,9 @@
+import { Platform } from '@wepin/common';
 import { IWepinStorage } from './types/IWepinStorage';
 import { IUserInfo, IWepinToken, LocalStorageData, LocalStorageKey, LocalStorageType } from './types/storage';
 export default class WepinStorage implements IWepinStorage {
     #private;
-    platform: 'web' | 'ios' | 'android';
+    platform: keyof typeof Platform;
     getLocalStorageEnabled(): boolean;
     setAllLocalStorage(appId: string, value: LocalStorageType): Promise<void>;
     setLocalStorage(appId: string, name: LocalStorageKey, value: LocalStorageData): Promise<void>;

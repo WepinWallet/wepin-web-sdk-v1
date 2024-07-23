@@ -1,3 +1,8 @@
+## [Version 0.0.5](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.5) (2024-07-23)
+
+#### Refactoring:
+  - Added `@wepin/common` to dependencies.
+
 ## [Version 0.0.4](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.4) (2024-07-12)
 
 #### Breaking Changes:

@@ -1,3 +1,8 @@
+## [Version 0.0.9](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.9) (2024-08-08)
+
+#### Updates:
+- Added ESM and CJS exports for better module compatibility.
+
 ## [Version 0.0.8](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.8) (2024-07-23)
 
 #### package update:

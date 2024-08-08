@@ -1,0 +1,1 @@
+import{jwtDecode as e}from"jwt-decode";export var checkJwtToken=function(){var o=function(o){var r;return!!(!o||(null===(r=e(o))||void 0===r?void 0:r.exp)<=Math.floor(Date.now()/1e3)+60)};return{checkTokenExpired:function(e,r){if("/app/info"!==e&&"/user/login"!==e&&"/user/oauth"!==e&&o(r)){if("/access-token"!==e)throw Error("token_expired");return}}}};

@@ -1,0 +1,1 @@
+export var APIEvents={request:"request",response:"response"};

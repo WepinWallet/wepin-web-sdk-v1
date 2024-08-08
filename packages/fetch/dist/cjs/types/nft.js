@@ -1,0 +1,1 @@
+"use strict";var e,t,n,r;Object.defineProperty(exports,"__esModule",{value:!0}),function(e,t){for(var n in t)Object.defineProperty(e,n,{enumerable:!0,get:t[n]})}(exports,{NFTContractScheme:function(){return e},NFTTokenContentType:function(){return t}}),(n=e||(e={}))[n.ERC721=1]="ERC721",n[n.ERC1155=2]="ERC1155",(r=t||(t={}))[r.image=1]="image",r[r.video=2]="video";

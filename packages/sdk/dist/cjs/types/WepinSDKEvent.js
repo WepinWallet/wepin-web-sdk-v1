@@ -1,0 +1,1 @@
+"use strict";var e,_;Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"WEPIN_SDK_EVENTS",{enumerable:!0,get:function(){return e}}),(_=e||(e={})).WEPIN_LIFECYCLE_CHANGE="wepin_lifecycle_change",_.SEND_IN_PROGRESS="send_in_progress",_.SEND_COMPLETE="send_complete";

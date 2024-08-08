@@ -1,3 +1,21 @@
+## [Version 0.0.13](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.13) (2024-08-08)
+
+#### Updates:
+  - Added ESM and CJS exports for better module compatibility.
+  - Support Japanese
+
+#### Package Update:
+ - Updated `@wepin/common` package to v0.0.4.
+ - Updated `@wepin/storage-js` package to v0.0.6.
+
+## [Version 0.0.11](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.11) (2024-07-23)
+
+#### Package Update:
+ - Updated `@wepin/common` package to v0.0.3.
+ - Updated `@wepin/fetch-js` package to v0.0.8.
+ - Updated `@wepin/modal-js` package to v0.0.5.
+ - Updated `@wepin/storage-js` package to v0.0.5.
+
 ## [Version 0.0.12](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.12) (2024-07-23)
 
 #### Bug Fixes:

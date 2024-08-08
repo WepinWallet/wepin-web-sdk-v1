@@ -58,8 +58,10 @@ await wepinSdk.init(attributes?)
 #### Parameters
 - `attributes` \<IWepinSDKAttributes> __optional__
     - `type`: This determines how the widget is displayed when Wepin is initiated. The default value is `'hide'` and currently, only 'hide' is supported.
-    - `defaultLanguage`: This sets the language displayed on the widget. The default value is `'ko'`, but you can also set it to `'en'`.
-    - `defaultCurrency`: This sets the currency displayed on the widget. The default value is `'KRW'`, but you can also set it to `'USD'`.
+    - `defaultLanguage`: - `defaultLanguage`: The language to be displayed on the widget (default: `'ko'`)
+    Currently, only `ko`, `en`, and `ja` are supported.
+    - `defaultCurrency`: The currency to be displayed on the widget (default: `'KRW'`)
+    Currently, only `'KRW'`,`'USD'` and `'JPY'` are supported.
     - `loginProviders`:  __optional__ An array of login providers to configure the widget. 
       - If not provided, all available login providers will be displayed on the widget. 
       - If an empty array is provided, only the email login function is available. (from version `v0.0.3`)
@@ -106,8 +108,8 @@ wepinSdk.changeLanguage({language, currency})
 Change the language and currency of the widget.
 
 #### Parameters
-- `language` \<string> - The language to be displayed on the widget. Currently, only `'ko'` and `'en'` are supported.
-- `currency` \<string> - The currency to be displayed on the widget.
+- `language` \<string> - The language to be displayed on the widget. Currently, only `'ko'`, `'en'` and `'ja'` are supported.
+- `currency` \<string> - The currency to be displayed on the widget. Currently, only `'KRW'`, `'USD'` and `'JPY'` are supported.
 
 #### Returns
 - void
@@ -155,7 +157,7 @@ const status = await wepinSdk.getStatus()
 await wepinSdk.openWidget()
 ```
 
-The `openWidget()` method shows Wepin widget. If a user is not logged in, Wepin widget will show login page.
+The `openWidget()` method displays the Wepin widget. If a user is not logged in, the widget will not open. Therefore, you must log in to Wepin before using this method. To log in to Wepin, use the `loginWithUI` method or the `loginWepin` method from the [@wepin/login-js](https://www.npmjs.com/package/@wepin/login-js).
 
 #### Parameters
 - void

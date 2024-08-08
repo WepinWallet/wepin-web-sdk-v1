@@ -1,0 +1,1 @@
+export function makeWepinResponseMessage(e,o,d){return{header:{response_from:"web",response_to:"wepin_widget",id:e.header.id},body:{command:e.body.command,state:o,data:d}}}

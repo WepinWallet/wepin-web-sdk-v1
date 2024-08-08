@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"messages",{enumerable:!0,get:function(){return r}});var e=require("./getUrlsByMode.js");function r(r){return{hasValidOrigin:function(t){return t.origin===(0,e.getUrlsByMode)(r).wepinWebview}}}

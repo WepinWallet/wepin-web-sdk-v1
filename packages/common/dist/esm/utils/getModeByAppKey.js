@@ -1,0 +1,1 @@
+export function getModeByAppKey(e){if("ak_live_"===e.slice(0,8))return"production";if("ak_test_"===e.slice(0,8))return"test";if("ak_dev_"===e.slice(0,7))return"development";if("local_ak_dev_"===e.slice(0,13))return"local";throw Error("Wepin.getModeByAppKey: Invalid appKey:"+e)}

@@ -1,3 +1,9 @@
+## [Version 0.0.8](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.8) (2024-08-08)
+    
+#### Package Update:
+ - Updated `@wepin/storage-js` package to v0.0.7.
+ - Updated `@wepin/fetch-js` package to v0.0.10.
+  
 ## [Version 0.0.7](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.7) (2024-08-08)
 
 #### Updates:

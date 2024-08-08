@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),function(e,r){for(var t in r)Object.defineProperty(e,t,{enumerable:!0,get:r[t]})}(exports,{OAUTH2:function(){return r},PROVIDER:function(){return e}});var e=["twitter","facebook"],r=["google","naver","discord","apple"];

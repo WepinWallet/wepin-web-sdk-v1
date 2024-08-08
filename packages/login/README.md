@@ -54,7 +54,7 @@ await wepinLogin.init(language?)
 #### Parameters
 - `language` \<string> __optional__
   - The language to be displayed on the widget (default: `'ko'`)
-Currently, only `'ko'` and `'en'` are supported.
+Currently, only `'ko'`, `'en'` and `'ja'` are supported.
 
 #### Example
 ```js
@@ -79,7 +79,7 @@ wepinLogin.changeLanguage(language)
 #### Parameters
 - `language` \<string>
   - The language to be displayed on the widget.
-Currently, only `'ko'` and `'en'` are supported.
+Currently, only `'ko'`, `'en'` and `'ja'` are supported.
 
 #### Returns
 - void 

@@ -1,3 +1,13 @@
+## [Version 0.0.10](https://www.npmjs.com/package/@wepin/login-js/v/0.0.10) (2024-08-08)
+
+#### Updates:
+  - Added ESM and CJS exports for better module compatibility.
+  - Support Japanese
+
+#### package update:
+ - Updated `@wepin/common` package to v0.0.4.
+ - Updated `@wepin/storage-js` package to v0.0.6.
+
 ## [Version 0.0.9](https://www.npmjs.com/package/@wepin/login-js/v/0.0.9) (2024-07-23)
 
 #### package update:

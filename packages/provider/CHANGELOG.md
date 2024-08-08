@@ -1,3 +1,13 @@
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.7) (2024-08-08)
+
+#### Updates:
+  - Added ESM and CJS exports for better module compatibility.
+  - Support Japanese
+    
+#### Package Update:
+ - Updated `@wepin/common` package to v0.0.4.
+ - Updated `@wepin/storage-js` package to v0.0.6.
+
 ## [Version 0.0.6](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.6) (2024-07-23)
 
 #### Package Update:

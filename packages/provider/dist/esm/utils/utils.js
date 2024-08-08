@@ -1,0 +1,1 @@
+export var getRpcPromiseCallback=function(r,t){var e=!(arguments.length>2)||void 0===arguments[2]||arguments[2];return function(i,n){i||n.error?t(i||n.error):!e||Array.isArray(n)?r(n):r(n.result)}};export var isValidChainId=function(r){return!!r&&"string"==typeof r&&r.startsWith("0x")};

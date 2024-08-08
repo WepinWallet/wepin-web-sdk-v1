@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"InfoUrl",{enumerable:!0,get:function(){return e}});var e="https://delivery.wepin.io/sdk/provider/info.json";

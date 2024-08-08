@@ -1,0 +1,1 @@
+export default{Gateway:"https://gateway.wepin.io"};

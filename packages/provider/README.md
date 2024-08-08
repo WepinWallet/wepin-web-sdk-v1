@@ -71,9 +71,9 @@ await wepinProvider.init(attributes?)
 #### Parameters
 - `attributes` \<object> __optional__
     - `defaultLanguage`: The language to be displayed on the widget (default: `'ko'`)
-Currently, only `'ko'` and `'en'` are supported.
+    Currently, only `'ko'`, `'en'` and `'ja'` are supported.
     - `defaultCurrency`: The currency to be displayed on the widget (default: `'KRW'`)
-
+    Currently, only `'KRW'`, `'USD'` and `'JPY'` are supported.
 #### Example
 ```js
 await wepinProvider.init({
@@ -100,8 +100,8 @@ Change the language and currency of the widget.
 
 #### Parameters
 - `attributes` \<object>
-  - `language` \<string> - The language to be displayed on the widget. Currently, only `'ko'` and `'en'` are supported.
-  - `currency` \<string> - The currency to be displayed on the widget.
+  - `language` \<string> - The language to be displayed on the widget. Currently, only `'ko'`, `'en'` and `'ja'` are supported.
+  - `currency` \<string> - The currency to be displayed on the widget. Currently, only `'KRW'` , `'USD'` and `'JPY'` are supported.
 
 #### Returns
 - void

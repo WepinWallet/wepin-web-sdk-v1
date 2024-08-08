@@ -39,7 +39,9 @@ import { WepinPin } from '@wepin/pin-js'
 ```
 
 ## ⏩ Initialize
-Create a new instance of `WepinPin` and initialize it with your application's  key:
+Create a new instance of `WepinPin` and initialize it with your application's  key
+- `defaultLanguage`: The language to be displayed on the widget (default: `'ko'`)
+Currently, only `'ko'`, `'en'` and `'ja'` are supported.
 ```js
 const wepinPin = new WepinPin({
   appKey: 'your-wepin-api-key',

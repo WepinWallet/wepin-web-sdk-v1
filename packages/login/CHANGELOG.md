@@ -1,3 +1,9 @@
+## [Version 0.0.11](https://www.npmjs.com/package/@wepin/login-js/v/0.0.11) (2024-08-08)
+
+#### package update:
+ - Updated `@wepin/fetch-js` package to v0.0.10.
+ - Updated `@wepin/storage-js` package to v0.0.7.
+
 ## [Version 0.0.10](https://www.npmjs.com/package/@wepin/login-js/v/0.0.10) (2024-08-08)
 
 #### Updates:

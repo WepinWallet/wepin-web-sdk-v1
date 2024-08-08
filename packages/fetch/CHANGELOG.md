@@ -1,3 +1,8 @@
+## [Version 0.0.10](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.10) (2024-08-08)
+
+#### package update:
+ - Updated `@wepin/storage-js` package to v0.0.7.
+
 ## [Version 0.0.9](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.9) (2024-08-08)
 
 #### Updates:
@@ -7,7 +12,7 @@
 
 #### package update:
  - Updated `@wepin/common` package to v0.0.3.
- - Updated `@wepin/storage` package to v0.0.5.
+ - Updated `@wepin/storage-js` package to v0.0.5.
 
 ## [Version 0.0.7](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.7) (2024-07-12)
 

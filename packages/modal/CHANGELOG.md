@@ -1,3 +1,8 @@
+## [Version 0.0.6](https://www.npmjs.com/package/@wepin/modal-js/v/0.0.6) (2024-08-08)
+
+#### Updates:
+- Added ESM and CJS exports for better module compatibility.
+
 ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/modal-js/v/0.0.5) (2024-07-23)
 
 #### Bug Fixes:

@@ -1,3 +1,12 @@
+## [Version 0.0.6](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.6) (2024-08-08)
+
+#### Updates:
+  - Added ESM and CJS exports for better module compatibility.
+  - Support Japanese
+
+#### Package Update:
+ - Updated `@wepin/common` package to v0.0.4.
+
 ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.5) (2024-07-23)
 
 #### Refactoring:

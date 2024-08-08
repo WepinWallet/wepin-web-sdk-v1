@@ -1,0 +1,1 @@
+import e from"./WepinStorage.js";export default e;

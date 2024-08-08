@@ -1,9 +1,15 @@
-## [Version 0.0.7](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.7) (2024-08-07)
+## [Version 0.0.8](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.7) (2024-08-08)
+
+#### Package Update:
+ - Updated `@wepin/fetch-js` package to v0.0.10.
+ - Updated `@wepin/login-js` package to v0.0.11.
+ - Updated `@wepin/storage-js` package to v0.0.7.
+
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.7) (2024-08-08)
 
 #### Updates:
 - Added ESM and CJS exports for better module compatibility.
 
-## [Version 0.0.6](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.6) (2024-07-25)
 
 #### Updates:
  - Updated README
@@ -12,6 +18,9 @@
  - Updated `@wepin/common` package to v0.0.4.
  - Updated `@wepin/login-js` package to v0.0.10.
  - Updated `@wepin/storage-js` package to v0.0.6.
+
+## ~~[Version 0.0.6](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.6) (2024-07-25)~~ (deprecated)
+
 
 ## [Version 0.0.5](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.5) (2024-07-23)
 

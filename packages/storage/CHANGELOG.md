@@ -1,3 +1,8 @@
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.7) (2024-08-08)
+
+#### Bug Fixes:
+  - Changed the default import file format in package.json.
+  
 ## [Version 0.0.6](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.6) (2024-08-08)
 
 #### Updates:

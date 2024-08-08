@@ -1,6 +1,6 @@
 {
   "name": "@wepin/storage-js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Wepin SDK storage for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -14,7 +14,7 @@
         "types": "./dist/cjs/index.d.ts"
       },
       "import": {
-        "default": "./dist/esm/index.mjs",
+        "default": "./dist/esm/index.js",
         "types": "./dist/esm/index.d.ts"
       }
     },

@@ -1,3 +1,9 @@
+## [Version 0.0.14](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.14) (2024-08-08)
+
+#### Package Update:
+ - Updated `@wepin/storage-js` package to v0.0.7.
+ - Updated `@wepin/fetch-js` package to v0.0.10.
+ - 
 ## [Version 0.0.13](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.13) (2024-08-08)
 
 #### Updates:

@@ -1,3 +1,8 @@
+## [Version 0.0.12](https://www.npmjs.com/package/@wepin/login-js/v/0.0.12) (2024-08-09)
+
+#### Updates:
+  - fix `Error: Default condition should be last one`
+
 ## [Version 0.0.11](https://www.npmjs.com/package/@wepin/login-js/v/0.0.11) (2024-08-08)
 
 #### package update:

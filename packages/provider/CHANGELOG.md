@@ -1,3 +1,8 @@
+## [Version 0.0.9](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.9) (2024-08-09)
+
+#### Updates:
+  - fix `Error: Default condition should be last one`
+
 ## [Version 0.0.8](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.8) (2024-08-08)
     
 #### Package Update:

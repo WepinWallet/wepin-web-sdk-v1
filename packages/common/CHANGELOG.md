@@ -1,3 +1,8 @@
+## [Version 0.0.5](https://www.npmjs.com/package/@wepin/common/v/0.0.5) (2024-08-09)
+
+#### Updates:
+  - fix `Error: Default condition should be last one`
+
 ## [Version 0.0.4](https://www.npmjs.com/package/@wepin/common/v/0.0.4) (2024-08-08)
 
 #### Updates:

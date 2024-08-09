@@ -1,6 +1,6 @@
 {
   "name": "@wepin/common",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Wepin API library for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -11,13 +11,14 @@
   "exports": {
     ".": {
       "require": {
-        "default": "./dist/cjs/index.js",
-        "types": "./dist/cjs/index.d.ts"
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
       },
       "import": {
-        "default": "./dist/esm/index.js",
-        "types": "./dist/esm/index.d.ts"
-      }
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "default": "./dist/esm/index.js"
     },
     "./package.json": "./package.json"
   },

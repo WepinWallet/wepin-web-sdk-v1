@@ -1,3 +1,8 @@
+## [Version 0.0.15](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.15) (2024-08-09)
+
+#### Updates:
+  - fix `Error: Default condition should be last one`
+
 ## [Version 0.0.14](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.14) (2024-08-08)
 
 #### Package Update:

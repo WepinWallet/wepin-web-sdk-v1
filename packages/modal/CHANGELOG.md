@@ -1,3 +1,8 @@
+## [Version 0.0.7](https://www.npmjs.com/package/@wepin/modal-js/v/0.0.7) (2024-08-09)
+
+#### Updates:
+  - fix `Error: Default condition should be last one`
+
 ## [Version 0.0.6](https://www.npmjs.com/package/@wepin/modal-js/v/0.0.6) (2024-08-08)
 
 #### Updates:

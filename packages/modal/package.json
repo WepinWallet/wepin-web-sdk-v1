@@ -1,6 +1,6 @@
 {
   "name": "@wepin/modal-js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "wepin widget modal",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -10,13 +10,14 @@
   "exports": {
     ".": {
       "require": {
-        "default": "./dist/cjs/index.js",
-        "types": "./dist/cjs/index.d.ts"
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
       },
       "import": {
-        "default": "./dist/esm/index.js",
-        "types": "./dist/esm/index.d.ts"
-      }
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "default": "./dist/esm/index.js"
     },
     "./package.json": "./package.json"
   },

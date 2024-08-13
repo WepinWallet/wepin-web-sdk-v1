@@ -16,6 +16,23 @@
 
 [![npm version](https://img.shields.io/npm/v/@wepin/pin-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/pin-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/pin-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/pin-js)
 
+> ⚠️ **Notice:**
+>
+>This package is **only available for web environments** and cannot be used in Android or iOS hybrid apps (Webview).
+>
+>If you are using this package in a Server Side Rendering (SSR) environment, make sure to load the package only on the Client Side Rendering (CSR) side.
+>
+>Please refer to the following code for implementation:
+> ```js
+> const initWepinPin = async () => {
+>    const { WepinPin } = await import('@wepin/pin-js');
+>    const wepinPin = new WepinPin({
+>        appKey: '',
+>    });
+>    await wepinPin.init();
+>}
+> ```
+
 ## ⏩ Document
 [![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_pin_js.html)
 

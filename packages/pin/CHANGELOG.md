@@ -1,3 +1,8 @@
+## [Version 0.0.10](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.10) (2024-08-13)
+
+#### Updates:
+  - add `jwt-decode` package to dependencies
+
 ## [Version 0.0.9](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.9) (2024-08-09)
 
 #### Updates:

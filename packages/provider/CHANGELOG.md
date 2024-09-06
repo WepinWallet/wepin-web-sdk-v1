@@ -1,3 +1,8 @@
+## [Version 0.0.10](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.10) (2024-09-06)
+
+#### Bug Fixes:
+- Added `fast-deep-equal` to dependencies.
+
 ## [Version 0.0.9](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.9) (2024-08-09)
 
 #### Updates:

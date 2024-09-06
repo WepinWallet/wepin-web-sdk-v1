@@ -16,8 +16,25 @@
 
 [![npm version](https://img.shields.io/npm/v/@wepin/provider-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/provider-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/provider-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/provider-js)
 
-Wepin Provider V1 for Web. This package is exclusively available for use in web 
-environments.
+Wepin Provider V1 for Web. This package is exclusively available for use in web environments.
+
+> ⚠️ **Notice:**
+>
+>This package is **only available for web environments** and cannot be used in Android or iOS hybrid apps (Webview).
+>
+>If you are using this package in a Server Side Rendering (SSR) environment, make sure to load the package only on the Client Side Rendering (CSR) side.
+>
+>Please refer to the following code for implementation:
+> ```js
+> const initWepinProvider = async () => {
+>    const { WepinProvider } = await import('@wepin/provider-js');
+>    const wepinProvider = new WepinProvider({
+>        appKey: '',
+>        appId: '',
+>    });
+>    await wepinProvider.init();
+>}
+> ```
 
 ## ⏩ Document
 [![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_provider_js.html)

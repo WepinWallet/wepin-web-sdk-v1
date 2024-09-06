@@ -1,0 +1,25 @@
+{
+  "name": "vue-wepin-example",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@wepin/login-js": "^0.0.12",
+    "@wepin/provider-js": "^0.0.10",
+    "@wepin/sdk-js": "^0.0.15",
+    "vue": "^3.4.37"
+  },
+  "devDependencies": {
+    "@rollup/plugin-inject": "^5.0.5",
+    "@vitejs/plugin-vue": "^5.1.2",
+    "node-stdlib-browser": "^1.2.0",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vue-tsc": "^2.0.29"
+  }
+}

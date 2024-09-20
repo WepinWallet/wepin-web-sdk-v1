@@ -9,7 +9,7 @@ export interface NetworkInfo {
     family: string;
     id: string;
     name: string;
-    chainId: number;
+    chainId: number | string;
     ticker: string;
     rpcUrl: RpcUrlType[];
     isTestnet?: boolean;

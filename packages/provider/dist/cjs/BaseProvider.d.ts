@@ -14,6 +14,7 @@ export declare abstract class BaseProvider extends SafeEventEmitter implements P
     protected static _defaultState: BaseProviderState;
     chainId: string | null;
     selectedAddress: string | null;
+    publicKey: string | null;
     constructor({ logger, maxEventListeners, rpcMiddleware, }?: BaseProviderOptions);
     uuid: string;
     name: string;

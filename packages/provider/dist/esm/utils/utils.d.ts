@@ -8,3 +8,6 @@ export declare const getRpcPromiseCallback: (resolve: (value?: any) => void, rej
  * @returns Whether the given chain ID is valid.
  */
 export declare const isValidChainId: (chainId: unknown) => chainId is string;
+export declare const isEthChainId: (chainId: unknown) => chainId is string;
+export declare const isSolChain: (chainId: string) => boolean;
+export declare const getAddress: (network: string, address?: string) => string;

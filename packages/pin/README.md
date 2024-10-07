@@ -40,20 +40,33 @@
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.
 
 
-## ⏩ Installation
-To install the WepinSDK, you can use npm or yarn:
-```bash
+## ⏩ Install
+To install the Wepin Pin Pad Library, you can use npm, yarn, or a CDN:
+Using npm:
+```
 npm install @wepin/pin-js
 ```
-or
-```bash
+Using yarn:
+```
 yarn add @wepin/pin-js
 ```
+Using CDN:
+You can also include the library directly via CDN by adding the following script tag to your HTML file:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@wepin/pin-js/dist/umd/wepin-pin-pad.umd.cjs"></script>
+```
 
-## ⏩ Import WepinPin 
+
+## ⏩ Import SDK
+Using npm or yarn:
 ```js
 import { WepinPin } from '@wepin/pin-js'
 ```
+Using CDN:
+```js
+const { WepinPin } = window.WepinPinPad
+```
+
 
 ## ⏩ Initialize
 Create a new instance of `WepinPin` and initialize it with your application's  key

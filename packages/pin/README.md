@@ -53,7 +53,7 @@ yarn add @wepin/pin-js
 Using CDN:
 You can also include the library directly via CDN by adding the following script tag to your HTML file:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@wepin/pin-js/dist/umd/wepin-pin-pad.umd.cjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/@wepin/pin-js/dist/umd/wepin-pin-pad.umd.js"></script>
 ```
 
 

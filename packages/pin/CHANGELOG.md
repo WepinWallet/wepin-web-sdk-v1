@@ -1,7 +1,9 @@
-## [Version 0.0.11](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.11) (2024-10-04)
+## [Version 0.0.12](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.12) (2024-10-08)
 
 #### Updates:
   - Added UMD build format to support script (CDN) distribution via Vite.
+
+~~## [Version 0.0.11](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.11) (2024-10-04)~~ (deprecated)
 
 ## [Version 0.0.10](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.10) (2024-08-13)
 

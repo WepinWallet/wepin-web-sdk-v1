@@ -1,6 +1,6 @@
 {
   "name": "@wepin/pin-js",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Wepin Widget Javascript SDK for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -39,7 +39,7 @@
     "copy:packages": "run-p copy:packages:cjs copy:packages:esm",
     "copy:packages:cjs": "cp ../../packages-json/cjs.package.json ./dist/cjs/package.json",
     "copy:packages:esm": "cp ../../packages-json/esm.package.json ./dist/esm/package.json",
-    "copy:script:example": "cp ./dist/umd/wepin-pin-pad.umd.cjs ../../example/script-wepin-example",
+    "copy:script:example": "cp ./dist/umd/wepin-pin-pad.umd.js ../../example/script-wepin-example",
     "dev": "run-p -l dev:swc dev:vite dev:dts",
     "dev:swc": "yarn build:swc -w --source-maps inline",
     "dev:vite": "yarn build:vite:umd -w --source-maps inline",

@@ -59,19 +59,32 @@ Please refer to the following link for detailed information on the supported net
 
 
 ## ⏩ Install
-
+To install the Wepin Provider, you can use npm, yarn, or a CDN:
+Using npm:
 ```
 npm install @wepin/provider-js
 ```
-or
+Using yarn:
 ```
 yarn add @wepin/provider-js
 ```
+Using CDN:
+You can also include the library directly via CDN by adding the following script tag to your HTML file:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@wepin/provider-js/dist/umd/wepin-provider.umd.js"></script>
+```
+
 
 ## ⏩ Import SDK
+Using npm or yarn:
 ```js
 import { WepinProvider } from '@wepin/provider-js'
 ```
+Using CDN:
+```js
+const { WepinProvider } = window.WepinProvider
+```
+
 
 ## ⏩ Initialize
 ```js

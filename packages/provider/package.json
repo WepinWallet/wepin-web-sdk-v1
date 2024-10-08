@@ -1,7 +1,7 @@
 {
   "name": "@wepin/provider-js",
-  "version": "0.0.12",
-  "description": "Wepin Widget Javascript SDK for Web",
+  "version": "0.0.13",
+  "description": "Wepin EVM/Solana Provider for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
   "license": "MIT",
@@ -26,19 +26,23 @@
     "dist"
   ],
   "scripts": {
-    "build": "run-s -l remove:dist build:swc build:dts copy:packages",
+    "build": "run-s -l remove:dist build:swc build:dts build:vite:umd copy:packages copy:script:example",
     "build:swc": "run-p build:swc:esm build:swc:cjs",
     "build:swc:esm": "yarn run swc ./src -d ./dist/esm --strip-leading-paths --config-file esm.swcrc",
     "build:swc:cjs": "yarn run swc ./src -d ./dist/cjs --strip-leading-paths --config-file cjs.swcrc",
-    "build:dts": "run-p build:dts:esm build:dts:cjs",
+    "build:vite:umd": "VITE_LIB_NAME=WepinProvider VITE_FILE_NAME=wepin-provider vite build --config ../../vite.config.ts",
+    "build:dts": "run-p build:dts:esm build:dts:cjs build:dts:umd",
     "build:dts:esm": "tsc --declaration --emitDeclarationOnly --outDir dist/esm",
     "build:dts:cjs": "tsc --declaration --emitDeclarationOnly --outDir dist/cjs",
+    "build:dts:umd": "tsc --declaration --emitDeclarationOnly --outDir dist/umd",
     "remove:dist": "rimraf dist",
     "copy:packages": "run-p copy:packages:cjs copy:packages:esm",
     "copy:packages:cjs": "cp ../../packages-json/cjs.package.json ./dist/cjs/package.json",
     "copy:packages:esm": "cp ../../packages-json/esm.package.json ./dist/esm/package.json",
-    "dev": "run-p -l dev:swc dev:dts",
+    "copy:script:example": "cp ./dist/umd/wepin-provider.umd.js ../../example/script-wepin-example",
+    "dev": "run-p -l dev:swc dev:vite dev:dts",
     "dev:swc": "yarn build:swc -w --source-maps inline",
+    "dev:vite": "yarn build:vite:umd -w --source-maps inline",
     "dev:dts": "yarn build:dts --watch --preserveWatchOutput"
   },
   "keywords": [

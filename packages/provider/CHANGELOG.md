@@ -1,3 +1,18 @@
+## [Version 0.0.13](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.13) (2024-10-04)
+
+#### Updates:
+  - Added UMD build format to support script (CDN) distribution via Vite.
+
+## [Version 0.0.12](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.12) (2024-09-23)
+
+#### Bug Fixes:
+- Updated package.json dependencies.
+
+## [Version 0.0.11](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.11) (2024-09-20)
+
+#### Updates:
+  - Added Solana provider.
+
 ## [Version 0.0.10](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.10) (2024-09-06)
 
 #### Bug Fixes:

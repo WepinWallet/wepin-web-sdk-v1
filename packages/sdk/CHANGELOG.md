@@ -1,3 +1,8 @@
+## [Version 0.0.16](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.16) (2024-10-04)
+
+#### Updates:
+  - Added UMD build format to support script (CDN) distribution via Vite.
+
 ## [Version 0.0.15](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.15) (2024-08-09)
 
 #### Updates:

@@ -17,6 +17,23 @@
 [![npm version](https://img.shields.io/npm/v/@wepin/sdk-js?style=for-the-badge)](https://www.npmjs.org/package/@wepin/sdk-js) [![npm downloads](https://img.shields.io/npm/dt/@wepin/sdk-js.svg?label=downloads&style=for-the-badge)](https://www.npmjs.org/package/@wepin/sdk-js)
 
 The Wepin SDK is designed for use in both Web environments. This package is exclusively available for use in web environments.
+> ⚠️ **Notice:**
+>
+>This package is **only available for web environments** and cannot be used in Android or iOS hybrid apps (Webview).
+>
+>If you are using this package in a Server Side Rendering (SSR) environment, make sure to load the package only on the Client Side Rendering (CSR) side.
+>
+>Please refer to the following code for implementation:
+> ```js
+> const initWepinSDK = async () => {
+>    const { WepinSDK } = await import('@wepin/sdk-js');
+>    const wepinSDK = new WepinSDK({
+>        appKey: '',
+>        appId: '',
+>    });
+>    await wepinSDK.init();
+>}
+> ```
 
 ## ⏩ Document
 [![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_sdk_js.html)
@@ -25,21 +42,33 @@ The Wepin SDK is designed for use in both Web environments. This package is excl
 ## ⏩ Get App ID and Key
 After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the development tools menu and enter the information for each app platform to receive your App ID and App Key.
 
-
-## ⏩ Installation
-To install the WepinSDK, you can use npm or yarn:
-```bash
+## ⏩ Install
+To install the Wepin Widget SDK, you can use npm, yarn, or a CDN:
+Using npm:
+```
 npm install @wepin/sdk-js
 ```
-or
-```bash
+Using yarn:
+```
 yarn add @wepin/sdk-js
 ```
+Using CDN:
+You can also include the library directly via CDN by adding the following script tag to your HTML file:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@wepin/sdk-js/dist/umd/wepin-widget-sdk.umd.js"></script>
+```
+
 
 ## ⏩ Import SDK
+Using npm or yarn:
 ```js
 import { WepinSDK } from '@wepin/sdk-js'
 ```
+Using CDN:
+```js
+const { WepinSDK } = window.WepinWidgetSDK
+```
+
 
 ## ⏩ Initialize
 Create a new instance of `WepinSDK` and initialize it with your application's ID and key:

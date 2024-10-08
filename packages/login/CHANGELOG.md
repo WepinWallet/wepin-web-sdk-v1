@@ -1,3 +1,8 @@
+## [Version 0.0.13](https://www.npmjs.com/package/@wepin/login-js/v/0.0.13) (2024-10-04)
+
+#### Updates:
+  - Added UMD build format to support script (CDN) distribution via Vite.
+
 ## [Version 0.0.12](https://www.npmjs.com/package/@wepin/login-js/v/0.0.12) (2024-08-09)
 
 #### Updates:

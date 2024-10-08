@@ -18,6 +18,24 @@
 
 Wepin Login Library V1 from Web. This package is exclusively available for use in web environments.
 
+> ⚠️ **Notice:**
+>
+>This package is **only available for web environments** and cannot be used in Android or iOS hybrid apps (Webview).
+>
+>If you are using this package in a Server Side Rendering (SSR) environment, make sure to load the package only on the Client Side Rendering (CSR) side.
+>
+>Please refer to the following code for implementation:
+> ```js
+> const initWepinLogin = async () => {
+>    const { WepinLogin } = await import('@wepin/login-js');
+>    const wepinLogin = new WepinLogin({
+>        appKey: '',
+>        appId: '',
+>    });
+>    await wepinLogin.init();
+>}
+> ```
+
 ## ⏩ Document
 [![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_login_js.html)
 
@@ -26,18 +44,30 @@ After signing up for [Wepin Workspace](https://workspace.wepin.io/), go to the d
 
 
 ## ⏩ Install
-
+To install the Wepin Login Library, you can use npm, yarn, or a CDN:
+Using npm:
 ```
 npm install @wepin/login-js
 ```
-or
+Using yarn:
 ```
 yarn add @wepin/login-js
 ```
+Using CDN:
+You can also include the library directly via CDN by adding the following script tag to your HTML file:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@wepin/login-js/dist/umd/wepin-login.umd.js"></script>
+```
+
 
 ## ⏩ Import SDK
+Using npm or yarn:
 ```js
 import { WepinLogin } from '@wepin/login-js'
+```
+Using CDN:
+```js
+const { WepinLogin } = window.WepinLogin
 ```
 
 ## ⏩ Initialize

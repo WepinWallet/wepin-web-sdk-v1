@@ -1,4 +1,4 @@
-import { WebviewEventHandler, IWepinUser, Platform, providerType } from '@wepin/common';
+import { WebviewEventHandler, IWepinUser, Platform } from '@wepin/common';
 import { Widget } from '@wepin/modal-js';
 import { LocaleType } from './types/Locale.js';
 import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params, ISendVerifyEmailParams } from './types/LoginRequest.js';
@@ -132,7 +132,7 @@ export declare class WepinLogin {
      * })
      **/
     loginWepin({ provider, token, }: {
-        provider: providerType;
+        provider: string;
         token: {
             idToken: string;
             refreshToken: string;

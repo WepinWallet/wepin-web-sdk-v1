@@ -1,3 +1,8 @@
+## [Version 0.0.18](https://www.npmjs.com/package/@wepin/login-js/v/0.0.18) (2024-10-15)
+
+#### Bug Fixes:
+- Fixed a type issue in the parameter of the loginWepin method.​
+
 ## [Version 0.0.17](https://www.npmjs.com/package/@wepin/login-js/v/0.0.17) (2024-10-11)
 
 #### Package Updates:

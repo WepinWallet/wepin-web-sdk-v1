@@ -1,6 +1,6 @@
 {
   "name": "@wepin/login-js",
-  "version": "0.0.13",
+  "version": "0.0.17",
   "description": "Wepin Login Library V1 for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -41,15 +41,19 @@
     "copy:packages:esm": "cp ../../packages-json/esm.package.json ./dist/esm/package.json",
     "copy:script:example": "cp ./dist/umd/wepin-login.umd.js ../../example/script-wepin-example",
     "dev": "run-p -l dev:swc dev:vite dev:dts",
-    "dev:swc": "yarn build:swc -w --source-maps inline",
     "dev:vite": "yarn build:vite:umd -w --source-maps inline",
-    "dev:dts": "yarn build:dts --watch --preserveWatchOutput"
+    "dev:swc": "run-p dev:swc:esm dev:swc:cjs",
+    "dev:swc:esm": "yarn build:swc:esm -w --source-maps inline",
+    "dev:swc:cjs": "yarn build:swc:cjs -w --source-maps inline",
+    "dev:dts": "run-p dev:dts:esm dev:dts:cjs",
+    "dev:dts:esm": "yarn build:dts:esm --watch --preserveWatchOutput",
+    "dev:dts:cjs": "yarn build:dts:cjs --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@wepin/common": "^0.0.5",
-    "@wepin/fetch-js": "^0.0.11",
-    "@wepin/modal-js": "^0.0.7",
-    "@wepin/storage-js": "^0.0.8",
+    "@wepin/common": "^0.0.17",
+    "@wepin/fetch-js": "^0.0.17",
+    "@wepin/modal-js": "^0.0.17",
+    "@wepin/storage-js": "^0.0.17",
     "secp256k1": "^5.0.0",
     "sha256": "^0.2.0"
   },

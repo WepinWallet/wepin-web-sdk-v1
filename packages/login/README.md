@@ -132,15 +132,21 @@ A new window will open and proceed to log in to wepin firebase. Returns firebase
 
 #### Parameters
 - `params` \<object> 
-  - `provider` \<'google'|'naver'|'discord'|'apple'> - Provider for Firebase login
-  - `withLogout` \<boolean> __optional__ - 
+  - `provider` \<string> - Provider for Firebase login. The value must be one of the supported login provider names in lowercase, such as 'google', 'naver', 'discord', 'apple', 'facebook', or 'line'. Please refer to [Wepin Social Login Auth Provider documentation](https://docs.wepin.io/login/social-login-auth-provider) to check the supported login providers.
+  - `withLogout` \<boolean> __optional__ 
 
 #### Returns
-- Promise\<LoginResult>
-  - `provider` \<'google'|'apple'|'discord'|'naver'>
-  - `token` \<object>
-    - `idToken` \<string> - wepin firebase idToken
-    - `refreshToken` `<string> - wepin firebase refreshToken
+- Promise\<LoginResult|LoginErrorResult>
+  - \<LoginResult>  
+    - `provider` \<string>
+    - `token` \<object>
+      - `idToken` \<string> - wepin firebase idToken
+      - `refreshToken` `<string> - wepin firebase refreshToken
+  - \<LoginErrorResult>
+    - `error` \<string> - error message
+    - `idToken` \<string> __optional__ - id token value
+    - `accessToken` \<string> __optional__ - accessToken token value
+    - `provider` \<string> __optional__ - Provider that issued the access token
 
 #### Exception
 - `Invalid provider`: Incorrect value of provider parameter
@@ -153,15 +159,25 @@ A new window will open and proceed to log in to wepin firebase. Returns firebase
 const user = await wepinLogin.loginWithOauthProvider(true)
 ```
 - response
-```json
+  - LoginResult
+    ```json
     {
-        "provider": "google",
-        "token": {
-            "idToken": "ab2231df....ad0f3291",
-            "refreshToken": "eyJHGciO....adQssw5c",
-        }
+      "provider": "google",
+      "token": {
+          "idToken": "ab2231df....ad0f3291",
+          "refreshToken": "eyJHGciO....adQssw5c",
+      }
     }
-```
+    ```
+  - LoginErrorResult
+    ```json
+    {
+      "error": "required/register_email",
+      "provider": "naver",
+      "accessToken": "eyJHGciO....adQssw5c",
+    }
+    ```
+
 ### signUpWithEmailAndPassword
 ```javascript
 await wepinLogin.signUpWithEmailAndPassword(email, password, openWepinWallet?)
@@ -251,11 +267,15 @@ It logs in to the Wepin firebase with external id token. Returns firebase login 
 
 
 #### Returns
-- Promise\<LoginResult>
-  - `provider` \<'external_token'>
-  - `token` \<object>
-    - `idToken` \<string> - wepin firebase idToken
-    - `refreshToken` `<string> - wepin firebase refreshToken
+- Promise\<LoginResult|LoginErrorResult>
+  - \<LoginResult>  
+    - `provider` \<'external_token'>
+    - `token` \<object>
+      - `idToken` \<string> - wepin firebase idToken
+      - `refreshToken` `<string> - wepin firebase refreshToken
+  - \<LoginErrorResult>
+    - `error` \<string> - error message
+    - `idToken` \<string> __optional__ - id token value
 
 
 #### Example
@@ -267,15 +287,23 @@ const user = await wepinLogin.loginWithIdToken({
 })
 ```
 - response
-```json
+  - LoginResult
+    ```json
     {
-        "provider": "external_token",
-        "token": {
-            "idToken": "ab2231df....ad0f3291",
-            "refreshToken": "eyJHGciO....adQssw5c",
-        }
+      "provider": "external_token",
+      "token": {
+          "idToken": "ab2231df....ad0f3291",
+          "refreshToken": "eyJHGciO....adQssw5c",
+      }
     }
-```
+    ```
+  - LoginErrorResult
+    ```json
+    {
+      "error": "required/register_email",
+      "idToken": "eyJHGciO....adQssw5c",
+    }
+    ```
 
 ### loginWithAccessToken
 ```javascript
@@ -286,17 +314,22 @@ It logs in to the Wepin firebase with external access token. Returns firebase lo
 
 #### Parameters
 - `params` \<object> 
-  - `provider` \<'naver'|'discord'> - provider that issued the access token
+  - `provider` \<string> - Provider that issued the access token. The value must be one of the supported login provider names in lowercase, such as 'naver', 'discord', 'facebook'. Please refer to [Wepin Simplified Login documentation](https://docs.wepin.io/login/simplified-login) to check the supported login providers.
   - `token` \<string> - access token value to be used for login 
   - `sign` \<string> - signature value for the token provided as the first parameter.([Signature Generation Methods](./SignatureGenerationMethods.md))
 
 
 #### Returns
-- Promise\<LoginResult>
-  - `provider` \<'external_token'>
-  - `token` \<object>
-    - `idToken` \<string> - wepin firebase idToken
-    - `refreshToken` `<string> - wepin firebase refreshToken
+- Promise\<LoginResult|LoginErrorResult>
+  - \<LoginResult>  
+    - `provider` \<'external_token'>
+    - `token` \<object>
+      - `idToken` \<string> - wepin firebase idToken
+      - `refreshToken` `<string> - wepin firebase refreshToken
+  - \<LoginErrorResult>
+    - `error` \<string> - error message
+    - `accessToken` \<string> __optional__ - accessToken token value
+    - `provider` \<string> __optional__ - Provider that issued the access token
 
 
 #### Example
@@ -309,15 +342,54 @@ const user = await wepinLogin.loginWithAccessToken({
 })
 ```
 - response
-```json
+  - LoginResult
+    ```json
     {
-        "provider": "external_token",
-        "token": {
-            "idToken": "ab2231df....ad0f3291",
-            "refreshToken": "eyJHGciO....adQssw5c",
-        }
+      "provider": "external_token",
+      "token": {
+          "idToken": "ab2231df....ad0f3291",
+          "refreshToken": "eyJHGciO....adQssw5c",
+      }
     }
+    ```
+  - LoginErrorResult
+    ```json
+    {
+      "error": "required/register_email",
+      "provider": "naver",
+      "accessToken": "eyJHGciO....adQssw5c",
+    }
+    ```
+
+### sendVerifyEmail
+```javascript
+await wepinLogin.sendVerifyEmail(params)
 ```
+
+Method for registering an email and requesting email verification.
+If a `required/register_email` error occurs, you need to register an email and request email verification.
+Once email verification is complete, you should use the `loginWithAccessToken` or `loginWithIdToken` method to log in again with the AccessToken or IdToken used for the initial login.
+
+#### Parameters
+- `params` \<ISendVerifyEmailParams> 
+  - `email` \<string> 
+  - `provider` \<string> - Provider for Firebase login. The value must be one of the supported login provider names in lowercase, such as 'google', 'naver', 'discord', 'apple', 'facebook', or 'line'. Please refer to [Wepin Social Login Auth Provider documentation](https://docs.wepin.io/login/social-login-auth-provider) to check the supported login providers.
+  - `idToken` \<string> - id token value to be used for login 
+  - `accessToken` \<string> - access token value to be used for login
+
+#### Returns
+- Promise\<boolean>
+
+#### Example
+
+```javascript
+const res = await wepinLogin.sendVerifyEmail({
+    email:'test@abcde.com'
+    provider: 'naver', 
+    accessToken:'eyJHGciO....adQssw5c', 
+})
+```
+
 
 ### getRefreshFirebaseToken
 ```javascript

@@ -1,12 +1,16 @@
-import { OAUTH2 } from '../const/Provider.js';
+import { LoginProviders } from '@wepin/common';
+import { LoginErrorResult } from './LoginResult.js';
 export interface ILoginOauth2Params {
-    provider: (typeof OAUTH2)[number];
+    provider: LoginProviders;
     withLogout?: boolean;
 }
 export interface ILoginIdTokenParams {
     token: string;
-    sign: string;
+    sign?: string;
 }
 export interface ILoginAccessTokenParams extends ILoginIdTokenParams {
-    provider: 'naver' | 'discord';
+    provider: string;
+}
+export interface ISendVerifyEmailParams extends Omit<LoginErrorResult, 'error'> {
+    email: string;
 }

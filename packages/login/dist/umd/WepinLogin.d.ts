@@ -1,8 +1,8 @@
-import { WebviewEventHandler, IWepinUser, Platform } from '@wepin/common';
+import { WebviewEventHandler, IWepinUser, Platform, providerType } from '@wepin/common';
 import { Widget } from '@wepin/modal-js';
 import { LocaleType } from './types/Locale.js';
-import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params } from './types/LoginRequest.js';
-import { LoginResult, providerType } from './types/LoginResult.js';
+import { ILoginAccessTokenParams, ILoginIdTokenParams, ILoginOauth2Params, ISendVerifyEmailParams } from './types/LoginRequest.js';
+import { LoginErrorResult, LoginResult } from './types/LoginResult.js';
 export declare class WepinLogin {
     version: string;
     type: keyof typeof Platform;
@@ -50,12 +50,14 @@ export declare class WepinLogin {
     private throwUserCancel;
     private openLoginWidget;
     private loginOAuth2;
+    private checkProvider;
     /**
-     * A new window will open and proceed to log in to wepin firebase. Returns firebase login info upon successful login.
-     * @param params `{provider: 'google'|'naver'|'discord'|'apple', withLogout?: boolean}`
-     * @returns {Promise<LoginResult>}
+     * A new window will open and proceed to log in to Wepin Firebase. Returns Firebase login info upon successful login.
+     * If the response contains an `error` value of `required/register_email`, you need to register an email and request email verification using the `sendVerifyEmail` method.
+     * @param params `{provider: string, withLogout?: boolean}` - `provider` accepts one of the following values: 'google', 'naver', 'discord', 'apple', 'line', 'facebook'
+     * @returns {Promise<LoginResult | LoginErrorResult>}
      **/
-    loginWithOauthProvider(params: ILoginOauth2Params): Promise<LoginResult>;
+    loginWithOauthProvider(params: ILoginOauth2Params): Promise<LoginResult | LoginErrorResult>;
     logout(): Promise<boolean>;
     /**
      * It signs up on the wepin firebase with your email and password. Returns firebase login info upon successful login.
@@ -75,17 +77,38 @@ export declare class WepinLogin {
     loginWithEmailAndPassword(email: string, password: string): Promise<LoginResult>;
     private doFirebaseLoginWithCustomToken;
     /**
-     *It logs in to the Wepin firebase with external id token. Returns firebase login info upon successful login.
-     * @param params '{token: string, sign: string}'
-     * @returns {Promise<LoginResult>}
+     * Logs into Wepin firebase using external tokens (id token or access token).
+     * Returns firebase login info upon successful login. If a `required/register_email` error occurs,
+     * you need to register an email and request email verification using the `sendVerifyEmail` method.
+     * @param params `{ type: 'id' | 'access', provider?: string, token: string, sign: string }`
+     * @returns {Promise<LoginResult | LoginErrorResult>}
      **/
-    loginWithIdToken(params: ILoginIdTokenParams): Promise<LoginResult>;
+    private loginWithToken;
     /**
-     * It logs in to the Wepin firebase with external access token. Returns firebase login info upon successful login.
-     * @param params '{provider: 'naver'|'discord', token: string, sign: string}'
-     * @returns {Promise<LoginResult>}
+     * Logs into Wepin firebase with an external id token. Returns firebase login info upon successful login.
+     * @param params `{ token: string, sign: string }`
+     * @returns {Promise<LoginResult | LoginErrorResult>}
      **/
-    loginWithAccessToken(params: ILoginAccessTokenParams): Promise<LoginResult>;
+    loginWithIdToken(params: ILoginIdTokenParams): Promise<LoginResult | LoginErrorResult>;
+    /**
+     * Logs into Wepin firebase with an external access token. Returns firebase login info upon successful login.
+     * @param params `{ provider: 'naver' | 'discord'|'facebook', token: string, sign: string }`
+     * @returns {Promise<LoginResult | LoginErrorResult>}
+     **/
+    loginWithAccessToken(params: ILoginAccessTokenParams): Promise<LoginResult | LoginErrorResult>;
+    /**
+     * Method for registering an email and requesting email verification.
+     * If a `required/register_email` error occurs, you need to register an email and request email verification.
+     * Once email verification is complete, you should use the `loginWithAccessToken` or `loginWithIdToken` method to log in again with the AccessToken or IdToken used for the initial login.
+     * @param params `{
+        email: string,
+        provider: LoginProviders,
+        idToken?: string,
+        accessToken?: string
+     }` - The `provider` accepts one of the following values: 'google', 'naver', 'discord', 'apple', 'line', 'facebook'
+     * @returns {Promise<boolean>}
+     **/
+    sendVerifyEmail(params: ISendVerifyEmailParams): Promise<boolean>;
     /**
      * This method retrieves the current firebase token's information from the Wepin.
      * @returns {Promise<LoginResult>}

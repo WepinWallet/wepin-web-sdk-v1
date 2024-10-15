@@ -1,3 +1,11 @@
+## [Version 0.0.18](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.18) (2024-10-15)
+
+#### Updates:
+ - monorepo package version synchronization.
+
+ #### Bug Fixes:
+ - Fixed a type issue in the parameter of the changePin method.
+
 ## [Version 0.0.17](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.17) (2024-10-11)
 
 #### Updates:

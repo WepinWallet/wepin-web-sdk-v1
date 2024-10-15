@@ -1,4 +1,4 @@
-import { EncUVD, Hint } from './wepinUtil.js';
+import { EncUVD, Hint, OTP } from './wepinUtil.js';
 export declare enum WalletPinState {
     normal = 1,
     resetRequest = 2,
@@ -39,6 +39,7 @@ export interface ChangePinRequestBody {
     UVD: EncUVD;
     newUVD: EncUVD;
     hint: Hint;
+    otpCode?: OTP;
 }
 export interface ChangePinResponseBody {
     status: boolean;

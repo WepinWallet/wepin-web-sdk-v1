@@ -1,3 +1,9 @@
+## [Version 0.0.17](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.17) (2024-10-11)
+
+#### Updates:
+  - monorepo package version synchronization
+
+
 ## [Version 0.0.8](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.8) (2024-08-09)
 
 #### Updates:

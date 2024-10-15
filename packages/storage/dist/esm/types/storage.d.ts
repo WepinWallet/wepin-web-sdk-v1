@@ -1,10 +1,10 @@
+import { providerType } from '@wepin/common';
 export type LocalStorageType = {
     [key in LocalStorageKey]?: LocalStorageData;
 };
 export type LocalStorageKey = 'firebase:wepin' | 'oauth_provider_pending' | 'wallet_id' | 'user_id' | 'wepin:connectUser' | 'user_info' | 'app_language' | 'user_status' | 'selectedAddress';
 export type LocalStorageData = IFirebaseWepin | oauthProvider | string | IWepinToken | IUserInfo | IAppLanguage | IUserStatus | IWepinProviderSelectedAddress;
-export type oauthProvider = //string
-'google' | 'apple' | 'email' | 'naver' | 'discord' | 'external_token';
+export type oauthProvider = providerType;
 export interface IFirebaseWepin {
     provider: oauthProvider;
     idToken: string;

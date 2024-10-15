@@ -1,1 +1,1 @@
-export{};
+export var OAUTH2=["google","apple","naver","discord","facebook","line"];

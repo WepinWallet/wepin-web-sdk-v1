@@ -1,1 +1,1 @@
-"use strict";var e,r;Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"Platform",{enumerable:!0,get:function(){return e}}),(r=e||(e={}))[r.web=1]="web",r[r.android=2]="android",r[r.ios=3]="ios";
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"Platform",{enumerable:!0,get:function(){return r}});var e,r=((e={})[e.web=1]="web",e[e.android=2]="android",e[e.ios=3]="ios",e);

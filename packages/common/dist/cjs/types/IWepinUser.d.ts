@@ -1,4 +1,5 @@
-export type providerType = 'google' | 'apple' | 'email' | 'discord' | 'naver' | 'external_token';
+import type { LoginProviders } from './LoginProviders';
+export type providerType = LoginProviders | 'email' | 'external_token';
 export interface IWepinUser {
     status: 'success' | 'fail';
     userInfo?: UserInfo;

@@ -1,1 +1,1 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"OAUTH2",{enumerable:!0,get:function(){return e}});var e=["google","apple","naver","discord","facebook","line"];

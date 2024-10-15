@@ -1,4 +1,4 @@
-import { CheckEmailRequestParams, CheckEmailResponseBody, GetTermsAcceptedResponseBody, GetUserInfoResponseBody, GetUserPasswordStateRequestBody, GetUserPasswordStateResponseBody, LoginAccessTokenRequestBody, LoginAccessTokenResponseBody, LoginIdTokenRequestBody, LoginIdTokenResponseBody, LoginResponseBody, OauthTokenRequestBody, OauthTokenRequestQuery, OauthTokenResponseBody, UpdateTermsAcceptedRequestBody, UpdateTermsAcceptedResponseBody, UpdateUserPasswordStateRequestBody, UpdateUserPasswordStateResponseBody, VerifyRequestBody, VerifyResponseBody, oAuthRequest, oAuthResponseBody } from '../../../types/index.js';
+import { CheckEmailRequestParams, CheckEmailResponseBody, GetTermsAcceptedResponseBody, GetUserInfoResponseBody, GetUserPasswordStateRequestBody, GetUserPasswordStateResponseBody, LoginAccessTokenRequestBody, LoginAccessTokenResponseBody, LoginIdTokenRequestBody, LoginIdTokenResponseBody, LoginResponseBody, OAuthVerifyEmailRequestBody, OAuthVerifyEmailResponseBody, OauthTokenRequestBody, OauthTokenRequestQuery, OauthTokenResponseBody, UpdateTermsAcceptedRequestBody, UpdateTermsAcceptedResponseBody, UpdateUserPasswordStateRequestBody, UpdateUserPasswordStateResponseBody, VerifyRequestBody, VerifyResponseBody, oAuthRequest, oAuthResponseBody } from '../../../types/index.js';
 import type { ErrorResponse } from '../../APITypes.js';
 interface IUserAPI {
     checkEmailExist(queries: CheckEmailRequestParams): Promise<CheckEmailResponseBody | ErrorResponse>;
@@ -33,6 +33,7 @@ interface IUserAPI {
     getFirebaseConfig(): Promise<string | ErrorResponse>;
     loginOAuthIdToken(body: LoginIdTokenRequestBody): Promise<LoginIdTokenResponseBody | ErrorResponse>;
     loginOAuthAccessToken(body: LoginAccessTokenRequestBody): Promise<LoginAccessTokenResponseBody | ErrorResponse>;
+    OAuthVerifyEmail(body: OAuthVerifyEmailRequestBody): Promise<OAuthVerifyEmailResponseBody | ErrorResponse>;
     OAuthTokenRequest(queries: OauthTokenRequestQuery, body: OauthTokenRequestBody): Promise<OauthTokenResponseBody | ErrorResponse>;
     getUserInfo(params: {
         userId: string;

@@ -1,1 +1,1 @@
-var e,t;export var UserJoinStage;(e=UserJoinStage||(UserJoinStage={}))[e.emailRequire=1]="emailRequire",e[e.pinRequire=2]="pinRequire",e[e.complete=3]="complete";export var UserState;(t=UserState||(UserState={}))[t.active=1]="active",t[t.deleted=2]="deleted";
+var e,i;export var UserJoinStage=((e={})[e.emailRequire=1]="emailRequire",e[e.pinRequire=2]="pinRequire",e[e.complete=3]="complete",e);export var UserState=((i={})[i.active=1]="active",i[i.deleted=2]="deleted",i);

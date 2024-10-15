@@ -1,3 +1,9 @@
+## [Version 0.0.17](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.17) (2024-10-11)
+
+#### Updates:
+ - Added Oauth Verify Email Request API.
+ - monorepo package version synchronization.
+
 ## [Version 0.0.11](https://www.npmjs.com/package/@wepin/fetch-js/v/0.0.11) (2024-08-09)
 
 #### Updates:

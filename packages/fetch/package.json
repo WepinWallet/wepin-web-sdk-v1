@@ -1,6 +1,6 @@
 {
   "name": "@wepin/fetch-js",
-  "version": "0.0.11",
+  "version": "0.0.17",
   "description": "Wepin fetch library for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -37,12 +37,16 @@
     "copy:packages:cjs": "cp ../../packages-json/cjs.package.json ./dist/cjs/package.json",
     "copy:packages:esm": "cp ../../packages-json/esm.package.json ./dist/esm/package.json",
     "dev": "run-p -l dev:swc dev:dts",
-    "dev:swc": "yarn build:swc -w --source-maps inline",
-    "dev:dts": "yarn build:dts --watch --preserveWatchOutput"
+    "dev:swc": "run-p dev:swc:esm dev:swc:cjs",
+    "dev:swc:esm": "yarn build:swc:esm -w --source-maps inline",
+    "dev:swc:cjs": "yarn build:swc:cjs -w --source-maps inline",
+    "dev:dts": "run-p dev:dts:esm dev:dts:cjs",
+    "dev:dts:esm": "yarn build:dts:esm --watch --preserveWatchOutput",
+    "dev:dts:cjs": "yarn build:dts:cjs --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@wepin/common": "^0.0.5",
-    "@wepin/storage-js": "^0.0.8",
+    "@wepin/common": "^0.0.17",
+    "@wepin/storage-js": "^0.0.17",
     "bcryptjs": "^2.4.3",
     "eventemitter2": "^6.4.9",
     "jwt-decode": "^4.0.0"

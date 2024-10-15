@@ -105,7 +105,7 @@ export interface LoginIdTokenRequestBody {
     sign: string;
 }
 export interface LoginAccessTokenRequestBody {
-    provider: 'naver' | 'discord';
+    provider: string;
     accessToken: string;
     sign: string;
 }
@@ -113,6 +113,28 @@ export interface LoginIdTokenResponseBody {
     result: boolean;
     token?: string;
     error?: string;
+}
+export interface BaseOAuthVerifyEmail {
+    provider: string;
+    email: string;
+    localeId?: number;
+}
+export interface OAuthCodeState {
+    code: string;
+    state: string;
+    redirect_url?: string;
+}
+export interface OAuthAccessToken {
+    accessToken: string;
+    sign?: string;
+}
+export interface OAuthIdToken {
+    idToken: string;
+    sign?: string;
+}
+export type OAuthVerifyEmailRequestBody = BaseOAuthVerifyEmail & (OAuthCodeState | OAuthAccessToken | OAuthIdToken);
+export interface OAuthVerifyEmailResponseBody {
+    result: boolean;
 }
 export type LoginAccessTokenResponseBody = LoginIdTokenResponseBody;
 export type GetUserInfoResponseBody = IAppUser;

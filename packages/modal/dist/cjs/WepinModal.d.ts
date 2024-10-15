@@ -1,8 +1,9 @@
+import { Platform } from '@wepin/common';
 import { IWepinModal } from './IWepinModal.js';
 import { WidgetFrame } from './widget/WidgetFrame.js';
 import { WidgetWindow } from './widget/WidgetWindow.js';
 export declare class WepinModal implements IWepinModal {
-    platformType: "web";
+    platformType: keyof typeof Platform;
     domain: string;
     private _modalWindow;
     private _modalFrame;

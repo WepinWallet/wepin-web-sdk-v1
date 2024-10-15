@@ -1,3 +1,9 @@
+## [Version 0.0.17](https://www.npmjs.com/package/@wepin/modal-js/v/0.0.17) (2024-10-11)
+
+#### Updates:
+  - monorepo package version synchronization
+
+
 ## [Version 0.0.7](https://www.npmjs.com/package/@wepin/modal-js/v/0.0.7) (2024-08-09)
 
 #### Updates:

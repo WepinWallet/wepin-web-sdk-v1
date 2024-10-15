@@ -1,3 +1,9 @@
+## [Version 0.0.18](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.18) (2024-10-15)
+## [Version 0.0.17](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.17) (2024-10-11)
+
+#### Updates:
+  - monorepo package version synchronization.
+
 ## [Version 0.0.16](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.16) (2024-10-04)
 
 #### Updates:

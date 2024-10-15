@@ -1,5 +1,5 @@
 import SafeEventEmitter from '@metamask/safe-event-emitter';
-import { modeByAppKey, WebviewEventHandler, Platform, WepinRequestMessage, IWepinSDKAttributes, IWepinUser } from '@wepin/common';
+import { modeByAppKey, WebviewEventHandler, Platform, WepinRequestMessage, IWepinSDKAttributes, IWepinUser, LoginProviders } from '@wepin/common';
 import type { Widget, IWepinModal } from '@wepin/modal-js';
 import { IWepinStorage } from '@wepin/storage-js';
 import { Account } from './types/Account.js';
@@ -96,6 +96,17 @@ export declare class WepinSDK extends SafeEventEmitter {
     openWidget(): Promise<void>;
     private _open;
     /**
+     * Method that opens the widget and responds with No request for get_sdk_request
+     */
+    private openWithoutRequestWepinWidget;
+    /**
+     * A function that passes in a request to be fired when the widget is launched and handles the response when there is a request that needs to be fired immediately.
+     *
+     * @param url
+     * @param data
+     */
+    private openAndRequestWepinWidget;
+    /**
      * It closes widget itself.
      */
     closeWidget(): void;
@@ -134,6 +145,14 @@ export declare class WepinSDK extends SafeEventEmitter {
      * @returns {Promise<IWepinUser>}
      */
     register(): Promise<IWepinUser>;
+    /**
+     * If the oauth provider account does not have an email registered, the function will take an email from Wepin and register it.
+     */
+    registerUserEmail(params: {
+        provider: LoginProviders;
+        idToken?: string;
+        accessToken?: string;
+    }): Promise<IWepinUser>;
     /**
      * Function to handle user logout.
      *
@@ -195,7 +214,9 @@ export declare class WepinSDK extends SafeEventEmitter {
             toAddress: string;
             amount: string;
         };
-    }): Promise<unknown>;
+    }): Promise<{
+        txId: any;
+    }>;
     /**
      * The `finalize()` method finalizes the Wepin SDK.
      */

@@ -1,1 +1,1 @@
-var E;export var WEPIN_SDK_EVENTS;(E=WEPIN_SDK_EVENTS||(WEPIN_SDK_EVENTS={})).WEPIN_LIFECYCLE_CHANGE="wepin_lifecycle_change",E.SEND_IN_PROGRESS="send_in_progress",E.SEND_COMPLETE="send_complete";
+var E;export var WEPIN_SDK_EVENTS=((E={}).WEPIN_LIFECYCLE_CHANGE="wepin_lifecycle_change",E.SEND_IN_PROGRESS="send_in_progress",E.SEND_COMPLETE="send_complete",E);

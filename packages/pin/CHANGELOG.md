@@ -1,3 +1,8 @@
+## [Version 0.0.17](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.17) (2024-10-11)
+
+#### Updates:
+  - monorepo package version synchronization.
+
 ## [Version 0.0.12](https://www.npmjs.com/package/@wepin/pin-js/v/0.0.12) (2024-10-08)
 
 #### Updates:

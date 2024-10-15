@@ -1,3 +1,7 @@
+## [Version 0.0.18](https://www.npmjs.com/package/@wepin/common/v/0.0.18) (2024-10-15)
+#### Updates:
+  - monorepo package version synchronization.
+
 ## [Version 0.0.17](https://www.npmjs.com/package/@wepin/common/v/0.0.17) (2024-10-11)
 #### Updates:
   - Modified the `LoginProviders` type to accept `facebook`, `line`, `string`  values.

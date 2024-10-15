@@ -1,6 +1,6 @@
 {
   "name": "@wepin/fetch-js",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Wepin fetch library for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -45,8 +45,8 @@
     "dev:dts:cjs": "yarn build:dts:cjs --watch --preserveWatchOutput"
   },
   "dependencies": {
-    "@wepin/common": "^0.0.18",
-    "@wepin/storage-js": "^0.0.18",
+    "@wepin/common": "^0.0.19",
+    "@wepin/storage-js": "^0.0.19",
     "bcryptjs": "^2.4.3",
     "eventemitter2": "^6.4.9",
     "jwt-decode": "^4.0.0"

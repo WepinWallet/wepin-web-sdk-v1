@@ -1,3 +1,8 @@
+## [Version 0.0.17](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.17) (2024-10-11)
+
+#### Updates:
+  - monorepo package version synchronization.
+
 ## [Version 0.0.13](https://www.npmjs.com/package/@wepin/provider-js/v/0.0.13) (2024-10-04)
 
 #### Updates:

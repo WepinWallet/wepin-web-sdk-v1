@@ -300,6 +300,41 @@ After calling the `loginWepin()` method in `@wepin/login-js`, if the loginStatus
 const userInfo = await wepinSdk.register()
 ```
   
+### registerUserEmail
+```js
+await wepinSdk.registerUserEmail(param)
+```
+The registerUserEmail function registers an email for accounts from OAuth providers that do not already have an email associated with them.
+
+#### Supported Version
+Supported in version `0.0.18` and later
+
+#### Parameters
+- provider \<LoginProviders> - Provider for Firebase login. The value must be one of the supported login provider names in lowercase, such as 'google', 'naver', 'discord', 'apple', 'facebook', or 'line'. Please refer to Wepin Social Login Auth Provider documentation to check the supported login providers.
+- idToken \<string> - id token value to be used for login
+- accessToken \<string> - access token value to be used for login
+
+#### Return Value
+- Promise\<IWepinUser>
+  - status \<'success'|'fail'>
+  - userInfo \<object> __optional__
+    - userId \<string>
+    - email \<string>
+    - provider \<'google'|'apple'|'naver'|'discord'|'email'|'external_token'>
+    - use2FA \<boolean>
+  - userStatus: \<object> - The user's status of wepin login. including:
+    - loginStatus: \<'complete' | 'pinRequired' | 'registerRequired'> - If the user's loginStatus value is not complete, it must be registered in the wepin.
+    - pinRequired?: <boolean> 
+  - walletId \<string>
+
+#### Example
+```js
+await wepinSdk.registerUserEmail({
+    provider: 'google',
+    idToken: 'google-idToken',
+})
+```
+
 ### logout
 ```js
 await wepinSdk.logout()

@@ -1,3 +1,4 @@
+## [Version 0.0.19](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.10) (2024-10-16)
 ## [Version 0.0.18](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.18) (2024-10-15)
 ## [Version 0.0.17](https://www.npmjs.com/package/@wepin/storage-js/v/0.0.17) (2024-10-11)
 

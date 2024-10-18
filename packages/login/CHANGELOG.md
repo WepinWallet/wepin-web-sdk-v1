@@ -1,3 +1,13 @@
+## [Version 0.0.20](https://www.npmjs.com/package/@wepin/login-js/v/0.0.20) (2024-10-17)
+
+#### Bug fixes:
+ - remove global buffer dependency
+
+## [Version 0.0.19](https://www.npmjs.com/package/@wepin/login-js/v/0.0.19) (2024-10-16)
+
+#### Updates:
+ - monorepo package version synchronization
+
 ## [Version 0.0.18](https://www.npmjs.com/package/@wepin/login-js/v/0.0.18) (2024-10-15)
 
 #### Bug Fixes:

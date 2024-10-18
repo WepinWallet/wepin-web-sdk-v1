@@ -1,3 +1,4 @@
+## [Version 0.0.19](https://www.npmjs.com/package/@wepin/common/v/0.0.19) (2024-10-15)
 ## [Version 0.0.18](https://www.npmjs.com/package/@wepin/common/v/0.0.18) (2024-10-15)
 #### Updates:
   - monorepo package version synchronization.

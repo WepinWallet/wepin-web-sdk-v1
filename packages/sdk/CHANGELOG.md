@@ -1,3 +1,8 @@
+## [Version 0.0.21](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.21) (2024-10-23)
+#### Bug Fixes:
+  -  fix widget close timing issue
+
+## [Version 0.0.20](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.20) (2024-10-16)
 ## [Version 0.0.19](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.19) (2024-10-16)
 ## [Version 0.0.18](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.18) (2024-10-15)
 ## [Version 0.0.17](https://www.npmjs.com/package/@wepin/sdk-js/v/0.0.17) (2024-10-11)

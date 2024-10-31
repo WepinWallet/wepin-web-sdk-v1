@@ -1,6 +1,6 @@
 {
   "name": "@wepin/modal-js",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "wepin widget modal",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -34,8 +34,8 @@
     "build:dts:cjs": "tsc --declaration --emitDeclarationOnly --outDir dist/cjs",
     "remove:dist": "rimraf dist",
     "copy:packages": "run-p copy:packages:cjs copy:packages:esm",
-    "copy:packages:cjs": "cp ../../packages-json/cjs.package.json ./dist/cjs/package.json",
-    "copy:packages:esm": "cp ../../packages-json/esm.package.json ./dist/esm/package.json",
+    "copy:packages:cjs": "cpx ../../packages-json/cjs/package.json ./dist/cjs",
+    "copy:packages:esm": "cpx ../../packages-json/esm/package.json ./dist/esm",
     "dev": "run-p -l dev:swc dev:dts",
     "dev:swc": "run-p dev:swc:esm dev:swc:cjs",
     "dev:swc:esm": "yarn build:swc:esm -w --source-maps inline",

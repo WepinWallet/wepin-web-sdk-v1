@@ -5,11 +5,11 @@ export interface IWepinSDKAttributes {
      */
     type?: string;
     /**
-     * This sets the language displayed on the widget. The default value is 'ko', but you can also set it to 'en' or 'ja'.
+     * This sets the language displayed on the widget. The default value is 'en', but you can also set it to 'ko' or 'ja'.
      */
     defaultLanguage?: string;
     /**
-     * This sets the currency displayed on the widget. The default value is 'KRW', but you can also set it to 'USD' or 'JPY'.
+     * This sets the currency displayed on the widget. The default value is 'USD', but you can also set it to 'KRW' or 'JPY'.
      */
     defaultCurrency?: string;
     /**

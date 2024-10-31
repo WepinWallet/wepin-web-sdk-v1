@@ -75,7 +75,7 @@ Create a new instance of `WepinSDK` and initialize it with your application's ID
 ```js
 const wepinSdk = new WepinSDK({
     appId: 'your-wepin-app-id',
-    appKey: 'your-wepin-api-key',
+    appKey: 'your-wepin-app-key',
 })
 ```
 
@@ -87,9 +87,9 @@ await wepinSdk.init(attributes?)
 #### Parameters
 - `attributes` \<IWepinSDKAttributes> __optional__
     - `type`: This determines how the widget is displayed when Wepin is initiated. The default value is `'hide'` and currently, only 'hide' is supported.
-    - `defaultLanguage`: - `defaultLanguage`: The language to be displayed on the widget (default: `'ko'`)
+    - `defaultLanguage`: - `defaultLanguage`: The language to be displayed on the widget (default: `'en'`)
     Currently, only `ko`, `en`, and `ja` are supported.
-    - `defaultCurrency`: The currency to be displayed on the widget (default: `'KRW'`)
+    - `defaultCurrency`: The currency to be displayed on the widget (default: `'USD'`)
     Currently, only `'KRW'`,`'USD'` and `'JPY'` are supported.
     - `loginProviders`:  __optional__ An array of login providers to configure the widget. 
       - If not provided, all available login providers will be displayed on the widget. 

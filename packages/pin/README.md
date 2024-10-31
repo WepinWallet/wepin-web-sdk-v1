@@ -70,16 +70,28 @@ const { WepinPin } = window.WepinPinPad
 
 ## ⏩ Initialize
 Create a new instance of `WepinPin` and initialize it with your application's  key
-- `defaultLanguage`: The language to be displayed on the widget (default: `'ko'`)
+- `defaultLanguage`: The language to be displayed on the widget (default: `'en'`)
 Currently, only `'ko'`, `'en'` and `'ja'` are supported.
 ```js
 const wepinPin = new WepinPin({
-  appKey: 'your-wepin-api-key',
+  appKey: 'your-wepin-app-key',
 })
+```
+Or you can also pass in the [WepinLogin](../classes/_wepin_login_js.WepinLogin.html) library you created.
+```js
+const wepinLogin = new WepinLogin()
+const wepinPin = new WepinPin({
+  appKey: 'your-wepin-app-key',
+  wepinLogin,
+})
+```
+```js
+// initialization
 await wepinPin.init({
   defaultLanguage: 'ko',
 })
 ```
+
 
 Then use [login](../modules/_wepin_login_js.html) to log in to wepin.
 ```js
@@ -87,19 +99,6 @@ const loginRes = await wepinPin.login.loginWithEmailAndPassword(...)
 await wepinPin.login.loginWepin(loginRes)
 ```
 
-Or you can also pass in the [WepinLogin](../classes/_wepin_login_js.WepinLogin.html) library you created.
-```js
-const wepinLogin = new WepinLogin()
-const wepinPin = new WepinPin({
-  appKey: 'your-wepin-api-key',
-  wepinLogin,
-})
-await wepinPin.init({
-  defaultLanguage: 'ko',
-})
-const loginRes = await wepinPin.login.loginWithEmailAndPassword(...)
-await wepinPin.login.loginWepin(loginRes)
-```
 
 ### isInitialized
 ```js

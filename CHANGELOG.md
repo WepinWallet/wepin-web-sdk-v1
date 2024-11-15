@@ -1,3 +1,12 @@
+# Version 0.0.23 (2024-11-15)
+
+## @wepin/provider-js
+### Updates:
+  - Specified compatible Node.js versions in `package.json` (”^20.17 || >=22”). 
+## @wepin/pin-js
+### Updates:
+ - Added the `changeLanguage` method to allow changing the language displayed on the PIN pad screen.
+
 # Version 0.0.22 (2024-10-31)
 ## @wepin/provider-js
   - Change eth-json-rpc-middleware to metamask package.

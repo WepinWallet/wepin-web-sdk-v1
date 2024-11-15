@@ -106,7 +106,25 @@ wepinPin.isInitialized()
 ```
 The `isInitialized()` method checks WepinPin is initialized.
 
+### changeLanguage
+```javascript
+wepinPin.changeLanguage(language)
+```
+Changes the language displayed on the PIN pad screen. Currently, only 'ko', 'en', and 'ja' are supported.
 
+#### Parameters
+- `language` \<string>
+  - The language to be displayed on the PIN pad screen.
+Currently, only `'ko'`, `'en'` and `'ja'` are supported.
+
+#### Returns
+- void 
+
+#### Example
+
+```javascript
+wepinPin.changeLanguage('ko')
+```
 
 ## ⏩ Examples
 

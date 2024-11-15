@@ -1,6 +1,6 @@
 {
   "name": "@wepin/provider-js",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Wepin EVM/Solana Provider for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -25,6 +25,9 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": "^20.17 || >=22"
+  },
   "scripts": {
     "build": "run-s -l remove:dist build:swc build:dts build:vite:umd copy:packages copy:script:example",
     "build:swc": "run-p build:swc:esm build:swc:cjs",
@@ -60,10 +63,10 @@
     "@metamask/eth-json-rpc-middleware": "^15.0.0",
     "@metamask/safe-event-emitter": "^3.1.1",
     "@solana/web3.js": "^1.77.3",
-    "@wepin/common": "^0.0.22",
-    "@wepin/fetch-js": "^0.0.22",
-    "@wepin/modal-js": "^0.0.22",
-    "@wepin/storage-js": "^0.0.22",
+    "@wepin/common": "^0.0.23",
+    "@wepin/fetch-js": "^0.0.23",
+    "@wepin/modal-js": "^0.0.23",
+    "@wepin/storage-js": "^0.0.23",
     "@wepin/utils": "^1.0.3",
     "buffer": "^6.0.3",
     "fast-deep-equal": "^3.1.3",

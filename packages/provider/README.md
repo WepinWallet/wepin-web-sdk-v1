@@ -36,6 +36,10 @@ Wepin Provider V1 for Web. This package is exclusively available for use in web 
 >}
 > ```
 
+## ⏩ Requirements
+
+- Node version **20.17** or newer is required.
+
 ## ⏩ Document
 [![typedoc](https://img.shields.io/badge/typedoc-blue?style=for-the-badge)](https://wepinwallet.github.io/wepin-web-sdk-v1/modules/_wepin_provider_js.html)
 

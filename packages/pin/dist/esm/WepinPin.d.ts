@@ -39,6 +39,12 @@ export declare class WepinPin {
      * @returns true if Wepin SDK is already initialized.
      */
     isInitialized(): boolean;
+    /**
+     * change language
+     * @param language string <'ko' | 'en' | 'ja'> - The language to be displayed on the widget.
+     * @returns void
+     */
+    changeLanguage(language: string): void;
     private checkExpiredToken;
     finalize(): void;
     private initEventHandler;

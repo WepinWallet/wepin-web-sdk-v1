@@ -36,6 +36,7 @@
         </div>
 
         <div v-else class="button-group">
+          <button @click="getSignForLoginCall" class="button-style">Get sign for login</button>
           <button @click="loginWithUI" class="button-style">Login with UI</button>
           <button @click="loginWithOAuth" class="button-style">Login without UI (Google)</button>
         </div>
@@ -46,12 +47,13 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { WepinLogin } from '@wepin/login-js'
+import { getSignForLogin, LoginErrorResult, WepinLogin } from '@wepin/login-js'
 import { WepinProvider } from '@wepin/provider-js'
 import { WepinSDK, WepinLifeCycle } from '@wepin/sdk-js'
 
 const wepinAppID = 'your-app-id'
 const wepinAppWebKey = 'your-app-key'
+const privKey = 'your-private-key'
 
 const wepinSdkInstance = new WepinSDK({
   appId: wepinAppID,
@@ -109,11 +111,19 @@ const loginWithUI = async () => {
   }
 }
 
+const isLoginError = (res: any): res is LoginErrorResult => {
+    return (res as LoginErrorResult).error !== undefined
+  }
+
 const loginWithOAuth = async () => {
   try {
     const oauthUser = await wepinLoginInstance.loginWithOauthProvider({
       provider: 'google',
     })
+    if(isLoginError(oauthUser)) {
+      console.error('OAuth login failed:', oauthUser.error)
+      return
+    }
     const userInfo = await wepinLoginInstance.loginWepin(oauthUser)
     appStatus.value = await wepinSdkInstance.getStatus()
     userDetails.value = userInfo
@@ -122,6 +132,15 @@ const loginWithOAuth = async () => {
     }
   } catch (error) {
     console.error('OAuth login failed:', error)
+  }
+}
+
+const getSignForLoginCall = () => {
+  try {
+    const sign = getSignForLogin(privKey, wepinAppWebKey)
+    alert('Sign for login: ' + sign)
+  } catch (error) {
+    console.error('Get sign for login failed:', error)
   }
 }
 

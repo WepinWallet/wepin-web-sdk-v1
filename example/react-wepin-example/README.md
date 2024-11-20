@@ -40,7 +40,7 @@ yarn start
 This will run the app in development mode.
 Once the app is running, open http://localhost:3000 in your browser to view it.
 
-| ![wepin react example](../../assets/wepin_react_example_login.jpeg) | ![wepin react example](../../assets/wepin_react_example_provider.jpeg) |
+| ![wepin react example](../../assets/wepin_react_example_login.png) | ![wepin react example](../../assets/wepin_react_example_provider.png) |
 | ------------------------------------------------------------- | ------------------------------------------------------------- |
 | Before Login                              | After Login                               |
 

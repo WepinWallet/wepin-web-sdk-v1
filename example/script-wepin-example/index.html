@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wepin Script Example</title>
+  <script src="./wepin-widget-sdk.umd.js"></script>
+  <script src="./wepin-login.umd.js"></script>
+  <script src="./wepin-pin-pad.umd.js"></script>
+  <script src="./wepin-provider.umd.js"></script>
+  <style>
+    body {
+      margin: 10px;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #6A82FB, #FC5C7D);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .app-container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .app-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .app-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .content-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .card {
+      max-height: 200px; /* 최대 높이 설정 */
+      overflow-y: auto;  /* 세로 방향으로 스크롤 가능 */
+      /* white-space: pre-wrap; 줄바꿈 허용 */
+      word-wrap: break-word; /* 긴 단어도 자동 줄바꿈 */
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .button-style {
+      background-color: #FC5C7D;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 2px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-style:hover {
+      background-color: #ff7a96;
+    }
+
+    .button-style.logout {
+      background-color: #e74c3c;
+    }
+
+    .button-style.logout:hover {
+      background-color: #ff6b60;
+    }
+
+    #login-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      margin: 0;
+    }
+
+    @media (max-width: 600px) {
+      .app-container {
+        padding: 15px;
+      }
+      .app-title {
+        font-size: 20px;
+      }
+      .button-style {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1 class="app-title">Wepin Script Example</h1>
+    </header>
+    <main>
+      <div class="content-grid">
+        <div id="login-section" class="content" style="display: none;">
+          <h2 class="section-title">User Information</h2>
+          <div class="card">
+            <pre id="user-details"></pre>
+          </div>
+
+          <div class="button-group">
+            <button id="register-button" class="button-style" style="display: none;">Registration</button>
+            <div id="actions">
+              <button id="get-accounts-button" class="button-style">Get Accounts</button>
+              <button id="get-balance-button" class="button-style">Get Balance</button>
+              <button id="sign-message-button" class="button-style">Sign Message</button>
+              <button id="send-transaction-button" class="button-style">Send Transaction</button>
+              <button id="logout-button" class="button-style logout">Sign Out</button>
+            </div>
+          </div>
+
+          <div id="account-details-card" class="card" style="display: none;">
+            <h3>Account Details:</h3>
+            <p id="account-details"></p>
+          </div>
+
+          <div id="balance-card" class="card" style="display: none;">
+            <h3>Balance:</h3>
+            <p id="balance"></p>
+          </div>
+        </div>
+
+        <div id="login-options" class="button-group">
+          <button id="login-with-ui-button" class="button-style">Login with UI</button>
+          <button id="login-with-oauth-button" class="button-style">Login without UI (Google)</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const wepinAppID = 'your-app-id';
+    const wepinAppWebKey = 'your-app-key';
+
+    const wepinSdkInstance = new WepinWidgetSDK.WepinSDK({
+      appId: wepinAppID,
+      appKey: wepinAppWebKey,
+    });
+
+    const wepinLoginInstance = new WepinLogin.WepinLogin({
+      appId: wepinAppID,
+      appKey: wepinAppWebKey,
+    });
+
+    const wepinProvider = new WepinProvider.WepinProvider({
+      appId: wepinAppID,
+      appKey: wepinAppWebKey,
+    });
+
+    let blockchainProvider = null;
+    let appStatus = 'not_initialized';
+    let registrationNeeded = false;
+    let userDetails = null;
+    let currentAddress = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeApp();
+
+      document.getElementById('login-with-ui-button').addEventListener('click', loginWithUI);
+      document.getElementById('login-with-oauth-button').addEventListener('click', loginWithOAuth);
+      document.getElementById('logout-button').addEventListener('click', logout);
+      document.getElementById('register-button').addEventListener('click', registerWepin);
+      document.getElementById('get-accounts-button').addEventListener('click', getAccounts);
+      document.getElementById('get-balance-button').addEventListener('click', getBalance);
+      document.getElementById('sign-message-button').addEventListener('click', signMessageDialog);
+      document.getElementById('send-transaction-button').addEventListener('click', sendTransactionDialog);
+    });
+
+    async function initializeApp() {
+      try {
+        await wepinSdkInstance.init();
+        await wepinLoginInstance.init();
+        await wepinProvider.init();
+
+        appStatus = await wepinSdkInstance.getStatus();
+        blockchainProvider = await wepinProvider.getProvider('ethereum');
+
+        if(appStatus === 'login' || appStatus === 'login_before_register'){
+          userDetails = await wepinLoginInstance.getCurrentWepinUser()
+        }
+        updateUI()
+          
+      } catch (error) {
+        console.error('Error during initialization:', error);
+      }
+    }
+
+    function updateUI() {
+      if (appStatus === 'login_before_register') {
+          registrationNeeded = true;
+          document.getElementById('register-button').style.display = 'block';
+        } else if (appStatus === 'login') {
+          document.getElementById('login-options').style.display = 'none';
+          document.getElementById('login-section').style.display = 'block';
+        } else {
+          document.getElementById('login-options').style.display = 'block';
+          document.getElementById('login-section').style.display = 'none';
+          document.getElementById('register-button').style.display = 'none';
+        }
+
+      if (userDetails) {
+        document.getElementById('user-details').textContent = JSON.stringify(userDetails, null, 2);
+      }
+    }
+    
+    async function loginWithUI() {
+      try {
+        const userInfo = await wepinSdkInstance.loginWithUI();
+        appStatus = await wepinSdkInstance.getStatus();
+        userDetails = userInfo;
+        updateUI();
+      } catch (error) {
+        console.error('Login with UI failed:', error);
+      }
+    }
+
+    async function loginWithOAuth() {
+      try {
+        const oauthUser = await wepinLoginInstance.loginWithOauthProvider({
+          provider: 'google',
+        });
+        const userInfo = await wepinLoginInstance.loginWepin(oauthUser);
+        appStatus = await wepinSdkInstance.getStatus();
+        userDetails = userInfo;
+        if (appStatus === 'login_before_register') {
+          registrationNeeded = true;
+          document.getElementById('register-button').style.display = 'block';
+        }
+        updateUI();
+      } catch (error) {
+        console.error('OAuth login failed:', error);
+      }
+    }
+
+    async function logout() {
+      try {
+        await wepinSdkInstance.logout();
+        appStatus = await wepinSdkInstance.getStatus();
+        userDetails = null;
+        balanceValue = null;
+        currentAddress = null; 
+        updateUI();
+      } catch (error) {
+        console.error('Logout failed:', error);
+      }
+    }
+
+    async function registerWepin() {
+      if (!registrationNeeded) {
+        alert('No registration required.');
+        return;
+      }
+      try {
+        const userInfo = await wepinSdkInstance.register();
+        userDetails = userInfo;
+        registrationNeeded = false;
+        updateUI();
+      } catch (error) {
+        console.error('Registration failed:', error);
+      }
+    }
+
+    async function getAccounts() {
+      try {
+        const accounts = await blockchainProvider.request({
+          method: 'eth_accounts',
+        });
+        document.getElementById('account-details').textContent = accounts.join(', '); // accounts 배열을 문자열로 변환
+        document.getElementById('account-details-card').style.display = 'block'; // 계정 카드 표시
+        currentAddress = blockchainProvider.selectedAddress || accounts[0] || null;
+      } catch (error) {
+        alert('Error getAccounts: ' + error);
+      }
+    }
+
+    async function getBalance() {
+      if (!currentAddress) {
+        alert('Please select an account.');
+        return;
+      }
+      try {
+        const balanceValue = await blockchainProvider.request({
+          method: 'eth_getBalance',
+          params: [currentAddress, 'latest'],
+        });
+        document.getElementById('balance').textContent = balanceValue;
+        document.getElementById('balance-card').style.display = 'block'; // 잔액 카드 표시
+      } catch (error) {
+        alert('Error getBalance:' + error);
+      }
+    }
+
+    function signMessageDialog() {
+      const message = prompt('Enter the message to sign:');
+      if (message) {
+        signMessage(message);
+      }
+    }
+
+    async function signMessage(message) {
+      try {
+        const signature = await blockchainProvider.request({
+          method: 'personal_sign',
+          params: [message, currentAddress],
+        });
+        alert('Signature: ' + signature);
+      } catch (error) {
+        alert('Error signing message:' + error);
+      }
+    }
+
+    async function sendTransaction(to, amount) {
+      try {
+        const txHash = await blockchainProvider.request({
+          method: 'eth_sendTransaction',
+          params: [{
+            from: currentAddress,
+            to,
+            value: amount,
+          }],
+        });
+        alert('Transaction hash: ' + txHash);
+      } catch (error) {
+        alert('Error sending transaction:' + error);
+      }
+    }
+  </script>
+</body>
+</html>

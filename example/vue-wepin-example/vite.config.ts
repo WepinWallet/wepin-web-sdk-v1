@@ -25,13 +25,13 @@ export default defineConfig({
           ),
           'process',
         ],
-        Buffer: [
-          path.resolve(
-            __dirname,
-            'node_modules/node-stdlib-browser/helpers/esbuild/shim',
-          ),
-          'Buffer',
-        ],
+        // Buffer: [
+        //   path.resolve(
+        //     __dirname,
+        //     'node_modules/node-stdlib-browser/helpers/esbuild/shim',
+        //   ),
+        //   'Buffer',
+        // ],
       }),
       enforce: 'post',
     },

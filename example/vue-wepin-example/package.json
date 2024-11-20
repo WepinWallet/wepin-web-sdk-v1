@@ -8,10 +8,13 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": "^20.17 || >=22"
+  },
   "dependencies": {
-    "@wepin/login-js": "^0.0.12",
-    "@wepin/provider-js": "^0.0.10",
-    "@wepin/sdk-js": "^0.0.15",
+    "@wepin/login-js": "^0.0.22",
+    "@wepin/provider-js": "^0.0.22",
+    "@wepin/sdk-js": "^0.0.22",
     "vue": "^3.4.37"
   },
   "devDependencies": {

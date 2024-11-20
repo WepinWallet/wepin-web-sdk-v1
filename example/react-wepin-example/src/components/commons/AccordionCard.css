@@ -1,0 +1,69 @@
+.accordion-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    max-width: 100%;
+  }
+  
+  .accordion-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f2f5;
+    cursor: pointer;
+    font-weight: bold;
+    color: #2c3e50;
+    transition: background-color 0.3s ease;
+  }
+  
+  .accordion-header:hover {
+    background-color: #e5e8eb;
+  }
+  
+  .accordion-title {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .accordion-icon {
+    transition: transform 0.3s ease;
+    /* font-size: 1.5rem; */
+    /* color: #3498db; */
+    color: #2c3e50;
+  }
+  
+  .accordion-icon.open {
+    transform: rotate(180deg);
+  }
+  
+  .accordion-content {
+    padding: 20px;
+    border-top: 1px solid #dfe3e6;
+    animation: fadeIn 0.3s ease;
+    background-color: #ffffff;
+    color: #4a4a4a;
+    word-wrap: break-word; /* 긴 단어를 줄바꿈 처리 */
+  overflow-wrap: break-word; /* 긴 단어가 영역을 초과하지 않도록 설정 */
+  max-width: 100%; /* 콘텐츠의 최대 너비 제한 */
+  overflow: hidden; /* 초과된 내용 숨기기 */
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

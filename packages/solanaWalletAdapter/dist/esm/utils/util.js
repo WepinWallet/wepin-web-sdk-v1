@@ -1,0 +1,1 @@
+export var uintToHexString=function(r){return Array.from(r).map(function(r){return r.toString(16).padStart(2,"0")}).join("")};

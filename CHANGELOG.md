@@ -1,3 +1,11 @@
+# Version 0.0.25 (2024-12-12)
+
+- added @wepin/solana-wallet-adapter
+
+## @wepin/provider-js
+
+- support solana VersionedTransaction
+
 # Version 0.0.24 (2024-11-18)
 
 ## @wepin/pin-js

@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"WepinSolanaWalletAdapter",{enumerable:!0,get:function(){return e.WepinSolanaWalletAdapter}});var e=require("./adapter.js");

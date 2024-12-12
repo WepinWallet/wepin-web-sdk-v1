@@ -53,6 +53,7 @@ The providers supported by Wepin are as follows.
 - EVM compatible Networks
 - Klaytn Network 
 
+- Solana Network
 
 ## EVM compatible Networks
 Ethers.js or Web3.js can be used with Wepin Provider to interoperate with EVM compatible blockchains.

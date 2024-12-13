@@ -1,4 +1,8 @@
-# Version 0.0.27 (2024-12-13)
+# Version 0.0.28 (2024-12-13)
+
+- fix get version
+
+~~## [Version 0.0.27] (2024-12-13)~~ (deprecated)
 
 - fix get version
 

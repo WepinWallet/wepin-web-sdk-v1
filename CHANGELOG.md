@@ -1,4 +1,8 @@
-# Version 0.0.25 (2024-12-12)
+# Version 0.0.26 (2024-12-13)
+
+- change swc config
+
+~~## [Version 0.0.25] (2024-1-12)~~ (deprecated)
 
 - added @wepin/solana-wallet-adapter
 

@@ -263,8 +263,15 @@ It logs in to the Wepin firebase with external id token. Returns firebase login 
 #### Parameters
 - `params` \<object> 
   - `token` \<string> - id token value to be used for login 
-  - `sign` \<string> - signature value for the token provided as the first parameter.([Signature Generation Methods](./SignatureGenerationMethods.md))
+  - `sign` \<string> - __optional__ signature value for the token provided as the first parameter.([Signature Generation Methods](./SignatureGenerationMethods.md))
 
+> [!NOTE]
+> Starting from @wepin/login-js version `0.0.29`, the sign value is optional.
+>
+> If you choose to remove the authentication key issued from the [Wepin Workspace](https://workspace.wepin.io/), you may opt not to use the sign value.
+>
+> (Wepin Workspace > Development Tools menu > Login tab > Auth Key > Delete)
+> > The Auth Key menu is visible only if an authentication key was previously generated
 
 #### Returns
 - Promise\<LoginResult|LoginErrorResult>
@@ -316,8 +323,15 @@ It logs in to the Wepin firebase with external access token. Returns firebase lo
 - `params` \<object> 
   - `provider` \<string> - Provider that issued the access token. The value must be one of the supported login provider names in lowercase, such as 'naver', 'discord', 'facebook'. Please refer to [Wepin Simplified Login documentation](https://docs.wepin.io/login/simplified-login) to check the supported login providers.
   - `token` \<string> - access token value to be used for login 
-  - `sign` \<string> - signature value for the token provided as the first parameter.([Signature Generation Methods](./SignatureGenerationMethods.md))
+  - `sign` \<string> - __optional__  signature value for the token provided as the first parameter.([Signature Generation Methods](./SignatureGenerationMethods.md))
 
+> [!NOTE]
+> Starting from @wepin/login-js version `0.0.29`, the sign value is optional.
+>
+> If you choose to remove the authentication key issued from the [Wepin Workspace](https://workspace.wepin.io/), you may opt not to use the sign value.
+>
+> (Wepin Workspace > Development Tools menu > Login tab > Auth Key > Delete)
+> > The Auth Key menu is visible only if an authentication key was previously generated
 
 #### Returns
 - Promise\<LoginResult|LoginErrorResult>

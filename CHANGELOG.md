@@ -1,3 +1,10 @@
+# Version 0.0.29 (2024-12-16)
+
+## @wepin/login-js
+
+### Updates:
+- Made the `sign` parameter optional for both `loginWithIdToken` and `loginWithAccessToken` methods.
+
 # Version 0.0.28 (2024-12-13)
 
 - fix get version

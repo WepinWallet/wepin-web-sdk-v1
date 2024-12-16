@@ -102,12 +102,12 @@ export type UpdateTermsAcceptedResponseBody = UpdateTermsAcceptedRequestBody;
 export type GetTermsAcceptedResponseBody = UpdateTermsAcceptedRequestBody;
 export interface LoginIdTokenRequestBody {
     idToken: string;
-    sign: string;
+    sign?: string;
 }
 export interface LoginAccessTokenRequestBody {
     provider: string;
     accessToken: string;
-    sign: string;
+    sign?: string;
 }
 export interface LoginIdTokenResponseBody {
     result: boolean;

@@ -1,6 +1,6 @@
 {
   "name": "@wepin/storage-js",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "Wepin SDK storage for Web",
   "author": "IoTrust, Co., Ltd.",
   "license": "MIT",
@@ -52,6 +52,6 @@
     "wepin-storage"
   ],
   "dependencies": {
-    "@wepin/common": "^0.0.28"
+    "@wepin/common": "^0.0.29"
   }
 }

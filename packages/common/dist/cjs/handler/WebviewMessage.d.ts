@@ -2,7 +2,7 @@ type WepinCommonCommand = 'ready_to_widget' | 'close_wepin_widget' | 'set_local_
 type WepinGetSdkRequestCommand = 'send_transaction_without_provider' | 'register_wepin' | 'register_user_email';
 type WepinSDKCommand = 'set_user_email' | 'get_sdk_request' | WepinGetSdkRequestCommand;
 type WepinLoginCommand = 'set_token';
-type WepinProviderCommand = 'request_enable' | 'sign_transaction' | 'send_transaction' | 'sign_typed_data' | 'sign' | 'wallet_switchEthereumChain' | 'provider_request' | 'dequeue_request';
+type WepinProviderCommand = 'request_enable' | 'sign_transaction' | 'send_transaction' | 'sign_all_transactions' | 'sign_typed_data' | 'sign' | 'wallet_switchEthereumChain' | 'provider_request' | 'dequeue_request';
 type WepinPinCommand = 'pin_register' | 'pin_auth' | 'pin_change' | 'pin_otp';
 export type WepinCommand = WepinCommonCommand | WepinSDKCommand | WepinLoginCommand | WepinProviderCommand | WepinPinCommand;
 export interface WebviewRequestMessage {

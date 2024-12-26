@@ -29,6 +29,7 @@ export declare class WepinSolanaWalletAdapter extends BaseMessageSignerWalletAda
     signMessage(message: Uint8Array): Promise<Uint8Array>;
     signTransaction<T extends TransactionOrVersionedTransaction<this['supportedTransactionVersions']>>(transaction: T): Promise<T>;
     sendTransaction<T extends TransactionOrVersionedTransaction<this['supportedTransactionVersions']>>(transaction: T, connection: Connection, options?: SendTransactionOptions): Promise<TransactionSignature>;
+    signAllTransactions<T extends TransactionOrVersionedTransaction<this['supportedTransactionVersions']>>(transactions: T[]): Promise<T[]>;
     connect(): Promise<void>;
     disconnect(): Promise<void>;
 }

@@ -1,8 +1,24 @@
+# Version 0.0.30 (2024-12-20)
+
+## @wepin/provider-js
+
+### Updates:
+
+- add solana signAllTransactions
+- fix solana signAndSendTransaction parameter
+
+## @wepin/solana-wallet-adapter
+
+### Updates:
+
+- add solana signAllTransactions
+
 # Version 0.0.29 (2024-12-16)
 
 ## @wepin/login-js
 
 ### Updates:
+
 - Made the `sign` parameter optional for both `loginWithIdToken` and `loginWithAccessToken` methods.
 
 # Version 0.0.28 (2024-12-13)

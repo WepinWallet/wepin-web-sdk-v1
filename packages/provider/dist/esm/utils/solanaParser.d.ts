@@ -12,4 +12,4 @@ export declare const parsingSolanaTransaction: (serializedTransaction: string) =
     to: string;
     value?: undefined;
 };
-export declare const decodeTransaction: (inputTransaction: string, transaction: string) => Transaction | VersionedTransaction;
+export declare const decodeTransaction: (unsignedTransactions: string, signedResult: string) => Transaction | VersionedTransaction;

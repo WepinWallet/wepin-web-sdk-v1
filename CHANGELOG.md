@@ -1,3 +1,11 @@
+# Version 0.0.31 (2025-02-05)
+
+## @wepin/provider-js
+
+### Updates:
+
+- add kaia Typed Transaction Sign
+
 # Version 0.0.30 (2024-12-20)
 
 ## @wepin/provider-js

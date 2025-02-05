@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),function(e,r){for(var t in r)Object.defineProperty(e,t,{enumerable:!0,get:r[t]})}(exports,{kaiaBaseTxType:function(){return e},kaiaFeeDelegatedTxType:function(){return r}});var e=[8,16,48,56],r=[9,10,17,18,49,50];

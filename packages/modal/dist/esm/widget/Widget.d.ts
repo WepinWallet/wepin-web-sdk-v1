@@ -1,12 +1,11 @@
 import { WepinRequestMessage, WepinResponseMessage } from '../types/Message.js';
-import { Overlay } from '../widget/overlay/Overlay.js';
 type WebviewType = Window | HTMLIFrameElement;
 /**
  * Basically, Widget has control over Webview.
  * Client must not handle this object directly.
  * It Also has informations about Webview itself.
  */
-export declare abstract class Widget extends Overlay {
+export declare abstract class Widget {
     private static _webview;
     readonly id: string;
     readonly url: string;

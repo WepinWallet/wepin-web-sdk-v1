@@ -1,1 +1,1 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"version",{enumerable:!0,get:function(){return e}});var e="0.0.31";
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"version",{enumerable:!0,get:function(){return e}});var e="0.0.32";

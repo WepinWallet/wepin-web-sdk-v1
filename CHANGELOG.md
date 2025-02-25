@@ -1,3 +1,13 @@
+# Version 0.0.32 (2025-02-25)
+
+## @wepin/modal-js
+
+### Bug Fixes:
+
+- Fixed **iframe** background color issue when **color-scheme: dark**
+  - **Enforced `color-scheme: light`** in **iframe** to ensure dark mode compatibility
+  - Set **iframe** background color and removed the existing overlay** **
+
 # Version 0.0.31 (2025-02-05)
 
 ## @wepin/provider-js

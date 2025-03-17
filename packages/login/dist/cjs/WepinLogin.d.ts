@@ -111,9 +111,12 @@ export declare class WepinLogin {
     sendVerifyEmail(params: ISendVerifyEmailParams): Promise<boolean>;
     /**
      * This method retrieves the current firebase token's information from the Wepin.
+     * @param prevFBToken LoginResult
+     *          - provider 'email'|'apple'|'google'|'discord'|'naver'|'external_token'
+     *          - token  `{idToken: string, refreshToken: string}`. this value is response of `@wepin/login-js`
      * @returns {Promise<LoginResult>}
      */
-    getRefreshFirebaseToken(): Promise<LoginResult>;
+    getRefreshFirebaseToken(prevFBToken?: LoginResult): Promise<LoginResult>;
     /**
      * Returns the user's login information.
      * This method with the same as `loginWithUI()` of WepinSDK module, but it doesn't show the widget.

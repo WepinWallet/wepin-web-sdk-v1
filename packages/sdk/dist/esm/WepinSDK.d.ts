@@ -1,6 +1,7 @@
 import SafeEventEmitter from '@metamask/safe-event-emitter';
 import { modeByAppKey, WebviewEventHandler, Platform, WepinRequestMessage, IWepinSDKAttributes, IWepinUser, LoginProviders } from '@wepin/common';
 import type { Widget, IWepinModal } from '@wepin/modal-js';
+import { IFirebaseWepin, IWepinToken } from '@wepin/storage-js';
 import { IWepinStorage } from '@wepin/storage-js';
 import { Account } from './types/Account.js';
 import { AccountBalanceInfo } from './types/AccountBalanceInfo.js';
@@ -216,6 +217,16 @@ export declare class WepinSDK extends SafeEventEmitter {
         };
     }): Promise<{
         txId: any;
+    }>;
+    /**
+     * The `getLoginSession()` method returns the login session information.
+     */
+    getLoginSession(prevToken?: {
+        firebaseToken: IFirebaseWepin;
+        wepinToken: IWepinToken;
+    }): Promise<{
+        firebaseToken: IFirebaseWepin;
+        wepinToken: IWepinToken;
     }>;
     /**
      * The `finalize()` method finalizes the Wepin SDK.

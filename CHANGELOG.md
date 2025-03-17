@@ -1,3 +1,17 @@
+# Version 0.0.33 (2025-03-13)
+
+## @wepin/login-js
+
+### Updates:
+
+- Added prevFBToken parameter to refresh Firebase Token
+
+## @wepin/sdk-js
+
+### Updates:
+
+- Added the `getLoginSession` method to retrieve and refresh Firebase Token
+
 # Version 0.0.32 (2025-02-25)
 
 ## @wepin/modal-js

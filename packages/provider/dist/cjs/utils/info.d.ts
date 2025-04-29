@@ -11,3 +11,8 @@ export declare const getNetworkInfoByName: (network: string, withoutCache?: bool
  * @returns network e.g) ethereum, klaytn
  */
 export declare const getNetworkByChainId: (chainId: unknown, withoutCache?: boolean) => Promise<string>;
+/**
+ * Get available networks
+ * @returns available networks
+ */
+export declare const getAvailableNetworks: () => Promise<string[]>;

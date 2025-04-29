@@ -1,6 +1,6 @@
 {
   "name": "@wepin/solana-wallet-adapter",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "Wepin Solana Wallet Adapter for Web",
   "author": "IoTrust, Co., Ltd.",
   "homepage": "https://github.com/WepinWallet/wepin-web-sdk-v1/",
@@ -67,7 +67,7 @@
     "@solana/wallet-standard-features": "^1.2.0",
     "@wallet-standard/base": "^1.1.0",
     "@wallet-standard/features": "^1.1.0",
-    "@wepin/provider-js": "^0.0.33",
+    "@wepin/provider-js": "^0.0.34",
     "@wepin/utils": "^1.0.3",
     "buffer": "^6.0.3",
     "encoding": "^0.1.13",

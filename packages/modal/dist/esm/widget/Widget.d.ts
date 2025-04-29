@@ -22,8 +22,8 @@ export declare abstract class Widget {
     protected abstract expand(): void;
     protected abstract shrink(): void;
     protected abstract _post(message: WepinResponseMessage | WepinRequestMessage): void;
-    protected abstract _closeWebview(): void;
-    close(): void;
+    protected abstract _closeWebview(): Promise<void>;
+    close(): Promise<void>;
     response(data: WepinResponseMessage): void;
     request(data: WepinRequestMessage): void;
 }

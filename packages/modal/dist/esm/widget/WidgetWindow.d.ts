@@ -16,6 +16,6 @@ export declare class WidgetWindow extends Widget {
     }): Promise<WidgetWindow>;
     protected expand(): void;
     protected shrink(): void;
-    protected _closeWebview(): void;
+    protected _closeWebview(): Promise<void>;
     protected _post(message: WepinResponseMessage): void;
 }

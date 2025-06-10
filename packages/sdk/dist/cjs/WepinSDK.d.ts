@@ -29,6 +29,7 @@ export declare class WepinSDK extends SafeEventEmitter {
     private _detailAccount;
     private _userInfo;
     protected webviewEventHandler: WebviewEventHandler;
+    private _loginRejectCallback;
     constructor({ appId, appKey, wepinModal, wepinStorage, }: {
         appId: string;
         appKey: string;

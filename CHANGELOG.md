@@ -1,3 +1,14 @@
+# Version 0.0.35 (2025-06-10)
+
+## @wepin/sdk-js
+
+### Bug Fixes:
+
+- Fixed an issue where `loginWithUI` did not return a response when the login process was cancelled.
+  - If the user cancelled the login attempt (e.g. by closing the widget), the SDK did not trigger a response, causing the caller to hang indefinitely. This has been resolved so that a cancellation now returns an appropriate response.
+
+---
+
 # Version 0.0.34 (2025-04-25)
 
 ## @wepin/modal-js
@@ -30,8 +41,6 @@
 
 ---
 
-
-
 # Version 0.0.33 (2025-03-13)
 
 ## @wepin/login-js
@@ -48,8 +57,6 @@
 
 ---
 
-
-
 # Version 0.0.32 (2025-02-25)
 
 ## @wepin/modal-js
@@ -58,11 +65,9 @@
 
 - Fixed **iframe** background color issue when **color-scheme: dark**
   - **Enforced `color-scheme: light`** in **iframe** to ensure dark mode compatibility
-  - Set **iframe** background color and removed the existing overlay** **
+  - Set **iframe** background color and removed the existing overlay\*\* \*\*
 
 ---
-
-
 
 # Version 0.0.31 (2025-02-05)
 
@@ -73,8 +78,6 @@
 - add kaia Typed Transaction Sign
 
 ---
-
-
 
 # Version 0.0.30 (2024-12-20)
 
@@ -93,8 +96,6 @@
 
 ---
 
-
-
 # Version 0.0.29 (2024-12-16)
 
 ## @wepin/login-js
@@ -104,8 +105,6 @@
 - Made the `sign` parameter optional for both `loginWithIdToken` and `loginWithAccessToken` methods.
 
 ---
-
-
 
 # Version 0.0.28 (2024-12-13)
 
@@ -129,8 +128,6 @@
 
 ---
 
-
-
 # Version 0.0.24 (2024-11-18)
 
 ## @wepin/pin-js
@@ -152,8 +149,6 @@
 - Added the `changeLanguage` method to allow changing the language displayed on the PIN pad screen.
 
 ---
-
-
 
 # Version 0.0.22 (2024-10-31)
 
